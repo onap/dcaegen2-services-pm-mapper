@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "9adffdf1_406afcee",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DataRouterSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-01-18T08:36:08Z",
+      "side": 1,
+      "message": "Just to improve readability and to shorted the method, I would extract the following out into its own method, maybe getDataRouterConnection()..",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 41
+      },
+      "revId": "e55b24a8f970b01104bb0d99bba8d9555f6ea020",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_007074da",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DataRouterSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-01-18T08:36:08Z",
+      "side": 1,
+      "message": "Similarly extract out in its own method, again to improve readability",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 75
+      },
+      "revId": "e55b24a8f970b01104bb0d99bba8d9555f6ea020",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_c0758ccb",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DataRouterSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-01-18T08:36:08Z",
+      "side": 1,
+      "message": "Currently, this is only being set as false, and the part to set it to true is probably is not in place... Maybe, update the story that implements the true setting is updated with a note.",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 20
+      },
+      "revId": "e55b24a8f970b01104bb0d99bba8d9555f6ea020",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_6080608b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DataRouterSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-01-18T08:36:08Z",
+      "side": 1,
+      "message": "Just to improve readability, I would extract out the following in its own method \nsendResponse(httpServerExchange, StatusCodes.SERVICE_UNAVAILABLE, StatusCodes.SERVICE_UNAVAILABLE_STRING)",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 143
+      },
+      "revId": "e55b24a8f970b01104bb0d99bba8d9555f6ea020",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_807b04bd",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DataRouterSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-01-18T08:36:08Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 34
+      },
+      "revId": "e55b24a8f970b01104bb0d99bba8d9555f6ea020",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_40519c34",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DataRouterSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-01-18T08:36:08Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 34
+      },
+      "revId": "e55b24a8f970b01104bb0d99bba8d9555f6ea020",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_c0aeec2d",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequiredFieldDeserializer.java",
         "patchSetId": 1
