@@ -17,7 +17,7 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.dcaegen2.services.pmmapper.config;
+package org.onap.dcaegen2.services.pmmapper.model;
 
 import lombok.Data;
 
