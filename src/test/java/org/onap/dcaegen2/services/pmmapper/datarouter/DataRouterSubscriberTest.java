@@ -17,36 +17,8 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcaegen2.services.pmmapper.datarouter;
-
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.onap.dcaegen2.services.pmmapper.config.BusControllerConfig;
-import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
-import org.onap.dcaegen2.services.pmmapper.model.Event;
-import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
-import io.undertow.io.Receiver;
-import io.undertow.io.Sender;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.StatusCodes;
-
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.any;
@@ -58,6 +30,32 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import io.undertow.io.Receiver;
+import io.undertow.io.Sender;
+import io.undertow.server.HttpServerExchange;
+import io.undertow.util.StatusCodes;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.onap.dcaegen2.services.pmmapper.config.BusControllerConfig;
+import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
+import org.onap.dcaegen2.services.pmmapper.model.Event;
+import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 
 @RunWith(PowerMockRunner.class)
@@ -79,22 +77,22 @@ public class DataRouterSubscriberTest {
     public void testStartTooManyTriesWithResponse() throws IOException {
         PowerMockito.mockStatic(Thread.class);
 
-        URL subURL = mock(URL.class);
+        URL subEndpoint = mock(URL.class);
         BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subURL);
+        config.setDataRouterSubscribeEndpoint(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
-        when(subURL.openConnection()).thenReturn(huc);
+        when(subEndpoint.openConnection()).thenReturn(huc);
         when(huc.getResponseCode()).thenReturn(300);
         Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start(config));
     }
 
     @Test
     public void testStartImmediateSuccess() throws IOException, TooManyTriesException, InterruptedException {
-        URL subURL = mock(URL.class);
+        URL subEndpoint = mock(URL.class);
         BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subURL);
+        config.setDataRouterSubscribeEndpoint(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
-        when(subURL.openConnection()).thenReturn(huc);
+        when(subEndpoint.openConnection()).thenReturn(huc);
         when(huc.getResponseCode()).thenReturn(200);
         objUnderTest.start(config);
         verify(huc, times(1)).getResponseCode();
@@ -104,11 +102,11 @@ public class DataRouterSubscriberTest {
     public void testStartDelayedSuccess() throws IOException, TooManyTriesException, InterruptedException {
         PowerMockito.mockStatic(Thread.class);
 
-        URL subURL = mock(URL.class);
+        URL subEndpoint = mock(URL.class);
         BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subURL);
+        config.setDataRouterSubscribeEndpoint(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
-        when(subURL.openConnection()).thenReturn(huc);
+        when(subEndpoint.openConnection()).thenReturn(huc);
         doAnswer(new Answer() {
             boolean forceRetry = true;
 
@@ -129,11 +127,11 @@ public class DataRouterSubscriberTest {
     public void testStartReadTimeout() throws IOException {
         PowerMockito.mockStatic(Thread.class);
 
-        URL subURL = mock(URL.class);
+        URL subEndpoint = mock(URL.class);
         BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subURL);
+        config.setDataRouterSubscribeEndpoint(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
-        when(subURL.openConnection()).thenReturn(huc);
+        when(subEndpoint.openConnection()).thenReturn(huc);
         doThrow(new IOException()).when(huc).getResponseCode();
         Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start(config));
     }
@@ -160,13 +158,13 @@ public class DataRouterSubscriberTest {
         verify(eventReceiver, times(0)).receive(any());
     }
 
-
-
     @Test
     public void testRequestInboundInvalidMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
-        JsonObject metadata = new JsonParser().parse(new String(Files.readAllBytes(Paths.get("src/test/resources/invalid_metadata.json")))).getAsJsonObject();
-        when(httpServerExchange.getRequestHeaders().get(any(String.class)).get(anyInt())).thenReturn(metadata.toString());
+        JsonObject metadata = new JsonParser().parse(new String(Files
+                .readAllBytes(Paths.get("src/test/resources/invalid_metadata.json")))).getAsJsonObject();
+        when(httpServerExchange.getRequestHeaders().get(any(String.class)).get(anyInt()))
+                .thenReturn(metadata.toString());
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
         objUnderTest.handleRequest(httpServerExchange);
         verify(httpServerExchange, times(1)).setStatusCode(StatusCodes.BAD_REQUEST);
@@ -175,7 +173,7 @@ public class DataRouterSubscriberTest {
     }
 
     @Test
-    public void testRequestInboundNoMetadata() throws Exception{
+    public void testRequestInboundNoMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         Receiver receiver = mock(Receiver.class);
         when(httpServerExchange.getRequestReceiver()).thenReturn(receiver);
@@ -203,10 +201,10 @@ public class DataRouterSubscriberTest {
         Receiver receiver = mock(Receiver.class);
         when(httpServerExchange.getRequestReceiver()).thenReturn(receiver);
         String testString = "MESSAGE BODY";
-        JsonObject metadata = new JsonParser().parse(new String(Files.readAllBytes(Paths.get("src/test/resources/valid_metadata.json")))).getAsJsonObject();
-        EventMetadata metadataObj = new GsonBuilder().create().fromJson(metadata, EventMetadata.class);
-
-        when(httpServerExchange.getRequestHeaders().get(any(String.class)).get(anyInt())).thenReturn(metadata.toString());
+        JsonObject metadata = new JsonParser().parse(
+                new String(Files.readAllBytes(Paths.get("src/test/resources/valid_metadata.json")))).getAsJsonObject();
+        when(httpServerExchange.getRequestHeaders().get(any(String.class)).get(anyInt()))
+                .thenReturn(metadata.toString());
         doAnswer((Answer<Void>) invocationOnMock -> {
             Receiver.FullStringCallback callback = invocationOnMock.getArgument(0);
             callback.handle(httpServerExchange, testString);
@@ -220,6 +218,9 @@ public class DataRouterSubscriberTest {
         }).when(httpServerExchange).dispatch(any(Runnable.class));
 
         objUnderTest.handleRequest(httpServerExchange);
-        verify(eventReceiver, times(1)).receive(new Event(httpServerExchange, testString, metadataObj));
+        verify(eventReceiver, times(1))
+                .receive(new Event(httpServerExchange, testString,
+                        new GsonBuilder().create()
+                                .fromJson(metadata, EventMetadata.class)));
     }
 }
