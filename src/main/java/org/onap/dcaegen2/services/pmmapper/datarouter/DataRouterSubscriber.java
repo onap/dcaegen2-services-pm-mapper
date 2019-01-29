@@ -27,10 +27,11 @@ import com.google.gson.JsonParseException;
 import io.undertow.util.HeaderValues;
 import lombok.Data;
 import lombok.NonNull;
-import org.onap.dcaegen2.services.pmmapper.config.BusControllerConfig;
+
 import org.onap.dcaegen2.services.pmmapper.exceptions.NoMetadataException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
