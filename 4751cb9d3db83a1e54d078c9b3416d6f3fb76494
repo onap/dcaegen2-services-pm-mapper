@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: T M <tobias.mole@ericsson.com>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Fri, 01 Feb 2019 03:30:05 +0000
+Reviewed-on: https://gerrit.onap.org/r/77468
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
