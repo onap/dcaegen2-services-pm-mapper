@@ -55,6 +55,7 @@
         <dockerfile.version>1.4.10</dockerfile.version>
         <surefire.version>2.22.0</surefire.version>
         <!-- Plugin Settings -->
+        <image-name>${docker.push.registry}/onap/${project.groupId}.${project.artifactId}</image-name>
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
@@ -157,7 +158,7 @@
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>${dockerfile.version}</version>
                 <configuration>
-                    <repository>${docker.push.registry}/${project.artifactId}</repository>
+                    <repository>${image-name}</repository>
                     <tag>${project.version}</tag>
                     <dockerfile>${project.build.outputDirectory}/Dockerfile</dockerfile>
                     <buildArgs>
