@@ -34,6 +34,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
+import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +42,7 @@ import java.net.URL;
 public class App {
 
     public static void main(String[] args) throws MalformedURLException, InterruptedException, TooManyTriesException, CBSConfigException, ConsulServerError, EnvironmentConfigException, CBSServerError, MapperConfigException {
+        HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(event -> {
             event.getHttpServerExchange().unDispatch();
             event.getHttpServerExchange().getResponseSender().send(StatusCodes.OK_STRING);
@@ -53,7 +55,8 @@ public class App {
 
         Undertow.builder()
                 .addHttpListener(8081, "0.0.0.0")
-                .setHandler(Handlers.routing().add("put", "/sub", dataRouterSubscriber))
+                .setHandler(Handlers.routing().add("put", "/sub", dataRouterSubscriber)
+                .add("get", "/healthcheck", healthCheckHandler))
                 .build().start();
     }
 }
