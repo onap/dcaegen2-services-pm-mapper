@@ -20,6 +20,8 @@
 package org.onap.dcaegen2.services.pmmapper.config;
 
 import java.util.Arrays;
+import java.util.UUID;
+
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ConsulServerError;
@@ -30,15 +32,20 @@ import org.onap.dcaegen2.services.pmmapper.model.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
+
+import org.onap.logging.ref.slf4j.ONAPLogAdapter;
+import org.onap.logging.ref.slf4j.ONAPLogConstants;
+import org.slf4j.LoggerFactory;
 import com.google.gson.GsonBuilder;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Handles the retrieval of the component spec-based PM-Mapper Configuration
  * from DCAE.
  */
-@Slf4j
+
 public class ConfigHandler {
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(ConfigHandler.class));
+    private static final String EMPTY_MESSAGE = "";
     private RequestSender sender;
 
     /**
@@ -67,37 +74,41 @@ public class ConfigHandler {
      */
     public MapperConfig getMapperConfig() throws CBSConfigException, ConsulServerError, EnvironmentConfigException,
             CBSServerError, MapperConfigException {
+        String mapperConfigJson = "";
         CBSConfig cbsConfig = convertCBSConfigToObject(getCBSConfigFromConsul());
         String cbsSocketAddress = cbsConfig.getServiceAddress() + ":" + cbsConfig.getServicePort();
         String requestURL = "http://" + cbsSocketAddress + "/service_component/" + cbsConfig.getServiceName();
-        String mapperConfigJson = "";
-        log.debug("Fetching mapper configuration from CBS: " + requestURL);
         try {
+            logger.unwrap().info(ONAPLogConstants.Markers.ENTRY, "Fetching pm-mapper configuration from Configbinding Service");
             mapperConfigJson = sender.send(requestURL);
         } catch (Exception exception) {
             throw new CBSServerError("Error connecting to Configbinding Service: ", exception);
+        } finally {
+            logger.unwrap().info(ONAPLogConstants.Markers.EXIT, EMPTY_MESSAGE);
         }
 
+        logger.unwrap().info("Received pm-mapper configuration from ConfigBinding Service:\n{}", mapperConfigJson);
         return convertMapperConfigToObject(mapperConfigJson);
     }
 
     private String getCBSConfigFromConsul() throws ConsulServerError, EnvironmentConfigException {
-        String cbsParams;
+        String cbsParams="";
         String consulURL = "http://" + EnvironmentConfig.getConsulHost() + ":" + EnvironmentConfig.getConsultPort()
                 + "/v1/catalog/service/" + EnvironmentConfig.getCbsName();
-        log.debug(consulURL);
         try {
+            logger.unwrap().info(ONAPLogConstants.Markers.ENTRY,
+                    "Retrieving ConfigBinding Service parameters from this Consul URL: {}", consulURL);
             cbsParams = sender.send(consulURL);
         } catch (Exception exception) {
             throw new ConsulServerError("Error connecting to Consul: ", exception);
+        } finally {
+            logger.unwrap().info(ONAPLogConstants.Markers.EXIT, "Received ConfigBinding Service parameters:\n{}", cbsParams);
         }
 
-        log.debug("cbsConfig: " + cbsParams);
         return cbsParams;
     }
 
     private MapperConfig convertMapperConfigToObject(String mapperConfigJson) throws MapperConfigException {
-        log.debug("mapperConfigJson:" + mapperConfigJson);
         MapperConfig mapperConfig;
         try {
             mapperConfig = new GsonBuilder()
@@ -105,10 +116,10 @@ public class ConfigHandler {
                     .create()
                     .fromJson(mapperConfigJson, MapperConfig.class);
         } catch (Exception exception) {
-            throw new MapperConfigException("Error parsing mapper configuration: " + mapperConfigJson, exception);
+            throw new MapperConfigException("Error parsing mapper configuration:\n{}" + mapperConfigJson, exception);
         }
 
-        log.debug("\n" + mapperConfig.toString());
+        logger.unwrap().debug("Mapper configuration:\n{}", mapperConfig);
         return mapperConfig;
     }
 
@@ -121,7 +132,7 @@ public class ConfigHandler {
                             .create()
                             .fromJson(cbsParameters, CBSConfig[].class))
                     .get(0);
-            log.debug("\n\nReceived ConfigBinding Service Configurations: " + cbsConfig);
+            logger.unwrap().debug("ConfigBinding Service Configurations: " + cbsConfig);
         } catch (Exception exception) {
             throw new CBSConfigException(
                     "Error mapping the received ConfigBinding service configuration parameters: " + cbsParameters,

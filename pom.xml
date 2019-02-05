@@ -66,6 +66,7 @@
         <compiler.source.version>1.8</compiler.source.version>
         <shade.main>org.onap.dcaegen2.services.pmmapper.App</shade.main>
         <shade.transformer>org.apache.maven.plugins.shade.resource.ManifestResourceTransformer</shade.transformer>
+        <onap.logging.version>1.2.2</onap.logging.version>
     </properties>
 
     <dependencies>
@@ -94,6 +95,17 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.onap.logging-analytics</groupId>
+            <artifactId>logging-slf4j</artifactId>
+            <version>${onap.logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

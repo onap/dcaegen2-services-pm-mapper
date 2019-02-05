@@ -27,6 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class MapperConfig {
+    public static final String CLIENT_NAME = "pm-mapper";
 
     @GSONRequired
     @SerializedName("streams_subscribes.pm_mapper_handle_out.message_router_topic")
