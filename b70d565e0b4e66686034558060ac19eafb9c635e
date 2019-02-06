@@ -16,6 +16,24 @@
       "revId": "b70d565e0b4e66686034558060ac19eafb9c635e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8aaaf4ca_18e05944",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-02-06T20:57:05Z",
+      "side": 1,
+      "message": "this was a mistake, fixed in the latest patch.",
+      "parentUuid": "b90a2257_353dc7e0",
+      "revId": "b70d565e0b4e66686034558060ac19eafb9c635e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
