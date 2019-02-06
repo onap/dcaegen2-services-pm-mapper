@@ -29,10 +29,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import io.undertow.io.Receiver;
 import io.undertow.io.Sender;
 import io.undertow.server.HttpServerExchange;
@@ -53,10 +58,11 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
+import org.slf4j.LoggerFactory;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(DataRouterSubscriber.class)
@@ -139,6 +145,9 @@ public class DataRouterSubscriberTest {
     @Test
     public void testRequestInboundLimitedStateServiceUnavailable() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class);
+        HttpServerExchangeAdapter adapterMock = PowerMockito.mock(HttpServerExchangeAdapter.class);
+        PowerMockito.whenNew(HttpServerExchangeAdapter.class).withAnyArguments().thenReturn(adapterMock);
+
         Sender responseSender = mock(Sender.class);
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
         when(httpServerExchange.getResponseSender()).thenReturn(responseSender);
@@ -150,6 +159,9 @@ public class DataRouterSubscriberTest {
     @Test
     public void testRequestInboundLimitedStateServiceNoEmission() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class);
+        HttpServerExchangeAdapter adapterMock = PowerMockito.mock(HttpServerExchangeAdapter.class);
+        PowerMockito.whenNew(HttpServerExchangeAdapter.class).withAnyArguments().thenReturn(adapterMock);
+
         Sender responseSender = mock(Sender.class);
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
         when(httpServerExchange.getResponseSender()).thenReturn(responseSender);
@@ -197,6 +209,7 @@ public class DataRouterSubscriberTest {
 
     @Test
     public void testRequestInboundSuccess() throws Exception {
+        ListAppender<ILoggingEvent> logAppender = getLogListAppender();
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         Receiver receiver = mock(Receiver.class);
         when(httpServerExchange.getRequestReceiver()).thenReturn(receiver);
@@ -222,5 +235,19 @@ public class DataRouterSubscriberTest {
                 .receive(new Event(httpServerExchange, testString,
                         new GsonBuilder().create()
                                 .fromJson(metadata, EventMetadata.class)));
+
+        assertEquals(logAppender.list.get(0).getMarker().getName(), "ENTRY");
+        assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("InvocationID"));
+        assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("RequestID"));
+        assertEquals(logAppender.list.get(1).getMarker().getName(), "EXIT");
+    }
+
+    private ListAppender<ILoggingEvent> getLogListAppender() {
+        Logger logger = (Logger) LoggerFactory.getLogger(DataRouterSubscriber.class);
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+        logger.addAppender(listAppender);
+
+        return listAppender;
     }
 }

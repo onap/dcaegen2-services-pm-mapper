@@ -31,14 +31,18 @@ import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.exceptions.NoMetadataException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 
-import lombok.extern.slf4j.Slf4j;
+import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
+import org.onap.logging.ref.slf4j.ONAPLogAdapter;
+import org.onap.logging.ref.slf4j.ONAPLogConstants;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,15 +51,15 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Subscriber for events sent from data router
  * Provides an undertow HttpHandler to be used as an endpoint for data router to send events to.
  */
-@Slf4j
 @Data
 public class DataRouterSubscriber implements HttpHandler {
-
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(DataRouterSubscriber.class));
     private static final int NUMBER_OF_ATTEMPTS = 5;
     private static final int DEFAULT_TIMEOUT = 2000;
     private static final int MAX_JITTER = 50;
@@ -88,7 +92,12 @@ public class DataRouterSubscriber implements HttpHandler {
      * @throws TooManyTriesException in the event that timeout has occurred several times.
      */
     public void start(BusControllerConfig config) throws TooManyTriesException, InterruptedException {
-        subscribe(NUMBER_OF_ATTEMPTS, DEFAULT_TIMEOUT, config);
+        try {
+            logger.unwrap().info(ONAPLogConstants.Markers.ENTRY, "Starting subscription to DataRouter");
+            subscribe(NUMBER_OF_ATTEMPTS, DEFAULT_TIMEOUT, config);
+        } finally {
+            logger.unwrap().info(ONAPLogConstants.Markers.EXIT, "");
+        }
     }
 
     private HttpURLConnection getBusControllerConnection(BusControllerConfig config, int timeout) throws IOException {
@@ -99,6 +108,13 @@ public class DataRouterSubscriber implements HttpHandler {
         connection.setReadTimeout(timeout);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
+
+        final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
+        final UUID requestID = UUID.randomUUID();
+        connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());
+        connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID.toString());
+        connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
+
         return connection;
     }
 
@@ -126,9 +142,9 @@ public class DataRouterSubscriber implements HttpHandler {
             subResponse = connection.getResponseCode();
             subMessage = connection.getResponseMessage();
         } catch (IOException e) {
-            log.info("Timeout Failure:", e);
+            logger.unwrap().error("Timeout Failure:", e);
         }
-        log.info("Request to bus controller executed with Response Code: '{}' and Response Event: '{}'.", subResponse, subMessage);
+        logger.unwrap().info("Request to bus controller executed with Response Code: '{}' and Response Event: '{}'.", subResponse, subMessage);
         if (subResponse >= 300 && attempts > 1) {
             Thread.sleep(timeout);
             subscribe(--attempts, (timeout * 2) + jitterGenerator.nextInt(MAX_JITTER), config);
@@ -146,33 +162,38 @@ public class DataRouterSubscriber implements HttpHandler {
      */
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) {
-        if (limited) {
-            httpServerExchange.setStatusCode(StatusCodes.SERVICE_UNAVAILABLE)
-                    .getResponseSender()
-                    .send(StatusCodes.SERVICE_UNAVAILABLE_STRING);
-        } else {
-            try {
-                String metadataAsString = Optional.of(httpServerExchange.getRequestHeaders()
-                        .get(METADATA_HEADER))
-                        .map((HeaderValues headerValues) -> headerValues.get(0))
-                        .orElseThrow(() -> new NoMetadataException("Metadata Not found"));
+        try{
+            logger.entering(new HttpServerExchangeAdapter(httpServerExchange));
+            if (limited) {
+                httpServerExchange.setStatusCode(StatusCodes.SERVICE_UNAVAILABLE)
+                        .getResponseSender()
+                        .send(StatusCodes.SERVICE_UNAVAILABLE_STRING);
+            } else {
+                try {
+                    String metadataAsString = Optional.of(httpServerExchange.getRequestHeaders()
+                            .get(METADATA_HEADER))
+                            .map((HeaderValues headerValues) -> headerValues.get(0))
+                            .orElseThrow(() -> new NoMetadataException("Metadata Not found"));
 
-                EventMetadata metadata = metadataBuilder.fromJson(metadataAsString, EventMetadata.class);
-                httpServerExchange.getRequestReceiver()
-                        .receiveFullString((callbackExchange, body) -> {
-                            httpServerExchange.dispatch(() -> eventReceiver.receive(new Event(callbackExchange, body, metadata)));
-                        });
-            } catch (NoMetadataException exception) {
-                log.info("Bad Request: no metadata found under '{}' header.", METADATA_HEADER, exception);
-                httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST)
-                        .getResponseSender()
-                        .send(NO_METADATA_MESSAGE);
-            } catch (JsonParseException exception) {
-                log.info("Bad Request: Failure to parse metadata", exception);
-                httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST)
-                        .getResponseSender()
-                        .send(BAD_METADATA_MESSAGE);
+                    EventMetadata metadata = metadataBuilder.fromJson(metadataAsString, EventMetadata.class);
+                    httpServerExchange.getRequestReceiver()
+                            .receiveFullString((callbackExchange, body) -> {
+                                httpServerExchange.dispatch(() -> eventReceiver.receive(new Event(callbackExchange, body, metadata)));
+                            });
+                } catch (NoMetadataException exception) {
+                    logger.unwrap().info("Bad Request: no metadata found under '{}' header.", METADATA_HEADER, exception);
+                    httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST)
+                            .getResponseSender()
+                            .send(NO_METADATA_MESSAGE);
+                } catch (JsonParseException exception) {
+                    logger.unwrap().info("Bad Request: Failure to parse metadata", exception);
+                    httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST)
+                            .getResponseSender()
+                            .send(BAD_METADATA_MESSAGE);
+                }
             }
+        } finally {
+            logger.exiting();
         }
     }
 }
