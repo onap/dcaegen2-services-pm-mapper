@@ -17,22 +17,25 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.dcaegen2.services.pmmapper.model;
 
-import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
-import com.google.gson.annotations.SerializedName;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package utils;
 
-@Data
-@NoArgsConstructor
-public class MapperConfig {
-    public static final String CLIENT_NAME = "pm-mapper";
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 
-    @GSONRequired
-    @SerializedName("streams_subscribes.pm_mapper_handle_out.message_router_topic")
-    private String messageRouterTopicName;
+public class LoggingUtils {
 
-    BusControllerConfig busControllerConfig;
+    /**
+     * Returns a ListAppender that contains all logging events. Call this method at the very beginning of the test
+     * */
+    public static ListAppender<ILoggingEvent> getLogListAppender(Class<?> c) {
+        Logger logger = (Logger) LoggerFactory.getLogger(c);
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+        logger.addAppender(listAppender);
 
+        return listAppender;
+    }
 }
