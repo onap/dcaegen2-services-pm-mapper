@@ -12,7 +12,7 @@
             "consul-network-segment": ""
         },
         "ServiceID": "dcae-cbs0",
-        "ServiceName": "pm-mapper-service-name",
+        "ServiceName": "config-binding-service",
         "ServiceTags": [],
         "ServiceAddress": "config-binding-service",
         "ServicePort": 10000,

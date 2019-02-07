@@ -32,10 +32,6 @@ public class CBSConfig {
     private String serviceID;
 
     @GSONRequired
-    @SerializedName("ServiceName")
-    private String serviceName;
-
-    @GSONRequired
     @SerializedName("ServiceAddress")
     private String serviceAddress;
 

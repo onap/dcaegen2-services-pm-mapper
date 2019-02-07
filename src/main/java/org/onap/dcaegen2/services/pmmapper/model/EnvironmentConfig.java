@@ -28,7 +28,7 @@ public class EnvironmentConfig {
     private static Integer consulPort = 8500;
 
     public static String getConsulHost() throws EnvironmentConfigException {
-        return Optional.ofNullable(System.getProperty("CONSUL_HOST"))
+        return Optional.ofNullable(System.getenv("CONSUL_SERVER_UI_SERVICE_HOST"))
                 .orElseThrow(() -> new EnvironmentConfigException(
                         "$CONSUL_HOST environment variable must be defined prior to pm-mapper initialization"));
     }
@@ -36,7 +36,7 @@ public class EnvironmentConfig {
     public static Integer getConsultPort() throws EnvironmentConfigException {
         Integer port = consulPort;
         try {
-            port = Optional.ofNullable(System.getProperty("CONSUL_PORT"))
+            port = Optional.ofNullable(System.getenv("CONSUL_SERVER_UI_SERVICE_PORT_CONSUL_UI"))
                     .map(Integer::valueOf)
                     .orElse(consulPort);
         } catch (NumberFormatException e) {
@@ -47,8 +47,14 @@ public class EnvironmentConfig {
     }
 
     public static String getCbsName() throws EnvironmentConfigException {
-        return Optional.ofNullable(System.getProperty("CONFIG_BINDING_SERVICE"))
+        return Optional.ofNullable(System.getenv("CONFIG_BINDING_SERVICE"))
                 .orElseThrow(() -> new EnvironmentConfigException(
                         "$CONFIG_BINDING_SERVICE environment variable must be defined prior to pm-mapper initialization."));
+    }
+
+    public static String getServiceName() throws EnvironmentConfigException {
+        return Optional.ofNullable(System.getenv("HOSTNAME"))
+                .orElseThrow(() -> new EnvironmentConfigException(
+                        "$HOSTNAME environment variable must be defined prior to pm-mapper initialization."));
     }
 }

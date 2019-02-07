@@ -77,7 +77,7 @@ public class ConfigHandler {
         String mapperConfigJson = "";
         CBSConfig cbsConfig = convertCBSConfigToObject(getCBSConfigFromConsul());
         String cbsSocketAddress = cbsConfig.getServiceAddress() + ":" + cbsConfig.getServicePort();
-        String requestURL = "http://" + cbsSocketAddress + "/service_component/" + cbsConfig.getServiceName();
+        String requestURL = "http://" + cbsSocketAddress + "/service_component/" + EnvironmentConfig.getServiceName();
         try {
             logger.unwrap().info(ONAPLogConstants.Markers.ENTRY, "Fetching pm-mapper configuration from Configbinding Service");
             mapperConfigJson = sender.send(requestURL);
