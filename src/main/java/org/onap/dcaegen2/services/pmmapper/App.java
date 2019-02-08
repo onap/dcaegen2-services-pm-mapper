@@ -28,7 +28,6 @@ import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
 import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
-import org.onap.dcaegen2.services.pmmapper.exceptions.ConsulServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
@@ -41,7 +40,7 @@ import java.net.URL;
 
 public class App {
 
-    public static void main(String[] args) throws MalformedURLException, InterruptedException, TooManyTriesException, CBSConfigException, ConsulServerError, EnvironmentConfigException, CBSServerError, MapperConfigException {
+    public static void main(String[] args) throws MalformedURLException, InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(event -> {
             event.getHttpServerExchange().unDispatch();

@@ -65,13 +65,6 @@ public class RequestSenderTests {
         mockServer.stop();
     }
 
-    @BeforeClass
-    public static void setEnvironmentVariable() {
-        System.setProperty("CONSUL_HOST", "my_consult_host");
-        System.setProperty("CONFIG_BINDING_SERVICE", "config-binding-service");
-        System.setProperty("HOSTNAME", "hostname");
-    }
-
     @Test
     public void send_success() throws Exception {
         String url = "http://127.0.0.1:1080/once";
