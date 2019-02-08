@@ -19,13 +19,14 @@
  */
 package org.onap.dcaegen2.pmmapper.config.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 
@@ -33,15 +34,19 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockserver.client.server.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
+import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpStatusCode;
 import org.mockserver.verify.VerificationTimes;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
+import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+import utils.LoggingUtils;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(RequestSender.class)
@@ -60,23 +65,27 @@ public class RequestSenderTests {
         mockServer.stop();
     }
 
-    @BeforeClass
-    public static void setEnvironmentVariable() {
-        System.setProperty("CONSUL_HOST", "my_consult_host");
-        System.setProperty("CONFIG_BINDING_SERVICE", "config-binding-service");
-        System.setProperty("HOSTNAME", "hostname");
-    }
-
     @Test
     public void send_success() throws Exception {
+        String url = "http://127.0.0.1:1080/once";
+        String uuidRegex = "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
+        ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(RequestSender.class);
+        HttpRequest req = HttpRequest.request();
 
-        client.when(request())
-                .respond(response().withStatusCode(HttpStatusCode.OK_200.code()));
+        client.when(req
+                .withHeader(ONAPLogConstants.Headers.REQUEST_ID, uuidRegex)
+                .withHeader(ONAPLogConstants.Headers.INVOCATION_ID, uuidRegex))
+                .respond(response()
+                        .withStatusCode(HttpStatusCode.OK_200.code())
+                        .withBody("ResponseBody"));
+        String result = new RequestSender().send(url);
 
-        new RequestSender().send("http://127.0.0.1:1080/once");
-
-        client.verify(request(), VerificationTimes.exactly(1));
-        client.clear(request());
+        client.verify(req, VerificationTimes.atLeast(1));
+        assertEquals(result, "ResponseBody");
+        assertTrue(logAppender.list.get(1).getMessage().contains("Sending"));
+        assertTrue(logAppender.list.get(2).getMessage().contains("Received"));
+        logAppender.stop();
+        client.clear(req);
     }
 
     @Test
@@ -95,17 +104,17 @@ public class RequestSenderTests {
     }
 
     @Test
-    public void host_unknown() throws IOException {
+    public void host_unknown() throws Exception {
         PowerMockito.mockStatic(Thread.class);
-        URL url = PowerMockito.mock(URL.class);
-        PowerMockito.when(url.openConnection())
-                .thenThrow(UnknownHostException.class);
+        String unknownHostUrl = "http://unknown-host:1080/host-is-unknown";
+        PowerMockito.whenNew(URL.class).withArguments(unknownHostUrl)
+            .thenThrow(UnknownHostException.class);
 
         assertThrows(Exception.class, () -> {
-            new RequestSender().send("http://127.0.0.1:1080/host-is-unknown");
+            new RequestSender().send(unknownHostUrl);
         });
 
-        client.verify(request(), VerificationTimes.exactly(5));
+        client.verify(request(), VerificationTimes.exactly(0));
         client.clear(request());
     }
 

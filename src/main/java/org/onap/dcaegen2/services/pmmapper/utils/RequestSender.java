@@ -24,15 +24,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
+import org.onap.logging.ref.slf4j.ONAPLogAdapter;
+import org.onap.logging.ref.slf4j.ONAPLogConstants;
+import org.slf4j.LoggerFactory;
+
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class RequestSender {
     private static final int MAX_RETRIES = 5;
     private static final int RETRY_INTERVAL = 1000;
-    public static final String SERVER_ERROR_MESSAGE = "Error on Server";
-    public static final int ERROR_START_RANGE = 300;
+    private static final String SERVER_ERROR_MESSAGE = "Error on Server";
+    private static final int ERROR_START_RANGE = 300;
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(RequestSender.class));
 
     /**
      * Sends an Http GET request to a given endpoint.
@@ -41,18 +48,29 @@ public class RequestSender {
      * @throws Exception
      * @throws InterruptedException
      */
-    public String send(final String url) throws Exception {
-        log.debug("RequestSender::send: " + url);
+
+    public String send(final String urlString) throws Exception {
+        final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
+        final UUID requestID = UUID.randomUUID();
         String result = "";
+
         for (int i = 1; i <= MAX_RETRIES; i++) {
-            URL obj = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());
+            connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID.toString());
+            connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
+            logger.unwrap()
+                    .info("Sending:\n{}", connection.getRequestProperties());
+
             try (InputStream is = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 result = reader.lines()
                         .collect(Collectors.joining("\n"));
                 int responseCode = connection.getResponseCode();
                 if (!(isWithinErrorRange(responseCode))) {
+                    logger.unwrap()
+                            .info("Received:\n{}", result);
                     break;
                 }
 

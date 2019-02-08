@@ -19,7 +19,6 @@
  */
 package org.onap.dcaegen2.pmmapper.config;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -45,6 +44,10 @@ import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 
 import com.google.gson.Gson;
+
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+import utils.LoggingUtils;
 
 @ExtendWith(MockitoExtension.class)
 public class ConfigHandlerTests {
@@ -86,6 +89,7 @@ public class ConfigHandlerTests {
 
     @Test
     public void getMapperConfig_success() throws Exception {
+        ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(ConfigHandler.class);
         when(sender.send(anyString())).then(invocation -> {
             String url = (String) invocation.getArguments()[0];
             return url.equals(consulURL) ? cbsConfig : validMapperConfig;
@@ -95,6 +99,11 @@ public class ConfigHandlerTests {
         MapperConfig expectedConfig = gson.fromJson(validMapperConfig, MapperConfig.class);
 
         assertEquals(expectedConfig, actualConfig);
+        assertEquals(logAppender.list.get(0).getMarker().getName(), "ENTRY");
+        assertTrue(logAppender.list.get(1).getMessage().contains("Received ConfigBinding Service parameters"));
+        assertEquals(logAppender.list.get(1).getMarker().getName(), "EXIT");
+        assertTrue(logAppender.list.get(4).getMessage().contains("Received pm-mapper configuration from ConfigBinding Service"));
+        logAppender.stop();
     }
 
     @Test

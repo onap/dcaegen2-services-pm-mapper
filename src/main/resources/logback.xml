@@ -1,0 +1,46 @@
+<configuration>
+    <property name="outputFilename" value="pm-mapper_output"/>
+    <property name="logPath" value="/var/log/ONAP/dcaegen2/services/pm-mapper"/>
+    <property name="archivePath" value="${logPath}/archive"/>
+    <property name="maxFileSize" value="50MB"/>
+    <property name="maxHistory" value="30"/>
+    <property name="totalSizeCap" value="10GB"/>
+    <property name="p_tim" value="%d{&quot;yyyy-MM-dd'T'HH:mm:ss.SSSXXX&quot;, UTC}"/>
+    <property name="p_lvl" value="%level"/>
+    <property name="p_log" value="%logger"/>
+    <property name="p_mdc" value="%replace(%replace(%mdc){'\t','\\\\t'}){'\n', '\\\\n'}"/>
+    <property name="p_msg" value="%replace(%replace(%msg){'\t', '\\\\t'}){'\n','\\\\n'}"/>
+    <property name="p_exc" value="%replace(%replace(%rootException){'\t', '\\\\t'}){'\n','\\\\n'}"/>
+    <property name="p_mak" value="%replace(%replace(%marker){'\t', '\\\\t'}){'\n','\\\\n'}"/>
+    <property name="p_thr" value="%thread"/>
+    <property name="pattern" value="%nopexception${p_tim}\t${p_thr}\t${p_lvl}\t${p_log}\t${p_mdc}\t${p_msg}\t${p_exc}\t${p_mak}\t%n"/>
+
+    <variable name="logLevel" value="${LOG_LEVEL:-INFO}"/>
+
+    <logger name="org.mockserver" level="${mockserver.logLevel:-OFF}"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ROLLING-FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${logPath}/${outputFilename}.log</file>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <FileNamePattern>${archivePath}/${outputFilename}.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+        <MaxFileSize>${maxFileSize}</MaxFileSize>
+        <MaxHistory>${maxHistory}</MaxHistory>
+        <TotalSizeCap>${totalSizeCap}</TotalSizeCap>
+      </rollingPolicy>
+    </appender>
+
+    <root level="${logLevel}" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ROLLING-FILE" />
+    </root>
+
+</configuration>
