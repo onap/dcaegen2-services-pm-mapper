@@ -1,0 +1,10 @@
+Code-Review+1: T M <tobias.mole@ericsson.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: David Farrelly <david.farrelly@est.tech>
+Code-Review+1: Ephraim Martin <ephraim.martin@est.tech>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Tue, 12 Feb 2019 23:32:54 +0000
+Reviewed-on: https://gerrit.onap.org/r/78308
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
