@@ -25,30 +25,32 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException
 
 public class EnvironmentConfig {
 
-    private static Integer consulPort = 8500;
+    public static final int DEFAULT_CBS_PORT = 10000;
+    public static final String ENV_CBS_HOST_KEY = "CONFIG_BINDING_SERVICE_SERVICE_HOST";
+    public static final String ENV_CBS_PORT_KEY = "CONFIG_BINDING_SERVICE_SERVICE_PORT";
+    public static final String ENV_SERVICE_NAME_KEY = "HOSTNAME";
 
-    public static String getConsulHost() throws EnvironmentConfigException {
-        return Optional.ofNullable(System.getProperty("CONSUL_HOST"))
+    public static String getServiceName() throws EnvironmentConfigException {
+        return Optional.ofNullable(System.getenv("HOSTNAME"))
                 .orElseThrow(() -> new EnvironmentConfigException(
-                        "$CONSUL_HOST environment variable must be defined prior to pm-mapper initialization"));
+                        ENV_SERVICE_NAME_KEY+ " environment variable must be defined prior to pm-mapper initialization."));
     }
 
-    public static Integer getConsultPort() throws EnvironmentConfigException {
-        Integer port = consulPort;
+    public static String getCBSHostName() throws EnvironmentConfigException {
+        return Optional.ofNullable(System.getenv("CONFIG_BINDING_SERVICE_SERVICE_HOST"))
+                .orElseThrow(() -> new EnvironmentConfigException(
+                        ENV_CBS_HOST_KEY+ " environment variable must be defined prior to pm-mapper initialization."));
+    }
+
+    public static Integer getCBSPort() throws EnvironmentConfigException {
+        Integer port = DEFAULT_CBS_PORT;
         try {
-            port = Optional.ofNullable(System.getProperty("CONSUL_PORT"))
-                    .map(Integer::valueOf)
-                    .orElse(consulPort);
+            port = Optional.ofNullable(System.getenv("CONFIG_BINDING_SERVICE_SERVICE_PORT"))
+                    .map(Integer::valueOf).orElse(DEFAULT_CBS_PORT);
         } catch (NumberFormatException e) {
-            throw new EnvironmentConfigException("CONSUL_PORT must be valid: " + port);
+            throw new EnvironmentConfigException(ENV_CBS_PORT_KEY + " must be valid: " + port);
         }
         return port;
 
-    }
-
-    public static String getCbsName() throws EnvironmentConfigException {
-        return Optional.ofNullable(System.getProperty("CONFIG_BINDING_SERVICE"))
-                .orElseThrow(() -> new EnvironmentConfigException(
-                        "$CONFIG_BINDING_SERVICE environment variable must be defined prior to pm-mapper initialization."));
     }
 }

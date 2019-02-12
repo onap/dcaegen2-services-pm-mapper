@@ -19,20 +19,88 @@
  */
 package org.onap.dcaegen2.services.pmmapper.model;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 import com.google.gson.annotations.SerializedName;
-import lombok.Data;
+import lombok.Getter;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class MapperConfig {
+
     public static final String CLIENT_NAME = "pm-mapper";
 
     @GSONRequired
-    @SerializedName("streams_subscribes.pm_mapper_handle_out.message_router_topic")
-    private String messageRouterTopicName;
+    @Getter(AccessLevel.PRIVATE)
+    @SerializedName("streams_subscribes")
+    private StreamsSubscribes streamsSubscribes;
 
-    BusControllerConfig busControllerConfig;
+    @GSONRequired
+    @SerializedName("buscontroller_feed_subscription_endpoint")
+    private String busControllerSubscriptionEndpoint;
 
+    @GSONRequired
+    @SerializedName("buscontroller_feed_id")
+    private String busControllerFeedId;
+
+    public String getBusControllerDeliveryUrl() {
+        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getDeliveryUrl();
+    }
+
+    public String getDcaeLocation() {
+        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getLocation();
+    }
+
+    public String getBusControllerUserName() {
+        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getUsername();
+    }
+
+    public String getBusControllerPassword() {
+        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getPassword();
+    }
+
+    public URL getBusControllerSubscriptionUrl() throws MalformedURLException {
+        return new URL(this.getBusControllerSubscriptionEndpoint());
+    }
+
+    @Getter
+    @EqualsAndHashCode
+    private class StreamsSubscribes {
+        @GSONRequired
+        @SerializedName("dmaap_subscriber")
+        DmaapSubscriber dmaapSubscriber;
+    }
+
+    @Getter
+    @EqualsAndHashCode
+    class DmaapSubscriber {
+        @GSONRequired
+        @SerializedName("dmaap_info")
+        DmaapInfo dmaapInfo;
+    }
+
+    @Getter
+    @EqualsAndHashCode
+    class DmaapInfo {
+        @GSONRequired
+        private String location;
+        private String username;
+        private String password;
+
+        @SerializedName("delivery_url")
+        private String deliveryUrl;
+
+        @SerializedName("subscriber_id")
+        private String subscriberId;
+    }
 }
+
+
+
+
