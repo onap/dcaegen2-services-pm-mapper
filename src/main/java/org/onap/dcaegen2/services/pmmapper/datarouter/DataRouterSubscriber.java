@@ -32,7 +32,6 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.NoMetadataException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
-import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -49,9 +48,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 /**
  * Subscriber for events sent from data router
@@ -91,7 +94,7 @@ public class DataRouterSubscriber implements HttpHandler {
      *               all non constant configuration for subscription through this endpoint.
      * @throws TooManyTriesException in the event that timeout has occurred several times.
      */
-    public void start(BusControllerConfig config) throws TooManyTriesException, InterruptedException {
+    public void start(MapperConfig config) throws TooManyTriesException, InterruptedException {
         try {
             logger.unwrap().info(ONAPLogConstants.Markers.ENTRY, "Starting subscription to DataRouter");
             subscribe(NUMBER_OF_ATTEMPTS, DEFAULT_TIMEOUT, config);
@@ -100,8 +103,8 @@ public class DataRouterSubscriber implements HttpHandler {
         }
     }
 
-    private HttpURLConnection getBusControllerConnection(BusControllerConfig config, int timeout) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) config.getDataRouterSubscribeEndpoint()
+    private HttpURLConnection getBusControllerConnection(MapperConfig config, int timeout) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) config.getBusControllerSubscriptionUrl()
                 .openConnection();
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(timeout);
@@ -118,18 +121,18 @@ public class DataRouterSubscriber implements HttpHandler {
         return connection;
     }
 
-    private JsonObject getBusControllerSubscribeBody(BusControllerConfig config) {
+    private JsonObject getBusControllerSubscribeBody(MapperConfig config) {
         JsonObject subscriberObj = new JsonObject();
         subscriberObj.addProperty("dcaeLocationName", config.getDcaeLocation());
-        subscriberObj.addProperty("deliveryURL", config.getDeliveryURL());
-        subscriberObj.addProperty("feedId", config.getFeedId());
-        subscriberObj.addProperty("lastMod", config.getLastMod());
-        subscriberObj.addProperty("username", config.getUsername());
-        subscriberObj.addProperty("userpwd", config.getPassword());
+        subscriberObj.addProperty("deliveryURL", config.getBusControllerDeliveryUrl());
+        subscriberObj.addProperty("feedId", config.getBusControllerFeedId());
+        subscriberObj.addProperty("lastMod", Instant.now().toString());
+        subscriberObj.addProperty("username", config.getBusControllerUserName());
+        subscriberObj.addProperty("userpwd", config.getBusControllerPassword());
         return subscriberObj;
     }
 
-    private void subscribe(int attempts, int timeout, BusControllerConfig config) throws TooManyTriesException, InterruptedException {
+    private void subscribe(int attempts, int timeout, MapperConfig config) throws TooManyTriesException, InterruptedException {
         int subResponse = 504;
         String subMessage = "";
         try {

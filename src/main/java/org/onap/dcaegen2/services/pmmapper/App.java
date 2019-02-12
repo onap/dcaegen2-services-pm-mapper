@@ -28,11 +28,9 @@ import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
 import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
-import org.onap.dcaegen2.services.pmmapper.exceptions.ConsulServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
-import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
 
@@ -41,17 +39,14 @@ import java.net.URL;
 
 public class App {
 
-    public static void main(String[] args) throws MalformedURLException, InterruptedException, TooManyTriesException, CBSConfigException, ConsulServerError, EnvironmentConfigException, CBSServerError, MapperConfigException {
+    public static void main(String[] args) throws MalformedURLException, InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(event -> {
             event.getHttpServerExchange().unDispatch();
             event.getHttpServerExchange().getResponseSender().send(StatusCodes.OK_STRING);
-            System.out.println(event.getMetadata().getProductName());
         });
         MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
-        BusControllerConfig busConfig =  mapperConfig.getBusControllerConfig();
-        busConfig.setDataRouterSubscribeEndpoint(new URL("http://" + System.getenv("DMAAP_BC_SERVICE_HOST") + ":" + System.getenv("DMAAP_BC_SERVICE_PORT") + "/webapi/dr_subs"));
-        dataRouterSubscriber.start(busConfig);
+        dataRouterSubscriber.start(mapperConfig);
 
         Undertow.builder()
                 .addHttpListener(8081, "0.0.0.0")

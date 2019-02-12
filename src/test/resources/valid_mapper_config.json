@@ -1,7 +1,20 @@
 {
     "pm-mapper-filter": "{ \"filters\":[]}",
     "3GPP.schema.file": "{\"3GPP_Schema\":\"./etc/3GPP_relaxed_schema.xsd\"}",
-    "streams_subscribes": {},
+    "streams_subscribes": {
+        "dmaap_subscriber": {
+            "type": "data_router",
+            "aaf_username": null,
+            "aaf_password": null,
+            "dmaap_info": {
+                "location": "location",
+                "delivery_url": "delivery_url",
+                "username": "username",
+                "password": "password",
+                "subscriber_id": "subsriber_id"
+            }
+        }
+    },
     "streams_publishes": {
         "pm_mapper_handle_out": {
             "type": "message_router",
@@ -15,6 +28,7 @@
             "aaf_username": null
         }
     },
-    "streams_subscribes.pm_mapper_handle_out.message_router_topic": "unauthenticated.PM_VES_OUTPUT",
+    "buscontroller_feed_id": "2",
+    "buscontroller_feed_subscription_endpoint": "http://dmaap-bc.onap.svc.cluster.local:8080/webapi/dr_subs",
     "services_calls": {}
 }

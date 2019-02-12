@@ -76,6 +76,8 @@ public class RequestSender {
 
             } catch (Exception e) {
                 if (retryLimitReached(i)) {
+                    logger.unwrap()
+                            .error("Execution error: "+connection.getResponseMessage(), e);
                     throw new Exception(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
                 }
             }

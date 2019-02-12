@@ -57,7 +57,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
-import org.onap.dcaegen2.services.pmmapper.model.BusControllerConfig;
+import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
@@ -86,8 +86,8 @@ public class DataRouterSubscriberTest {
         PowerMockito.mockStatic(Thread.class);
 
         URL subEndpoint = mock(URL.class);
-        BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subEndpoint);
+        MapperConfig config = mock(MapperConfig.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
         when(subEndpoint.openConnection()).thenReturn(huc);
         when(huc.getResponseCode()).thenReturn(300);
@@ -97,8 +97,8 @@ public class DataRouterSubscriberTest {
     @Test
     public void testStartImmediateSuccess() throws IOException, TooManyTriesException, InterruptedException {
         URL subEndpoint = mock(URL.class);
-        BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subEndpoint);
+        MapperConfig config = mock(MapperConfig.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
         when(subEndpoint.openConnection()).thenReturn(huc);
         when(huc.getResponseCode()).thenReturn(200);
@@ -111,8 +111,8 @@ public class DataRouterSubscriberTest {
         PowerMockito.mockStatic(Thread.class);
 
         URL subEndpoint = mock(URL.class);
-        BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subEndpoint);
+        MapperConfig config = mock(MapperConfig.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
         when(subEndpoint.openConnection()).thenReturn(huc);
         doAnswer(new Answer() {
@@ -136,8 +136,8 @@ public class DataRouterSubscriberTest {
         PowerMockito.mockStatic(Thread.class);
 
         URL subEndpoint = mock(URL.class);
-        BusControllerConfig config = new BusControllerConfig();
-        config.setDataRouterSubscribeEndpoint(subEndpoint);
+        MapperConfig config = mock(MapperConfig.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
         when(subEndpoint.openConnection()).thenReturn(huc);
         doThrow(new IOException()).when(huc).getResponseCode();

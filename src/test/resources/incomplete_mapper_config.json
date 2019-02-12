@@ -1,10 +1,10 @@
 {
-    "_comment": "This mapper config is missing the messagerouter feed name",
+    "_comment": "This mapper config is missing streams_subscribes",
     "pm-mapper-filter": {
         "filters": "{[]}"
     },
     "3GPP.schema.file": "{\"3GPP_Schema\":\"./etc/3GPP_relaxed_schema.xsd\"}",
-    "streams_subscribes": {},
+    "streams_subscribes": null,
     "streams_publishes": {
         "pm_mapper_handle_out": {
             "type": "message_router",
