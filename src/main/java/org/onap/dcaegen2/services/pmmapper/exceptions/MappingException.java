@@ -17,25 +17,12 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
-package org.onap.dcaegen2.services.pmmapper.model;
 
-import io.undertow.server.HttpServerExchange;
-import lombok.Data;
-import lombok.NonNull;
+package org.onap.dcaegen2.services.pmmapper.exceptions;
 
-import java.util.Map;
+public class MappingException extends RuntimeException{
+    public MappingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-/**
- * Class used to pass around relevant inbound event data.
- */
-@Data
-public class Event {
-    @NonNull
-    private HttpServerExchange httpServerExchange;
-    @NonNull
-    private String body;
-    @NonNull
-    private EventMetadata metadata;
-    @NonNull
-    private Map<String, String> mdc;
 }
