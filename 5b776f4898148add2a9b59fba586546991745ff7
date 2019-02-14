@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc411ea_a61c6f24",
+        "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-02-14T12:37:13Z",
+      "side": 1,
+      "message": "Should these be measType and measValue, instead of r types",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "5b776f4898148add2a9b59fba586546991745ff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
