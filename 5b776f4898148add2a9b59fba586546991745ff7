@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7e286779_073dbae8",
+        "filename": "src/test/resources/mapper_test/mapping_data/invalid_data/no_managed_element.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4715
+      },
+      "writtenOn": "2019-02-14T17:02:57Z",
+      "side": 1,
+      "message": "would it make a difference if the time is of format\n\"2018-07-30T10:15:00Z\"",
+      "revId": "5b776f4898148add2a9b59fba586546991745ff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c8d7b04_102cc459",
+        "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4715
+      },
+      "writtenOn": "2019-02-14T17:02:57Z",
+      "side": 1,
+      "message": "Should header of the xml files have something lie\n\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\" standalone\u003d\"no\"?\u003e\n\nor\n\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e\n\u003c?xml-stylesheet type\u003d\"text/xsl\" href\u003d\"MeasDataCollection.xsl\"?\u003e\n\u003cmeasCollecFile xmlns\u003d\"http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec\"\n                xmlns:xsi\u003d\"http://www.w3.org/2001/XMLSchema-instance\"\n                xsi:schemaLocation\u003d\"http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec\"\u003e",
+      "revId": "5b776f4898148add2a9b59fba586546991745ff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc411ea_a61c6f24",
         "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
         "patchSetId": 1
