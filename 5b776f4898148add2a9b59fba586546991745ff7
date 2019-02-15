@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fc5246f_2d25be57",
+        "filename": "src/test/resources/mapper_test/mapping_data/invalid_data/no_managed_element.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-02-15T08:40:22Z",
+      "side": 1,
+      "message": "The format is ISO 8601, which is actually the same format you have mentioned.\nThe difference between what\u0027s in this file and the one you have shown is your one has a zero offset, while the one referenced in this file has an offset of +01:00.\n\nSo to answer your question no it wouldn\u0027t make a difference cause they are technically the same format.",
+      "parentUuid": "7e286779_073dbae8",
+      "revId": "5b776f4898148add2a9b59fba586546991745ff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c8d7b04_102cc459",
         "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6d20e5bc_93143069",
+        "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-02-15T08:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c8d7b04_102cc459",
+      "revId": "5b776f4898148add2a9b59fba586546991745ff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc411ea_a61c6f24",
         "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2019-02-14T12:37:13Z",
       "side": 1,
       "message": "Should these be measType and measValue, instead of r types",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "5b776f4898148add2a9b59fba586546991745ff7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "487f104f_60a40bea",
+        "filename": "src/test/resources/mapper_test/mapping_data/valid_data/meas_results.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-02-15T08:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfc411ea_a61c6f24",
       "range": {
         "startLine": 13,
         "startChar": 0,
