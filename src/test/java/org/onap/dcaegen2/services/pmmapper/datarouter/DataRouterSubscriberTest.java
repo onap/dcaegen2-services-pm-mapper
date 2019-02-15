@@ -32,10 +32,8 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import io.undertow.io.Receiver;
@@ -59,12 +57,10 @@ import org.mockito.stubbing.Answer;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
-import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.slf4j.LoggerFactory;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(DataRouterSubscriber.class)
@@ -233,10 +229,7 @@ public class DataRouterSubscriberTest {
         }).when(httpServerExchange).dispatch(any(Runnable.class));
 
         objUnderTest.handleRequest(httpServerExchange);
-        verify(eventReceiver, times(1))
-                .receive(new Event(httpServerExchange, testString,
-                        new GsonBuilder().create()
-                                .fromJson(metadata, EventMetadata.class)));
+        verify(eventReceiver, times(1)).receive(any(Event.class));
 
         assertEquals(logAppender.list.get(0).getMarker().getName(), "ENTRY");
         assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("InvocationID"));
