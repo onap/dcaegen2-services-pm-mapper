@@ -18,6 +18,9 @@
 # ============LICENSE_END=========================================================
 #
 FROM openjdk:8-jre
-ENTRYPOINT ["/usr/bin/java", "-jar", "/opt/pm-mapper.jar"]
+ENTRYPOINT ["/usr/bin/java", "-jar", "/opt/app/pm-mapper/pm-mapper.jar"]
 ARG JAR
-ADD target/${JAR} /opt/pm-mapper.jar
+WORKDIR /opt/app/pm-mapper
+ADD target/${JAR} /opt/app/pm-mapper/pm-mapper.jar
+ADD target/classes/mapping.ftl /opt/app/pm-mapper/etc/mapping.ftl
+
