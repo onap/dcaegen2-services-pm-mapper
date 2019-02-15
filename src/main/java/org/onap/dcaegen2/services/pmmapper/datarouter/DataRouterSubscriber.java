@@ -42,6 +42,7 @@ import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,6 +50,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -174,11 +176,11 @@ public class DataRouterSubscriber implements HttpHandler {
                             .get(METADATA_HEADER))
                             .map((HeaderValues headerValues) -> headerValues.get(0))
                             .orElseThrow(() -> new NoMetadataException("Metadata Not found"));
-
+                    Map<String,String> mdc = MDC.getCopyOfContextMap();
                     EventMetadata metadata = metadataBuilder.fromJson(metadataAsString, EventMetadata.class);
                     httpServerExchange.getRequestReceiver()
                             .receiveFullString((callbackExchange, body) -> {
-                                httpServerExchange.dispatch(() -> eventReceiver.receive(new Event(callbackExchange, body, metadata)));
+                                httpServerExchange.dispatch(() -> eventReceiver.receive(new Event(callbackExchange, body, metadata, mdc)));
                             });
                 } catch (NoMetadataException exception) {
                     logger.unwrap().info("Bad Request: no metadata found under '{}' header.", METADATA_HEADER, exception);

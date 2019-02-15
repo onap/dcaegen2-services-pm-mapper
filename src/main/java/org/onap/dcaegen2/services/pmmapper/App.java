@@ -31,19 +31,29 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
+import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
+import org.onap.logging.ref.slf4j.ONAPLogAdapter;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class App {
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
+    private static Path mappingTemplate = Paths.get("/opt/app/pm-mapper/etc/mapping.ftl");
 
-    public static void main(String[] args) throws MalformedURLException, InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
+    public static void main(String[] args) throws InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
+        Mapper mapper = new Mapper(mappingTemplate);
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(event -> {
             event.getHttpServerExchange().unDispatch();
             event.getHttpServerExchange().getResponseSender().send(StatusCodes.OK_STRING);
+            MDC.setContextMap(event.getMdc());
+            String ves = mapper.map(event);
+            logger.unwrap().info("Mapped Event: {}", ves);
         });
         MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
         dataRouterSubscriber.start(mapperConfig);
