@@ -39,6 +39,7 @@ import ch.qos.logback.core.read.ListAppender;
 import io.undertow.io.Receiver;
 import io.undertow.io.Sender;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.util.HeaderMap;
 import io.undertow.util.StatusCodes;
 import utils.LoggingUtils;
 
@@ -186,8 +187,11 @@ public class DataRouterSubscriberTest {
     public void testRequestInboundNoMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         Receiver receiver = mock(Receiver.class);
+        HeaderMap headers = mock(HeaderMap.class);
         when(httpServerExchange.getRequestReceiver()).thenReturn(receiver);
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
+        when(httpServerExchange.getRequestHeaders()).thenReturn(headers);
+        when(headers.get(any(String.class))).thenReturn(null);
 
         doAnswer((Answer<Void>) invocationOnMock -> {
             Receiver.FullStringCallback callback = invocationOnMock.getArgument(0);
