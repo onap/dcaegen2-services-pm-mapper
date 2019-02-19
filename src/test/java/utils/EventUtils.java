@@ -31,19 +31,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
-import org.slf4j.MDC;
 
 public class EventUtils {
 
 
     /**
-     * reads contents of files inside the eventBodyDirectory, combines contents with metadata to make an Event Object.
+     * Reads contents of files inside the eventBodyDirectory, combines contents with metadata to make an Event Object.
      * Fails test in the event of failure to read a file.
      * @param eventBodyDirectory Path to directory with event body files.
      * @param metadataPath Path to file with metadata object.

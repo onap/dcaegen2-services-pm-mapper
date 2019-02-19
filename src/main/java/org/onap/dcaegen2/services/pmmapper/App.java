@@ -34,6 +34,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
+import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -44,16 +45,22 @@ import java.nio.file.Paths;
 public class App {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
     private static Path mappingTemplate = Paths.get("/opt/app/pm-mapper/etc/mapping.ftl");
+    private static Path xmlSchema = Paths.get("/opt/app/pm-mapper/etc/measCollec_plusString.xsd");
 
     public static void main(String[] args) throws InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         Mapper mapper = new Mapper(mappingTemplate);
+        XMLValidator validator = new XMLValidator(xmlSchema);
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(event -> {
             event.getHttpServerExchange().unDispatch();
             event.getHttpServerExchange().getResponseSender().send(StatusCodes.OK_STRING);
             MDC.setContextMap(event.getMdc());
-            String ves = mapper.map(event);
-            logger.unwrap().info("Mapped Event: {}", ves);
+            if(!validator.validate(event)){
+                logger.unwrap().info("Event failed validation against schema.");
+            } else {
+                String ves = mapper.map(event);
+                logger.unwrap().info("Mapped Event: {}", ves);
+            }
         });
         MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
         dataRouterSubscriber.start(mapperConfig);
