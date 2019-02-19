@@ -22,6 +22,30 @@
       "revId": "8b7fe8ffe49cba7fce52838e51bb46144c06bae2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf6a69bc_8a8e16a3",
+        "filename": "src/test/java/utils/EventUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-02-19T10:32:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46372421_d2a98536",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "8b7fe8ffe49cba7fce52838e51bb46144c06bae2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
