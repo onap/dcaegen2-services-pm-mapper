@@ -23,4 +23,4 @@ ARG JAR
 WORKDIR /opt/app/pm-mapper
 ADD target/${JAR} /opt/app/pm-mapper/pm-mapper.jar
 ADD target/classes/mapping.ftl /opt/app/pm-mapper/etc/mapping.ftl
-
+ADD target/classes/measCollec_plusString.xsd /opt/app/pm-mapper/etc/measCollec_plusString.xsd

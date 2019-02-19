@@ -1,0 +1,22 @@
+<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
+    <measData>
+        <managedElement swVersion="r0.1" localDn="Dublin"/>
+        <measInfo measInfoId="some meas info id">
+            <job jobId="some jobId"/>
+            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
+            <repPeriod duration="PT900S"/>
+            <measType p="1">a</measType>
+            <measType p="2">b</measType>
+            <measType p="3">c</measType>
+            <measValue measObjLdn="some measObjLdn">
+                <r p="1">86</r>
+                <r p="2">67</r>
+                <r p="3">14</r>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <fileFooter>
+        <measCollec endTime="2018-10-02T12:15:00+01:00"/>
+    </fileFooter>
+</measCollecFile>
