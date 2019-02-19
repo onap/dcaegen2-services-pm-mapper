@@ -155,6 +155,14 @@ public class DataRouterSubscriber implements HttpHandler {
         }
     }
 
+    private EventMetadata getMetadata(HttpServerExchange httpServerExchange) throws NoMetadataException {
+        String metadata = Optional.ofNullable(httpServerExchange.getRequestHeaders()
+                .get(METADATA_HEADER))
+                .map((HeaderValues headerValues) -> headerValues.get(0))
+                .orElseThrow(() -> new NoMetadataException("Metadata Not found"));
+        return metadataBuilder.fromJson(metadata, EventMetadata.class);
+    }
+
     /**
      * Receives inbound requests, verifies that required headers are valid
      * and passes an Event onto the eventReceiver.
@@ -172,16 +180,13 @@ public class DataRouterSubscriber implements HttpHandler {
                         .send(StatusCodes.SERVICE_UNAVAILABLE_STRING);
             } else {
                 try {
-                    String metadataAsString = Optional.of(httpServerExchange.getRequestHeaders()
-                            .get(METADATA_HEADER))
-                            .map((HeaderValues headerValues) -> headerValues.get(0))
-                            .orElseThrow(() -> new NoMetadataException("Metadata Not found"));
+
                     Map<String,String> mdc = MDC.getCopyOfContextMap();
-                    EventMetadata metadata = metadataBuilder.fromJson(metadataAsString, EventMetadata.class);
+                    EventMetadata metadata = getMetadata(httpServerExchange);
                     httpServerExchange.getRequestReceiver()
-                            .receiveFullString((callbackExchange, body) -> {
-                                httpServerExchange.dispatch(() -> eventReceiver.receive(new Event(callbackExchange, body, metadata, mdc)));
-                            });
+                            .receiveFullString((callbackExchange, body) ->
+                                httpServerExchange.dispatch(() -> eventReceiver.receive(new Event(callbackExchange, body, metadata, mdc)))
+                            );
                 } catch (NoMetadataException exception) {
                     logger.unwrap().info("Bad Request: no metadata found under '{}' header.", METADATA_HEADER, exception);
                     httpServerExchange.setStatusCode(StatusCodes.BAD_REQUEST)
