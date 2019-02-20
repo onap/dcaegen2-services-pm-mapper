@@ -1,0 +1,23 @@
+{
+  "pm_mapper_publish_mr": {
+    "aaf_username": "username",
+    "aaf_password": "password",
+    "type": "message_router",
+    "dmaap_info": {
+      "client_role": "ves-publisher",
+      "client_id": "ves-pub-1",
+      "location": "location",
+      "topic_url": "http://message-router.onap.svc.cluster.local:3904/events/pm-mapper-ves"
+    }
+  },
+  "pm_mapper_subscribe_dr": {
+    "type": "data_router",
+    "dmaap_info": {
+      "username": "username",
+      "password": "password",
+      "location": "location",
+      "delivery_url": "/delivery",
+      "subscriber_id": ""
+    }
+  }
+}

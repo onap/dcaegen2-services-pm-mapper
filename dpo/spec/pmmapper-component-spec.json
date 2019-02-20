@@ -1,0 +1,111 @@
+{
+  "self": {
+    "name": "dcaegen2.services.pm-mapper",
+    "version": "1.0.0",
+    "description": "Docker application to map bulk PM files to VES events",
+    "component_type": "docker"
+  },
+  "streams": {
+    "subscribes": [
+      {
+        "type": "data_router",
+        "config_key": "pm_mapper_subscribe_dr",
+        "route": "/delivery",
+        "format": "3GPP_XML",
+        "version": "1.0.0"
+      }
+    ],
+    "publishes": [
+      {
+        "type": "message_router",
+        "config_key": "pm_mapper_publish_mr",
+        "format": "VES_specification",
+        "version": "7.30.1"
+      }
+    ]
+  },
+  "services": {
+    "calls": [],
+    "provides": []
+  },
+  "auxilary": {
+    "healthcheck": {
+      "type": "http",
+      "interval": "30s",
+      "timeout": "10s",
+      "endpoint": "/healthcheck"
+    },
+    "policy": {
+      "trigger_type": "docker",
+      "script_path": "/opt/app/reconfigure.sh"
+    }
+  },
+  "artifacts": [
+    {
+      "uri": "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:1.0-SNAPSHOT",
+      "type": "docker image"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "service_name",
+      "value": "pm-mapper",
+      "description": "Name of the service",
+      "designer_editable": true,
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "buscontroller_feed_subscription_endpoint",
+      "value": "http://dmaap-bc.onap.svc.cluster.local:8080/webapi/dr_subs",
+      "description": "DMAAP Bus Controller subscription endpoint",
+      "designer_editable": true,
+      "sourced_at_deployment": false,
+      "policy_editable": true,
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "dmaap_dr_feed_id",
+      "value": "bulk_pm_feed",
+      "description": "ID of the data router feed that the PM Mapper will subscribe to",
+      "designer_editable": true,
+      "sourced_at_deployment": false,
+      "policy_editable": true,
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "dmaap_dr_delete_endpoint",
+      "value": "http://dmaap-dr-node.onap.svc.cluster.local:8443/delete",
+      "description": "DMAAP Data Router endpoint to delete file",
+      "designer_editable": true,
+      "sourced_at_deployment": false,
+      "policy_editable": true,
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "filter",
+      "value": "{ \"filters\":[]}",
+      "description": "PM mapper filter on measInfo, measInfoId, measType, instanceId",
+      "designer_editable": true,
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "policy",
+      "value": "",
+      "description": "PM Mapper policy JSON string",
+      "designer_editable": false,
+      "sourced_at_deployment": false,
+      "policy_editable": true,
+      "type": "string",
+      "required": true
+    }
+  ]
+}

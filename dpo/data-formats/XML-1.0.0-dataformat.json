@@ -1,0 +1,11 @@
+{
+  "self": {
+    "name": "3GPP_XML",
+    "version": "1.0.0",
+    "description": "Unstructured 3GPP XML"
+  },
+  "dataformatversion": "1.0.0",
+  "unstructured": {
+    "encoding": "UTF-8"
+  }
+}
