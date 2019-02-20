@@ -1,0 +1,104 @@
+tosca_definitions_version: tosca_simple_yaml_1_0_0
+metadata:
+  template_name: dcaegen2.services.pm-mapper
+imports:
+- schema: schema.yaml
+topology_template:
+  inputs:
+    topic1_aaf_password:
+      type: string
+    topic1_aaf_username:
+      type: string
+    topic1_client_role:
+      type: string
+  node_templates:
+    dcaegen2.services.pm-mapper:
+      type: tosca.dcae.nodes.dockerApp.dcaegen2.services.pm-mapper
+      properties:
+        buscontroller_feed_subscription_endpoint: http://dmaap-bc.onap.svc.cluster.local:8080/webapi/dr_subs
+        dmaap_dr_delete_endpoint: http://dmaap-dr-node.onap.svc.cluster.local:8443/delete
+        dmaap_dr_feed_id: bulk_pm_feed
+        filter: '{ "filters":[]}'
+        location_id:
+          get_property:
+          - SELF
+          - composition
+          - location_id
+        policy: ''
+        service_name: pm-mapper
+      requirements:
+      - stream_subscribe_0: feed0
+      - stream_publish_0: topic1
+      - policy: policy_0
+    feed0:
+      type: tosca.dcae.nodes.dmaap.feed
+      properties:
+        feed_name: ''
+        location:
+          get_property:
+          - SELF
+          - composition
+          - location_id
+        node_name: __GET_NODE_NAME__
+      capabilities:
+        feed:
+          properties:
+            feed_name:
+              get_property:
+              - SELF
+              - feed_name
+            location:
+              get_property:
+              - SELF
+              - location
+            node_name:
+              get_property:
+              - SELF
+              - node_name
+    policy_0:
+      type: tosca.dcae.nodes.policy
+      properties:
+        policy_name: policy.nodes.dcaegen2.services.pm-mapper
+    topic1:
+      type: tosca.dcae.nodes.dmaap.topic
+      properties:
+        aaf_password:
+          get_input: topic1_aaf_password
+        aaf_username:
+          get_input: topic1_aaf_username
+        client_role:
+          get_input: topic1_client_role
+        location:
+          get_property:
+          - SELF
+          - composition
+          - location_id
+        node_name: __GET_NODE_NAME__
+        topic_name: ''
+      capabilities:
+        topic:
+          properties:
+            aaf_password:
+              get_property:
+              - SELF
+              - aaf_password
+            aaf_username:
+              get_property:
+              - SELF
+              - aaf_username
+            client_role:
+              get_property:
+              - SELF
+              - client_role
+            location:
+              get_property:
+              - SELF
+              - location
+            node_name:
+              get_property:
+              - SELF
+              - node_name
+            topic_name:
+              get_property:
+              - SELF
+              - topic_name

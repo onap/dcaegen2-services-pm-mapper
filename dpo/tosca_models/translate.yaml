@@ -1,0 +1,160 @@
+tosca_definitions_version: tosca_simple_yaml_1_0_0
+metadata:
+  template_name: dcaegen2.services.pm-mapper_translate
+imports:
+- schema: schema.yaml
+topology_template:
+  inputs:
+    buscontroller_feed_subscription_endpoint:
+      type: string
+    cpu_period:
+      type: integer
+      default: 10000
+    cpu_quota:
+      type: integer
+      default: 30000
+    cpu_shares:
+      type: integer
+      default: 256
+    dmaap_dr_delete_endpoint:
+      type: string
+    dmaap_dr_feed_id:
+      type: string
+    filter:
+      type: string
+    image:
+      type: string
+    location_id:
+      type: string
+    mem_limit:
+      type: string
+      default: 500m
+    policy:
+      type: string
+    restart_policy.Name:
+      type: string
+      default: on-failure
+    restart_policy.max_retry_counts:
+      type: integer
+      default: 3
+    service_component_type:
+      type: string
+    service_name:
+      type: string
+  substitution_mappings:
+    node_type: tosca.dcae.nodes.dockerApp.dcaegen2.services.pm-mapper
+    capabilities: {}
+    requirements:
+      host:
+      - dcaegen2.services.pm-mapper
+      - host
+      policy:
+      - dcaegen2.services.pm-mapper
+      - policy
+      stream_publish_0:
+      - dcaegen2.services.pm-mapper
+      - stream_publish_0
+      stream_subscribe_0:
+      - dcaegen2.services.pm-mapper
+      - stream_subscribe_0
+  node_templates:
+    dcaegen2.services.pm-mapper:
+      type: dcae.nodes.DockerContainerForComponentsUsingDmaap
+      properties:
+        application_config:
+          buscontroller_feed_subscription_endpoint:
+            get_input: buscontroller_feed_subscription_endpoint
+          dmaap_dr_delete_endpoint:
+            get_input: dmaap_dr_delete_endpoint
+          dmaap_dr_feed_id:
+            get_input: dmaap_dr_feed_id
+          filter:
+            get_input: filter
+          policy:
+            get_input: policy
+          service_name:
+            get_input: service_name
+          services_calls: {}
+          streams_publishes:
+            pm_mapper_publish_mr:
+              aaf_password:
+                get_property:
+                - SELF
+                - stream_publish_0
+                - aaf_password
+              aaf_username:
+                get_property:
+                - SELF
+                - stream_publish_0
+                - aaf_username
+              dmaap_info:
+                concat:
+                - '<<'
+                - get_property:
+                  - SELF
+                  - stream_publish_0
+                  - node_name
+                - '>>'
+              type: message_router
+          streams_subscribes:
+            pm_mapper_subscribe_dr:
+              dmaap_info:
+                concat:
+                - '<<'
+                - get_property:
+                  - SELF
+                  - stream_subscribe_0
+                  - node_name
+                - '>>'
+              type: data_router
+        docker_config:
+          healthcheck:
+            endpoint: /healthcheck
+            interval: 30s
+            timeout: 10s
+            type: http
+          policy:
+            script_path: /opt/app/reconfigure.sh
+            trigger_type: docker
+        image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:1.0-SNAPSHOT
+        location_id:
+          get_input: location_id
+        service_component_type: dcaegen2.services.pm-mapper
+        streams_publishes:
+        - client_role:
+            get_property:
+            - SELF
+            - stream_publish_0
+            - client_role
+          location:
+            get_property:
+            - SELF
+            - stream_publish_0
+            - location
+          name:
+            get_property:
+            - SELF
+            - stream_publish_0
+            - node_name
+          type: message_router
+        streams_subscribes:
+        - location:
+            get_property:
+            - SELF
+            - stream_subscribe_0
+            - location
+          name:
+            get_property:
+            - SELF
+            - stream_subscribe_0
+            - node_name
+          type: data_router
+      interfaces:
+        cloudify.interfaces.lifecycle:
+          type: tosca.interfaces.Root
+          start:
+            inputs:
+              host_config: null
+          stop:
+            inputs:
+              cleanup_image: null
