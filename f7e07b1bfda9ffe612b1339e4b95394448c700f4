@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Ephraim Martin <ephraim.martin@est.tech>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Code-Review+2: Tony Hansen <tony@att.com>
+Submitted-by: Tony Hansen <tony@att.com>
+Submitted-at: Fri, 22 Feb 2019 15:45:13 +0000
+Reviewed-on: https://gerrit.onap.org/r/79005
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
