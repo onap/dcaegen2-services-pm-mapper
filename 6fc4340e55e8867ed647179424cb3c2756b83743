@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8ed068a_9faf5e61",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-02-22T15:07:06Z",
+      "side": 1,
+      "message": "maybe remove \u0027publishOn\u0027, as you are already using runOn below",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "6fc4340e55e8867ed647179424cb3c2756b83743",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0170e15_245377be",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-02-22T15:07:06Z",
+      "side": 1,
+      "message": "event that will not be further processed",
+      "range": {
+        "startLine": 85,
+        "startChar": 14,
+        "endLine": 85,
+        "endChar": 52
+      },
+      "revId": "6fc4340e55e8867ed647179424cb3c2756b83743",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "605cab32_14a7ba8a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-02-22T15:07:06Z",
+      "side": 1,
+      "message": "maybe log this event?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 16
+      },
+      "revId": "6fc4340e55e8867ed647179424cb3c2756b83743",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c46164d5_40a55bc0",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-02-22T15:07:06Z",
+      "side": 1,
+      "message": "maybe log this event?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "revId": "6fc4340e55e8867ed647179424cb3c2756b83743",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
