@@ -42,12 +42,21 @@ public class MapperConfig {
     private StreamsSubscribes streamsSubscribes;
 
     @GSONRequired
+    @Getter(AccessLevel.PRIVATE)
+    @SerializedName("streams_publishes")
+    private StreamsPublishes streamsPublishes;
+
+    @GSONRequired
     @SerializedName("buscontroller_feed_subscription_endpoint")
     private String busControllerSubscriptionEndpoint;
 
     @GSONRequired
-    @SerializedName("buscontroller_feed_id")
-    private String busControllerFeedId;
+    @SerializedName("dmaap_dr_feed_id")
+    private String dmaapDRFeedId;
+
+    @GSONRequired
+    @SerializedName("dmaap_dr_delete_endpoint")
+    private String dmaapDRDeleteEndpoint;
 
     public String getBusControllerDeliveryUrl() {
         return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getDeliveryUrl();
@@ -87,8 +96,23 @@ public class MapperConfig {
 
     @Getter
     @EqualsAndHashCode
-    class DmaapInfo {
+    private class StreamsPublishes {
         @GSONRequired
+        @SerializedName("dmaap_publisher")
+        DmaapPublisher dmaapPublisher;
+    }
+
+    @Getter
+    @EqualsAndHashCode
+    class DmaapPublisher {
+        @GSONRequired
+        @SerializedName("dmaap_info")
+        DmaapInfo dmaapInfo;
+    }
+
+    @Getter
+    @EqualsAndHashCode
+    class DmaapInfo {
         private String location;
         private String username;
         private String password;
@@ -98,9 +122,20 @@ public class MapperConfig {
 
         @SerializedName("subscriber_id")
         private String subscriberId;
+
+        @SerializedName("aaf_username")
+        private String aafUsername;
+
+        @SerializedName("aaf_password")
+        private String aafPassword;
+
+        @SerializedName("client_role")
+        private String clientRole;
+
+        @SerializedName("client_id")
+        private String clientId;
+
+        @SerializedName("topic_url")
+        private String topicUrl;
     }
 }
-
-
-
-

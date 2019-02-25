@@ -124,7 +124,7 @@ public class DataRouterSubscriber implements HttpHandler {
         JsonObject subscriberObj = new JsonObject();
         subscriberObj.addProperty("dcaeLocationName", config.getDcaeLocation());
         subscriberObj.addProperty("deliveryURL", config.getBusControllerDeliveryUrl());
-        subscriberObj.addProperty("feedId", config.getBusControllerFeedId());
+        subscriberObj.addProperty("feedId", config.getDmaapDRFeedId());
         subscriberObj.addProperty("lastMod", Instant.now().toString());
         subscriberObj.addProperty("username", config.getBusControllerUserName());
         subscriberObj.addProperty("userpwd", config.getBusControllerPassword());

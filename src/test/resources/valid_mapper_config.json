@@ -1,6 +1,5 @@
 {
     "pm-mapper-filter": "{ \"filters\":[]}",
-    "3GPP.schema.file": "{\"3GPP_Schema\":\"./etc/3GPP_relaxed_schema.xsd\"}",
     "streams_subscribes": {
         "dmaap_subscriber": {
             "type": "data_router",
@@ -11,16 +10,16 @@
                 "delivery_url": "delivery_url",
                 "username": "username",
                 "password": "password",
-                "subscriber_id": "subsriber_id"
+                "subscriber_id": "subscriber_id"
             }
         }
     },
     "streams_publishes": {
-        "pm_mapper_handle_out": {
+        "dmaap_publisher": {
             "type": "message_router",
             "aaf_password": null,
             "dmaap_info": {
-                "topic_url": "https://we-are-message-router.us:3905/events/some-topic",
+                "topic_url": "https://message-router.onap.svc.cluster.local:3904/events/some-topic",
                 "client_role": null,
                 "location": null,
                 "client_id": null
@@ -28,7 +27,8 @@
             "aaf_username": null
         }
     },
-    "buscontroller_feed_id": "2",
+    "dmaap_dr_feed_id": "2",
     "buscontroller_feed_subscription_endpoint": "http://dmaap-bc.onap.svc.cluster.local:8080/webapi/dr_subs",
+    "dmaap_dr_delete_endpoint": "http://dmaap-dr-node.onap.svc.cluster.local:8443/delete",
     "services_calls": {}
 }
