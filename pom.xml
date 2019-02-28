@@ -62,7 +62,7 @@
         <surefire.version>2.22.0</surefire.version>
         <!-- Plugin Settings -->
         <image-name>${docker.push.registry}/onap/${project.groupId}.${project.artifactId}</image-name>
-        <maven.build.timestamp.format>yyyymmdd'T'hhmmss'Z'</maven.build.timestamp.format>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <timestamp>${maven.build.timestamp}</timestamp>
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
