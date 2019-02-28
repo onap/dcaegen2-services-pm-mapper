@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4e90de2_9653ccd1",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4719
+      },
+      "writtenOn": "2019-02-28T11:45:18Z",
+      "side": 1,
+      "message": "Add \u003cdocker-image.latest\u003e1.0.0-SNAPSHOT\u003c/docker-image.latest\u003e",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 55
+      },
+      "revId": "e2ad1857a8e0b14d3dd66e010fdabd50ba215fb9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
