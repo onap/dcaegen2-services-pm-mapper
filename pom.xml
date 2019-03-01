@@ -62,7 +62,7 @@
         <surefire.version>2.22.0</surefire.version>
         <!-- Plugin Settings -->
         <image-name>${docker.push.registry}/onap/${project.groupId}.${project.artifactId}</image-name>
-        <maven.build.timestamp.format>yyyymmdd'T'hhmmss'Z'</maven.build.timestamp.format>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <timestamp>${maven.build.timestamp}</timestamp>
         <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -196,12 +196,43 @@
                 <version>${dockerfile.version}</version>
                 <configuration>
                     <repository>${image-name}</repository>
-                    <tag>${project.version}-${timestamp}</tag>
                     <dockerfile>${project.build.outputDirectory}/Dockerfile</dockerfile>
                     <buildArgs>
                         <JAR>${project.build.finalName}-jar-with-dependencies.jar</JAR>
                     </buildArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>tag-version</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>tag</goal>
+                        </goals>
+                        <configuration>
+                            <tag>${project.version}-${timestamp}</tag>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>push-latest</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <tag>latest</tag>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>push-version</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <tag>${project.version}-${timestamp}</tag>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
