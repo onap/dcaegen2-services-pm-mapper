@@ -78,6 +78,9 @@ public class MapperConfig {
         return new URL(this.getBusControllerSubscriptionEndpoint());
     }
 
+    public String getSubscriberIdentity(){
+        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getSubscriberId();
+    }
     @Getter
     @EqualsAndHashCode
     private class StreamsSubscribes {

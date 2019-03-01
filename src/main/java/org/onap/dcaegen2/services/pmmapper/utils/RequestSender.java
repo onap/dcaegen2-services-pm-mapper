@@ -32,14 +32,13 @@ import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.slf4j.LoggerFactory;
 
-import lombok.extern.slf4j.Slf4j;
-
 public class RequestSender {
     private static final int MAX_RETRIES = 5;
     private static final int RETRY_INTERVAL = 1000;
     private static final String SERVER_ERROR_MESSAGE = "Error on Server";
     private static final int ERROR_START_RANGE = 300;
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(RequestSender.class));
+    public static final String DELETE = "DELETE";
 
     /**
      * Sends an Http GET request to a given endpoint.
@@ -50,6 +49,18 @@ public class RequestSender {
      */
 
     public String send(final String urlString) throws Exception {
+        return send("GET", urlString);
+    }
+
+
+    /**
+     * Sends a request to a given endpoint.
+     * @param method of the outbound request
+     * @param urlString representing given endpoint
+     * @return http response body
+     * @throws Exception
+     */
+    public String send(String method, final String urlString) throws Exception {
         final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
         final UUID requestID = UUID.randomUUID();
         String result = "";
@@ -60,6 +71,7 @@ public class RequestSender {
             connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());
             connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID.toString());
             connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
+            connection.setRequestMethod(method);
             logger.unwrap()
                     .info("Sending:\n{}", connection.getRequestProperties());
 

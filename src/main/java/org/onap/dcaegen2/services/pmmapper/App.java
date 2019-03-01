@@ -74,7 +74,7 @@ public class App {
 
         Undertow.builder()
                 .addHttpListener(8081, "0.0.0.0")
-                .setHandler(Handlers.routing().add("put", "/delivery", dataRouterSubscriber)
+                .setHandler(Handlers.routing().add("put", "/delivery/{filename}", dataRouterSubscriber)
                         .add("get", "/healthcheck", healthCheckHandler))
                 .build().start();
     }

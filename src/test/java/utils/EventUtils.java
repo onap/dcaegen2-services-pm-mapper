@@ -75,11 +75,26 @@ public class EventUtils {
     }
 
     /**
+     * Makes an event with a mock http server exchange, empty mdc and publish identity
      * @param body body for the event.
      * @param eventMetadata metadata for the event.
      * @return event with mock HttpServerExchange
      */
     public static Event makeMockEvent(String body, EventMetadata eventMetadata) {
-        return new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS), body, eventMetadata, new HashMap<>());
+        return new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS), body, eventMetadata, new HashMap<>(), "");
     }
+
+
+    /**
+     * Makes an event with a mock http server exchange and empty mdc
+     * @param body body for the event.
+     * @param eventMetadata metadata for the event.
+     * @return event with mock HttpServerExchange
+     */
+    public static Event makeMockEvent(String body, EventMetadata eventMetadata, String publishIdentity) {
+        HttpServerExchange mockHttpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
+        return new Event(mockHttpServerExchange, body, eventMetadata, new HashMap<>(), publishIdentity);
+    }
+
+
 }
