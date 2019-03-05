@@ -55,6 +55,7 @@
         <mockserver.version>3.10.8</mockserver.version>
         <junit4.version>4.12</junit4.version>
         <jsonschema.version>1.3.0</jsonschema.version>
+        <xerces.version>2.11.0</xerces.version>
         <!-- Plugin Versions -->
         <shade.plugin.version>3.2.0</shade.plugin.version>
         <jacoco.version>0.8.2</jacoco.version>
@@ -184,6 +185,12 @@
             <groupId>org.everit.json</groupId>
             <artifactId>org.everit.json.schema</artifactId>
             <version>${jsonschema.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>${xerces.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

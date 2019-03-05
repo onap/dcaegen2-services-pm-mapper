@@ -40,4 +40,6 @@ public class Event {
     private Map<String, String> mdc;
     @NonNull
     private String publishIdentity;
+
+    MeasCollecFile measCollecFile;
 }

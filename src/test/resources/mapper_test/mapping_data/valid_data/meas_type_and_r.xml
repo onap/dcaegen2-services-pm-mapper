@@ -9,8 +9,8 @@
         <managedElement swVersion="r0.1" localDn="Dublin"/>
         <measInfo measInfoId="some measInfoId">
             <job jobId="some Job Id"/>
-            <granPeriod endTime="2018-10-02T12:15:00Z" duration="some duration"/>
-            <repPeriod duration="some duration"/>
+            <granPeriod endTime="2018-10-02T12:15:00Z" duration="PT900S"/>
+            <repPeriod duration="PT900S"/>
             <measType p="1">a</measType>
             <measType p="2">b</measType>
             <measType p="3">c</measType>

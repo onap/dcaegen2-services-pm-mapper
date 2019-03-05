@@ -141,4 +141,7 @@ public class MapperConfig {
         @SerializedName("topic_url")
         private String topicUrl;
     }
+
+    @SerializedName("pm-mapper-filter")
+    MeasFilterConfig filterConfig;
 }

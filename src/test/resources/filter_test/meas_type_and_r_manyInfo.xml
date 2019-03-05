@@ -1,0 +1,54 @@
+<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
+    <fileHeader fileFormatVersion="32.435 V10.0" vendorName="FooBar Ltd" dnPrefix="some dnPrefix">
+        <fileSender localDn="Dublin"/>
+        <measCollec beginTime="2018-10-02T12:00:00+01:00"/>
+    </fileHeader>
+    <measData>
+        <managedElement localDn="Dublin" swVersion="r0.1"/>
+        <measInfo measInfoId="some measInfoId">
+            <job jobId="jobId"/>
+            <granPeriod duration="PT900S" endTime="2018-10-02T12:15:00Z"/>
+            <repPeriod duration="PT900S"/>
+            <measType p="1">a</measType>
+            <measType p="2">z</measType>
+            <measType p="3">b</measType>
+            <measValue measObjLdn="some measObjLdn">
+                <r p="1">1</r>
+                <r p="2">99</r>
+                <r p="3">2</r>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+        <measInfo measInfoId="filter will disregard this measInfo">
+            <job jobId="jobId"/>
+            <granPeriod duration="PT900S" endTime="2018-10-02T12:15:00Z"/>
+            <repPeriod duration="PT900S"/>
+            <measType p="1">aa</measType>
+            <measType p="2">z</measType>
+            <measType p="3">bb</measType>
+            <measValue measObjLdn="some measObjLdn">
+                <r p="1">1</r>
+                <r p="2">99</r>
+                <r p="3">2</r>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+        <measInfo measInfoId="some measInfoId2">
+            <job jobId="jobId"/>
+            <granPeriod duration="PT900S" endTime="2018-10-02T12:15:00Z"/>
+            <repPeriod duration="PT900S"/>
+            <measType p="1">a</measType>
+            <measType p="2">z</measType>
+            <measType p="3">b</measType>
+            <measValue measObjLdn="some measObjLdn">
+                <r p="1">1</r>
+                <r p="2">99</r>
+                <r p="3">2</r>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <fileFooter>
+        <measCollec endTime="2018-10-02T12:15:00+01:00"/>
+    </fileFooter>
+</measCollecFile>
