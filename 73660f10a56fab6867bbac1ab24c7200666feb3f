@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c81a1177_4d36d8f4",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-08T13:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e10876a4_c9092c26",
+      "revId": "73660f10a56fab6867bbac1ab24c7200666feb3f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb47b840_7ea9b85e",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilter.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "72c901b0_ad4cfd28",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-08T13:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb47b840_7ea9b85e",
+      "revId": "73660f10a56fab6867bbac1ab24c7200666feb3f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0efc6838_c5a90d56",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilterTest.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2019-03-08T10:44:21Z",
       "side": 1,
       "message": "please add the test when there are multiple Filter objects in the collection",
+      "revId": "73660f10a56fab6867bbac1ab24c7200666feb3f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c70976b_e8191fc6",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-08T13:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0efc6838_c5a90d56",
       "revId": "73660f10a56fab6867bbac1ab24c7200666feb3f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
