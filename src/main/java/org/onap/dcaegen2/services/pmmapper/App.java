@@ -32,6 +32,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
+import org.onap.dcaegen2.services.pmmapper.filtering.MetadataFilter;
 import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
@@ -56,6 +57,10 @@ public class App {
     public static void main(String[] args) throws InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
         Flux<Event> flux = Flux.create(eventFluxSink -> fluxSink = eventFluxSink);
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
+
+        MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
+
+        MetadataFilter metadataFilter = new MetadataFilter(mapperConfig);
         Mapper mapper = new Mapper(mappingTemplate);
         XMLValidator validator = new XMLValidator(xmlSchema);
         flux.onBackpressureDrop(App::handleBackPressure)
@@ -64,12 +69,12 @@ public class App {
                 .parallel()
                 .runOn(Schedulers.newParallel(""), 1)
                 .doOnNext(event -> MDC.setContextMap(event.getMdc()))
+                .filter(metadataFilter::filter)
                 .filter(validator::validate)
                 .map(mapper::map)
                 .subscribe(event -> logger.unwrap().info("Event Processed"));
 
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next);
-        MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
         dataRouterSubscriber.start(mapperConfig);
 
         Undertow.builder()

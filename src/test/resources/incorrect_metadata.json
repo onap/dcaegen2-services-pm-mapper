@@ -1,5 +1,5 @@
 {
-  "productName": "NrRadio",
+  "productName": "LTE",
   "vendorName": "Ericsson",
   "lastEpochMicrosec": "1538478000000",
   "sourceName": "oteNB5309",
@@ -8,6 +8,5 @@
   "location": "ftpes://192.168.0.101:22/ftp/rop/A20161224.1045-1100.bin.gz",
   "compression": "gzip",
   "fileFormatType": "org.3GPP.32.435#measCollec",
-  "fileFormatVersion": "V9",
-  "decompression_status": "false"
+  "fileFormatVersion": "V8"
 }
