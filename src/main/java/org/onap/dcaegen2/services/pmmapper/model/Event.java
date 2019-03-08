@@ -24,6 +24,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.util.Map;
+import org.onap.dcaegen2.services.pmmapper.model.MeasFilterConfig.Filter;
 
 /**
  * Class used to pass around relevant inbound event data.
@@ -41,5 +42,7 @@ public class Event {
     @NonNull
     private String publishIdentity;
 
-    MeasCollecFile measCollecFile;
+    private MeasCollecFile measCollecFile;
+
+    private Filter filter;
 }
