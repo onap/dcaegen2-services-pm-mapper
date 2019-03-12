@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "652c931e_541f390e",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-03-12T14:56:36Z",
+      "side": 1,
+      "message": "why does this method need to return a boolean?",
+      "revId": "93907ee41525dbcda4ddfb01fac58a66ae357861",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
