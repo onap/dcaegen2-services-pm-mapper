@@ -16,6 +16,24 @@
       "revId": "93907ee41525dbcda4ddfb01fac58a66ae357861",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a672b58_a4585e89",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MetadataFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-12T16:09:56Z",
+      "side": 1,
+      "message": "It is used for filtering the stream of events, returning true will pass the event on to the next step of the flow, false will stop the event going any further.",
+      "parentUuid": "652c931e_541f390e",
+      "revId": "93907ee41525dbcda4ddfb01fac58a66ae357861",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
