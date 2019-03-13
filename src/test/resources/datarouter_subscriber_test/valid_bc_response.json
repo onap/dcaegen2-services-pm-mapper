@@ -1,0 +1,15 @@
+{
+  "type": "dr_Sub",
+  "lastMod": "2019-03-11T14:29:39.659",
+  "status": "VALID",
+  "dcaeLocationName": "location",
+  "deliveryURL": "delivery_url",
+  "feedId": "2",
+  "logURL": "https://dmaap-dr-prov/sublog/2",
+  "owner": "DGL",
+  "subId": "1",
+  "suspended": false,
+  "use100": false,
+  "username": "username",
+  "userpwd": "password"
+}

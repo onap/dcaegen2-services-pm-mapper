@@ -24,11 +24,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import io.undertow.util.HeaderValues;
 import lombok.Data;
 import lombok.NonNull;
 
+import org.onap.dcaegen2.services.pmmapper.config.Configurable;
 import org.onap.dcaegen2.services.pmmapper.exceptions.NoMetadataException;
+import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
@@ -44,23 +48,28 @@ import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Subscriber for events sent from data router
  * Provides an undertow HttpHandler to be used as an endpoint for data router to send events to.
  */
 @Data
-public class DataRouterSubscriber implements HttpHandler {
+public class DataRouterSubscriber implements HttpHandler, Configurable {
     public static final String METADATA_HEADER = "X-DMAAP-DR-META";
     public static final String PUB_ID_HEADER = "X-DMAAP-DR-PUBLISH-ID";
 
@@ -75,40 +84,41 @@ public class DataRouterSubscriber implements HttpHandler {
     private boolean limited = false;
     private Random jitterGenerator;
     private Gson metadataBuilder;
+    private MapperConfig config;
+    private String subscriberId;
     @NonNull
     private EventReceiver eventReceiver;
 
     /**
      * @param eventReceiver receiver for any inbound events.
      */
-    public DataRouterSubscriber(EventReceiver eventReceiver) {
+    public DataRouterSubscriber(EventReceiver eventReceiver, MapperConfig config) {
         this.eventReceiver = eventReceiver;
         this.jitterGenerator = new Random();
         this.metadataBuilder = new GsonBuilder().registerTypeAdapter(EventMetadata.class, new RequiredFieldDeserializer<EventMetadata>())
                 .create();
+        this.config = config;
+        this.subscriberId="";
     }
 
     /**
      * Starts data flow by subscribing to data router through bus controller.
      *
-     * @param config configuration object containing bus controller endpoint for subscription and
-     *               all non constant configuration for subscription through this endpoint.
      * @throws TooManyTriesException in the event that timeout has occurred several times.
      */
-    public void start(MapperConfig config) throws TooManyTriesException, InterruptedException {
+    public void start() throws TooManyTriesException, InterruptedException {
         try {
             logger.unwrap().info("Starting subscription to DataRouter {}", ONAPLogConstants.Markers.ENTRY);
-            subscribe(NUMBER_OF_ATTEMPTS, DEFAULT_TIMEOUT, config);
+            subscribe();
             logger.unwrap().info("Successfully started DR Subscriber");
         } finally {
             logger.unwrap().info("{}", ONAPLogConstants.Markers.EXIT);
         }
     }
 
-    private HttpURLConnection getBusControllerConnection(MapperConfig config, int timeout) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) config.getBusControllerSubscriptionUrl()
-                .openConnection();
-        connection.setRequestMethod("POST");
+    private HttpURLConnection getBusControllerConnection(String method, URL resource, int timeout) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) resource.openConnection();
+        connection.setRequestMethod(method);
         connection.setConnectTimeout(timeout);
         connection.setReadTimeout(timeout);
         connection.setRequestProperty("Content-Type", "application/json");
@@ -135,26 +145,66 @@ public class DataRouterSubscriber implements HttpHandler {
         return subscriberObj;
     }
 
-    private void subscribe(int attempts, int timeout, MapperConfig config) throws TooManyTriesException, InterruptedException {
+    private void processResponse(HttpURLConnection connection) throws IOException {
+        try (BufferedReader responseBody = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String body = responseBody.lines().collect(Collectors.joining(""));
+            updateSubscriberId(body);
+        } catch (IOException | JsonSyntaxException | IllegalStateException e) {
+            throw new IOException("Failed to process response", e);
+        }
+    }
+
+    private void updateSubscriberId(String responseBody) {
+            JsonParser parser = new JsonParser();
+            JsonObject responseObject = parser.parse(responseBody).getAsJsonObject();
+            this.subscriberId = responseObject.get("subId").getAsString();
+    }
+
+    private void subscribe() throws TooManyTriesException, InterruptedException {
+        try {
+            URL subscribeResource = this.config.getBusControllerSubscriptionUrl();
+            JsonObject subscribeBody = this.getBusControllerSubscribeBody(this.config);
+            request(NUMBER_OF_ATTEMPTS, DEFAULT_TIMEOUT, "POST", subscribeResource, subscribeBody);
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException("Subscription URL is malformed", e);
+        }
+
+    }
+    private void updateSubscriber() throws TooManyTriesException, InterruptedException {
+        try {
+            URL subscribeResource = this.config.getBusControllerSubscriptionUrl();
+            URL updateResource = new URL(String.format("%s/%s", subscribeResource, subscriberId));
+            JsonObject subscribeBody = this.getBusControllerSubscribeBody(this.config);
+            request(NUMBER_OF_ATTEMPTS, DEFAULT_TIMEOUT, "PUT", updateResource, subscribeBody);
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException("Subscription URL is malformed", e);
+        }
+    }
+
+    private void request(int attempts, int timeout, String method, URL resource, JsonObject subscribeBody) throws TooManyTriesException, InterruptedException {
         int subResponse = 504;
         String subMessage = "";
+        boolean processFailure = false;
         try {
-            HttpURLConnection connection = getBusControllerConnection(config, timeout);
-
+            HttpURLConnection connection = getBusControllerConnection(method, resource, timeout);
             try (OutputStream bodyStream = connection.getOutputStream();
                  OutputStreamWriter bodyWriter = new OutputStreamWriter(bodyStream, StandardCharsets.UTF_8)) {
-                bodyWriter.write(getBusControllerSubscribeBody(config).toString());
+                bodyWriter.write(subscribeBody.toString());
             }
             subResponse = connection.getResponseCode();
             subMessage = connection.getResponseMessage();
+            if (subResponse < 300) {
+                processResponse(connection);
+            }
         } catch (IOException e) {
-            logger.unwrap().error("Timeout Failure:", e);
+            logger.unwrap().error("Failure to process response", e);
+            processFailure = true;
         }
         logger.unwrap().info("Request to bus controller executed with Response Code: '{}' and Response Event: '{}'.", subResponse, subMessage);
-        if (subResponse >= 300 && attempts > 1) {
+        if ((subResponse >= 300 || processFailure) && attempts > 1 ) {
             Thread.sleep(timeout);
-            subscribe(--attempts, (timeout * 2) + jitterGenerator.nextInt(MAX_JITTER), config);
-        } else if (subResponse >= 300) {
+            request(--attempts, (timeout * 2) + jitterGenerator.nextInt(MAX_JITTER), method, resource, subscribeBody);
+        } else if (subResponse >= 300 || processFailure) {
             throw new TooManyTriesException("Failed to subscribe within appropriate amount of attempts");
         }
     }
@@ -208,5 +258,21 @@ public class DataRouterSubscriber implements HttpHandler {
         } finally {
             logger.exiting();
         }
+    }
+
+    @Override
+    public void reconfigure(MapperConfig config) throws ReconfigurationException {
+        logger.unwrap().info("Checking new Configuration against existing.");
+        if(!this.config.dmaapInfoEquals(config) || !this.config.getDmaapDRFeedId().equals(config.getDmaapDRFeedId())){
+            logger.unwrap().info("DMaaP Info changes found, reconfiguring.");
+            try {
+                this.config = config;
+                this.updateSubscriber();
+            } catch (TooManyTriesException | InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new ReconfigurationException("Failed to reconfigure DataRouter subscriber.", e);
+            }
+        }
+
     }
 }

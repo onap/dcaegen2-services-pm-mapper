@@ -81,6 +81,15 @@ public class MapperConfig {
     public String getSubscriberIdentity(){
         return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getSubscriberId();
     }
+
+    public boolean dmaapInfoEquals(MapperConfig mapperConfig){
+        return this
+                .getStreamsSubscribes()
+                .getDmaapSubscriber()
+                .getDmaapInfo()
+                .equals(mapperConfig.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo());
+    }
+
     @Getter
     @EqualsAndHashCode
     private class StreamsSubscribes {

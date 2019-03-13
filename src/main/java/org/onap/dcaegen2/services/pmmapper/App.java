@@ -26,6 +26,8 @@ import io.undertow.util.StatusCodes;
 
 import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
+import org.onap.dcaegen2.services.pmmapper.config.Configurable;
+import org.onap.dcaegen2.services.pmmapper.config.DynamicConfiguration;
 import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
@@ -47,6 +49,7 @@ import reactor.core.scheduler.Schedulers;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class App {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
@@ -57,9 +60,7 @@ public class App {
     public static void main(String[] args) throws InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
         Flux<Event> flux = Flux.create(eventFluxSink -> fluxSink = eventFluxSink);
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
-
         MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
-
         MetadataFilter metadataFilter = new MetadataFilter(mapperConfig);
         Mapper mapper = new Mapper(mappingTemplate);
         XMLValidator validator = new XMLValidator(xmlSchema);
@@ -73,14 +74,18 @@ public class App {
                 .filter(validator::validate)
                 .map(mapper::map)
                 .subscribe(event -> logger.unwrap().info("Event Processed"));
-
-        DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next);
-        dataRouterSubscriber.start(mapperConfig);
+        DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next, mapperConfig);
+        dataRouterSubscriber.start();
+        ArrayList<Configurable> configurables = new ArrayList<>();
+        configurables.add(dataRouterSubscriber);
+        DynamicConfiguration dynamicConfiguration = new DynamicConfiguration(configurables, mapperConfig);
 
         Undertow.builder()
                 .addHttpListener(8081, "0.0.0.0")
-                .setHandler(Handlers.routing().add("put", "/delivery/{filename}", dataRouterSubscriber)
-                        .add("get", "/healthcheck", healthCheckHandler))
+                .setHandler(Handlers.routing()
+                        .add("put", "/delivery/{filename}", dataRouterSubscriber)
+                        .add("get", "/healthcheck", healthCheckHandler)
+                        .add("get", "/reconfigure", dynamicConfiguration))
                 .build().start();
     }
 
