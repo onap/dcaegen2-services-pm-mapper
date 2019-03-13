@@ -1841,4 +1841,9 @@ public class MeasCollecFile {
 
     }
 
+
+    public void replaceMeasData(List<MeasData> measDataList) {
+        this.measData = measDataList;
+    }
+
 }
