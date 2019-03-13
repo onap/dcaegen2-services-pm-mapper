@@ -19,7 +19,7 @@
 #
 FROM openjdk:8-jre-alpine
 
-ENTRYPOINT ["/usr/bin/java", "-jar", "/opt/app/pm-mapper/pm-mapper.jar"]
+ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/bin/java -jar /opt/app/pm-mapper/pm-mapper.jar"]
 ARG JAR
 WORKDIR /opt/app/pm-mapper
 
@@ -32,5 +32,6 @@ RUN addgroup -S onap \
 ADD target/${JAR} /opt/app/pm-mapper/pm-mapper.jar
 ADD target/classes/mapping.ftl /opt/app/pm-mapper/etc/mapping.ftl
 ADD target/classes/measCollec_plusString.xsd /opt/app/pm-mapper/etc/measCollec_plusString.xsd
+ADD target/classes/reconfigure.sh /opt/app/pm-mapper/etc/reconfigure.sh
 
 USER pm-mapper
