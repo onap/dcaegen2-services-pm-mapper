@@ -26,6 +26,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 
 @Data
 @EqualsAndHashCode
@@ -37,17 +38,20 @@ public class MeasFilterConfig {
 
       @Data
       public class Filter {
+          @GSONRequired
           @SerializedName("pmDefVsn")
           private String dictionaryVersion;
 
+          @GSONRequired
           @SerializedName("nfType")
           private String nfType;
 
+          @GSONRequired
           @SerializedName("vendor")
           private String vendor;
 
+          @GSONRequired
           @SerializedName("measTypes")
           private List<String> measTypes;
-
       }
 }

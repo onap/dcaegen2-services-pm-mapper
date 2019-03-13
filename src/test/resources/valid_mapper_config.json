@@ -1,5 +1,5 @@
 {
-    "pm-mapper-filter": {"filters":[]},
+    "pm-mapper-filter": {"filters":[{"pmDefVsn": "V9","nfType": "NrRadio","vendor": "Ericsson","measTypes": [ "A", "B" ]}]},
     "streams_subscribes": {
         "dmaap_subscriber": {
             "type": "data_router",

@@ -1,0 +1,34 @@
+{
+  "pm-mapper-filter": {"filters":[]},
+  "streams_subscribes": {
+    "dmaap_subscriber": {
+      "type": "data_router",
+      "aaf_username": null,
+      "aaf_password": null,
+      "dmaap_info": {
+        "location": "location",
+        "delivery_url": "delivery_url",
+        "username": "username",
+        "password": "password",
+        "subscriber_id": "subscriber_id"
+      }
+    }
+  },
+  "streams_publishes": {
+    "dmaap_publisher": {
+      "type": "message_router",
+      "aaf_password": null,
+      "dmaap_info": {
+        "topic_url": "https://message-router.onap.svc.cluster.local:3904/events/some-topic",
+        "client_role": null,
+        "location": null,
+        "client_id": null
+      },
+      "aaf_username": null
+    }
+  },
+  "dmaap_dr_feed_id": "2",
+  "buscontroller_feed_subscription_endpoint": "http://dmaap-bc.onap.svc.cluster.local:8080/webapi/dr_subs",
+  "dmaap_dr_delete_endpoint": "http://dmaap-dr-node.onap.svc.cluster.local:8443/delete",
+  "services_calls": {}
+}
