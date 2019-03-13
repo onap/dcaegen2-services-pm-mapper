@@ -43,10 +43,15 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HeaderMap;
 import io.undertow.util.StatusCodes;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,28 +60,38 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
+import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
+import org.onap.dcaegen2.services.pmmapper.model.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
+import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import utils.LoggingUtils;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(DataRouterSubscriber.class)
+@PrepareForTest({DataRouterSubscriber.class, EnvironmentConfig.class})
 public class DataRouterSubscriberTest {
 
+    private Path VALID_BC_RESPONSE_PATH = Paths.get("src/test/resources/datarouter_subscriber_test/valid_bc_response.json");
+    private Path VALID_METADATA_PATH = Paths.get("src/test/resources/valid_metadata.json");
+    private Path INVALID_METADATA_PATH = Paths.get("src/test/resources/invalid_metadata.json");
+    private Path VALID_CONFIG_PATH = Paths.get("src/test/resources/valid_mapper_config.json");
 
     @Mock
     private EventReceiver eventReceiver;
+    @Mock
+    private MapperConfig config;
 
     private DataRouterSubscriber objUnderTest;
 
     @Before
     public void setUp() {
-        objUnderTest = new DataRouterSubscriber(eventReceiver);
+        objUnderTest = new DataRouterSubscriber(eventReceiver, config);
     }
 
     @Test
@@ -84,34 +99,37 @@ public class DataRouterSubscriberTest {
         PowerMockito.mockStatic(Thread.class);
 
         URL subEndpoint = mock(URL.class);
-        MapperConfig config = mock(MapperConfig.class);
         when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
         when(subEndpoint.openConnection()).thenReturn(huc);
         when(huc.getResponseCode()).thenReturn(300);
-        Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start(config));
+        Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start());
     }
 
     @Test
     public void testStartImmediateSuccess() throws IOException, TooManyTriesException, InterruptedException {
         URL subEndpoint = mock(URL.class);
-        MapperConfig config = mock(MapperConfig.class);
         when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        String bcResponse = new String(Files.readAllBytes(VALID_BC_RESPONSE_PATH));
+        InputStream responseStream = new ByteArrayInputStream(bcResponse.getBytes(StandardCharsets.UTF_8));
+        when(huc.getInputStream()).thenReturn(responseStream);
         when(subEndpoint.openConnection()).thenReturn(huc);
         when(huc.getResponseCode()).thenReturn(200);
-        objUnderTest.start(config);
+        objUnderTest.start();
         verify(huc, times(1)).getResponseCode();
     }
 
     @Test
     public void testStartDelayedSuccess() throws IOException, TooManyTriesException, InterruptedException {
         PowerMockito.mockStatic(Thread.class);
-
-        URL subEndpoint = mock(URL.class);
-        MapperConfig config = mock(MapperConfig.class);
-        when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        String bcResponse = new String(Files.readAllBytes(VALID_BC_RESPONSE_PATH));
+        InputStream responseStream = new ByteArrayInputStream(bcResponse.getBytes(StandardCharsets.UTF_8));
+        when(huc.getInputStream()).thenReturn(responseStream);
+        URL subEndpoint = mock(URL.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
+
         when(subEndpoint.openConnection()).thenReturn(huc);
         doAnswer(new Answer() {
             boolean forceRetry = true;
@@ -125,7 +143,7 @@ public class DataRouterSubscriberTest {
                 return 200;
             }
         }).when(huc).getResponseCode();
-        objUnderTest.start(config);
+        objUnderTest.start();
         verify(huc, times(2)).getResponseCode();
     }
 
@@ -134,12 +152,11 @@ public class DataRouterSubscriberTest {
         PowerMockito.mockStatic(Thread.class);
 
         URL subEndpoint = mock(URL.class);
-        MapperConfig config = mock(MapperConfig.class);
         when(config.getBusControllerSubscriptionUrl()).thenReturn(subEndpoint);
         HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
         when(subEndpoint.openConnection()).thenReturn(huc);
         doThrow(new IOException()).when(huc).getResponseCode();
-        Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start(config));
+        Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start());
     }
 
     @Test
@@ -171,10 +188,29 @@ public class DataRouterSubscriberTest {
     }
 
     @Test
+    public void testStartPositiveResponseCodeInvalidResponseBody() throws Exception{
+        PowerMockito.mockStatic(EnvironmentConfig.class);
+        PowerMockito.mockStatic(Thread.class);
+        PowerMockito.when(EnvironmentConfig.getCBSHostName()).thenReturn("");
+        PowerMockito.when(EnvironmentConfig.getCBSPort()).thenReturn(1);
+        PowerMockito.when(EnvironmentConfig.getServiceName()).thenReturn("");
+
+        URL mockURL = mock(URL.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(mockURL);
+        HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        String bcResponse = "not a valid response";
+        InputStream responseStream = new ByteArrayInputStream(bcResponse.getBytes(StandardCharsets.UTF_8));
+        when(huc.getInputStream()).thenReturn(responseStream);
+        when(mockURL.openConnection()).thenReturn(huc);
+        when(huc.getResponseCode()).thenReturn(200);
+        Assertions.assertThrows(TooManyTriesException.class, () -> objUnderTest.start());
+    }
+
+    @Test
     public void testRequestInboundInvalidMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         JsonObject metadata = new JsonParser().parse(new String(Files
-                .readAllBytes(Paths.get("src/test/resources/invalid_metadata.json")))).getAsJsonObject();
+                .readAllBytes(INVALID_METADATA_PATH))).getAsJsonObject();
         when(httpServerExchange.getRequestHeaders().get(any(String.class)).get(anyInt()))
                 .thenReturn(metadata.toString());
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
@@ -218,7 +254,7 @@ public class DataRouterSubscriberTest {
         when(httpServerExchange.getRequestReceiver()).thenReturn(receiver);
         String testString = "MESSAGE BODY";
         JsonObject metadata = new JsonParser().parse(
-                new String(Files.readAllBytes(Paths.get("src/test/resources/valid_metadata.json")))).getAsJsonObject();
+                new String(Files.readAllBytes(VALID_METADATA_PATH))).getAsJsonObject();
         when(httpServerExchange.getRequestHeaders().get(DataRouterSubscriber.METADATA_HEADER).get(anyInt()))
                 .thenReturn(metadata.toString());
         when(httpServerExchange.getRequestHeaders().get(DataRouterSubscriber.PUB_ID_HEADER).getFirst()).thenReturn("");
@@ -244,4 +280,108 @@ public class DataRouterSubscriberTest {
         logAppender.stop();
     }
 
+    @Test
+    public void testConfigThrowsMalformedURLException() throws MalformedURLException {
+        when(config.getBusControllerSubscriptionUrl()).thenThrow(MalformedURLException.class);
+        Assertions.assertThrows(IllegalStateException.class, () -> objUnderTest.start());
+    }
+    @Test
+    public void testReconfigurationSameConfig() throws Exception {
+        PowerMockito.mockStatic(EnvironmentConfig.class);
+        PowerMockito.when(EnvironmentConfig.getCBSHostName()).thenReturn("");
+        PowerMockito.when(EnvironmentConfig.getCBSPort()).thenReturn(1);
+        PowerMockito.when(EnvironmentConfig.getServiceName()).thenReturn("");
+
+        RequestSender sender = mock(RequestSender.class);
+        String mapperConfig = new String(Files.readAllBytes(VALID_CONFIG_PATH));
+        when(sender.send(any())).thenReturn(mapperConfig);
+        MapperConfig originalMapperConfig = new ConfigHandler(sender).getMapperConfig();
+
+        DataRouterSubscriber objUnderTest = new DataRouterSubscriber(eventReceiver, originalMapperConfig);
+        objUnderTest.reconfigure(originalMapperConfig);
+        assertEquals(originalMapperConfig, objUnderTest.getConfig());
+    }
+
+    @Test
+    public void testReconfigurationModifiedFeedId() throws Exception {
+        PowerMockito.mockStatic(EnvironmentConfig.class);
+        PowerMockito.when(EnvironmentConfig.getCBSHostName()).thenReturn("");
+        PowerMockito.when(EnvironmentConfig.getCBSPort()).thenReturn(1);
+        PowerMockito.when(EnvironmentConfig.getServiceName()).thenReturn("");
+
+        URL mockURL = mock(URL.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(mockURL);
+        HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        String bcResponse = new String(Files.readAllBytes(VALID_BC_RESPONSE_PATH));
+        InputStream responseStream = new ByteArrayInputStream(bcResponse.getBytes(StandardCharsets.UTF_8));
+        when(huc.getInputStream()).thenReturn(responseStream);
+        when(mockURL.openConnection()).thenReturn(huc);
+        when(huc.getResponseCode()).thenReturn(200);
+
+        PowerMockito.whenNew(URL.class).withAnyArguments().thenReturn(mockURL);
+
+        RequestSender sender = mock(RequestSender.class);
+        String mapperConfig = new String(Files.readAllBytes(VALID_CONFIG_PATH));
+        when(sender.send(any())).thenReturn(mapperConfig);
+        MapperConfig originalMapperConfig = new ConfigHandler(sender).getMapperConfig();
+        JsonObject modifiedMapperConfigObj = new JsonParser().parse(mapperConfig).getAsJsonObject();
+        modifiedMapperConfigObj.addProperty("dmaap_dr_feed_id", "3");
+        when(sender.send(any())).thenReturn(modifiedMapperConfigObj.toString());
+        MapperConfig modifiedMapperConfig = new ConfigHandler(sender).getMapperConfig();
+
+        DataRouterSubscriber objUnderTest = new DataRouterSubscriber(eventReceiver, originalMapperConfig);
+        objUnderTest.reconfigure(modifiedMapperConfig);
+        assertEquals(modifiedMapperConfig, objUnderTest.getConfig());
+    }
+
+    @Test
+    public void testReconfigurationModifiedUsername() throws Exception {
+        PowerMockito.mockStatic(EnvironmentConfig.class);
+        PowerMockito.when(EnvironmentConfig.getCBSHostName()).thenReturn("");
+        PowerMockito.when(EnvironmentConfig.getCBSPort()).thenReturn(1);
+        PowerMockito.when(EnvironmentConfig.getServiceName()).thenReturn("");
+
+        URL mockURL = mock(URL.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(mockURL);
+        HttpURLConnection huc = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        String bcResponse = new String(Files.readAllBytes(VALID_BC_RESPONSE_PATH));
+        InputStream responseStream = new ByteArrayInputStream(bcResponse.getBytes(StandardCharsets.UTF_8));
+        when(huc.getInputStream()).thenReturn(responseStream);
+        when(mockURL.openConnection()).thenReturn(huc);
+        when(huc.getResponseCode()).thenReturn(200);
+
+        PowerMockito.whenNew(URL.class).withAnyArguments().thenReturn(mockURL);
+
+        RequestSender sender = mock(RequestSender.class);
+        String mapperConfig = new String(Files.readAllBytes(VALID_CONFIG_PATH));
+        when(sender.send(any())).thenReturn(mapperConfig);
+        MapperConfig originalMapperConfig = new ConfigHandler(sender).getMapperConfig();
+        JsonObject modifiedMapperConfigObj = new JsonParser().parse(mapperConfig).getAsJsonObject();
+        modifiedMapperConfigObj.get("streams_subscribes")
+                .getAsJsonObject().get("dmaap_subscriber")
+                .getAsJsonObject().get("dmaap_info")
+                .getAsJsonObject()
+                .addProperty("username", "bob");
+        when(sender.send(any())).thenReturn(modifiedMapperConfigObj.toString());
+        MapperConfig modifiedMapperConfig = new ConfigHandler(sender).getMapperConfig();
+
+        DataRouterSubscriber objUnderTest = new DataRouterSubscriber(eventReceiver, originalMapperConfig);
+        objUnderTest.reconfigure(modifiedMapperConfig);
+        assertEquals(modifiedMapperConfig, objUnderTest.getConfig());
+    }
+
+    @Test
+    public void testReconfigurationMalformedURL() throws Exception {
+        when(config.getBusControllerSubscriptionUrl()).thenThrow(MalformedURLException.class);
+        Assertions.assertThrows(IllegalStateException.class, () -> objUnderTest.reconfigure(config));
+    }
+    @Test
+    public void testReconfigurationException() throws Exception {
+        PowerMockito.mockStatic(Thread.class);
+        URL url = mock(URL.class);
+        when(url.toString()).thenReturn("http://valid:8080/");
+        when(url.openConnection()).thenThrow(IOException.class);
+        when(config.getBusControllerSubscriptionUrl()).thenReturn(url);
+        Assertions.assertThrows(ReconfigurationException.class, () -> objUnderTest.reconfigure(config));
+    }
 }

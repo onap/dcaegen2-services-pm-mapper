@@ -26,6 +26,8 @@ import io.undertow.util.StatusCodes;
 
 import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
+import org.onap.dcaegen2.services.pmmapper.config.Configurable;
+import org.onap.dcaegen2.services.pmmapper.config.DynamicConfiguration;
 import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
@@ -46,6 +48,7 @@ import reactor.core.scheduler.Schedulers;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class App {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
@@ -58,6 +61,7 @@ public class App {
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         Mapper mapper = new Mapper(mappingTemplate);
         XMLValidator validator = new XMLValidator(xmlSchema);
+        MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
         flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
                 .limitRate(1)
@@ -67,15 +71,20 @@ public class App {
                 .filter(validator::validate)
                 .map(mapper::map)
                 .subscribe(event -> logger.unwrap().info("Event Processed"));
+        DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next, mapperConfig);
+        dataRouterSubscriber.start();
 
-        DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next);
-        MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
-        dataRouterSubscriber.start(mapperConfig);
+        ArrayList<Configurable> configurables = new ArrayList<>();
+        configurables.add(dataRouterSubscriber);
+
+        DynamicConfiguration dynamicConfiguration = new DynamicConfiguration(configurables, mapperConfig);
 
         Undertow.builder()
                 .addHttpListener(8081, "0.0.0.0")
-                .setHandler(Handlers.routing().add("put", "/delivery/{filename}", dataRouterSubscriber)
-                        .add("get", "/healthcheck", healthCheckHandler))
+                .setHandler(Handlers.routing()
+                        .add("put", "/delivery/{filename}", dataRouterSubscriber)
+                        .add("get", "/healthcheck", healthCheckHandler)
+                        .add("get", "/reconfigure", dynamicConfiguration))
                 .build().start();
     }
 
