@@ -20,6 +20,7 @@
 
 package org.onap.dcaegen2.services.pmmapper.mapping;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.everit.json.schema.Schema;
@@ -46,6 +48,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.XMLParseException;
@@ -131,6 +134,15 @@ class MapperTest {
     @Test
     void testNullLogger() {
         assertThrows(NullPointerException.class, () -> objUnderTest.map(mock(Event.class)));
+    }
+
+    @Test
+    void testMapEvents() throws IOException {
+        List<Event> events = getValidEvents();
+        List<Event> expectedEvents = objUnderTest.mapEvents(events);
+        expectedEvents.forEach(event->{
+            assertTrue(event.getVes() != null);
+        });
     }
 
     static List<Event> getValidEvents() throws IOException {

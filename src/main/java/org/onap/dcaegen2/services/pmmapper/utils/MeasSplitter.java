@@ -22,17 +22,17 @@ package org.onap.dcaegen2.services.pmmapper.utils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import org.onap.dcaegen2.services.pmmapper.exceptions.ProcessEventException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
-import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 
-import io.undertow.server.HttpServerExchange;
 
 /**
  * Splits the MeasCollecFile based on MeasData.
@@ -45,10 +45,16 @@ public class MeasSplitter {
         this.converter = converter;
     }
 
+    /**
+     * Splits the MeasCollecFile to multiple MeasCollecFile based on the number of MeasData
+     **/
     public List<Event> split(Event event) {
-        logger.unwrap().debug("Splitting 3GPP xml MeasData to MeasCollecFile");
+        logger.unwrap().debug("Splitting 3GPP xml MeasData to individual MeasCollecFile");
         MeasCollecFile currentMeasurement = converter.convert(event.getBody());
-
+        event.setMeasCollecFile(currentMeasurement);
+        if(currentMeasurement.getMeasData().isEmpty()) {
+            throw new NoSuchElementException("MeasData is empty.");
+        }
         return currentMeasurement.getMeasData().stream().map( measData -> {
             Event newEvent  = generateNewEvent(event);
             MeasCollecFile newMeasCollec = generateNewMeasCollec(newEvent,measData);
@@ -70,6 +76,7 @@ public class MeasSplitter {
                 event.getBody(), event.getMetadata(), event.getMdc(),
                 event.getPublishIdentity());
         modifiedEvent.setMeasCollecFile(event.getMeasCollecFile());
+        modifiedEvent.setFilter(event.getFilter());
         return modifiedEvent;
     }
 }
