@@ -69,19 +69,20 @@
 
 <#macro measValuesList measInfo>
 [
+<#list measInfo.measValue as measValue>
     {
-        "measObjInstId": "${measInfo.measValue.@measObjLdn[0]!}",
-        "suspectFlag": "${measInfo.measValue.suspect[0]! "false"}",
+        "measObjInstId": "${measValue.@measObjLdn[0]!}",
+        "suspectFlag": "${measValue.suspect[0]! "false"}",
         "measResults": [
-        <#if measInfo.measValue.r?has_content>
-        <#list measInfo.measValue.r as r>
+        <#if measValue.r?has_content>
+        <#list measValue.r as r>
             {
                 "p": ${r.@p},
                 "sValue": "${r}"
             }<#sep>,</#sep>
         </#list>
         <#else>
-        <#list measInfo.measValue.measResults?split(" ") as r>
+        <#list measValue.measResults?split(" ") as r>
             {
                 "p":${r?index+1},
                 "sValue": "${r}"
@@ -90,6 +91,8 @@
         </#if>
         ]
    }
+<#sep>,</#sep>
+</#list>
 ]
 </#macro>
 
@@ -114,7 +117,7 @@
     "granularityPeriod": ${measData.measInfo.granPeriod.@endTime[0]!?datetime?long?c},
     "measuredEntityUserName": "${measData.managedElement.@userLabel[0]!}",
     "measuredEntityDn": "${measData.managedElement.@localDn}",
-    "measuredEntitySoftwareVersion": "${measData.managedElement.@swVersion}",
+    "measuredEntitySoftwareVersion": "${measData.managedElement.@swVersion[0]!}",
     "measInfoList": <@measInfoList/>
 }
 </#macro>
