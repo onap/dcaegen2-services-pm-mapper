@@ -24,8 +24,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData;
@@ -43,28 +45,30 @@ import org.slf4j.LoggerFactory;
  **/
 public class MeasFilterHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasFilterHandler.class));
-    private Filter filter;
     private MeasConverter converter;
 
     public MeasFilterHandler(MeasConverter converter) {
         this.converter = converter;
     }
 
-    public void setFilter(Filter filter) {
-       this.filter = filter;
-    }
-
     /**
      * Filters each measInfo node for measTypes that match the given measTypes from filters.
      **/
     public boolean filterByMeasType(Event event) {
-      logger.unwrap().debug("Filtering the measurement file.");
-
+        Optional<Filter> filter = Optional.ofNullable(event.getFilter());
         MeasCollecFile measCollecFile = event.getMeasCollecFile();
-        if(filter.getMeasTypes().isEmpty() || measCollecFile.getMeasData().isEmpty()) {
+
+        if(hasNoFilters(filter)) {
+            logger.unwrap().info("Skipping filtering by measTypes as filter config does not contain measTypes.");
+            return true;
+        }
+
+        if(measCollecFile.getMeasData().isEmpty()) {
+            logger.unwrap().info("Measurement file will not be processed further as MeasData is empty.");
             return false;
         }
 
+        logger.unwrap().info("Filtering the measurement file by measTypes.");
         MeasData measData = measCollecFile.getMeasData().get(0);
         List<MeasInfo> measInfos = measData.getMeasInfo();
         List<MeasInfo> filteredMeasInfos = new ArrayList<>();
@@ -73,23 +77,62 @@ public class MeasFilterHandler {
             MeasInfo currentMeasInfo = measInfos.get(i);
             List<String> measTypesNode = currentMeasInfo.getMeasTypes();
             if(!measTypesNode.isEmpty()) {
-                setMeasInfosFromMeasTypes(currentMeasInfo,filteredMeasInfos);
+                setMeasInfosFromMeasTypes(currentMeasInfo,filteredMeasInfos, filter.get());
             }else {
-                setMeasInfoFromMeasType(currentMeasInfo,filteredMeasInfos);
+                setMeasInfoFromMeasType(currentMeasInfo,filteredMeasInfos, filter.get());
             }
         }
 
         if (filteredMeasInfos.isEmpty()) {
+            logger.unwrap().info("No filter match from the current measurement file.");
             return false;
         }
-
         measData.setMeasInfo(filteredMeasInfos);
         String filteredXMl = converter.convert(measCollecFile);
         event.setBody(filteredXMl);
+        logger.unwrap().info("Successfully filtered the measurement by measTypes.");
         return true;
     }
 
-    private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo,  List<MeasInfo> filteredMeasInfos) {
+    /**
+     * Filters each measInfo node in the list for measTypes that match the given measTypes from filters.
+     **/
+    public boolean filterByMeasType(List<Event> events) {
+        boolean hasMatchAnyFilter = false;
+        for (int i = 0; i < events.size(); i++) {
+            Event currentEvent = events.get(i);
+            boolean hasMatchingFilter = filterByMeasType(currentEvent);
+            if (hasMatchingFilter) {
+                hasMatchAnyFilter = true;
+            } else {
+                events.remove(events.get(i));
+            }
+        }
+
+        if (!hasMatchAnyFilter) {
+            logger.unwrap().info("No filter match from all measurement files.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasNoFilters(Optional<Filter> filter) {
+        return !filter.isPresent() || filter.get().getMeasTypes().isEmpty();
+    }
+
+
+    /**
+     * Filters the measurement by file type. Measurement files starting with A or C are valid.
+     **/
+    public boolean filterByFileType(Event event) {
+        logger.unwrap().debug("Filtering the measurement by file type.");
+        String requestPath  = event.getHttpServerExchange().getRequestPath();
+        String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
+        return (fileName.startsWith("C") || fileName.startsWith("A"));
+    }
+
+    private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo,  List<MeasInfo> filteredMeasInfos, Filter filter) {
         MeasValue currentMeasValue = currentMeasInfo.getMeasValue()
                 .get(0);
         List<R> measResultsRNodes = currentMeasValue.getR();
@@ -114,7 +157,7 @@ public class MeasFilterHandler {
 
     }
 
-    private void setMeasInfosFromMeasTypes(MeasInfo currentMeasInfo, List<MeasInfo> filteredMeasInfos) {
+    private void setMeasInfosFromMeasTypes(MeasInfo currentMeasInfo, List<MeasInfo> filteredMeasInfos, Filter filter) {
         MeasValue currentMeasValue = currentMeasInfo.getMeasValue()
                 .get(0);
         List<String> measTypesNode = currentMeasInfo.getMeasTypes();

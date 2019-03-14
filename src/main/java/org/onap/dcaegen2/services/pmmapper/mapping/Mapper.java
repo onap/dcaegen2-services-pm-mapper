@@ -42,6 +42,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -60,6 +61,11 @@ public class Mapper {
             logger.unwrap().error("Failed to read template from location {}", pathToTemplate, exception);
             throw new IllegalArgumentException("Failed to read template from path", exception);
         }
+    }
+
+    public List<Event> mapEvents(List<Event> events) {
+        events.forEach(event -> event.setVes(this.map(event)));
+        return events;
     }
 
     public String map(@NonNull Event event) {

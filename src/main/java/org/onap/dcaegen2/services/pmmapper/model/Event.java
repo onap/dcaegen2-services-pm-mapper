@@ -45,4 +45,6 @@ public class Event {
     private MeasCollecFile measCollecFile;
 
     private Filter filter;
+
+    String ves;
 }
