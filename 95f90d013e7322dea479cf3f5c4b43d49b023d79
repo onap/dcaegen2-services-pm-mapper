@@ -22,6 +22,30 @@
       "revId": "95f90d013e7322dea479cf3f5c4b43d49b023d79",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "793589da_30e99723",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/model/Event.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-03-14T15:51:57Z",
+      "side": 1,
+      "message": "done. this field is nullable",
+      "parentUuid": "32979d22_5c500dc0",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "95f90d013e7322dea479cf3f5c4b43d49b023d79",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
