@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.xml.bind.JAXBException;
 
@@ -35,6 +36,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
 
 import io.undertow.server.HttpServerExchange;
@@ -51,11 +53,16 @@ public class MeasSplitterTest {
     EventMetadata meta;
     @Mock
     Event event;
+    @Mock
+    MapperConfig config;
 
     @BeforeEach
     public void setup() {
         converter =  new MeasConverter();
         objUnderTest = new MeasSplitter(converter);
+    }
+
+    public void setupBaseEvent() {
         Mockito.when(event.getHttpServerExchange()).thenReturn(exchange);
         Mockito.when(event.getMetadata()).thenReturn(meta);
         Mockito.when(event.getMdc()).thenReturn(new HashMap<String, String>());
@@ -63,11 +70,24 @@ public class MeasSplitterTest {
         Mockito.when(event.getPublishIdentity()).thenReturn("");
     }
 
+
+    @Test
+    public void no_measData() {
+        String inputPath = baseDir + "no_measdata";
+        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
+        Mockito.when(event.getBody()).thenReturn(inputXml);
+
+        Assertions.assertThrows(NoSuchElementException.class, ()->{
+            objUnderTest.split(event);
+        });
+    }
+
     @Test
     public void typeA_returns_only_one_event() throws JAXBException {
         String inputPath = baseDir + "meas_results_typeA";
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         MeasCollecFile measToBeSplit = converter.convert(inputXml);
+        setupBaseEvent();
         Mockito.when(event.getBody()).thenReturn(inputXml);
         Mockito.when(event.getMeasCollecFile()).thenReturn(measToBeSplit);
 
@@ -80,6 +100,7 @@ public class MeasSplitterTest {
     public void typeC_returns_multiple_events() throws JAXBException {
         String inputPath = baseDir + "meas_results_typeC";
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
+        setupBaseEvent();
         Mockito.when(event.getBody()).thenReturn(inputXml);
         MeasCollecFile measToBeSplit = converter.convert(inputXml);
         Mockito.when(event.getMeasCollecFile()).thenReturn(measToBeSplit);

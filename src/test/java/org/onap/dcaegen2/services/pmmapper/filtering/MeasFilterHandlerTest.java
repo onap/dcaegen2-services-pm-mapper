@@ -22,10 +22,14 @@ package org.onap.dcaegen2.services.pmmapper.filtering;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -51,11 +55,9 @@ import utils.EventUtils;
 @ExtendWith(MockitoExtension.class)
 class MeasFilterHandlerTest {
 
-    private static MeasFilterConfig filterConfig;
     private static final String baseDir = "src/test/resources/filter_test/";
     private static final Path dataDirectory = Paths.get("src/test/resources/mapper_test/mapping_data/");
-    private static List<String> counters = Arrays.asList("a", "b");
-    private static  MeasConverter converter = new MeasConverter();
+    private static MeasConverter converter = new MeasConverter();
     private MeasFilterHandler objUnderTest;
     @Mock
     private HttpServerExchange exchange;
@@ -64,23 +66,14 @@ class MeasFilterHandlerTest {
 
     @BeforeEach
     void setup() {
-        filterConfig = new MeasFilterConfig();
-        Filter filter = filterConfig.new Filter();
-        filter.setDictionaryVersion("");
-        filter.setMeasTypes(counters);
-        filterConfig.setFilters(Arrays.asList(filter));
         objUnderTest = new MeasFilterHandler(new MeasConverter());
-        objUnderTest.setFilter(filterConfig.getFilters()
-                .get(0));
     }
 
     @Test
     void measTypes_byCommaSeparation() throws IOException {
         String inputPath = baseDir + "meas_results";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         String expected = EventUtils.fileContentsToString(Paths.get(inputPath + "_filtered.xml"));
-        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
-        event.setMeasCollecFile(converter.convert(inputXml));
+        Event event = generateEvent(inputPath, generateValidFilter());
 
         objUnderTest.filterByMeasType(event);
 
@@ -91,12 +84,11 @@ class MeasFilterHandlerTest {
     @Test
     void measType_byID() throws IOException {
         String inputPath = baseDir + "meas_type_and_r";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         String filteredString = EventUtils.fileContentsToString(Paths.get(inputPath + "_filtered.xml"));
-        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
-        event.setMeasCollecFile(converter.convert(inputXml));
+        Event event = generateEvent(inputPath, generateValidFilter());
         MeasCollecFile f = converter.convert(filteredString);
         String expected = converter.convert(f);
+
         objUnderTest.filterByMeasType(event);
 
         String actual = converter.convert(event.getMeasCollecFile());
@@ -104,26 +96,70 @@ class MeasFilterHandlerTest {
     }
 
     @Test
-    void no_Filters_match() {
+    void skip_mapping_when_no_Filters_match() {
         String inputPath = baseDir + "meas_results";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
-
-        Filter noMatchFilter = filterConfig.new Filter();
+        Filter noMatchFilter = new MeasFilterConfig().new Filter();
         noMatchFilter.setMeasTypes(Arrays.asList("nomatch1", "nomatch2"));
-        objUnderTest.setFilter(noMatchFilter);
+        Event event = generateEvent(inputPath, noMatchFilter);
+        List<Event> events = new ArrayList<>();
+        events.add(event);
+        events.add(event);
 
-        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
-        event.setMeasCollecFile(converter.convert(inputXml));
         assertFalse(objUnderTest.filterByMeasType(event));
+        assertFalse(objUnderTest.filterByMeasType(events));
+    }
+
+    @Test
+    void remove_events_that_does_not_match_filter() {
+        String inputPath = baseDir + "meas_type_and_r_manyInfo";
+
+        Filter matchFilter = new MeasFilterConfig().new Filter();
+        matchFilter.setMeasTypes(Arrays.asList("a", "b"));
+        Event eventMatch = generateEvent(inputPath, matchFilter);
+        Filter noMatchFilter = new MeasFilterConfig().new Filter();
+        noMatchFilter.setMeasTypes(Arrays.asList("ad", "bs"));
+        Event eventNoMatch = generateEvent(inputPath, noMatchFilter);
+
+        List<Event> events = new ArrayList<>();
+        events.add(eventMatch);
+        events.add(eventNoMatch);
+        assertTrue(objUnderTest.filterByMeasType(events));
+        assertEquals(1, events.size());
+    }
+
+    @Test
+    void skip_mapping_when_MeasData_isEmpty() {
+        String inputPath = baseDir + "meas_results";
+        Event event = generateEvent(inputPath, generateValidFilter());
+        event.getMeasCollecFile().replaceMeasData(Arrays.asList());
+
+        assertFalse(objUnderTest.filterByMeasType(event));
+    }
+
+    @Test
+    void skip_filtering_if_filter_or_meastypes_isEmpty() {
+        String inputPath = baseDir + "meas_results";
+
+        Filter emptyMeastypesFilter = new MeasFilterConfig().new Filter();
+        emptyMeastypesFilter.setMeasTypes(Arrays.asList());
+
+        Event event = generateEvent(inputPath, emptyMeastypesFilter);
+        MeasCollecFile originalMeasCollec = event.getMeasCollecFile();
+
+        assertTrue(objUnderTest.filterByMeasType(event));
+        assertEquals(originalMeasCollec,event.getMeasCollecFile());
+
+        event.setFilter(null);
+        assertTrue(objUnderTest.filterByMeasType(event));
+        assertEquals(originalMeasCollec,event.getMeasCollecFile());
     }
 
     @Test
     void multiple_measInfos_measResults() {
         String inputPath = baseDir + "meas_results_manyInfo";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         String filteredString = EventUtils.fileContentsToString(Paths.get(inputPath + "_filtered.xml"));
-        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
-        event.setMeasCollecFile(converter.convert(inputXml));
+        Event event = generateEvent(inputPath, generateValidFilter());
+
         MeasCollecFile f = converter.convert(filteredString);
         String expected = converter.convert(f);
         objUnderTest.filterByMeasType(event);
@@ -135,10 +171,9 @@ class MeasFilterHandlerTest {
     @Test
     void multiple_measInfos_measTypeAndR() {
         String inputPath = baseDir + "meas_type_and_r_manyInfo";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         String filteredString = EventUtils.fileContentsToString(Paths.get(inputPath + "_filtered.xml"));
-        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
-        event.setMeasCollecFile(converter.convert(inputXml));
+        Event event = generateEvent(inputPath, generateValidFilter());
+
         MeasCollecFile f = converter.convert(filteredString);
         String expected = converter.convert(f);
         objUnderTest.filterByMeasType(event);
@@ -147,10 +182,49 @@ class MeasFilterHandlerTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void valid_fileType() {
+        Event event = mock(Event.class);
+        when(event.getHttpServerExchange()).thenReturn(exchange);
+        when(exchange.getRequestPath()).thenReturn("Apm.xml","Cpm.xml");
+        assertTrue(objUnderTest.filterByFileType(event));
+        assertTrue(objUnderTest.filterByFileType(event));
+    }
+
+    @Test
+    void invalid_fileType() {
+        Event event = mock(Event.class);
+        List<String> invalidFiletypes = Arrays.asList("Bpm.xml","Dpm.xml","asdf","bsdf");
+        when(event.getHttpServerExchange()).thenReturn(exchange);
+        when(exchange.getRequestPath())
+            .thenReturn(invalidFiletypes.toString());
+
+        invalidFiletypes.forEach(c -> {
+            assertFalse(objUnderTest.filterByFileType(event));
+        });
+    }
+
+
     @ParameterizedTest
     @MethodSource("getValidMeas")
     void applyFilterToValidMeasurements(Event testEvent) {
         objUnderTest.filterByMeasType(testEvent);
+    }
+
+    private Event generateEvent(String inputPath, Filter filter) {
+        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
+        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
+        event.setMeasCollecFile(converter.convert(inputXml));
+        event.setFilter(filter);
+        return event;
+    }
+
+    private Filter generateValidFilter() {
+        Filter filter;
+        filter = new MeasFilterConfig().new Filter();
+        filter.setDictionaryVersion("1.0");
+        filter.setMeasTypes(Arrays.asList("a", "b"));
+        return filter;
     }
 
     static List<Event> getValidMeas() throws IOException {
@@ -159,9 +233,7 @@ class MeasFilterHandlerTest {
                 .eventsFromDirectory(Paths.get(dataDirectory.toString() + "/valid_data/"), metadata)
                 .stream()
                 .map(e -> {
-                    System.out.println(e.getBody());
                     MeasCollecFile m = converter.convert(e.getBody());
-                    System.out.println(m.getMeasData());
                     e.setMeasCollecFile(m);
                     return e;
                 })

@@ -42,7 +42,7 @@ public class DataRouterUtils {
         logger.unwrap().info("Sending processed to DataRouter");
         String baseDelete = config.getDmaapDRDeleteEndpoint();
         String subscriberIdentity = config.getSubscriberIdentity();
-        String delete = String.format("https://%s/%s/%s", baseDelete, subscriberIdentity, event.getPublishIdentity());
+        String delete = String.format("%s/%s/%s", baseDelete, subscriberIdentity, event.getPublishIdentity());
         try {
             return new RequestSender().send("DELETE", delete);
         } catch (Exception exception) {
