@@ -22,6 +22,9 @@ package org.onap.dcaegen2.services.pmmapper.filtering;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -145,6 +148,25 @@ class MeasFilterHandlerTest {
 
         String actual = converter.convert(event.getMeasCollecFile());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void valid_fileType() {
+        Event event = mock(Event.class);
+        when(event.getHttpServerExchange()).thenReturn(exchange);
+        when(exchange.getRequestPath()).thenReturn("Apm.xml","Cpm.xml");
+        assertTrue(objUnderTest.filterByFileType(event));
+        assertTrue(objUnderTest.filterByFileType(event));
+    }
+
+    @Test
+    void invalid_fileType() {
+        Event event = mock(Event.class);
+        when(event.getHttpServerExchange()).thenReturn(exchange);
+        when(exchange.getRequestPath())
+            .thenReturn("Bpm.xml","Dpm.xml","asdf","bsdf");
+        assertFalse(objUnderTest.filterByFileType(event));
+        assertFalse(objUnderTest.filterByFileType(event));
     }
 
     @ParameterizedTest

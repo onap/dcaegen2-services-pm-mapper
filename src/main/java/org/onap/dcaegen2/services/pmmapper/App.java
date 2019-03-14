@@ -35,6 +35,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.filtering.MetadataFilter;
+import org.onap.dcaegen2.services.pmmapper.filtering.MeasFilterHandler;
 import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
@@ -62,6 +63,7 @@ public class App {
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
         MetadataFilter metadataFilter = new MetadataFilter(mapperConfig);
+        MeasFilterHandler filterHandler = new MeasFilterHandler();
         Mapper mapper = new Mapper(mappingTemplate);
         XMLValidator validator = new XMLValidator(xmlSchema);
         flux.onBackpressureDrop(App::handleBackPressure)
@@ -71,6 +73,7 @@ public class App {
                 .runOn(Schedulers.newParallel(""), 1)
                 .doOnNext(event -> MDC.setContextMap(event.getMdc()))
                 .filter(metadataFilter::filter)
+                .filter(filterHandler::filterByFileType)
                 .filter(validator::validate)
                 .map(mapper::map)
                 .subscribe(event -> logger.unwrap().info("Event Processed"));

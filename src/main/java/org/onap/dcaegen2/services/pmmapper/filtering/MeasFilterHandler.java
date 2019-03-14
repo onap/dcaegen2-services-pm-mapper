@@ -50,6 +50,10 @@ public class MeasFilterHandler {
         this.converter = converter;
     }
 
+    public MeasFilterHandler() {
+        this.converter = new MeasConverter();
+    }
+
     public void setFilter(Filter filter) {
        this.filter = filter;
     }
@@ -58,7 +62,7 @@ public class MeasFilterHandler {
      * Filters each measInfo node for measTypes that match the given measTypes from filters.
      **/
     public boolean filterByMeasType(Event event) {
-      logger.unwrap().debug("Filtering the measurement file.");
+      logger.unwrap().debug("Filtering the measurement file by measTypes.");
 
         MeasCollecFile measCollecFile = event.getMeasCollecFile();
         if(filter.getMeasTypes().isEmpty() || measCollecFile.getMeasData().isEmpty()) {
@@ -87,6 +91,16 @@ public class MeasFilterHandler {
         String filteredXMl = converter.convert(measCollecFile);
         event.setBody(filteredXMl);
         return true;
+    }
+
+    /**
+     * Filters the measurement by file type. Measurement files starting with A or C are valid.
+     **/
+    public boolean filterByFileType(Event event) {
+        logger.unwrap().debug("Filtering the measurement by file type.");
+        String requestPath  = event.getHttpServerExchange().getRequestPath();
+        String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
+        return (fileName.startsWith("C") || fileName.startsWith("A"));
     }
 
     private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo,  List<MeasInfo> filteredMeasInfos) {
