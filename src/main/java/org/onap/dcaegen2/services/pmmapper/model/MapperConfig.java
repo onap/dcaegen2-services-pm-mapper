@@ -82,6 +82,14 @@ public class MapperConfig {
         return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getSubscriberId();
     }
 
+    public String getSubscriberDcaeLocation() {
+        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getLocation();
+    }
+
+    public String getPublisherTopicUrl() {
+        return this.getStreamsPublishes().getDmaapPublisher().getDmaapInfo().getTopicUrl();
+    }
+
     public boolean dmaapInfoEquals(MapperConfig mapperConfig){
         return this
                 .getStreamsSubscribes()

@@ -20,10 +20,13 @@
 package org.onap.dcaegen2.services.pmmapper.utils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -39,41 +42,46 @@ public class RequestSender {
     private static final int ERROR_START_RANGE = 300;
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(RequestSender.class));
     public static final String DELETE = "DELETE";
+    public static final String DEFAULT_CONTENT_TYPE = "application/json";
 
     /**
-     * Sends an Http GET request to a given endpoint.
-     *
-     * @return http response body
-     * @throws Exception
-     * @throws InterruptedException
+     * Works just like {@link RequestSender#send(method,urlString)}, except {@code method }
+     * is set to {@code GET} by default.
+     * @see RequestSender#send(String,String,String)
      */
-
     public String send(final String urlString) throws Exception {
         return send("GET", urlString);
     }
 
+    /**
+     * Works just like {@link RequestSender#send(method,urlString,body)}, except {@code body }
+     * is set to empty String by default.
+     * @see RequestSender#send(String,String,String)
+     */
+    public String send(String method, final String urlString) throws Exception {
+       return send(method,urlString,"");
+    }
 
     /**
-     * Sends a request to a given endpoint.
+     * Sends an http request to a given endpoint.
      * @param method of the outbound request
      * @param urlString representing given endpoint
+     * @param body of the request as json
      * @return http response body
      * @throws Exception
      */
-    public String send(String method, final String urlString) throws Exception {
+    public String send(String method, final String urlString, final String body) throws Exception {
         final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
         final UUID requestID = UUID.randomUUID();
         String result = "";
 
         for (int i = 1; i <= MAX_RETRIES; i++) {
-            URL url = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());
-            connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID.toString());
-            connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
-            connection.setRequestMethod(method);
-            logger.unwrap()
-                    .info("Sending:\n{}", connection.getRequestProperties());
+            final URL url = new URL(urlString);
+            final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
+            if(!body.isEmpty()) {
+                setMessageBody(connection, body);
+            }
+            logger.unwrap().info("Sending {} request to {} with properties {}", method, urlString, connection.getRequestProperties());
 
             try (InputStream is = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
@@ -81,15 +89,12 @@ public class RequestSender {
                         .collect(Collectors.joining("\n"));
                 int responseCode = connection.getResponseCode();
                 if (!(isWithinErrorRange(responseCode))) {
-                    logger.unwrap()
-                            .info("Received:\n{}", result);
+                    logger.unwrap().info("Received:\n{}", result);
                     break;
                 }
-
             } catch (Exception e) {
                 if (retryLimitReached(i)) {
-                    logger.unwrap()
-                            .error("Execution error: "+connection.getResponseMessage(), e);
+                    logger.unwrap().error("Execution error: "+connection.getResponseMessage(), e);
                     throw new Exception(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
                 }
             }
@@ -97,6 +102,25 @@ public class RequestSender {
             Thread.sleep(RETRY_INTERVAL);
         }
         return result;
+    }
+
+    private HttpURLConnection getHttpURLConnection(String method, URL url, UUID invocationID, UUID requestID) throws Exception {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());
+        connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID.toString());
+        connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
+        connection.setRequestMethod(method);
+
+        return connection;
+    }
+
+    private HttpURLConnection setMessageBody(HttpURLConnection connection, String body) throws IOException {
+        connection.setRequestProperty("Content-Type",DEFAULT_CONTENT_TYPE);
+        connection.setDoOutput(true);
+        OutputStream outputStream = connection.getOutputStream();
+        outputStream.write(body.getBytes(StandardCharsets.UTF_8));
+        outputStream.close();
+        return connection;
     }
 
     private boolean retryLimitReached(final int retryCount) {
