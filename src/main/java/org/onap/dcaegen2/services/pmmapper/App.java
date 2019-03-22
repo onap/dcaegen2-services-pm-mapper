@@ -38,6 +38,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.TooManyTriesException;
 import org.onap.dcaegen2.services.pmmapper.filtering.MetadataFilter;
 import org.onap.dcaegen2.services.pmmapper.filtering.MeasFilterHandler;
 import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
+import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
@@ -73,6 +74,7 @@ public class App {
         Mapper mapper = new Mapper(mappingTemplate);
         MeasSplitter splitter = new MeasSplitter(measConverter);
         XMLValidator validator = new XMLValidator(xmlSchema);
+        VESPublisher vesPublisher = new VESPublisher(mapperConfig);
 
         flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
@@ -86,6 +88,7 @@ public class App {
                 .concatMap(event -> App.split(splitter,event, mapperConfig))
                 .filter(events -> App.filter(filterHandler, events, mapperConfig))
                 .concatMap(events -> App.map(mapper, events, mapperConfig))
+                .concatMap(vesPublisher::publish)
                 .subscribe(events -> logger.unwrap().info("Event Processed"));
 
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next, mapperConfig);
