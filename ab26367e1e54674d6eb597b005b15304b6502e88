@@ -22,6 +22,30 @@
       "revId": "ab26367e1e54674d6eb597b005b15304b6502e88",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5f2775b_aa788260",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-03-25T10:21:28Z",
+      "side": 1,
+      "message": "This will be updated with the changes from DCAEGEN2-1282",
+      "parentUuid": "7e8a32fd_904eccac",
+      "range": {
+        "startLine": 92,
+        "startChar": 59,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "ab26367e1e54674d6eb597b005b15304b6502e88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
