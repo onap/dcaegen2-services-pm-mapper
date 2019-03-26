@@ -22,6 +22,7 @@ package org.onap.dcaegen2.services.pmmapper.model;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.onap.dcaegen2.services.pmmapper.config.Configurable;
 import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
@@ -32,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
-public class MapperConfig {
+public class MapperConfig implements Configurable{
 
     public static final String CLIENT_NAME = "pm-mapper";
 
@@ -161,4 +162,13 @@ public class MapperConfig {
 
     @SerializedName("pm-mapper-filter")
     MeasFilterConfig filterConfig;
+
+    @Override
+    public void reconfigure(MapperConfig mapperConfig) {
+            this.streamsSubscribes = mapperConfig.getStreamsSubscribes();
+            this.streamsPublishes = mapperConfig.getStreamsPublishes();
+            this.busControllerSubscriptionEndpoint = mapperConfig.getBusControllerSubscriptionEndpoint();
+            this.dmaapDRFeedId = mapperConfig.getDmaapDRFeedId();
+            this.dmaapDRDeleteEndpoint = mapperConfig.getDmaapDRDeleteEndpoint();
+    }
 }
