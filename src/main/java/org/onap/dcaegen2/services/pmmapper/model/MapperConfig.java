@@ -37,6 +37,21 @@ public class MapperConfig {
     public static final String CLIENT_NAME = "pm-mapper";
 
     @GSONRequired
+    @SerializedName("key_store_path")
+    private String keyStorePath;
+    @GSONRequired
+    @SerializedName("key_store_pass_path")
+    private String keyStorePassPath;
+
+    @GSONRequired
+    @SerializedName("trust_store_path")
+    private String trustStorePath;
+
+    @GSONRequired
+    @SerializedName("trust_store_pass_path")
+    private String trustStorePassPath;
+
+    @GSONRequired
     @Getter(AccessLevel.PRIVATE)
     @SerializedName("streams_subscribes")
     private StreamsSubscribes streamsSubscribes;

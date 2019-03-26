@@ -35,6 +35,10 @@ import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+
 public class RequestSender {
     private static final int MAX_RETRIES = 5;
     private static final int RETRY_INTERVAL = 1000;
@@ -79,6 +83,11 @@ public class RequestSender {
         for (int i = 1; i <= MAX_RETRIES; i++) {
             final URL url = new URL(urlString);
             final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
+
+            if(url.getProtocol().equals("https")) {
+                HttpsURLConnection.setDefaultSSLSocketFactory(SSLContext.getDefault().getSocketFactory());
+            }
+
             if(!body.isEmpty()) {
                 setMessageBody(connection, body);
             }
@@ -90,7 +99,7 @@ public class RequestSender {
                         .collect(Collectors.joining("\n"));
                 int responseCode = connection.getResponseCode();
                 if (!(isWithinErrorRange(responseCode))) {
-                    logger.unwrap().info("Server Response Received:\n{}", result);
+                    logger.unwrap().info("Response code: {}, Server Response Received:\n{}",responseCode, result);
                     break;
                 }
             } catch (Exception e) {
