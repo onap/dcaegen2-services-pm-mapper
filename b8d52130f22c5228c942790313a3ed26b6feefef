@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "383179e3_bf9f9c06",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-27T16:36:17Z",
+      "side": 1,
+      "message": "I have added the ability to disable http on the PM Mapper endpoints, however we require http for some of our external api calls, is that okay?",
+      "parentUuid": "8fa78011_37e41df3",
+      "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55189bd4_077e115b",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f72a7106_3b63df09",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-27T16:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55189bd4_077e115b",
+      "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e57207a_5e138823",
         "filename": "src/test/resources/keystore.jks.b64",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2019-03-27T00:27:44Z",
       "side": 1,
       "message": "pls create a jira ticket for the El Alto release to align with standard tls certificate distribution mechanism, removing the hardcoded cert from this repo, and following the steps here - https://wiki.onap.org/display/DW/Certificate+update+procedure+in+DCAE.\n\nRespond to this message with the Jira ticket number",
+      "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdad8761_e537aada",
+        "filename": "src/test/resources/keystore.jks.b64",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-27T16:36:17Z",
+      "side": 1,
+      "message": "This is only a dummy certificate for a unit test, we are using the real certificates in the tls container",
+      "parentUuid": "0e57207a_5e138823",
       "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
