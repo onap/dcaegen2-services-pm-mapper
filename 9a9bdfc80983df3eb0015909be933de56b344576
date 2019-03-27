@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bc242a9_cb634b13",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-27T22:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0404749_2600023c",
+      "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578a96f0_2262eaa8",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/DataRouterUtilsTest.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2019-03-27T19:22:20Z",
       "side": 1,
       "message": "the default should be https, and testing needs to cover https paths\n\nthere can be a separate test for the http path",
+      "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64203475_9bcaa7ea",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/DataRouterUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-27T22:18:20Z",
+      "side": 1,
+      "message": "Switched to https",
+      "parentUuid": "578a96f0_2262eaa8",
       "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
