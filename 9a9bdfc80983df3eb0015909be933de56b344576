@@ -22,6 +22,30 @@
       "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "729e0d07_6f6c90ed",
+        "filename": "src/test/resources/valid_mapper_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-03-27T18:55:26Z",
+      "side": 1,
+      "message": "The dmaap_dr_delete_endpoint would still be needed anyway as this is a direct call to Data Router to delete a file once we are done with it. The subscription endpoint could be removed in a dedicated commit if needed as we would also have to remove code and make some changes to the blueprint.",
+      "parentUuid": "92ad7316_a178dacc",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 90
+      },
+      "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
