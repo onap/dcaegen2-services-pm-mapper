@@ -26,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.google.gson.Gson;
 import freemarker.core.Environment;
@@ -54,6 +55,8 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.XMLParseException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
+import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.powermock.reflect.Whitebox;
 import utils.EventUtils;
@@ -64,6 +67,7 @@ class MapperTest {
 
     private static EventMetadata eventMetadata;
     private static Schema vesSchema;
+    private static MeasConverter converter;
     private Mapper objUnderTest;
 
     private static final Path schema = Paths.get("src/test/resources/mapper_test/CommonEventFormat_30.1-ONAP.json");
@@ -79,22 +83,25 @@ class MapperTest {
 
         String metadataFileContents = new String(Files.readAllBytes(metadata));
         eventMetadata = new Gson().fromJson(metadataFileContents, EventMetadata.class);
+        converter = mock(MeasConverter.class);
     }
 
     @BeforeEach
     void setup() {
-        objUnderTest = new Mapper(mapping);
+        objUnderTest = new Mapper(mapping,converter);
     }
 
     @ParameterizedTest
     @MethodSource("getValidEvents")
     void testValidEvent(Event testEvent) {
+        when(converter.convert(any(MeasCollecFile.class))).thenReturn(testEvent.getBody());
         vesSchema.validate(new JSONObject(objUnderTest.map(testEvent)));
     }
 
     @ParameterizedTest
     @MethodSource("getInvalidEvents")
     void testInvalidEvent(Event testEvent) {
+        when(converter.convert(any(MeasCollecFile.class))).thenReturn(testEvent.getBody());
         assertThrows(MappingException.class, () -> objUnderTest.map(testEvent));
     }
 
@@ -112,18 +119,19 @@ class MapperTest {
 
     @Test
     void testFailureToParse() {
-        assertThrows(XMLParseException.class, () ->
+        when(converter.convert(any(MeasCollecFile.class))).thenCallRealMethod();
+        assertThrows(MappingException.class, () ->
                 objUnderTest.map(EventUtils.makeMockEvent("not xml", eventMetadata)));
     }
 
     @Test
     void testInvalidPath() {
-        assertThrows(IllegalArgumentException.class, () -> new Mapper(Paths.get("not a path")));
+        assertThrows(IllegalArgumentException.class, () -> new Mapper(Paths.get("not a path"),converter));
     }
 
     @Test
     void testNullPath() {
-        assertThrows(NullPointerException.class, () -> new Mapper(null));
+        assertThrows(NullPointerException.class, () -> new Mapper(null,converter));
     }
 
     @Test
@@ -141,6 +149,7 @@ class MapperTest {
         List<Event> events = getValidEvents();
         List<Event> expectedEvents = objUnderTest.mapEvents(events);
         expectedEvents.forEach(event->{
+            when(converter.convert(any(MeasCollecFile.class))).thenReturn(event.getBody());
             assertTrue(event.getVes() != null);
         });
     }

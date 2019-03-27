@@ -116,7 +116,7 @@
 {
     "granularityPeriod": ${measData.measInfo.granPeriod.@endTime[0]!?datetime?long?c},
     "measuredEntityUserName": "${measData.managedElement.@userLabel[0]!}",
-    "measuredEntityDn": "${measData.managedElement.@localDn}",
+    "measuredEntityDn": "${measData.managedElement.@localDn[0]!}",
     "measuredEntitySoftwareVersion": "${measData.managedElement.@swVersion[0]!}",
     "measInfoList": <@measInfoList/>
 }
