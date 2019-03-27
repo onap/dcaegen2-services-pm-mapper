@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa78011_37e41df3",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-03-27T00:27:44Z",
+      "side": 1,
+      "message": "per the security requirements, http needs to be able to be disabled by configuration\n\neither fix that here OR write a Jira ticket about it",
+      "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55189bd4_077e115b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-03-27T00:27:44Z",
+      "side": 1,
+      "message": "the code SHOULD work without these two replace() calls, per the definition of base64 in the RFCs",
+      "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e57207a_5e138823",
+        "filename": "src/test/resources/keystore.jks.b64",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-03-27T00:27:44Z",
+      "side": 1,
+      "message": "pls create a jira ticket for the El Alto release to align with standard tls certificate distribution mechanism, removing the hardcoded cert from this repo, and following the steps here - https://wiki.onap.org/display/DW/Certificate+update+procedure+in+DCAE.\n\nRespond to this message with the Jira ticket number",
+      "revId": "b8d52130f22c5228c942790313a3ed26b6feefef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
