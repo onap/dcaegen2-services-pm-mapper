@@ -42,6 +42,7 @@ import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
+import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.onap.dcaegen2.services.pmmapper.utils.DataRouterUtils;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasSplitter;
@@ -53,6 +54,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 import reactor.core.scheduler.Schedulers;
 
+import javax.net.ssl.SSLContext;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -64,7 +67,7 @@ public class App {
     private static Path xmlSchema = Paths.get("/opt/app/pm-mapper/etc/measCollec_plusString.xsd");
     private static FluxSink<Event> fluxSink;
 
-    public static void main(String[] args) throws InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException {
+    public static void main(String[] args) throws InterruptedException, TooManyTriesException, CBSConfigException, EnvironmentConfigException, CBSServerError, MapperConfigException, IOException {
         Flux<Event> flux = Flux.create(eventFluxSink -> fluxSink = eventFluxSink);
         HealthCheckHandler healthCheckHandler = new HealthCheckHandler();
         MapperConfig mapperConfig = new ConfigHandler().getMapperConfig();
@@ -89,7 +92,7 @@ public class App {
                 .filter(events -> App.filter(filterHandler, events, mapperConfig))
                 .concatMap(events -> App.map(mapper, events, mapperConfig))
                 .concatMap(vesPublisher::publish)
-                .subscribe(events -> logger.unwrap().info("Event Processed"));
+                .subscribe(event -> App.sendEventProcessed(mapperConfig, event));
 
         DataRouterSubscriber dataRouterSubscriber = new DataRouterSubscriber(fluxSink::next, mapperConfig);
         dataRouterSubscriber.start();
@@ -97,8 +100,17 @@ public class App {
         configurables.add(dataRouterSubscriber);
         DynamicConfiguration dynamicConfiguration = new DynamicConfiguration(configurables, mapperConfig);
 
-        Undertow.builder()
-                .addHttpListener(8081, "0.0.0.0")
+        Undertow.Builder builder = Undertow.builder();
+
+        SSLContextFactory sslContextFactory = new SSLContextFactory(mapperConfig);
+        SSLContext sslContext = sslContextFactory.createSSLContext(mapperConfig);
+        SSLContext.setDefault(sslContext);
+
+        if(!mapperConfig.getDisableHttp()) {
+            builder.addHttpListener(8081, "0.0.0.0");
+        }
+
+        builder.addHttpsListener(8443, "0.0.0.0", sslContext)
                 .setHandler(Handlers.routing()
                         .add("put", "/delivery/{filename}", dataRouterSubscriber)
                         .add("get", "/healthcheck", healthCheckHandler)

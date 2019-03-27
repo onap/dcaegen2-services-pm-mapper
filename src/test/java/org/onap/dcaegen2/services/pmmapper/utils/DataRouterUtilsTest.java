@@ -33,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ProcessEventException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
@@ -45,7 +46,7 @@ import utils.EventUtils;
 
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(RequestSender.class)
+@PrepareForTest({RequestSender.class, DataRouterSubscriber.class})
 public class DataRouterUtilsTest {
 
     @Test
@@ -60,6 +61,7 @@ public class DataRouterUtilsTest {
         when(mockConnection.getInputStream()).thenReturn(new ByteArrayInputStream(serviceResponse.getBytes()));
 
         when(mockURL.openConnection()).thenReturn(mockConnection);
+        when(mockURL.getProtocol()).thenReturn("http");
         when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("dmaap-dr-node/delete/");
         when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
 
@@ -83,6 +85,7 @@ public class DataRouterUtilsTest {
                 .thenAnswer(invocationOnMock -> new ByteArrayInputStream(serviceResponse.getBytes()));
 
         when(mockURL.openConnection()).thenReturn(mockConnection);
+        when(mockURL.getProtocol()).thenReturn("http");
         when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("dmaap-dr-node/delete/");
         when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
 
