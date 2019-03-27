@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
  **/
 public class MeasFilterHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasFilterHandler.class));
+    public static final String XML_EXTENSION = "xml";
     private MeasConverter converter;
 
     public MeasFilterHandler(MeasConverter converter) {
@@ -129,7 +130,16 @@ public class MeasFilterHandler {
         logger.unwrap().debug("Filtering the measurement by file type.");
         String requestPath  = event.getHttpServerExchange().getRequestPath();
         String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
-        return (fileName.startsWith("C") || fileName.startsWith("A"));
+        return ( isXMLFile(fileName) && isValidPMType(fileName));
+    }
+
+    private boolean isValidPMType(String fileName) {
+        return fileName.startsWith("C") || fileName.startsWith("A");
+    }
+
+    private boolean isXMLFile(String fileName) {
+        String fileExtension = fileName.substring(fileName.lastIndexOf('.')+1);
+        return fileExtension.equals(XML_EXTENSION);
     }
 
     private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo,  List<MeasInfo> filteredMeasInfos, Filter filter) {
