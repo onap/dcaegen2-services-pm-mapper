@@ -150,4 +150,20 @@ public class DynamicConfigurationTest {
         verify(configurable, times(1)).reconfigure(modifiedMapperConfig);
 
     }
+
+    @Test
+    public void testMapperConfigReconfiguration() throws Exception {
+        ConfigHandler configHandler = new ConfigHandler(sender);
+        JsonObject modifiedConfigJson = new JsonParser().parse(config).getAsJsonObject();
+        modifiedConfigJson.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
+        String newConfig =  modifiedConfigJson.toString();
+
+        when(sender.send(any())).thenReturn(config,newConfig);
+
+        MapperConfig originalConfig = configHandler.getMapperConfig();
+        MapperConfig modifiedConfig = configHandler.getMapperConfig();
+
+        originalConfig.reconfigure(modifiedConfig);
+        assertEquals(originalConfig, modifiedConfig);
+    }
 }

@@ -95,6 +95,7 @@ public class App {
         dataRouterSubscriber.start();
         ArrayList<Configurable> configurables = new ArrayList<>();
         configurables.add(dataRouterSubscriber);
+        configurables.add(mapperConfig);
         DynamicConfiguration dynamicConfiguration = new DynamicConfiguration(configurables, mapperConfig);
 
         Undertow.builder()
