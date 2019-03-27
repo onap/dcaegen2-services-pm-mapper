@@ -85,7 +85,7 @@ public class DataRouterSubscriber implements HttpHandler, Configurable {
     private Random jitterGenerator;
     private Gson metadataBuilder;
     private MapperConfig config;
-    private String subscriberId;
+    public static String subscriberId;
     @NonNull
     private EventReceiver eventReceiver;
 

@@ -22,17 +22,17 @@ tosca_definitions_version: cloudify_dsl_1_3
 
 imports:
   - "http://www.getcloudify.org/spec/cloudify/3.4/types.yaml"
-  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R3/k8splugin/1.4.4/k8splugin_types.yaml"
+  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1.4.5/k8splugin_types.yaml"
 
 inputs:
   service_name:
     type: string
     description: Name of the serice
-    default: "pm-mapper"
+    default: "dcae-pm-mapper"
   tag_version:
     type: string
     description: Docker image to be used
-    default: "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:1.0-SNAPSHOT"
+    default: "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest"
   replicas:
     type: integer
     description: Number of instances
@@ -69,6 +69,14 @@ inputs:
     type: string
     description: Subscriber id in Data Router
     default: ""
+  pm_mapper_service_protocol:
+    type: string
+    description: pm mapper protocol
+    default: "https"
+  pm_mapper_service_port:
+    type: string
+    description: pm mapper host port
+    default: "8443"
   dmaap_buscontroller_service_host:
     type: string
     description: DMAAP Bus Controller host address
@@ -84,7 +92,7 @@ inputs:
   dmaap_dr_service_host:
     type: string
     description: DMAAP Data Router host address
-    default: "dmaap-dr-node.onap.svc.cluster.local"
+    default: "dmaap-dr-node"
   dmaap_dr_service_port:
     type: string
     description: DMAAP Data Router host port
@@ -92,11 +100,11 @@ inputs:
   dmaap_mr_service_host:
     type: string
     description: DMAAP Data Router host address
-    default: "message-router.onap.svc.cluster.local"
+    default: "dmaap-mr"
   dmaap_mr_service_port:
     type: string
     description: DMAAP Data Router host port
-    default: "3904"
+    default: "3905"
   dmaap_mr_topic_name:
     type: string
     description: Name of MR topic events will be published to
@@ -105,6 +113,10 @@ inputs:
     type: string
     description: PM mapper filter on measInfo, measInfoId, measType, instanceId
     default: "{ \"filters\":[]}"
+  disable_security:
+    type: boolean
+    description: Option to disable HTTPS connections
+    default: false
 
 node_templates:
   pm-mapper:
@@ -113,18 +125,25 @@ node_templates:
         start:
           inputs:
             ports:
+              - '8443:0'
               - '8080:0'
     properties:
       application_config:
+        disable_security:
+          { get_input: disable_security }
+        trust_store_path: "/opt/app/pm-mapper/etc/cert/trust.jks.b64"
+        trust_store_pass_path: "/opt/app/pm-mapper/etc/cert/trust.pass"
+        key_store_path: "/opt/app/pm-mapper/etc/cert/cert.jks.b64"
+        key_store_pass_path: "/opt/app/pm-mapper/etc/cert/cert.pass"
         buscontroller_feed_subscription_endpoint:
           { concat: ["http://", { get_input: dmaap_buscontroller_service_host },
                      ":", { get_input: dmaap_buscontroller_service_port}, "/webapi/dr_subs"]}
         dmaap_dr_feed_id:
           get_input: dmaap_dr_feed_id
         dmaap_dr_delete_endpoint:
-          { concat: ["http://", { get_input: dmaap_dr_service_host },
+          { concat: ["https://", { get_input: dmaap_dr_service_host },
                      ":", { get_input: dmaap_dr_service_port}, "/delete"]}
-        filters:
+        pm-mapper-filter:
           get_input: filter
         streams_subscribes:
           dmaap_subscriber:
@@ -140,8 +159,8 @@ node_templates:
               subscriber_id:
                 get_input: subscriber_id
               delivery_url:
-                { concat: ["http://", { get_input: service_name }, ".onap.svc.cluster.local",
-                           ":8081/delivery"]}
+                { concat: [{ get_input: pm_mapper_service_protocol },"://", { get_input: service_name }, ".onap.svc.cluster.local",
+                           ":", { get_input: pm_mapper_service_port }, "/delivery"]}
         streams_publishes:
           dmaap_publisher:
             aaf_username:
@@ -156,7 +175,7 @@ node_templates:
               client_id:
                 get_input: client_id
               topic_url:
-                { concat: ["http://", { get_input: dmaap_mr_service_host },
+                { concat: ["https://", { get_input: dmaap_mr_service_host },
                            ":", { get_input: dmaap_mr_service_port }, "/events/", { get_input: dmaap_mr_topic_name }]}
               location:
                 get_input: dcae_location
@@ -173,4 +192,7 @@ node_templates:
       dns_name: { get_input: service_name }
       log_info:
         log_directory: "/var/log/ONAP/dcaegen2/services/pm-mapper"
+      tls_info:
+        cert_directory: "/opt/app/pm-mapper/etc/cert/"
+        use_tls: true
     type: dcae.nodes.ContainerizedPlatformComponent
