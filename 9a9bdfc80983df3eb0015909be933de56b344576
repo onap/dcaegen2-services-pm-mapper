@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ad7316_a178dacc",
+        "filename": "src/test/resources/valid_mapper_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-27T18:13:40Z",
+      "side": 1,
+      "message": "Are these configuration required?\nBased on discussion with ericsson team on Dmaap meeting earlier this week, both DFC and PM-Mapper will not require to connect into DMAAP BC directly. For Dublin, the plan was use to pre-configured topic and feeds.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 90
+      },
+      "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
