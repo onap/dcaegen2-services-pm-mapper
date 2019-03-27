@@ -36,6 +36,7 @@ import java.util.stream.Stream;
 
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
 
 public class EventUtils {
 
@@ -81,7 +82,9 @@ public class EventUtils {
      * @return event with mock HttpServerExchange
      */
     public static Event makeMockEvent(String body, EventMetadata eventMetadata) {
-        return new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS), body, eventMetadata, new HashMap<>(), "");
+        Event event = new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS), body, eventMetadata, new HashMap<>(), "");
+        event.setMeasCollecFile(new MeasCollecFile());
+        return event;
     }
 
 

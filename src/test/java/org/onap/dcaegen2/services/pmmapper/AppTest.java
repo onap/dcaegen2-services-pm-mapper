@@ -155,7 +155,7 @@ class AppTest {
         List<Event> mockEvents = Arrays.asList(mockEvent);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
         Path mappingTemplate = Paths.get("src/main/resources/mapping.ftl");
-        Flux<List<Event>> mappingResult = App.map(new Mapper(mappingTemplate), mockEvents, mockConfig);
+        Flux<List<Event>> mappingResult = App.map(new Mapper(mappingTemplate, new MeasConverter()), mockEvents, mockConfig);
         mappingResult.equals(Flux.<List<Event>>empty());
     }
 
