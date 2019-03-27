@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "578a96f0_2262eaa8",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/DataRouterUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-03-27T19:22:20Z",
+      "side": 1,
+      "message": "the default should be https, and testing needs to cover https paths\n\nthere can be a separate test for the http path",
+      "revId": "9a9bdfc80983df3eb0015909be933de56b344576",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ad7316_a178dacc",
         "filename": "src/test/resources/valid_mapper_config.json",
         "patchSetId": 3
