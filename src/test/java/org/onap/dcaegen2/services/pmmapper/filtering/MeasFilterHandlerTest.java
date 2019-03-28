@@ -194,7 +194,7 @@ class MeasFilterHandlerTest {
     @Test
     void invalid_fileType() {
         Event event = mock(Event.class);
-        List<String> invalidFiletypes = Arrays.asList("Bpm.xml","Dpm.xml","asdf","bsdf");
+        List<String> invalidFiletypes = Arrays.asList("Bpm.xml","Dpm.xml","Apm.xml.gz","Apm.xm1","asdf","bsdf");
         when(event.getHttpServerExchange()).thenReturn(exchange);
         when(exchange.getRequestPath())
             .thenReturn(invalidFiletypes.toString());
