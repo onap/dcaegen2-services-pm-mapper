@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2276ae2b_face4fd9",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-03-28T15:23:08Z",
+      "side": 1,
+      "message": "Instead of assigning it to a variable call the method directly within the if statement below.",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 56
+      },
+      "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8acef35_53dbb38d",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
         "patchSetId": 2
