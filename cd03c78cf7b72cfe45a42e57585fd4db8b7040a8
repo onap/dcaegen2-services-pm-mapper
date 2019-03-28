@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21925faf_c6624be0",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be Message?",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 27
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26dec9bc_1151985c",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be Message?",
+      "range": {
+        "startLine": 106,
+        "startChar": 23,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60ccb9b9_da60e7d9",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "No need to use this {} here, since an exception last in the paramter list will be added to the trace as an exception by the logging framework. See https://www.baeldung.com/slf4j-log-exceptions.",
+      "range": {
+        "startLine": 58,
+        "startChar": 69,
+        "endLine": 58,
+        "endChar": 71
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96799abb_8aaaf681",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 72,
+        "startChar": 66,
+        "endLine": 72,
+        "endChar": 68
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c91afe8_131920f1",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 74,
+        "startChar": 55,
+        "endLine": 74,
+        "endChar": 57
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a45d9551_c4af6af6",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 87,
+        "startChar": 68,
+        "endLine": 87,
+        "endChar": 70
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d8fc8a8_84626215",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 104,
+        "startChar": 51,
+        "endLine": 104,
+        "endChar": 53
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d9f66b7_d4fda4ad",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 124,
+        "startChar": 69,
+        "endLine": 124,
+        "endChar": 71
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93aade09_4129fc63",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "See comment in SSLContextFactory.",
+      "range": {
+        "startLine": 91,
+        "startChar": 95,
+        "endLine": 91,
+        "endChar": 97
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e10425de_e711a8cc",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "Use the {} notation instead of concatenating strings.",
+      "range": {
+        "startLine": 112,
+        "startChar": 61,
+        "endLine": 112,
+        "endChar": 62
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7c41ee5_9fc0a1af",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactoryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "Maybe use static import?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4588302_3a53bf58",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactoryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-03-28T08:15:56Z",
+      "side": 1,
+      "message": "Maybe use static import?",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 22
+      },
+      "revId": "cd03c78cf7b72cfe45a42e57585fd4db8b7040a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
