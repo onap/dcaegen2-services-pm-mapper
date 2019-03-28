@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "244b0c79_224f71d2",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-03-28T16:43:54Z",
+      "side": 1,
+      "message": "this is needed if you want to log if it is not xml. In the return statement I reference this as well. It will be 2 calls to isXMLFile(fileName) if I don\u0027t have this reference",
+      "parentUuid": "2276ae2b_face4fd9",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 56
+      },
+      "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8acef35_53dbb38d",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-03-28T15:21:07Z",
       "side": 1,
       "message": "Should this not before the full stop.  If your logging to date has been using full stop, just remmove it..",
+      "range": {
+        "startLine": 136,
+        "startChar": 81,
+        "endLine": 136,
+        "endChar": 83
+      },
+      "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec26a765_713ea753",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-03-28T16:43:54Z",
+      "side": 1,
+      "message": "It\u0027s a dot for the file extension, e.g. the dot in .xml\n\nSo this really reads:\n\nPM measurement file must have an extension of .xml",
+      "parentUuid": "a8acef35_53dbb38d",
       "range": {
         "startLine": 136,
         "startChar": 81,
