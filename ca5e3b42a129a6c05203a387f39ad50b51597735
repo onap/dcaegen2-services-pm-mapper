@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "130ca0ff_943567c2",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-03-28T16:49:01Z",
+      "side": 1,
+      "message": "Perfect... I didn\u0027t see that... makes sense..",
+      "parentUuid": "244b0c79_224f71d2",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 56
+      },
+      "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8acef35_53dbb38d",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
         "patchSetId": 2
@@ -83,6 +107,30 @@
       "writtenOn": "2019-03-28T16:43:54Z",
       "side": 1,
       "message": "It\u0027s a dot for the file extension, e.g. the dot in .xml\n\nSo this really reads:\n\nPM measurement file must have an extension of .xml",
+      "parentUuid": "a8acef35_53dbb38d",
+      "range": {
+        "startLine": 136,
+        "startChar": 81,
+        "endLine": 136,
+        "endChar": 83
+      },
+      "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "accab1e2_11c7a988",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-03-28T16:49:01Z",
+      "side": 1,
+      "message": "Perfect..",
       "parentUuid": "a8acef35_53dbb38d",
       "range": {
         "startLine": 136,
