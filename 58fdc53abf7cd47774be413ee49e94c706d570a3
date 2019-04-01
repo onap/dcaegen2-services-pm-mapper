@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e9c20c5_3a9b25c9",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-01T13:08:08Z",
+      "side": 1,
+      "message": "Couldn\u0027t this be a mock, since it is a Unit test of App? Now it there is something wrong in MeasConverter, it might effect this test also.",
+      "range": {
+        "startLine": 158,
+        "startChar": 78,
+        "endLine": 158,
+        "endChar": 97
+      },
+      "revId": "58fdc53abf7cd47774be413ee49e94c706d570a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
