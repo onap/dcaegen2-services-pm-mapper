@@ -71,7 +71,7 @@ public class App {
         MetadataFilter metadataFilter = new MetadataFilter(mapperConfig);
         MeasConverter measConverter = new MeasConverter();
         MeasFilterHandler filterHandler = new MeasFilterHandler(measConverter);
-        Mapper mapper = new Mapper(mappingTemplate);
+        Mapper mapper = new Mapper(mappingTemplate, measConverter);
         MeasSplitter splitter = new MeasSplitter(measConverter);
         XMLValidator validator = new XMLValidator(xmlSchema);
         VESPublisher vesPublisher = new VESPublisher(mapperConfig);
