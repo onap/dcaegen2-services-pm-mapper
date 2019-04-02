@@ -38,6 +38,26 @@ public class MapperConfig implements Configurable{
     public static final String CLIENT_NAME = "pm-mapper";
 
     @GSONRequired
+    @SerializedName("enable_http")
+    private Boolean enableHttp;
+
+    @GSONRequired
+    @SerializedName("key_store_path")
+    private String keyStorePath;
+
+    @GSONRequired
+    @SerializedName("key_store_pass_path")
+    private String keyStorePassPath;
+
+    @GSONRequired
+    @SerializedName("trust_store_path")
+    private String trustStorePath;
+
+    @GSONRequired
+    @SerializedName("trust_store_pass_path")
+    private String trustStorePassPath;
+
+    @GSONRequired
     @Getter(AccessLevel.PRIVATE)
     @SerializedName("streams_subscribes")
     private StreamsSubscribes streamsSubscribes;
@@ -58,6 +78,10 @@ public class MapperConfig implements Configurable{
     @GSONRequired
     @SerializedName("dmaap_dr_delete_endpoint")
     private String dmaapDRDeleteEndpoint;
+
+    @GSONRequired
+    @SerializedName("pm-mapper-filter")
+    private MeasFilterConfig filterConfig;
 
     public String getBusControllerDeliveryUrl() {
         return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getDeliveryUrl();
@@ -159,9 +183,6 @@ public class MapperConfig implements Configurable{
         @SerializedName("topic_url")
         private String topicUrl;
     }
-
-    @SerializedName("pm-mapper-filter")
-    MeasFilterConfig filterConfig;
 
     @Override
     public void reconfigure(MapperConfig mapperConfig) {
