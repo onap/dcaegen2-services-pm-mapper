@@ -28,6 +28,7 @@ import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.XMLParseException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
+import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
@@ -49,9 +50,11 @@ import java.util.UUID;
 public class Mapper {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(Mapper.class));
     private Template mappingTemplate;
+    private MeasConverter converter;
 
-    public Mapper(@NonNull Path pathToTemplate) {
+    public Mapper(@NonNull Path pathToTemplate, MeasConverter converter) {
         logger.unwrap().trace("Constructing Mapper from {}", pathToTemplate);
+        this.converter = converter;
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
         configuration.setTagSyntax(Configuration.ANGLE_BRACKET_TAG_SYNTAX);
         try {
@@ -72,7 +75,8 @@ public class Mapper {
         logger.unwrap().info("Mapping event");
         NodeModel pmNodeModel;
         try {
-            pmNodeModel = NodeModel.parse(new InputSource(new StringReader(event.getBody())));
+            String measCollecFile = converter.convert(event.getMeasCollecFile());
+            pmNodeModel = NodeModel.parse(new InputSource(new StringReader(measCollecFile)));
         } catch (IOException | SAXException | ParserConfigurationException exception) {
             logger.unwrap().error("Failed to parse input as XML", exception);
             throw new XMLParseException("Failed to parse input as XML", exception);

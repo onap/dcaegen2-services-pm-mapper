@@ -132,7 +132,8 @@ class AppTest {
     public void testSplit_empty_success() {
         Event mockEvent = Mockito.mock(Event.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
-        Flux<List<Event>> splitResult = App.split(new MeasSplitter(new MeasConverter()), mockEvent, mockConfig);
+        MeasConverter mockMeasConverter = Mockito.mock(MeasConverter.class);
+        Flux<List<Event>> splitResult = App.split(new MeasSplitter(mockMeasConverter), mockEvent, mockConfig);
         splitResult.equals(Flux.<List<Event>>empty());
     }
 
@@ -152,10 +153,11 @@ class AppTest {
     @Test
     public void testMapping_empty_success() {
         Event mockEvent = Mockito.mock(Event.class);
+        MeasConverter mockMeasConverter = Mockito.mock(MeasConverter.class);
         List<Event> mockEvents = Arrays.asList(mockEvent);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
         Path mappingTemplate = Paths.get("src/main/resources/mapping.ftl");
-        Flux<List<Event>> mappingResult = App.map(new Mapper(mappingTemplate), mockEvents, mockConfig);
+        Flux<List<Event>> mappingResult = App.map(new Mapper(mappingTemplate,mockMeasConverter), mockEvents, mockConfig);
         mappingResult.equals(Flux.<List<Event>>empty());
     }
 
