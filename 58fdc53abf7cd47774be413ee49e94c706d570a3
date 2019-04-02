@@ -22,6 +22,30 @@
       "revId": "58fdc53abf7cd47774be413ee49e94c706d570a3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b110b103_795bdd23",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-04-02T09:18:29Z",
+      "side": 1,
+      "message": "changed to use mock",
+      "parentUuid": "6e9c20c5_3a9b25c9",
+      "range": {
+        "startLine": 158,
+        "startChar": 78,
+        "endLine": 158,
+        "endChar": 97
+      },
+      "revId": "58fdc53abf7cd47774be413ee49e94c706d570a3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
