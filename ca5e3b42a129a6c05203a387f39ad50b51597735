@@ -164,6 +164,30 @@
       "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8bbd0b9_80d8d0c3",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-04-02T12:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bdd0bae_b0a558eb",
+      "range": {
+        "startLine": 150,
+        "startChar": 31,
+        "endLine": 150,
+        "endChar": 78
+      },
+      "revId": "ca5e3b42a129a6c05203a387f39ad50b51597735",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
