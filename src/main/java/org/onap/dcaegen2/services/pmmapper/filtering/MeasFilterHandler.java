@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
 import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData;
@@ -45,6 +46,7 @@ import org.slf4j.LoggerFactory;
  **/
 public class MeasFilterHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasFilterHandler.class));
+    public static final String XML_EXTENSION = "xml";
     private MeasConverter converter;
 
     public MeasFilterHandler(MeasConverter converter) {
@@ -129,7 +131,24 @@ public class MeasFilterHandler {
         logger.unwrap().debug("Filtering the measurement by file type.");
         String requestPath  = event.getHttpServerExchange().getRequestPath();
         String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
-        return (fileName.startsWith("C") || fileName.startsWith("A"));
+        boolean isXML = isXMLFile(fileName);
+        boolean isValidPMType = isValidPMType(fileName);
+        if(!isXML) {
+            logger.unwrap().info("PM measurement file must have an extension of .{}", XML_EXTENSION);
+        }
+        if(!isValidPMType) {
+            logger.unwrap().info("PM measurement file type not supported");
+        }
+
+        return  isXML && isValidPMType;
+    }
+
+    private boolean isValidPMType(String fileName) {
+        return fileName.startsWith("C") || fileName.startsWith("A");
+    }
+
+    private boolean isXMLFile(String fileName) {
+        return FilenameUtils.getExtension(fileName).equals(XML_EXTENSION);
     }
 
     private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo,  List<MeasInfo> filteredMeasInfos, Filter filter) {
