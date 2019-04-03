@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d482a53_77fadd78",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-04-03T14:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80f9d2df_45a96a1b",
+      "revId": "5a99fcf0bd36f1aa537f4fa56a01d3b5f73e326f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbcf3508_c89c0483",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2019-04-03T08:57:02Z",
       "side": 1,
       "message": "A good practice is to compare with the string instead of the value, \"https\".equalsIgnoreCase(url.getProtocol()). This way there will not be a NullPointerException in case the value is null.",
+      "range": {
+        "startLine": 87,
+        "startChar": 50,
+        "endLine": 87,
+        "endChar": 58
+      },
+      "revId": "5a99fcf0bd36f1aa537f4fa56a01d3b5f73e326f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c422e5d0_d3b774f6",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-04-03T14:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbcf3508_c89c0483",
       "range": {
         "startLine": 87,
         "startChar": 50,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "745ada6b_b44902bd",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-04-03T14:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b8ff37_4243f5a0",
+      "revId": "5a99fcf0bd36f1aa537f4fa56a01d3b5f73e326f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c36d3f55_bc0cacca",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
         "patchSetId": 6
@@ -70,6 +130,30 @@
       "writtenOn": "2019-04-03T08:57:02Z",
       "side": 1,
       "message": "There will be a Sonar warning if a generic exception is used instead of a dedicated one. So best to create/use a dedicated exception here.",
+      "range": {
+        "startLine": 113,
+        "startChar": 30,
+        "endLine": 113,
+        "endChar": 39
+      },
+      "revId": "5a99fcf0bd36f1aa537f4fa56a01d3b5f73e326f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cbec1e9_78dc4a25",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-04-03T14:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c36d3f55_bc0cacca",
       "range": {
         "startLine": 113,
         "startChar": 30,
