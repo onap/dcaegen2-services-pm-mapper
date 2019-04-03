@@ -30,10 +30,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.onap.dcaegen2.services.pmmapper.exceptions.ServerResponseException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 
 public class RequestSender {
     private static final int MAX_RETRIES = 5;
@@ -79,9 +83,16 @@ public class RequestSender {
         for (int i = 1; i <= MAX_RETRIES; i++) {
             final URL url = new URL(urlString);
             final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
+
+
+            if("https".equalsIgnoreCase(url.getProtocol())) {
+                HttpsURLConnection.setDefaultSSLSocketFactory(SSLContext.getDefault().getSocketFactory());
+            }
+
             if(!body.isEmpty()) {
                 setMessageBody(connection, body);
             }
+
             logger.unwrap().info("Sending {} request to {}.", method, urlString);
 
             try (InputStream is = connection.getInputStream();
@@ -90,13 +101,13 @@ public class RequestSender {
                         .collect(Collectors.joining("\n"));
                 int responseCode = connection.getResponseCode();
                 if (!(isWithinErrorRange(responseCode))) {
-                    logger.unwrap().info("Server Response Received:\n{}", result);
+                    logger.unwrap().info("Response code: {}, Server Response Received:\n{}",responseCode, result);
                     break;
                 }
             } catch (Exception e) {
                 if (retryLimitReached(i)) {
-                    logger.unwrap().error("Execution error: "+connection.getResponseMessage(), e);
-                    throw new Exception(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
+                    logger.unwrap().error("Execution error: {}", connection.getResponseMessage(), e);
+                    throw new ServerResponseException(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
                 }
             }
 
@@ -105,7 +116,7 @@ public class RequestSender {
         return result;
     }
 
-    private HttpURLConnection getHttpURLConnection(String method, URL url, UUID invocationID, UUID requestID) throws Exception {
+    private HttpURLConnection getHttpURLConnection(String method, URL url, UUID invocationID, UUID requestID) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(DEFAULT_READ_TIMEOUT);
         connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());

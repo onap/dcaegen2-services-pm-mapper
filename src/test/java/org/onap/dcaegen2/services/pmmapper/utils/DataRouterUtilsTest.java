@@ -31,25 +31,74 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ProcessEventException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
+import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 import utils.EventUtils;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 
+@PowerMockIgnore({"org.apache.http.conn.ssl.*", "javax.net.ssl.*" , "javax.crypto.*"})
+@PrepareForTest({RequestSender.class,DataRouterSubscriber.class})
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(RequestSender.class)
 public class DataRouterUtilsTest {
+
+    private static String validConfigFileContents;
+    private static MapperConfig validConfig;
+    private SSLContextFactory sslContextFactory;
+    private static final Path validConfigPath = Paths.get("src/test/resources/valid_mapper_config.json");
 
     @Test
     public void processEventSuccessful() throws Exception {
+        validConfigFileContents = new String(Files.readAllBytes(validConfigPath));
+        JsonObject configObject = new JsonParser().parse(validConfigFileContents).getAsJsonObject();
+        validConfig = new Gson().fromJson(configObject, MapperConfig.class);
+        sslContextFactory = new SSLContextFactory(validConfig);
+
+        SSLContext sslContext = sslContextFactory.createSSLContext(validConfig);
+        SSLContext.setDefault(sslContext);
+
+        String serviceResponse = "I'm a service response ;)";
+        String publishIdentity = "12";
+        PowerMockito.mockStatic(Thread.class);
+        MapperConfig mockMapperConfig = mock(MapperConfig.class);
+        URL mockURL = mock(URL.class);
+        HttpsURLConnection mockConnection = mock(HttpsURLConnection.class, RETURNS_DEEP_STUBS);
+        when(mockConnection.getResponseCode()).thenReturn(200);
+        when(mockConnection.getInputStream()).thenReturn(new ByteArrayInputStream(serviceResponse.getBytes()));
+
+        when(mockURL.openConnection()).thenReturn(mockConnection);
+        when(mockURL.getProtocol()).thenReturn("https");
+        when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("https://dmaap-dr-node/delete/");
+        when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
+
+        PowerMockito.whenNew(URL.class).withAnyArguments().thenReturn(mockURL);
+
+        Event testEvent = EventUtils.makeMockEvent("", mock(EventMetadata.class), publishIdentity);
+        assertEquals(serviceResponse,  DataRouterUtils.processEvent(mockMapperConfig, testEvent));
+        verify(mockConnection, times(1)).setRequestMethod(RequestSender.DELETE);
+    }
+
+    @Test
+    public void processEventSuccessfulHttp() throws Exception {
         String serviceResponse = "I'm a service response ;)";
         String publishIdentity = "12";
         PowerMockito.mockStatic(Thread.class);
@@ -60,7 +109,8 @@ public class DataRouterUtilsTest {
         when(mockConnection.getInputStream()).thenReturn(new ByteArrayInputStream(serviceResponse.getBytes()));
 
         when(mockURL.openConnection()).thenReturn(mockConnection);
-        when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("dmaap-dr-node/delete/");
+        when(mockURL.getProtocol()).thenReturn("http");
+        when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("http://dmaap-dr-node/delete/");
         when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
 
         PowerMockito.whenNew(URL.class).withAnyArguments().thenReturn(mockURL);
@@ -72,17 +122,26 @@ public class DataRouterUtilsTest {
 
     @Test
     public void testNegativeResponse() throws Exception {
+        validConfigFileContents = new String(Files.readAllBytes(validConfigPath));
+        JsonObject configObject = new JsonParser().parse(validConfigFileContents).getAsJsonObject();
+        validConfig = new Gson().fromJson(configObject, MapperConfig.class);
+        sslContextFactory = new SSLContextFactory(validConfig);
+
+        SSLContext sslContext = sslContextFactory.createSSLContext(validConfig);
+        SSLContext.setDefault(sslContext);
+
         String serviceResponse = "I'm a negative service response ;)";
         String publishIdentity = "12";
         PowerMockito.mockStatic(Thread.class);
         MapperConfig mockMapperConfig = mock(MapperConfig.class);
         URL mockURL = mock(URL.class);
-        HttpURLConnection mockConnection = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        HttpsURLConnection mockConnection = mock(HttpsURLConnection.class, RETURNS_DEEP_STUBS);
         when(mockConnection.getResponseCode()).thenReturn(503);
         when(mockConnection.getInputStream())
                 .thenAnswer(invocationOnMock -> new ByteArrayInputStream(serviceResponse.getBytes()));
 
         when(mockURL.openConnection()).thenReturn(mockConnection);
+        when(mockURL.getProtocol()).thenReturn("https");
         when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("dmaap-dr-node/delete/");
         when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
 
@@ -102,10 +161,11 @@ public class DataRouterUtilsTest {
         PowerMockito.mockStatic(Thread.class);
         MapperConfig mockMapperConfig = mock(MapperConfig.class);
         URL mockURL = mock(URL.class);
-        HttpURLConnection mockConnection = mock(HttpURLConnection.class, RETURNS_DEEP_STUBS);
+        HttpsURLConnection mockConnection = mock(HttpsURLConnection.class, RETURNS_DEEP_STUBS);
         when(mockConnection.getResponseCode()).thenReturn(503);
 
         when(mockURL.openConnection()).thenReturn(mockConnection);
+        when(mockURL.getProtocol()).thenReturn("https");
         when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("dmaap-dr-node/delete/");
         when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
 
