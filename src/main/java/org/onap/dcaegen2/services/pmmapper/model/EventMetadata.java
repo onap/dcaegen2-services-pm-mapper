@@ -48,6 +48,4 @@ public class EventMetadata {
     private String fileFormatType;
     @GSONRequired
     private String fileFormatVersion;
-    @SerializedName("decompression_status")
-    private String decompressionStatus;
 }

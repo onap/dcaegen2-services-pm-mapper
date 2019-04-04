@@ -15,7 +15,7 @@
     <property name="p_thr" value="%thread"/>
     <property name="pattern" value="%nopexception${p_tim}\t${p_thr}\t${p_lvl}\t${p_log}\t${p_mdc}\t${p_msg}\t${p_exc}\t${p_mak}\t%n"/>
 
-    <variable name="logLevel" value="${LOG_LEVEL:-INFO}"/>
+    <variable name="logLevel" value="${LOG_LEVEL:-DEBUG}"/>
 
     <logger name="org.mockserver" level="${mockserver.logLevel:-OFF}"/>
 

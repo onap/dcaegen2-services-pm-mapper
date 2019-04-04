@@ -56,11 +56,6 @@ public class MetadataFilter {
 
         List<MeasFilterConfig.Filter> filters = measFilterConfig.getFilters();
 
-        if(metadata.getDecompressionStatus() != null) {
-            decompressionStatus = metadata.getDecompressionStatus();
-            logger.unwrap().debug("Decompression Status: {}", decompressionStatus);
-        }
-
         if(filters.isEmpty()) {
             logger.unwrap().info("No filter specified in config: {}", filters);
             return true;
