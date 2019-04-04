@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Henrik Andersson <henrik.b.andersson@est.tech>
+Submitted-by: Henrik Andersson <henrik.b.andersson@est.tech>
+Submitted-at: Thu, 04 Apr 2019 13:06:43 +0000
+Reviewed-on: https://gerrit.onap.org/r/83385
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
