@@ -1832,6 +1832,10 @@ public class MeasCollecFile {
                 this.measType = filteredMeasTypes;
             }
 
+            public void replaceMeasValue(List<MeasValue> filteredMeasValues) {
+                this.measValue = filteredMeasValues;
+            }
+
         }
 
 
