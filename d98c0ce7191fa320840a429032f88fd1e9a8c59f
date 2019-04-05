@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46c6174a_cf8aa1c4",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-04-05T09:27:41Z",
+      "side": 1,
+      "message": "please remove unused variables",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "d98c0ce7191fa320840a429032f88fd1e9a8c59f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d7767a9_6fd667f9",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-04-05T09:27:41Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "d98c0ce7191fa320840a429032f88fd1e9a8c59f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
