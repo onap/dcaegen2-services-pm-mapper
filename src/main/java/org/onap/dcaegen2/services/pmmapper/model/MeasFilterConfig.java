@@ -33,6 +33,7 @@ import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 @NoArgsConstructor
 public class MeasFilterConfig {
 
+  @GSONRequired
   @SerializedName("filters")
   public List<Filter> filters;
 
