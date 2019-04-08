@@ -19,9 +19,6 @@
  */
 package org.onap.dcaegen2.services.pmmapper.model;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.onap.dcaegen2.services.pmmapper.config.Configurable;
 import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 import com.google.gson.annotations.SerializedName;
@@ -68,14 +65,6 @@ public class MapperConfig implements Configurable{
     private StreamsPublishes streamsPublishes;
 
     @GSONRequired
-    @SerializedName("buscontroller_feed_subscription_endpoint")
-    private String busControllerSubscriptionEndpoint;
-
-    @GSONRequired
-    @SerializedName("dmaap_dr_feed_id")
-    private String dmaapDRFeedId;
-
-    @GSONRequired
     @SerializedName("dmaap_dr_delete_endpoint")
     private String dmaapDRDeleteEndpoint;
 
@@ -83,32 +72,8 @@ public class MapperConfig implements Configurable{
     @SerializedName("pm-mapper-filter")
     private MeasFilterConfig filterConfig;
 
-    public String getBusControllerDeliveryUrl() {
-        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getDeliveryUrl();
-    }
-
-    public String getDcaeLocation() {
-        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getLocation();
-    }
-
-    public String getBusControllerUserName() {
-        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getUsername();
-    }
-
-    public String getBusControllerPassword() {
-        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getPassword();
-    }
-
-    public URL getBusControllerSubscriptionUrl() throws MalformedURLException {
-        return new URL(this.getBusControllerSubscriptionEndpoint());
-    }
-
     public String getSubscriberIdentity(){
         return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getSubscriberId();
-    }
-
-    public String getSubscriberDcaeLocation() {
-        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getLocation();
     }
 
     public String getPublisherTopicUrl() {
@@ -187,10 +152,9 @@ public class MapperConfig implements Configurable{
     @Override
     public void reconfigure(MapperConfig mapperConfig) {
         if(!this.equals(mapperConfig)) {
+            this.filterConfig = mapperConfig.getFilterConfig();
             this.streamsSubscribes = mapperConfig.getStreamsSubscribes();
             this.streamsPublishes = mapperConfig.getStreamsPublishes();
-            this.busControllerSubscriptionEndpoint = mapperConfig.getBusControllerSubscriptionEndpoint();
-            this.dmaapDRFeedId = mapperConfig.getDmaapDRFeedId();
             this.dmaapDRDeleteEndpoint = mapperConfig.getDmaapDRDeleteEndpoint();
         }
     }

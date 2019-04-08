@@ -22,7 +22,6 @@ package org.onap.dcaegen2.services.pmmapper.filtering;
 
 import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.exceptions.*;
-import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
@@ -48,18 +47,12 @@ public class MetadataFilter {
      * @param event inbound event
      */
     public boolean filter(@NonNull Event event) {
-        String decompressionStatus;
         logger.unwrap().info("Filtering event metadata");
         EventMetadata metadata = event.getMetadata();
 
         MeasFilterConfig measFilterConfig = config.getFilterConfig();
 
         List<MeasFilterConfig.Filter> filters = measFilterConfig.getFilters();
-
-        if(metadata.getDecompressionStatus() != null) {
-            decompressionStatus = metadata.getDecompressionStatus();
-            logger.unwrap().debug("Decompression Status: {}", decompressionStatus);
-        }
 
         if(filters.isEmpty()) {
             logger.unwrap().info("No filter specified in config: {}", filters);

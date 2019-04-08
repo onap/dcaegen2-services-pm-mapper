@@ -105,7 +105,7 @@ public class DynamicConfigurationTest {
         Configurable configurable = mock(Configurable.class);
         configurables.add(configurable);
         JsonObject modifiedConfig = new JsonParser().parse(config).getAsJsonObject();
-        modifiedConfig.addProperty("dmaap_dr_feed_id","3");
+        modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
         when(sender.send(any())).thenReturn(modifiedConfig.toString());
         MapperConfig modifiedMapperConfig = configHandler.getMapperConfig();
 
@@ -137,7 +137,7 @@ public class DynamicConfigurationTest {
         Configurable configurable = mock(Configurable.class);
         configurables.add(configurable);
         JsonObject modifiedConfig = new JsonParser().parse(config).getAsJsonObject();
-        modifiedConfig.addProperty("dmaap_dr_feed_id","3");
+        modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
 
         when(sender.send(any())).thenReturn(modifiedConfig.toString());
         MapperConfig modifiedMapperConfig = configHandler.getMapperConfig();

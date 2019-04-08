@@ -19,7 +19,6 @@
  */
 package org.onap.dcaegen2.services.pmmapper.model;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 
@@ -48,6 +47,4 @@ public class EventMetadata {
     private String fileFormatType;
     @GSONRequired
     private String fileFormatVersion;
-    @SerializedName("decompression_status")
-    private String decompressionStatus;
 }

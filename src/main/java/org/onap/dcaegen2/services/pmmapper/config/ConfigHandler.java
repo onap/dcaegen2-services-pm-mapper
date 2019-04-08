@@ -66,7 +66,7 @@ public class ConfigHandler {
      * @throws CBSServerError
      * @throws MapperConfigException
      */
-    public MapperConfig getMapperConfig() throws CBSConfigException, EnvironmentConfigException,
+    public MapperConfig getMapperConfig() throws EnvironmentConfigException,
             CBSServerError, MapperConfigException {
         String mapperConfigJson = "";
         String cbsSocketAddress = EnvironmentConfig.getCBSHostName() + ":" + EnvironmentConfig.getCBSPort();

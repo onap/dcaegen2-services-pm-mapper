@@ -20,7 +20,6 @@
 
 package org.onap.dcaegen2.services.pmmapper.utils;
 
-import org.onap.dcaegen2.services.pmmapper.datarouter.DataRouterSubscriber;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ProcessEventException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
@@ -42,12 +41,11 @@ public class DataRouterUtils {
     public static String processEvent(MapperConfig config, Event event){
         logger.unwrap().info("Sending processed to DataRouter");
         String baseDelete = config.getDmaapDRDeleteEndpoint();
-        String subscriberIdentity = DataRouterSubscriber.subscriberId;
+        String subscriberIdentity = config.getSubscriberIdentity();
         String delete = String.format("%s/%s/%s", baseDelete, subscriberIdentity, event.getPublishIdentity());
         try {
             return new RequestSender().send("DELETE", delete);
         } catch (Exception exception) {
-            logger.unwrap().error("Process event failure", exception);
             throw new ProcessEventException("Process event failure", exception);
         }
     }

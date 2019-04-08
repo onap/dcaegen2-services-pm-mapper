@@ -25,10 +25,6 @@ imports:
   - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1.4.5/k8splugin_types.yaml"
 
 inputs:
-  service_name:
-    type: string
-    description: Name of the serice
-    default: "dcae-pm-mapper"
   tag_version:
     type: string
     description: Docker image to be used
@@ -48,7 +44,7 @@ inputs:
   client_role:
     type: string
     description: Client role to request secure access to topic
-    default: "ves-publisher"
+    default: "org.onap.dmaap.mr.PM_MAPPER.pub"
   client_id:
     type: string
     description: Client id for given AAF client
@@ -64,11 +60,7 @@ inputs:
   dcae_location:
     type: string
     description: DCAE location for the subscriber, used to set up routing
-    default: "location"
-  subscriber_id:
-    type: string
-    description: Subscriber id in Data Router
-    default: ""
+    default: "san-francisco"
   pm_mapper_service_protocol:
     type: string
     description: PM Mapper protocol
@@ -77,18 +69,6 @@ inputs:
     type: string
     description: PM Mapper host port
     default: "8443"
-  dmaap_buscontroller_service_host:
-    type: string
-    description: DMAAP Bus Controller host address
-    default: "dmaap-bc.onap.svc.cluster.local"
-  dmaap_buscontroller_service_port:
-    type: string
-    description: DMAAP Bus Controller host port
-    default: "8080"
-  dmaap_dr_feed_id:
-    type: string
-    description: ID of the Data Router feed that the PM Mapper will subscribe to
-    default: "1"
   dmaap_dr_service_host:
     type: string
     description: DMAAP Data Router host address
@@ -105,10 +85,6 @@ inputs:
     type: string
     description: DMAAP Message Router host port
     default: "3905"
-  dmaap_mr_topic_name:
-    type: string
-    description: Name of Message Router topic events will be published to
-    default: "pm-mapper-ves"
   filter:
     type: string
     description: PM Mapper filter on measInfo, measInfoId, measType, instanceId
@@ -140,9 +116,10 @@ node_templates:
                      ":", { get_input: dmaap_buscontroller_service_port}, "/webapi/dr_subs"]}
         dmaap_dr_feed_id:
           get_input: dmaap_dr_feed_id
+        dmaap_dr_feed_name: "bulk_pm_feed"
         dmaap_dr_delete_endpoint:
           { concat: ["https://", { get_input: dmaap_dr_service_host },
-                     ":", { get_input: dmaap_dr_service_port}, "/delete"]}
+                     ":", { get_input: dmaap_dr_service_port},"/delete"]}
         pm-mapper-filter:
           get_input: filter
         streams_subscribes:
@@ -156,11 +133,9 @@ node_templates:
                 get_input: dmaap_dr_password
               location:
                 get_input: dcae_location
-              subscriber_id:
-                get_input: subscriber_id
+              subscriber_id: "1"
               delivery_url:
-                { concat: [{ get_input: pm_mapper_service_protocol },"://", { get_input: service_name }, ".onap.svc.cluster.local",
-                           ":", { get_input: pm_mapper_service_port }, "/delivery"]}
+                { concat: [{ get_input: pm_mapper_service_protocol },"://dcae-pm-mapper:",{ get_input: pm_mapper_service_port },"/delivery"]}
         streams_publishes:
           dmaap_publisher:
             aaf_username:
@@ -175,8 +150,8 @@ node_templates:
               client_id:
                 get_input: client_id
               topic_url:
-                { concat: ["https://", { get_input: dmaap_mr_service_host },
-                           ":", { get_input: dmaap_mr_service_port }, "/events/", { get_input: dmaap_mr_topic_name }]}
+                { concat: [{ get_input: pm_mapper_service_protocol },"://",{ get_input: dmaap_mr_service_host },
+                           ":",{ get_input: dmaap_mr_service_port },"/events/PM_MAPPER"]}
               location:
                 get_input: dcae_location
       docker_config:
@@ -188,8 +163,8 @@ node_templates:
       image:
         get_input: tag_version
       replicas: { get_input: replicas }
-      name: { get_input: service_name }
-      dns_name: { get_input: service_name }
+      name: "dcae-pm-mapper"
+      dns_name: "dcae-pm-mapper"
       log_info:
         log_directory: "/var/log/ONAP/dcaegen2/services/pm-mapper"
       tls_info:
