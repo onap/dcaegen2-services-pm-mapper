@@ -2,6 +2,178 @@
   "comments": [
     {
       "key": {
+        "uuid": "1e4cc92f_8aa0e141",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "This seems a bit redundant. When the exception is sent as the last parameter it is logged with both message and stack trace. It would be better to have a message that tells more about what the class couldn\u0027t do because of the exception, e.g. \"Unable to filter by file type.\".",
+      "range": {
+        "startLine": 128,
+        "startChar": 34,
+        "endLine": 128,
+        "endChar": 56
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c44877d_5ca88927",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "This seems a bit redundant. When the exception is sent as the last parameter it is logged with both message and stack trace. It would be better to have a message that tells more about what the class couldn\u0027t do because of the exception, e.g. \"Unable to validate.\".",
+      "range": {
+        "startLine": 142,
+        "startChar": 34,
+        "endLine": 142,
+        "endChar": 56
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8b4f331_8a292d9f",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 56
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f69e963_296f0867",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "Remove unused field.",
+      "range": {
+        "startLine": 63,
+        "startChar": 25,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "917c5e65_9bc1f589",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "Keep line shorter than 120 characters. Maybe use formatting below to increase readability:\n        this.metadataBuilder \u003d new GsonBuilder() //\n                .registerTypeAdapter(EventMetadata.class, new RequiredFieldDeserializer\u003cEventMetadata\u003e()) //\n                .create();\nThe use of \" //\" at the end of a line is an IDE independent way of keeping line breaks. So when \"Shift + Ctrl + F\" is used in Eclipse the formatting of those lines will not be changed.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20be4689_80566074",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "I cannot see that limited is ever set to true. Since it is private i cannot be set from outside. Why have a variable in an if clause that will never be true?",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 23
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f153732c_9d561c26",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "Keep line shorter than 120 characters.",
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "328b11fa_5e6257bf",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "Keep line shorter than 120 characters.",
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a35f7c5_3d57f482",
         "filename": "src/main/resources/logback.xml",
         "patchSetId": 2
@@ -37,6 +209,30 @@
       "side": 1,
       "message": "We have decided to use DEBUG here in our log files, and think that Kibana should be used to filter the logs.",
       "parentUuid": "2a35f7c5_3d57f482",
+      "range": {
+        "startLine": 18,
+        "startChar": 50,
+        "endLine": 18,
+        "endChar": 55
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "286fccc2_e4b7069a",
+        "filename": "src/main/resources/logback.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3763
+      },
+      "writtenOn": "2019-04-08T08:43:17Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "7ca1782f_4b2a41b8",
       "range": {
         "startLine": 18,
         "startChar": 50,
