@@ -424,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "3dfee1dc_fff255ee",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/DataRouterUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2019-04-08T10:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36df13fd_f949557e",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "0da1bdebbfd4a33509cba905b15640580551d907",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a35f7c5_3d57f482",
         "filename": "src/main/resources/logback.xml",
         "patchSetId": 2
