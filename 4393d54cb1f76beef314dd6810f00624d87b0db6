@@ -1,0 +1,9 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: David Farrelly <david.farrelly@est.tech>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Code-Review+2: Henrik Andersson <henrik.b.andersson@est.tech>
+Submitted-by: Henrik Andersson <henrik.b.andersson@est.tech>
+Submitted-at: Tue, 09 Apr 2019 10:55:51 +0000
+Reviewed-on: https://gerrit.onap.org/r/84320
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
