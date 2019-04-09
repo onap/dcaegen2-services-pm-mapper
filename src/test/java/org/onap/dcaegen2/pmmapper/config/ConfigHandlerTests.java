@@ -25,6 +25,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -48,6 +50,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
@@ -114,8 +118,24 @@ public class ConfigHandlerTests {
 
     @Test
     public void mapper_parse_valid_json_missing_attributes() throws Exception {
-        when(sender.send(anyString())).thenReturn(getFileContents("incomplete_mapper_config.json"));
-        assertThrows(MapperConfigException.class, this::getMapperConfig);
+        Map<String,String> invalidConfigs = new HashMap<>();
+        invalidConfigs.put("streams_subscribes", "{}");
+        invalidConfigs.put("streams_publishes", "{}");
+        invalidConfigs.put("streams_publishes", null);
+        invalidConfigs.remove("streams_publishes");
+        invalidConfigs.put("pm-mapper-filter", null);
+        invalidConfigs.put("pm-mapper-filter", "{}");
+        invalidConfigs.put("pm-mapper-filter", "{ \"filters\": null},");
+        invalidConfigs.put("pm-mapper-filter", "{ \"filters\": [{\"pmDefVsn\": \"V9\"}] },");
+
+        invalidConfigs.forEach( (k,v) -> {
+            try {
+                when(sender.send(anyString())).thenReturn( getInvalidConfig(k,v));
+                assertThrows(MapperConfigException.class, this::getMapperConfig);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private MapperConfig getMapperConfig()
@@ -134,6 +154,12 @@ public class ConfigHandlerTests {
             }
         }
         return fileAsString;
+    }
+
+    private String getInvalidConfig(String validKey, String invalidValue) {
+        JsonObject invalidConfigJson = new JsonParser().parse(validMapperConfig).getAsJsonObject();
+        invalidConfigJson.addProperty(validKey, invalidValue);
+        return invalidConfigJson.toString();
     }
 
 }

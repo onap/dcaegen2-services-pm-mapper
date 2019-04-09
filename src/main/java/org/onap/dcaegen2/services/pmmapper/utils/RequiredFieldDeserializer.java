@@ -25,8 +25,13 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
+import lombok.NonNull;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 
 /**
@@ -38,20 +43,35 @@ public class RequiredFieldDeserializer<T> implements JsonDeserializer<T> {
     @Override
     public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         T obj = new Gson().fromJson(jsonElement, type);
-        for (Field field : obj.getClass().getDeclaredFields()) {
-            if (field.getAnnotation(GSONRequired.class) != null) {
-                field.setAccessible(true);
-                try {
-                    if (field.get(obj) == null) {
-                        throw new JsonParseException(String.format("Field: '%s', is required but not found.", field.getName()));
-                    }
-                } catch (Exception exception) {
-                    throw new JsonParseException("Failed to check fields.", exception);
-                }
+        validateRequiredFields(obj.getClass().getDeclaredFields(), obj);
+        return obj;
+    }
+
+    private void validateRequiredFields(@NonNull Field[] fields, @NonNull Object pojo) {
+        if (pojo instanceof List) {
+            final List<?> pojoList = (List<?>) pojo;
+            for (final Object pojoListPojo : pojoList) {
+                validateRequiredFields(pojoListPojo.getClass().getDeclaredFields(), pojoListPojo);
             }
         }
 
-        return obj;
+        Stream.of(fields)
+            .filter(field -> field.getAnnotation(GSONRequired.class) != null)
+            .forEach(field -> {
+                try {
+                    field.setAccessible(true);
+                    Object fieldObj = Optional.ofNullable(field.get(pojo))
+                        .orElseThrow(()-> new JsonParseException(
+                            String.format("Field '%s' in class '%s' is required but not found.",
+                            field.getName(), pojo.getClass().getSimpleName())));
+
+                    Field[] declaredFields = fieldObj.getClass().getDeclaredFields();
+                    validateRequiredFields(declaredFields, fieldObj);
+                }
+                catch (Exception exception) {
+                    throw new JsonParseException("Failed to check fields.", exception);
+                }
+            });
     }
 
 }
