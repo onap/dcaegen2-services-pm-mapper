@@ -183,6 +183,20 @@ class MeasFilterHandlerTest {
     }
 
     @Test
+    void multiple_measValues() {
+        String inputPath = baseDir + "meas_type_and_r_manyMeasvalue";
+        String filteredString = EventUtils.fileContentsToString(Paths.get(inputPath + "_filtered.xml"));
+        Event event = generateEvent(inputPath, generateValidFilter());
+
+        MeasCollecFile f = converter.convert(filteredString);
+        String expected = converter.convert(f);
+        objUnderTest.filterByMeasType(event);
+
+        String actual = converter.convert(event.getMeasCollecFile());
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void valid_fileType() {
         Event event = mock(Event.class);
         when(event.getHttpServerExchange()).thenReturn(exchange);

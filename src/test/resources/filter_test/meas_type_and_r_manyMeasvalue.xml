@@ -1,0 +1,36 @@
+<measCollecFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
+    <fileHeader fileFormatVersion="32.435 V10.0" vendorName="FooBar Ltd" dnPrefix="some dnPrefix">
+        <fileSender localDn="Dublin"/>
+        <measCollec beginTime="2018-10-02T12:00:00+01:00"/>
+    </fileHeader>
+    <measData>
+        <managedElement localDn="Dublin" swVersion="r0.1"/>
+        <measInfo measInfoId="some measInfoId">
+            <job jobId="jobId"/>
+            <granPeriod duration="PT900S" endTime="2018-10-02T12:15:00Z"/>
+            <repPeriod duration="PT900S"/>
+            <measTypes></measTypes>
+            <measType p="1">a</measType>
+            <measType p="2">b</measType>
+            <measType p="3">c</measType>
+            <measValue measObjLdn="some measObjLdn 1">
+                <r p="1">1</r>
+                <r p="2">2</r>
+                <suspect>false</suspect>
+            </measValue>
+            <measValue measObjLdn="some measObjLdn 2">
+                <r p="88">88</r>
+                <r p="99">99</r>
+                <suspect>false</suspect>
+            </measValue>
+            <measValue measObjLdn="some measObjLdn 3">
+                <r p="1">111</r>
+                <r p="2">222</r>
+                <suspect>false</suspect>
+            </measValue>
+        </measInfo>
+    </measData>
+    <fileFooter>
+        <measCollec endTime="2018-10-02T12:15:00+01:00"/>
+    </fileFooter>
+</measCollecFile>

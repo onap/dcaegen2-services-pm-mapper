@@ -22,6 +22,8 @@ package org.onap.dcaegen2.services.pmmapper.filtering;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -151,29 +153,36 @@ public class MeasFilterHandler {
         return FilenameUtils.getExtension(fileName).equals(XML_EXTENSION);
     }
 
-    private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo,  List<MeasInfo> filteredMeasInfos, Filter filter) {
-        MeasValue currentMeasValue = currentMeasInfo.getMeasValue()
-                .get(0);
-        List<R> measResultsRNodes = currentMeasValue.getR();
-        Map<BigInteger, R> mappedR = measResultsRNodes.stream()
-                .collect(Collectors.toMap(R::getP, Function.identity()));
-        List<R> filteredRs = new ArrayList<>();
-        List<MeasType> filteredMeasTypes = currentMeasInfo.getMeasType()
-                .stream().filter(mt -> {
-                    List<String> measTypeFilters = filter.getMeasTypes();
-                    if (measTypeFilters.contains(mt.getValue())) {
-                        filteredRs.add(mappedR.get(mt.getP()));
-                        return true;
-                    }
-                    return false;
-                })
+    private boolean hasMatchingResults(List<MeasType> filteredMeasTypes, MeasValue measValue ) {
+        List<R> filteredResults = new ArrayList<>();
+
+        filteredMeasTypes.forEach( mst ->
+            measValue.getR().stream()
+                .filter(r -> mst.getP().equals(r.getP()))
+                .findFirst()
+                .ifPresent(filteredResults::add)
+        );
+
+        boolean hasResults  = !filteredResults.isEmpty();
+        if(hasResults) {
+           measValue.replaceR(filteredResults);
+        }
+       return hasResults;
+    }
+
+    private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo, List<MeasInfo> filteredMeasInfos, Filter filter) {
+        List<MeasType> filteredMeasTypes = currentMeasInfo.getMeasType().stream()
+                .filter(mt -> filter.getMeasTypes().contains(mt.getValue()))
                 .collect(Collectors.toList());
-        if (!filteredMeasTypes.isEmpty()) {
+
+        if(!filteredMeasTypes.isEmpty()) {
+            List<MeasValue> filteredMeasValues = currentMeasInfo.getMeasValue().stream()
+                    .filter( mv -> hasMatchingResults(filteredMeasTypes, mv))
+                    .collect(Collectors.toList());
             currentMeasInfo.replaceMeasType(filteredMeasTypes);
-            currentMeasValue.replaceR(filteredRs);
+            currentMeasInfo.replaceMeasValue(filteredMeasValues);
             filteredMeasInfos.add(currentMeasInfo);
         }
-
     }
 
     private void setMeasInfosFromMeasTypes(MeasInfo currentMeasInfo, List<MeasInfo> filteredMeasInfos, Filter filter) {
