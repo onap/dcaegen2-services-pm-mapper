@@ -48,7 +48,7 @@ inputs:
   client_id:
     type: string
     description: Client id for given AAF client
-    default: "ves-pub-1"
+    default: "dcae@dcae.onap.org"
   dmaap_dr_username:
     type: string
     description: DMAAP Data Router user name
@@ -61,6 +61,10 @@ inputs:
     type: string
     description: DCAE location for the subscriber, used to set up routing
     default: "san-francisco"
+  subscriber_id:
+    type: string
+    description: Subscriber id in Data Router
+    default: ""
   pm_mapper_service_protocol:
     type: string
     description: PM Mapper protocol
@@ -77,6 +81,10 @@ inputs:
     type: string
     description: DMAAP Data Router host port
     default: "8443"
+  dmaap_mr_service_protocol:
+    type: string
+    description: DMAAP Message Router protocol
+    default: "https"
   dmaap_mr_service_host:
     type: string
     description: DMAAP Message Router host address
@@ -88,7 +96,7 @@ inputs:
   filter:
     type: string
     description: PM Mapper filter on measInfo, measInfoId, measType, instanceId
-    default: "{ \"filters\":[]}"
+    default: { "filters":[]}
   enable_http:
     type: boolean
     description: Option to turn on HTTP connections
@@ -110,12 +118,7 @@ node_templates:
         trust_store_path: "/opt/app/pm-mapper/etc/cert/trust.jks.b64"
         trust_store_pass_path: "/opt/app/pm-mapper/etc/cert/trust.pass"
         key_store_path: "/opt/app/pm-mapper/etc/cert/cert.jks.b64"
-        key_store_pass_path: "/opt/app/pm-mapper/etc/cert/cert.pass"
-        buscontroller_feed_subscription_endpoint:
-          { concat: ["http://", { get_input: dmaap_buscontroller_service_host },
-                     ":", { get_input: dmaap_buscontroller_service_port}, "/webapi/dr_subs"]}
-        dmaap_dr_feed_id:
-          get_input: dmaap_dr_feed_id
+        key_store_pass_path: "/opt/app/pm-mapper/etc/cert/jks.pass"
         dmaap_dr_feed_name: "bulk_pm_feed"
         dmaap_dr_delete_endpoint:
           { concat: ["https://", { get_input: dmaap_dr_service_host },
@@ -133,7 +136,8 @@ node_templates:
                 get_input: dmaap_dr_password
               location:
                 get_input: dcae_location
-              subscriber_id: "1"
+              subscriber_id:
+                get_input: subscriber_id
               delivery_url:
                 { concat: [{ get_input: pm_mapper_service_protocol },"://dcae-pm-mapper:",{ get_input: pm_mapper_service_port },"/delivery"]}
         streams_publishes:
@@ -150,7 +154,7 @@ node_templates:
               client_id:
                 get_input: client_id
               topic_url:
-                { concat: [{ get_input: pm_mapper_service_protocol },"://",{ get_input: dmaap_mr_service_host },
+                { concat: [{ get_input: dmaap_mr_service_protocol },"://",{ get_input: dmaap_mr_service_host },
                            ":",{ get_input: dmaap_mr_service_port },"/events/PM_MAPPER"]}
               location:
                 get_input: dcae_location
@@ -162,7 +166,7 @@ node_templates:
           type: https
       image:
         get_input: tag_version
-      replicas: { get_input: replicas }
+      replicas: 1
       name: "dcae-pm-mapper"
       dns_name: "dcae-pm-mapper"
       log_info:
