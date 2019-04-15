@@ -171,7 +171,7 @@ class AppTest {
         String metadataFileContents = new String(Files.readAllBytes(metadata));
         eventMetadata = new Gson().fromJson(metadataFileContents, EventMetadata.class);
 
-        Path testFile = Paths.get(dataDirectory + "/invalid_data/no_managed_element.xml");
+        Path testFile = Paths.get("src/test/resources/xml_validator_test/test_data/invalid/no_managed_element.xml");
         Event mockEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testFile), eventMetadata);
 
         boolean result = App.validate(mockValidator, mockEvent, mockConfig);

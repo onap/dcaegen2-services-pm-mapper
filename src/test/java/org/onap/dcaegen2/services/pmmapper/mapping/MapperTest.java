@@ -98,13 +98,6 @@ class MapperTest {
         vesSchema.validate(new JSONObject(objUnderTest.map(testEvent)));
     }
 
-    @ParameterizedTest
-    @MethodSource("getInvalidEvents")
-    void testInvalidEvent(Event testEvent) {
-        when(converter.convert(any(MeasCollecFile.class))).thenReturn(testEvent.getBody());
-        assertThrows(MappingException.class, () -> objUnderTest.map(testEvent));
-    }
-
     @Test
     void testFailureToProcess() throws IOException, TemplateException {
         Template mappingTemplateMock = mock(Template.class, RETURNS_DEEP_STUBS);
