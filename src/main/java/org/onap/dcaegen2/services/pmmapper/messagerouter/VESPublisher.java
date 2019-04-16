@@ -61,6 +61,7 @@ public class VESPublisher {
     private void publish(String ves) {
         try {
             String topicUrl = config.getPublisherTopicUrl();
+            ves = ves.replaceAll("\n", "");
             sender.send("POST", topicUrl, ves);
         } catch (Exception e) {
             throw new MRPublisherException(e.getMessage(), e);
