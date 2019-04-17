@@ -149,6 +149,14 @@ public class MapperConfig implements Configurable{
         private String topicUrl;
     }
 
+    public String getPublisherUserName() {
+        return this.getStreamsPublishes().getDmaapPublisher().getDmaapInfo().getAafUsername();
+    }
+
+    public String getPublisherPassword() {
+        return this.getStreamsPublishes().getDmaapPublisher().getDmaapInfo().getAafPassword();
+    }
+
     @Override
     public void reconfigure(MapperConfig mapperConfig) {
         if(!this.equals(mapperConfig)) {
