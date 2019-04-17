@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import org.jboss.logging.MDC;
 
 public class RequestSender {
     private static final int MAX_RETRIES = 5;
@@ -77,7 +79,8 @@ public class RequestSender {
      */
     public String send(String method, final String urlString, final String body) throws Exception {
         final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
-        final UUID requestID = UUID.randomUUID();
+        String requestID =  Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.REQUEST_ID))
+            .orElse( UUID.randomUUID().toString());
         String result = "";
 
         for (int i = 1; i <= MAX_RETRIES; i++) {
@@ -116,10 +119,10 @@ public class RequestSender {
         return result;
     }
 
-    private HttpURLConnection getHttpURLConnection(String method, URL url, UUID invocationID, UUID requestID) throws IOException {
+    private HttpURLConnection getHttpURLConnection(String method, URL url, UUID invocationID, String requestID) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(DEFAULT_READ_TIMEOUT);
-        connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID.toString());
+        connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID);
         connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID.toString());
         connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
         connection.setRequestMethod(method);

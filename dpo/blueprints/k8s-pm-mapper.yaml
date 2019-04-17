@@ -155,7 +155,7 @@ node_templates:
                 get_input: client_id
               topic_url:
                 { concat: [{ get_input: dmaap_mr_service_protocol },"://",{ get_input: dmaap_mr_service_host },
-                           ":",{ get_input: dmaap_mr_service_port },"/events/PM_MAPPER"]}
+                           ":",{ get_input: dmaap_mr_service_port },"/events/topic.org.onap.dmaap.mr.PM_MAPPER"]}
               location:
                 get_input: dcae_location
       docker_config:
