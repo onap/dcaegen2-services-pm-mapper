@@ -20,6 +20,8 @@
 
 package org.onap.dcaegen2.services.pmmapper.messagerouter;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 import org.onap.dcaegen2.services.pmmapper.exceptions.MRPublisherException;
@@ -61,7 +63,12 @@ public class VESPublisher {
     private void publish(String ves) {
         try {
             String topicUrl = config.getPublisherTopicUrl();
-            sender.send("POST", topicUrl, ves);
+            ves = ves.replaceAll("\n", "");
+            String userCredentials = this.config.getPublisherUserName() + ":" +
+                this.config.getPublisherPassword();
+            String encodedCredentials = Base64.getEncoder()
+                .encodeToString(userCredentials.getBytes(StandardCharsets.UTF_8));
+            sender.send("POST", topicUrl, ves, encodedCredentials);
         } catch (Exception e) {
             throw new MRPublisherException(e.getMessage(), e);
         }
