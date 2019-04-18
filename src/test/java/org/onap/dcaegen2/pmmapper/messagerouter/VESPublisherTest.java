@@ -67,7 +67,7 @@ public class VESPublisherTest {
 
         Flux<Event> flux = sut.publish(events);
 
-        verify(sender, times(3)).send(Mockito.anyString(),Mockito.anyString(), Mockito.anyString());
+        verify(sender, times(3)).send(Mockito.anyString(),Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
         StepVerifier.create(flux)
             .expectNextMatches(event::equals)
             .expectComplete()
@@ -79,11 +79,12 @@ public class VESPublisherTest {
         Event event = mock(Event.class);
         List<Event> events  = Arrays.asList(event,event,event);
         when(event.getVes()).thenReturn(ves);
-        when(sender.send("POST",topicURL,ves)).thenThrow(Exception.class);
+        when(sender.send("POST",topicURL,ves,"base64encoded")).thenThrow(Exception.class);
 
         Flux<Event> flux = sut.publish(events);
 
         StepVerifier.create(flux)
+        .expectNext(events.get(0))
             .verifyComplete();
     }
 }

@@ -118,6 +118,12 @@ public class MapperConfig implements Configurable{
         @GSONRequired
         @SerializedName("dmaap_info")
         DmaapInfo dmaapInfo;
+
+        @SerializedName("aaf_username")
+        private String aafUsername;
+
+        @SerializedName("aaf_password")
+        private String aafPassword;
     }
 
     @Getter
@@ -133,12 +139,6 @@ public class MapperConfig implements Configurable{
         @SerializedName("subscriber_id")
         private String subscriberId;
 
-        @SerializedName("aaf_username")
-        private String aafUsername;
-
-        @SerializedName("aaf_password")
-        private String aafPassword;
-
         @SerializedName("client_role")
         private String clientRole;
 
@@ -147,6 +147,14 @@ public class MapperConfig implements Configurable{
 
         @SerializedName("topic_url")
         private String topicUrl;
+    }
+
+    public String getPublisherUserName() {
+        return this.getStreamsPublishes().getDmaapPublisher().getAafUsername();
+    }
+
+    public String getPublisherPassword() {
+        return this.getStreamsPublishes().getDmaapPublisher().getAafPassword();
     }
 
     @Override
