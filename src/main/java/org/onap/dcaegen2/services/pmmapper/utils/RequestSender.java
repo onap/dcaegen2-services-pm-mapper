@@ -89,7 +89,8 @@ public class RequestSender {
      * @throws Exception
      */
     public String send(String method, final String urlString, final String body, final String encodedCredentials) throws Exception {
-        final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
+       String invocationID = Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.INVOCATION_ID))
+            .orElse(logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS).toString());
         String requestID =  Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.REQUEST_ID))
             .orElse( UUID.randomUUID().toString());
         String result = "";
@@ -134,7 +135,7 @@ public class RequestSender {
         return result;
     }
 
-    private HttpURLConnection getHttpURLConnection(String method, URL url, UUID invocationID, String requestID) throws IOException {
+    private HttpURLConnection getHttpURLConnection(String method, URL url, String invocationID, String requestID) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(DEFAULT_READ_TIMEOUT);
         connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID);
