@@ -18,6 +18,7 @@
   SPDX-License-Identifier: Apache-2.0
   ============LICENSE_END=========================================================
  -->
+<#compress>
 <#assign fileHeader = xml.measCollecFile.fileHeader>
 <#assign fileFooter = xml.measCollecFile.fileFooter>
 <#assign measData = xml.measCollecFile.measData>
@@ -129,3 +130,4 @@
     "measDataCollection": <@measDataCollection/>
 }
 </#macro>
+</#compress>
