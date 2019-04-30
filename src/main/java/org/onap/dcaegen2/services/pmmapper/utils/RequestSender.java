@@ -89,7 +89,8 @@ public class RequestSender {
      * @throws Exception
      */
     public String send(String method, final String urlString, final String body, final String encodedCredentials) throws Exception {
-        final UUID invocationID = logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS);
+        final UUID invocationID =  Optional.ofNullable(UUID.fromString((String)MDC.get(ONAPLogConstants.MDCs.INVOCATION_ID)))
+            .orElse(logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS));
         String requestID =  Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.REQUEST_ID))
             .orElse( UUID.randomUUID().toString());
         String result = "";
