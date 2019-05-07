@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc75a15_5224ed57",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-05-07T21:09:21Z",
+      "side": 1,
+      "message": "1.4.13",
+      "range": {
+        "startLine": 25,
+        "startChar": 119,
+        "endLine": 25,
+        "endChar": 121
+      },
+      "revId": "b9ec92082ae99282de3e240fff13085d261c204c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
