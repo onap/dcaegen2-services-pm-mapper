@@ -22,7 +22,8 @@ tosca_definitions_version: cloudify_dsl_1_3
 
 imports:
   - "http://www.getcloudify.org/spec/cloudify/3.4/types.yaml"
-  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1.4.5/k8splugin_types.yaml"
+  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1
+  .4.12/k8splugin_types.yaml"
 
 inputs:
   tag_version:
@@ -88,7 +89,7 @@ inputs:
   dmaap_mr_service_host:
     type: string
     description: DMAAP Message Router host address
-    default: "dmaap-mr"
+    default: "message-router"
   dmaap_mr_service_port:
     type: string
     description: DMAAP Message Router host port
