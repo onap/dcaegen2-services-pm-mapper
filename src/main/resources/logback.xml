@@ -25,7 +25,7 @@
         </encoder>
     </appender>
 
-    <appender name="ROLLING-FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logPath}/${outputFilename}.log</file>
         <encoder>
             <pattern>${pattern}</pattern>
