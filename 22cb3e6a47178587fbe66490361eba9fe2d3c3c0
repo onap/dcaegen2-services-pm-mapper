@@ -22,6 +22,29 @@
       "revId": "22cb3e6a47178587fbe66490361eba9fe2d3c3c0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54dd7b6b_ca61f6ba",
+        "filename": "dpo/spec/pmmapper-component-spec.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5064
+      },
+      "writtenOn": "2019-06-26T13:57:00Z",
+      "side": 1,
+      "message": "should this be 1s",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "22cb3e6a47178587fbe66490361eba9fe2d3c3c0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
