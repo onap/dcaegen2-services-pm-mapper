@@ -18,15 +18,7 @@ node_types:
   policy.nodes.dcaegen2.services.pm-mapper:
     derived_from: policy.nodes.Root
     properties:
-      buscontroller_feed_subscription_endpoint:
+      pm-mapper-filter:
         type: string
-        description: DMAAP Bus Controller subscription endpoint
-      dmaap_dr_delete_endpoint:
-        type: string
-        description: DMAAP Data Router endpoint to delete file
-      dmaap_dr_feed_id:
-        type: string
-        description: ID of the data router feed that the PM Mapper will subscribe to
-      policy:
-        type: string
-        description: PM Mapper policy JSON string
+        description: PM mapper filter on measInfo, measInfoId, measType, instanceId
+
