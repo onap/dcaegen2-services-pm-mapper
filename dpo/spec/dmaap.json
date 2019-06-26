@@ -4,10 +4,10 @@
     "aaf_password": "password",
     "type": "message_router",
     "dmaap_info": {
-      "client_role": "ves-publisher",
-      "client_id": "ves-pub-1",
-      "location": "location",
-      "topic_url": "http://message-router.onap.svc.cluster.local:3904/events/pm-mapper-ves"
+      "client_role": "org.onap.dmaap.mr.PM_MAPPER.pub",
+      "client_id": "dcae@dcae.onap.org",
+      "location": "san-francisco",
+      "topic_url": "https://message-router:3905//events/org.onap.dmaap.mr.PM_MAPPER"
     }
   },
   "pm_mapper_subscribe_dr": {
@@ -15,9 +15,9 @@
     "dmaap_info": {
       "username": "username",
       "password": "password",
-      "location": "location",
-      "delivery_url": "/delivery",
-      "subscriber_id": ""
+      "location": "san-francisco",
+      "delivery_url": "https://dcae-pm-mapper:8443/delivery",
+      "subscriber_id": "1"
     }
   }
 }
