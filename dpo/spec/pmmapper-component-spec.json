@@ -1,7 +1,7 @@
 {
   "self": {
     "name": "dcaegen2.services.pm-mapper",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "description": "Docker application to map bulk PM files to VES events",
     "component_type": "docker"
   },
@@ -30,19 +30,41 @@
   },
   "auxilary": {
     "healthcheck": {
-      "type": "http",
-      "interval": "30s",
+      "type": "https",
+      "interval": "15s",
       "timeout": "10s",
       "endpoint": "/healthcheck"
     },
     "policy": {
       "trigger_type": "docker",
       "script_path": "/opt/app/reconfigure.sh"
-    }
+    },
+    "volumes": [
+      {
+        "container": {
+          "bind": "/opt/app/pm-mapper/etc/cert/"
+        },
+        "host": {
+          "path": "/opt/app/pm-mapper/etc/cert/"
+        }
+      },
+      {
+        "container": {
+          "bind": "/var/log/ONAP/dcaegen2/services/pm-mapper"
+        },
+        "host": {
+          "path": "/var/log/ONAP/dcaegen2/services/pm-mapper"
+        }
+      }
+    ],
+    "ports": [
+      "8443:0",
+      "8001:0"
+    ]
   },
   "artifacts": [
     {
-      "uri": "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:1.0-SNAPSHOT",
+      "uri": "nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest",
       "type": "docker image"
     }
   ],
@@ -58,9 +80,9 @@
       "required": true
     },
     {
-      "name": "buscontroller_feed_subscription_endpoint",
-      "value": "http://dmaap-bc.onap.svc.cluster.local:8080/webapi/dr_subs",
-      "description": "DMAAP Bus Controller subscription endpoint",
+      "name": "enable_http",
+      "value": "true",
+      "description": "Option to turn on HTTP connections",
       "designer_editable": true,
       "sourced_at_deployment": false,
       "policy_editable": true,
@@ -68,18 +90,50 @@
       "required": true
     },
     {
-      "name": "dmaap_dr_feed_id",
-      "value": "bulk_pm_feed",
-      "description": "ID of the data router feed that the PM Mapper will subscribe to",
+      "name": "",
+      "value": "",
+      "description": "",
       "designer_editable": true,
       "sourced_at_deployment": false,
       "policy_editable": true,
       "type": "string",
       "required": true
+    },
+    {
+      "name": "trust_store_path",
+      "value": "/opt/app/pm-mapper/etc/cert/trust.jks.b64",
+      "description": "Points to private key store file",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "trust_store_pass_path",
+      "value": "/opt/app/pm-mapper/etc/cert/trust.pass",
+      "description": "File which contains password for the key store",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "key_store_path",
+      "value": "/opt/app/pm-mapper/etc/cert/cert.jks.b64",
+      "description": "Points to trust store file which contains trusted client certificates and/or CAs",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "key_store_pass_path",
+      "value": "/opt/app/pm-mapper/etc/cert/jks.pass",
+      "description": "File which contains password for the trust store",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
     },
     {
       "name": "dmaap_dr_delete_endpoint",
-      "value": "http://dmaap-dr-node.onap.svc.cluster.local:8443/delete",
+      "value": "https://dmaap-dr-node:8443/delete",
       "description": "DMAAP Data Router endpoint to delete file",
       "designer_editable": true,
       "sourced_at_deployment": false,
@@ -88,20 +142,10 @@
       "required": true
     },
     {
-      "name": "filter",
+      "name": "pm-mapper-filter",
       "value": "{ \"filters\":[]}",
       "description": "PM mapper filter on measInfo, measInfoId, measType, instanceId",
       "designer_editable": true,
-      "sourced_at_deployment": false,
-      "policy_editable": false,
-      "type": "string",
-      "required": true
-    },
-    {
-      "name": "policy",
-      "value": "",
-      "description": "PM Mapper policy JSON string",
-      "designer_editable": false,
       "sourced_at_deployment": false,
       "policy_editable": true,
       "type": "string",
