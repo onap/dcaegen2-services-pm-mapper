@@ -1,3 +1,10 @@
+data_types:
+  onap.datatypes.monitoring.pm-mapper-filter:
+    properties:
+      filter configuration:
+        type: string
+        description: Filter configuration needs to be applied
+
 policy_types:
   onap.policies.Monitoring:
     derived_from: tosca.policies.Root
@@ -21,4 +28,5 @@ policy_types:
       pm-mapper-filter:
         type: string
         description: PM mapper filter on measInfo, measInfoId, measType, instanceId
-
+        entry_schema:
+          type: onap.datatypes.monitoring.pm-mapper-filter
