@@ -1,6 +1,6 @@
 {
   "self": {
-    "name": "dcaegen2.services.pm-mapper",
+    "name": "dcae-pm-mapper",
     "version": "1.1.0",
     "description": "Docker application to map bulk PM files to VES events",
     "component_type": "docker"
@@ -71,7 +71,7 @@
   "parameters": [
     {
       "name": "service_name",
-      "value": "pm-mapper",
+      "value": "dcae-pm-mapper",
       "description": "Name of the service",
       "designer_editable": true,
       "sourced_at_deployment": false,
