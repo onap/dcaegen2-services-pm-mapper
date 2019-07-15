@@ -23,6 +23,8 @@ ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/bin/java -jar /
 ARG JAR
 WORKDIR /opt/app/pm-mapper
 
+RUN apk --no-cache add curl
+
 RUN mkdir -p /var/log/ONAP
 RUN addgroup -S onap \
     && adduser -S pm-mapper -G onap \
