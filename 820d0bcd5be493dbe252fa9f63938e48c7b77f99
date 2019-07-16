@@ -68,6 +68,57 @@
       "revId": "820d0bcd5be493dbe252fa9f63938e48c7b77f99",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a828f62b_882ad7c1",
+        "filename": "src/test/java/utils/ConfigUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-07-16T15:37:29Z",
+      "side": 1,
+      "message": "2 files?",
+      "revId": "820d0bcd5be493dbe252fa9f63938e48c7b77f99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8254213c_78211603",
+        "filename": "src/test/resources/invalid_configs/null_trust_store_pass_path.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-07-16T15:37:29Z",
+      "side": 1,
+      "message": "expect this to be null based on the filename",
+      "revId": "820d0bcd5be493dbe252fa9f63938e48c7b77f99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadc871a_59978297",
+        "filename": "src/test/resources/no_filter_mapper_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-07-16T15:37:29Z",
+      "side": 1,
+      "message": "no special characters in password ;)",
+      "revId": "820d0bcd5be493dbe252fa9f63938e48c7b77f99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
