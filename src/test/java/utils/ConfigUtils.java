@@ -18,15 +18,21 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.dcaegen2.services.pmmapper.datarouter;
+package utils;
+
+import com.google.gson.Gson;
+import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 
 
-import org.onap.dcaegen2.services.pmmapper.model.Event;
+public class ConfigUtils {
 
-/**
- * Sink for Events received from the data router subscriber.
- */
-@FunctionalInterface
-public interface EventReceiver {
-    void receive(Event event);
+    /**
+     * Returns A MapperConfig Object Created from two files.
+     * Fails test in the event of failure to read file.
+     * @param mapperConfigFile Filename for the mapper config
+     * @return A Mapper Config Object
+     */
+    public static MapperConfig getMapperConfigFromFile(String mapperConfigFile) {
+        return new Gson().fromJson(FileUtils.getFileContents(mapperConfigFile), MapperConfig.class);
+    }
 }

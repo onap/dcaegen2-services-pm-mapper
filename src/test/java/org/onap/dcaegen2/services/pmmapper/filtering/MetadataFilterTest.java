@@ -20,7 +20,6 @@
 
 package org.onap.dcaegen2.services.pmmapper.filtering;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,10 +28,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import utils.ConfigUtils;
 import utils.EventUtils;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -44,40 +43,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @PrepareForTest(MapperConfig.class)
 public class MetadataFilterTest {
 
-    private MetadataFilter metadataFilter;
+    private static final String VALID_MAPPER_CONFIG_FILE = "valid_mapper_config.json";
+    private static final String NO_FILTER_CONFIG_FILE = "no_filter_mapper_config.json";
+    private static final String MULTIPLE_FILTER_CONFIG_FILE = "multiple_filter_mapper_config.json";
+    private static final Path DATA_DIRECTORY = Paths.get("src/test/resources/xml_validator_test/test_data/");
+    private static final Path VALID_METADATA = Paths.get("src/test/resources/valid_metadata.json");
+    private static final Path INCORRECT_METADATA = Paths.get("src/test/resources/incorrect_metadata.json");
 
+    private MetadataFilter metadataFilter;
     private static MapperConfig validConfig;
     private static MapperConfig noFilterConfig;
     private static MapperConfig multipleFilterConfig;
 
-    private static String validConfigFileContents;
-    private static String noFilterConfigFileContents;
-    private static String multipleFilterConfigFileContents;
-
-    private static final Path validMetadata = Paths.get("src/test/resources/valid_metadata.json");
-    private static final Path incorrectMetadata = Paths.get("src/test/resources/incorrect_metadata.json");
-
-    private static final Path validConfigPath = Paths.get("src/test/resources/valid_mapper_config.json");
-    private static final Path noFilterConfigPath = Paths.get("src/test/resources/no_filter_mapper_config.json");
-    private static final Path multipleFilterConfigPath = Paths.get("src/test/resources/multiple_filter_mapper_config.json");
-
-    private static final Path dataDirectory = Paths.get("src/test/resources/xml_validator_test/test_data/");
-
-
     @BeforeEach
     void setup() throws Exception {
-        validConfigFileContents = new String(Files.readAllBytes(validConfigPath));
-        noFilterConfigFileContents = new String(Files.readAllBytes(noFilterConfigPath));
-        multipleFilterConfigFileContents = new String(Files.readAllBytes(multipleFilterConfigPath));
-
-        validConfig = new Gson().fromJson(validConfigFileContents, MapperConfig.class);
-        noFilterConfig = new Gson().fromJson(noFilterConfigFileContents, MapperConfig.class);
-        multipleFilterConfig = new Gson().fromJson(multipleFilterConfigFileContents, MapperConfig.class);
-
-
-        metadataFilter = new MetadataFilter(this.validConfig);
+        validConfig = ConfigUtils.getMapperConfigFromFile(VALID_MAPPER_CONFIG_FILE);
+        noFilterConfig = ConfigUtils.getMapperConfigFromFile(NO_FILTER_CONFIG_FILE);
+        multipleFilterConfig = ConfigUtils.getMapperConfigFromFile(MULTIPLE_FILTER_CONFIG_FILE);
+        metadataFilter = new MetadataFilter(validConfig);
     }
-
 
     @ParameterizedTest
     @MethodSource("getEventsWithValidMetadata")
@@ -105,15 +89,13 @@ public class MetadataFilterTest {
         assertFalse(metadataFilter.filter(testEvent));
     }
 
-
-
     private static List<Event> getEventsWithValidMetadata() throws IOException {
-        Path validDataDirectory = Paths.get(dataDirectory.toString() + "/valid/");
-        return EventUtils.eventsFromDirectory(validDataDirectory, validMetadata);
+        Path validDataDirectory = Paths.get(DATA_DIRECTORY.toString() + "/valid/");
+        return EventUtils.eventsFromDirectory(validDataDirectory, VALID_METADATA);
     }
 
     private static List<Event> getEventsWithInvalidMetadata() throws IOException {
-        Path validDataDirectory = Paths.get(dataDirectory.toString() + "/valid/");
-        return EventUtils.eventsFromDirectory(validDataDirectory, incorrectMetadata);
+        Path validDataDirectory = Paths.get(DATA_DIRECTORY.toString() + "/valid/");
+        return EventUtils.eventsFromDirectory(validDataDirectory, INCORRECT_METADATA);
     }
 }

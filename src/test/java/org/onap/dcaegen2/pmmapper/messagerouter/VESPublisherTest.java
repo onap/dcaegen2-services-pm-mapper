@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MRPublisherException;
 import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
-import org.onap.dcaegen2.services.pmmapper.model.EnvironmentConfig;
+import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;

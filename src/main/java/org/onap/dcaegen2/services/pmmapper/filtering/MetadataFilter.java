@@ -99,6 +99,7 @@ public class MetadataFilter {
         return true;
     }
 
+    @FunctionalInterface
     interface Validator<A, B> {
         boolean validate(A filter, B metadata);
     }

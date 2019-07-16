@@ -51,13 +51,10 @@ public class EventUtils {
      */
     public static List<Event> eventsFromDirectory(Path eventBodyDirectory, Path metadataPath) throws IOException {
         EventMetadata eventMetadata = new Gson().fromJson(fileContentsToString(metadataPath), EventMetadata.class);
-        try (Stream<Path> eventFileStream = Files.walk(eventBodyDirectory)) {
-            return eventFileStream.filter(Files::isRegularFile)
-                    .filter(Files::isReadable)
-                    .map(EventUtils::fileContentsToString)
-                    .map(body -> EventUtils.makeMockEvent(body, eventMetadata))
-                    .collect(Collectors.toList());
-        }
+        List<String> eventFiles = FileUtils.getFilesFromDirectory(eventBodyDirectory);
+        return eventFiles.stream()
+                       .map(contents -> EventUtils.makeMockEvent(contents, eventMetadata))
+                       .collect(Collectors.toList());
     }
 
     /**
