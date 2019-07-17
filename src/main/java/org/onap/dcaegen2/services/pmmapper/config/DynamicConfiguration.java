@@ -23,6 +23,7 @@ package org.onap.dcaegen2.services.pmmapper.config;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
+import java.util.List;
 import lombok.Data;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
@@ -30,10 +31,8 @@ import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 @Data
-public class DynamicConfiguration implements HttpHandler{
+public class DynamicConfiguration implements HttpHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(DynamicConfiguration.class));
     private List<Configurable> configurables;
     private MapperConfig originalConfig;
@@ -44,7 +43,7 @@ public class DynamicConfiguration implements HttpHandler{
      * @param configurables list of objects to reconfigure
      * @param originalConfig original config to compare against.
      */
-    public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig){
+    public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig) {
         this.configurables = configurables;
         this.originalConfig = originalConfig;
         this.configHandler = new ConfigHandler();
@@ -79,6 +78,7 @@ public class DynamicConfiguration implements HttpHandler{
                 } catch (ReconfigurationException e) {
                     responseCode = StatusCodes.INTERNAL_SERVER_ERROR;
                     responseMessage = StatusCodes.INTERNAL_SERVER_ERROR_STRING;
+                    logger.unwrap().error("Failed to apply configuration update, reverting to original config", e);
                     applyConfiguration(this.originalConfig);
                 }
             }

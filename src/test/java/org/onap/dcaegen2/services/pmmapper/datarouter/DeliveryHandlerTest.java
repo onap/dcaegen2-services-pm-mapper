@@ -44,20 +44,17 @@ import io.undertow.util.StatusCodes;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
-import org.onap.dcaegen2.services.pmmapper.model.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import utils.LoggingUtils;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({DeliveryHandler.class, EnvironmentConfig.class})
-public class DeliveryHandlerTest {
+@ExtendWith(MockitoExtension.class)
+class DeliveryHandlerTest {
 
     private Path VALID_METADATA_PATH = Paths.get("src/test/resources/valid_metadata.json");
     private Path INVALID_METADATA_PATH = Paths.get("src/test/resources/invalid_metadata.json");
@@ -67,13 +64,13 @@ public class DeliveryHandlerTest {
 
     private DeliveryHandler objUnderTest;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         objUnderTest = new DeliveryHandler(eventReceiver);
     }
 
     @Test
-    public void testRequestInboundInvalidMetadata() throws Exception {
+    void testRequestInboundInvalidMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         JsonObject metadata = new JsonParser().parse(new String(Files
                 .readAllBytes(INVALID_METADATA_PATH))).getAsJsonObject();
@@ -87,7 +84,7 @@ public class DeliveryHandlerTest {
     }
 
     @Test
-    public void testRequestInboundNoMetadata() throws Exception {
+    void testRequestInboundNoMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         Receiver receiver = mock(Receiver.class);
         HeaderMap headers = mock(HeaderMap.class);
@@ -95,17 +92,6 @@ public class DeliveryHandlerTest {
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
         when(httpServerExchange.getRequestHeaders()).thenReturn(headers);
         when(headers.get(any(String.class))).thenReturn(null);
-
-        doAnswer((Answer<Void>) invocationOnMock -> {
-            Receiver.FullStringCallback callback = invocationOnMock.getArgument(0);
-            callback.handle(httpServerExchange, "");
-            return null;
-        }).when(receiver).receiveFullString(any());
-        doAnswer((Answer<Void>) invocationOnMock -> {
-            Runnable runnable = invocationOnMock.getArgument(0);
-            runnable.run();
-            return null;
-        }).when(httpServerExchange).dispatch(any(Runnable.class));
         objUnderTest.handleRequest(httpServerExchange);
         verify(httpServerExchange, times(1)).setStatusCode(StatusCodes.BAD_REQUEST);
         verify(httpServerExchange.getResponseSender(), times(1)).send("Missing Metadata.");
@@ -113,7 +99,7 @@ public class DeliveryHandlerTest {
     }
 
     @Test
-    public void testRequestInboundSuccess() throws Exception {
+    void testRequestInboundSuccess() throws Exception {
         ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(DeliveryHandler.class);
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         Receiver receiver = mock(Receiver.class);

@@ -1,37 +1,47 @@
 {
-    "pm-mapper-filter": {"filters":[{"pmDefVsn": "V9","nfType": "NrRadio","vendor": "Ericsson","measTypes": [ "A", "B" ]}]},
-    "streams_subscribes": {
-        "dmaap_subscriber": {
-            "type": "data_router",
-            "aaf_username": null,
-            "aaf_password": null,
-            "dmaap_info": {
-                "location": "location",
-                "delivery_url": "delivery_url",
-                "username": "username",
-                "password": "password",
-                "subscriber_id": "subscriber_id"
-            }
-        }
-    },
-    "streams_publishes": {
-        "dmaap_publisher": {
-            "type": "message_router",
-            "aaf_password": null,
-            "dmaap_info": {
-                "topic_url": "https://message-router.onap.svc.cluster.local:3904/events/some-topic",
-                "client_role": null,
-                "location": null,
-                "client_id": null
-            },
-            "aaf_username": null
-        }
-    },
-    "dmaap_dr_delete_endpoint": "http://dmaap-dr-node.onap.svc.cluster.local:8443/delete",
-    "services_calls": {},
-    "key_store_path": "src/test/resources/testkeystore.jks.b64",
-    "key_store_pass_path": "src/test/resources/password",
-    "trust_store_path": "src/test/resources/testkeystore.jks.b64",
-    "trust_store_pass_path": "src/test/resources/password",
-    "enable_http": false
+  "pm-mapper-filter": {
+    "filters": [
+      {
+        "pmDefVsn": "V9",
+        "nfType": "NrRadio",
+        "vendor": "Ericsson",
+        "measTypes": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "key_store_path": "src/test/resources/testkeystore.jks.b64",
+  "key_store_pass_path": "src/test/resources/password",
+  "trust_store_path": "src/test/resources/testkeystore.jks.b64",
+  "trust_store_pass_path": "src/test/resources/password",
+  "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
+  "dmaap_dr_feed_name": "bulk_pm_feed",
+  "aaf_identity": "dcae@dcae.onap.org",
+  "aaf_password": "iheartrainbows44",
+  "enable_http": false,
+  "streams_publishes": {
+    "dmaap_publisher": {
+      "type": "message_router",
+      "dmaap_info": {
+        "topic_url": "https://message-router:3905/events/org.onap.dmaap.mr.VES_PM",
+        "client_role": "org.onap.dcae.pmPublisher",
+        "location": "san-francisco",
+        "client_id": "1562763644939"
+      }
+    }
+  },
+  "streams_subscribes": {
+    "dmaap_subscriber": {
+      "type": "data_router",
+      "dmaap_info": {
+        "username": "username",
+        "password": "password",
+        "location": "san-francisco",
+        "delivery_url": "https://dcae-pm-mapper:8443/delivery",
+        "subscriber_id": 1
+      }
+    }
+  }
 }

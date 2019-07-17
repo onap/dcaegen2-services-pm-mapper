@@ -9,8 +9,10 @@
     "subscribes": [
       {
         "type": "data_router",
-        "config_key": "pm_mapper_subscribe_dr",
+        "config_key": "dmaap_subscriber",
         "route": "/delivery",
+        "privileged": true,
+        "decompress": true,
         "format": "3GPP_XML",
         "version": "1.0.0"
       }
@@ -18,7 +20,7 @@
     "publishes": [
       {
         "type": "message_router",
-        "config_key": "pm_mapper_publish_mr",
+        "config_key": "dmaap_publisher",
         "format": "VES_specification",
         "version": "7.30.1"
       }
@@ -81,7 +83,7 @@
     },
     {
       "name": "enable_http",
-      "value": "true",
+      "value": "false",
       "description": "Option to turn on HTTP connections",
       "designer_editable": true,
       "sourced_at_deployment": false,

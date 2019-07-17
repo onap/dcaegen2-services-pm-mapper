@@ -22,9 +22,18 @@ tosca_definitions_version: cloudify_dsl_1_3
 
 imports:
   - "http://www.getcloudify.org/spec/cloudify/3.4/types.yaml"
-  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1.4.13/k8splugin_types.yaml"
+  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R5/k8splugin/1.6.0/k8splugin_types.yaml"
+  - "https://nexus.onap.org/service/local/repositories/raw/content/org.onap.ccsdk.platform.plugins/type_files/dmaap/dmaap.yaml"
 
 inputs:
+  filter:
+    type: string
+    description: PM Mapper filter on measInfo, measInfoId, measType, instanceId
+    default: { "filters":[]}
+  enable_http:
+    type: boolean
+    description: Option to turn on HTTP connections
+    default: false
   tag_version:
     type: string
     description: Docker image to be used
@@ -33,22 +42,23 @@ inputs:
     type: integer
     description: Number of instances
     default: 1
-  aaf_username:
+  feed_name:
     type: string
-    description: AAF user name
-    default: "username"
-  aaf_password:
+    default: "bulk_pm_feed"
+  topic_name:
     type: string
-    description: AAF password
-    default: "password"
+    default: "PERFORMANCE_MEASUREMENTS"
   client_role:
     type: string
     description: Client role to request secure access to topic
-    default: "org.onap.dmaap.mr.PM_MAPPER.pub"
+    default: "org.onap.dcae.pmPublisher"
   client_id:
     type: string
     description: Client id for given AAF client
     default: "dcae@dcae.onap.org"
+  client_password:
+    type: string
+    description: Password for AAF client provided as client_id
   dmaap_dr_username:
     type: string
     description: DMAAP Data Router user name
@@ -61,10 +71,6 @@ inputs:
     type: string
     description: DCAE location for the subscriber, used to set up routing
     default: "san-francisco"
-  subscriber_id:
-    type: string
-    description: Subscriber id in Data Router
-    default: "1"
   pm_mapper_service_protocol:
     type: string
     description: PM Mapper protocol
@@ -93,85 +99,82 @@ inputs:
     type: string
     description: DMAAP Message Router host port
     default: "3905"
-  filter:
-    type: string
-    description: PM Mapper filter on measInfo, measInfoId, measType, instanceId
-    default: { "filters":[]}
-  enable_http:
-    type: boolean
-    description: Option to turn on HTTP connections
-    default: false
 
 node_templates:
+  pm-feed:
+    type: ccsdk.nodes.Feed
+    properties:
+      feed_name: { get_input: feed_name }
+
+  pm-topic:
+    type: ccsdk.nodes.Topic
+    properties:
+      topic_name: { get_input: topic_name }
+
   pm-mapper:
+    type: dcae.nodes.ContainerizedServiceComponentUsingDmaap
     interfaces:
       cloudify.interfaces.lifecycle:
-        start:
+        create:
           inputs:
             ports:
               - '8443:0'
               - '8081:0'
+
+    relationships:
+      - type: ccsdk.relationships.subscribe_to_files
+        target: pm-feed
+      - type: ccsdk.relationships.publish_events
+        target: pm-topic
+
     properties:
+      service_component_type: "dcae-pm-mapper"
+      service_component_name_override: "dcae-pm-mapper"
       application_config:
-        enable_http:
-          { get_input: enable_http }
         trust_store_path: "/opt/app/pm-mapper/etc/cert/trust.jks.b64"
         trust_store_pass_path: "/opt/app/pm-mapper/etc/cert/trust.pass"
         key_store_path: "/opt/app/pm-mapper/etc/cert/cert.jks.b64"
         key_store_pass_path: "/opt/app/pm-mapper/etc/cert/jks.pass"
-        dmaap_dr_feed_name: "bulk_pm_feed"
-        dmaap_dr_delete_endpoint:
-          { concat: ["https://", { get_input: dmaap_dr_service_host },
-                     ":", { get_input: dmaap_dr_service_port},"/delete"]}
-        pm-mapper-filter:
-          get_input: filter
+        pm-mapper-filter: { get_input: filter }
+        enable_http: { get_input: enable_http }
+        dmaap_dr_delete_endpoint: { concat: ["https://",{ get_input: dmaap_dr_service_host },":",{ get_input: dmaap_dr_service_port },"/delete"] }
+        aaf_identity: { get_input: client_id }
+        aaf_password: { get_input: client_password }
         streams_subscribes:
           dmaap_subscriber:
-            type:
-              "data_router"
-            dmaap_info:
-              username:
-                get_input: dmaap_dr_username
-              password:
-                get_input: dmaap_dr_password
-              location:
-                get_input: dcae_location
-              subscriber_id:
-                get_input: subscriber_id
-              delivery_url:
-                { concat: [{ get_input: pm_mapper_service_protocol },"://dcae-pm-mapper:",{ get_input: pm_mapper_service_port },"/delivery"]}
+            type: data_router
+            dmaap_info: <<pm-feed>>
         streams_publishes:
           dmaap_publisher:
-            aaf_username:
-              get_input: aaf_username
-            aaf_password:
-              get_input: aaf_password
-            type:
-              "message_router"
-            dmaap_info:
-              client_role:
-                get_input: client_role
-              client_id:
-                get_input: client_id
-              topic_url:
-                { concat: [{ get_input: dmaap_mr_service_protocol },"://",{ get_input: dmaap_mr_service_host },
-                           ":",{ get_input: dmaap_mr_service_port },"/events/org.onap.dmaap.mr.PM_MAPPER"]}
-              location:
-                get_input: dcae_location
+            type: message_router
+            dmaap_info: <<pm-topic>>
       docker_config:
         healthcheck:
           endpoint: /healthcheck
           interval: 15s
           timeout: 1s
           type: https
-      image:
-        get_input: tag_version
+      streams_publishes:
+        - name: pm-topic
+          location: { get_input: dcae_location }
+          client_role: { get_input: client_role }
+          type: message-router
+      streams_subscribes:
+        - name: pm-feed
+          location: { get_input: dcae_location }
+          client_role: { get_input: client_role }
+          username: { get_input: dmaap_dr_username }
+          password: { get_input: dmaap_dr_password }
+          scheme: { get_input: pm_mapper_service_protocol }
+          route: delivery
+          delivery_url: ""
+          privileged: true
+          decompress: true
+          type: data_router
+      image: { get_input: tag_version }
       replicas: { get_input: replicas }
-      name: "dcae-pm-mapper"
-      dns_name: "dcae-pm-mapper"
       log_info:
         log_directory: "/var/log/ONAP/dcaegen2/services/pm-mapper"
       tls_info:
         cert_directory: "/opt/app/pm-mapper/etc/cert/"
         use_tls: true
-    type: dcae.nodes.ContainerizedPlatformComponent

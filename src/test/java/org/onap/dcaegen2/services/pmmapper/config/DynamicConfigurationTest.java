@@ -20,31 +20,27 @@
 
 package org.onap.dcaegen2.services.pmmapper.config;
 
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
-import org.onap.dcaegen2.services.pmmapper.model.EnvironmentConfig;
+import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import utils.ConfigUtils;
 import java.util.ArrayList;
+import utils.FileUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
@@ -55,62 +51,55 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({DynamicConfiguration.class, EnvironmentConfig.class})
-public class DynamicConfigurationTest {
-    private static Path VALID_CONFIG_PATH = Paths.get("src/test/resources/valid_mapper_config.json");
+@ExtendWith(MockitoExtension.class)
+class DynamicConfigurationTest {
+    private static final String VALID_MAPPER_CONFIG_FILE = "valid_mapper_config.json";
 
     private static ArrayList<Configurable> configurables;
     private DynamicConfiguration objUnderTest;
-    private static String config;
+    private static String mapperConfig;
     private MapperConfig originalMapperConfig;
+    private static ConfigHandler configHandler;
 
     @Mock
-    private RequestSender sender;
+    private static RequestSender sender;
 
-    @BeforeClass()
-    public static void setupBeforeClass() throws Exception {
-        config = new String(Files.readAllBytes(VALID_CONFIG_PATH));
+    @Mock
+    private static EnvironmentConfig config;
+
+    @BeforeAll
+     static void setupBeforeAll() throws Exception {
+        mapperConfig = FileUtils.getFileContents(VALID_MAPPER_CONFIG_FILE);
     }
 
-    @Before
-    public void setup() throws Exception {
+    @BeforeEach
+    void setup() throws Exception {
+        configHandler = new ConfigHandler(sender, config);
+        when(sender.send(any())).thenReturn(mapperConfig);
+        originalMapperConfig = ConfigUtils.getMapperConfigFromFile(VALID_MAPPER_CONFIG_FILE);
         configurables = new ArrayList<>();
-        PowerMockito.mockStatic(EnvironmentConfig.class);
-        PowerMockito.when(EnvironmentConfig.getCBSHostName()).thenReturn("");
-        PowerMockito.when(EnvironmentConfig.getCBSPort()).thenReturn(1);
-        PowerMockito.when(EnvironmentConfig.getServiceName()).thenReturn("");
-
-        when(sender.send(any())).thenReturn(config);
-        ConfigHandler configHandler = new ConfigHandler(sender);
-        originalMapperConfig = configHandler.getMapperConfig();
         objUnderTest = new DynamicConfiguration(configurables, originalMapperConfig);
     }
 
     @Test
-    public void testNoChangeResponse() throws Exception {
-        ConfigHandler configHandler = new ConfigHandler(sender);
+    void testNoChangeResponse() throws Exception {
         originalMapperConfig = configHandler.getMapperConfig();
         objUnderTest.setConfigHandler(configHandler);
-
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
         objUnderTest.handleRequest(httpServerExchange);
-        assertEquals(originalMapperConfig, objUnderTest.getOriginalConfig());
         verify(httpServerExchange, times(1)).setStatusCode(StatusCodes.OK);
+        assertEquals(originalMapperConfig, objUnderTest.getOriginalConfig());
     }
 
     @Test
-    public void testApplyOriginalUponFailure() throws Exception {
-        ConfigHandler configHandler = new ConfigHandler(sender);
+    void testApplyOriginalUponFailure() throws Exception {
         Configurable configurable = mock(Configurable.class);
         configurables.add(configurable);
-        JsonObject modifiedConfig = new JsonParser().parse(config).getAsJsonObject();
+        JsonObject modifiedConfig = new JsonParser().parse(mapperConfig).getAsJsonObject();
         modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
         when(sender.send(any())).thenReturn(modifiedConfig.toString());
         MapperConfig modifiedMapperConfig = configHandler.getMapperConfig();
-
         objUnderTest.setConfigHandler(configHandler);
-
         doAnswer(new Answer() {
             boolean failFirstReconfigure = true;
             @Override
@@ -132,14 +121,14 @@ public class DynamicConfigurationTest {
     }
 
     @Test
-    public void testSuccessfulReconfiguration() throws Exception {
-        ConfigHandler configHandler = new ConfigHandler(sender);
+    void testSuccessfulReconfiguration() throws Exception {
         Configurable configurable = mock(Configurable.class);
         configurables.add(configurable);
-        JsonObject modifiedConfig = new JsonParser().parse(config).getAsJsonObject();
+        JsonObject modifiedConfig = new JsonParser().parse(mapperConfig).getAsJsonObject();
         modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
 
-        when(sender.send(any())).thenReturn(modifiedConfig.toString());
+        when(sender.send(any()))
+                .thenReturn(modifiedConfig.toString());
         MapperConfig modifiedMapperConfig = configHandler.getMapperConfig();
         objUnderTest.setConfigHandler(configHandler);
 
@@ -152,18 +141,21 @@ public class DynamicConfigurationTest {
     }
 
     @Test
-    public void testMapperConfigReconfiguration() throws Exception {
-        ConfigHandler configHandler = new ConfigHandler(sender);
-        JsonObject modifiedConfigJson = new JsonParser().parse(config).getAsJsonObject();
+    void testMapperConfigReconfiguration() throws Exception {
+        JsonObject modifiedConfigJson = new JsonParser().parse(mapperConfig).getAsJsonObject();
         modifiedConfigJson.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
-        String newConfig =  modifiedConfigJson.toString();
-
-        when(sender.send(any())).thenReturn(config,newConfig);
-
-        MapperConfig originalConfig = configHandler.getMapperConfig();
+        when(sender.send(any()))
+                .thenReturn(modifiedConfigJson.toString());
         MapperConfig modifiedConfig = configHandler.getMapperConfig();
+        originalMapperConfig.reconfigure(modifiedConfig);
+        assertEquals(originalMapperConfig, modifiedConfig);
+    }
 
-        originalConfig.reconfigure(modifiedConfig);
-        assertEquals(originalConfig, modifiedConfig);
+    @Test
+    void testMapperConfigReconfigurationNoChange() throws Exception {
+        when(sender.send(any())).thenReturn(mapperConfig);
+        MapperConfig inboundConfig = configHandler.getMapperConfig();
+        originalMapperConfig.reconfigure(inboundConfig);
+        assertEquals(originalMapperConfig, inboundConfig);
     }
 }

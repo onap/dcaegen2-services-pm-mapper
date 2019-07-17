@@ -41,7 +41,7 @@ import java.util.stream.Stream;
 public class RequiredFieldDeserializer<T> implements JsonDeserializer<T> {
 
     @Override
-    public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) {
         T obj = new Gson().fromJson(jsonElement, type);
         validateRequiredFields(obj.getClass().getDeclaredFields(), obj);
         return obj;
