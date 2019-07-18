@@ -1,16 +1,16 @@
 {
-  "pm_mapper_publish_mr": {
+  "dmaap_publisher": {
     "aaf_username": "username",
     "aaf_password": "password",
     "type": "message_router",
     "dmaap_info": {
-      "client_role": "org.onap.dmaap.mr.PM_MAPPER.pub",
+      "client_role": "org.dcae.onap.pmPublisher",
       "client_id": "dcae@dcae.onap.org",
       "location": "san-francisco",
-      "topic_url": "https://message-router:3905//events/org.onap.dmaap.mr.PM_MAPPER"
+      "topic_url": "https://message-router:3905//events/org.onap.dmaap.mr.PERFORMANCE_MEASUREMENTS"
     }
   },
-  "pm_mapper_subscribe_dr": {
+  "dmaap_subscriber": {
     "type": "data_router",
     "dmaap_info": {
       "username": "username",

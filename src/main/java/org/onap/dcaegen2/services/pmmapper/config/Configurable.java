@@ -25,6 +25,7 @@ package org.onap.dcaegen2.services.pmmapper.config;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 
+@FunctionalInterface
 public interface Configurable {
 
     void reconfigure(MapperConfig mapperConfig) throws ReconfigurationException;

@@ -74,8 +74,8 @@ class AppTest {
 
     @BeforeAll
     public static void setup() {
-        mockServer =  startClientAndServer(1080);
-        client = new MockServerClient("127.0.0.1", 1080);
+        mockServer =  startClientAndServer(35454);
+        client = new MockServerClient("127.0.0.1", 35454);
     }
 
     @AfterAll
@@ -210,7 +210,7 @@ class AppTest {
         MeasFilterHandler mockFilter = Mockito.mock(MeasFilterHandler.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
-        Mockito.when(mockConfig.getDmaapDRDeleteEndpoint()).thenReturn("http://127.0.0.1:1080");
+        Mockito.when(mockConfig.getDmaapDRDeleteEndpoint()).thenReturn("http://127.0.0.1:35454");
         Mockito.when(mockConfig.getSubscriberIdentity()).thenReturn("sid");
         Mockito.when(mockEvent.getPublishIdentity()).thenReturn("pid");
         Mockito.when(mockFilter.filterByMeasType(mockEvent)).thenThrow(RuntimeException.class);
