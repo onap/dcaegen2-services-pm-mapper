@@ -64,11 +64,10 @@ public class VESPublisher {
         try {
             String topicUrl = config.getPublisherTopicUrl();
             ves = ves.replaceAll("\n", "");
-            String userCredentials =  topicUrl.startsWith("https") ? Base64.getEncoder()
+            String userCredentials =  Base64.getEncoder()
                 .encodeToString((this.config.getPublisherUserName() + ":" +
                     this.config.getPublisherPassword())
-                    .getBytes(StandardCharsets.UTF_8))
-                : "";
+                    .getBytes(StandardCharsets.UTF_8));
             sender.send("POST", topicUrl, ves, userCredentials);
         } catch (Exception e) {
             throw new MRPublisherException(e.getMessage(), e);

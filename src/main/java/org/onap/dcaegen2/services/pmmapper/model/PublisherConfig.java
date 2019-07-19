@@ -18,15 +18,28 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.dcaegen2.services.pmmapper.datarouter;
+package org.onap.dcaegen2.services.pmmapper.model;
 
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 
-import org.onap.dcaegen2.services.pmmapper.model.Event;
+@Data
+public class PublisherConfig {
+    @GSONRequired
+    @SerializedName("topic_url")
+    private String topicUrl;
 
-/**
- * Sink for Events received from the data router subscriber.
- */
-@FunctionalInterface
-public interface EventReceiver {
-    void receive(Event event);
+    @GSONRequired
+    @SerializedName("client_role")
+    private String clientRole;
+
+    @GSONRequired
+    @SerializedName("client_id")
+    private String clientId;
+
+    @GSONRequired
+    @SerializedName("location")
+    private String clusterLocation;
+
 }

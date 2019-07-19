@@ -17,20 +17,24 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcaegen2.services.pmmapper.model;
 
-import org.onap.dcaegen2.services.pmmapper.config.Configurable;
-import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import lombok.Getter;
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.onap.dcaegen2.services.pmmapper.config.Configurable;
+import org.onap.dcaegen2.services.pmmapper.utils.DMaaPAdapter;
+import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
-public class MapperConfig implements Configurable{
+@ToString
+public class MapperConfig implements Configurable {
 
     public static final String CLIENT_NAME = "pm-mapper";
 
@@ -55,16 +59,6 @@ public class MapperConfig implements Configurable{
     private String trustStorePassPath;
 
     @GSONRequired
-    @Getter(AccessLevel.PRIVATE)
-    @SerializedName("streams_subscribes")
-    private StreamsSubscribes streamsSubscribes;
-
-    @GSONRequired
-    @Getter(AccessLevel.PRIVATE)
-    @SerializedName("streams_publishes")
-    private StreamsPublishes streamsPublishes;
-
-    @GSONRequired
     @SerializedName("dmaap_dr_delete_endpoint")
     private String dmaapDRDeleteEndpoint;
 
@@ -72,98 +66,48 @@ public class MapperConfig implements Configurable{
     @SerializedName("pm-mapper-filter")
     private MeasFilterConfig filterConfig;
 
-    public String getSubscriberIdentity(){
-        return this.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo().getSubscriberId();
+    @GSONRequired
+    @SerializedName("aaf_identity")
+    private String aafUsername;
+
+    @GSONRequired
+    @SerializedName("aaf_password")
+    private String aafPassword;
+
+    @GSONRequired
+    @SerializedName("streams_subscribes")
+    @JsonAdapter(DMaaPAdapter.class)
+    private SubscriberConfig subscriberConfig;
+
+    @GSONRequired
+    @SerializedName("streams_publishes")
+    @JsonAdapter(DMaaPAdapter.class)
+    private PublisherConfig publisherConfig;
+
+    public String getSubscriberIdentity() {
+        return this.getSubscriberConfig().getSubscriberId();
     }
 
     public String getPublisherTopicUrl() {
-        return this.getStreamsPublishes().getDmaapPublisher().getDmaapInfo().getTopicUrl();
-    }
-
-    public boolean dmaapInfoEquals(MapperConfig mapperConfig){
-        return this
-                .getStreamsSubscribes()
-                .getDmaapSubscriber()
-                .getDmaapInfo()
-                .equals(mapperConfig.getStreamsSubscribes().getDmaapSubscriber().getDmaapInfo());
-    }
-
-    @Getter
-    @EqualsAndHashCode
-    private class StreamsSubscribes {
-        @GSONRequired
-        @SerializedName("dmaap_subscriber")
-        DmaapSubscriber dmaapSubscriber;
-    }
-
-    @Getter
-    @EqualsAndHashCode
-    class DmaapSubscriber {
-        @GSONRequired
-        @SerializedName("dmaap_info")
-        DmaapInfo dmaapInfo;
-    }
-
-    @Getter
-    @EqualsAndHashCode
-    private class StreamsPublishes {
-        @GSONRequired
-        @SerializedName("dmaap_publisher")
-        DmaapPublisher dmaapPublisher;
-    }
-
-    @Getter
-    @EqualsAndHashCode
-    class DmaapPublisher {
-        @GSONRequired
-        @SerializedName("dmaap_info")
-        DmaapInfo dmaapInfo;
-
-        @SerializedName("aaf_username")
-        private String aafUsername;
-
-        @SerializedName("aaf_password")
-        private String aafPassword;
-    }
-
-    @Getter
-    @EqualsAndHashCode
-    class DmaapInfo {
-        private String location;
-        private String username;
-        private String password;
-
-        @SerializedName("delivery_url")
-        private String deliveryUrl;
-
-        @SerializedName("subscriber_id")
-        private String subscriberId;
-
-        @SerializedName("client_role")
-        private String clientRole;
-
-        @SerializedName("client_id")
-        private String clientId;
-
-        @SerializedName("topic_url")
-        private String topicUrl;
+        return this.getPublisherConfig().getTopicUrl();
     }
 
     public String getPublisherUserName() {
-        return this.getStreamsPublishes().getDmaapPublisher().getAafUsername();
+        return this.getAafUsername();
     }
 
     public String getPublisherPassword() {
-        return this.getStreamsPublishes().getDmaapPublisher().getAafPassword();
+        return this.getAafPassword();
     }
 
-    @Override
     public void reconfigure(MapperConfig mapperConfig) {
-        if(!this.equals(mapperConfig)) {
+        if (!this.equals(mapperConfig)) {
             this.filterConfig = mapperConfig.getFilterConfig();
-            this.streamsSubscribes = mapperConfig.getStreamsSubscribes();
-            this.streamsPublishes = mapperConfig.getStreamsPublishes();
+            this.publisherConfig = mapperConfig.getPublisherConfig();
+            this.subscriberConfig = mapperConfig.getSubscriberConfig();
             this.dmaapDRDeleteEndpoint = mapperConfig.getDmaapDRDeleteEndpoint();
+            this.aafUsername = mapperConfig.getAafUsername();
+            this.aafPassword = mapperConfig.getAafPassword();
         }
     }
 }
