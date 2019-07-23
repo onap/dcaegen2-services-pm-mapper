@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb148de3_8293d5bd",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-07-23T15:40:00Z",
+      "side": 1,
+      "message": "Just FYi. These properties may not be cascaded when blueprint is generated through tool; also spec schema should be updated (tracked under \nDCAEGEN2-1643)",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "2c8ddf3501cfc5106d20b51ef077cc6d07ab65dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "243b9049_23286ad0",
+        "filename": "dpo/spec/pmmapper-component-spec.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-07-23T15:40:00Z",
+      "side": 1,
+      "message": "Requires component spec schema updates",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "2c8ddf3501cfc5106d20b51ef077cc6d07ab65dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
