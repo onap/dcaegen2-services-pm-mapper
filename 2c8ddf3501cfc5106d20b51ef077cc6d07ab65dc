@@ -1,0 +1,12 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Jack Lucas <jflucas@research.att.com>
+Code-Review+1: David Farrelly <david.farrelly@est.tech>
+Code-Review+1: James Cuddy <james.cuddy@est.tech>
+Code-Review+1: Ephraim Martin <ephraim.martin@est.tech>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Tue, 23 Jul 2019 15:40:06 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/91491
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
