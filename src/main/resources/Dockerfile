@@ -19,21 +19,40 @@
 #
 FROM openjdk:8u171-jre-alpine
 
-ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/bin/java -jar /opt/app/pm-mapper/pm-mapper.jar"]
-ARG JAR
 WORKDIR /opt/app/pm-mapper
 
 RUN apk --no-cache add curl
 
 RUN mkdir -p /var/log/ONAP
-RUN addgroup -S onap \
-    && adduser -S pm-mapper -G onap \
-    && chown -R pm-mapper:onap /opt/app/pm-mapper \
-    && chmod a+rwx /var/log/ONAP
 
-ADD target/${JAR} /opt/app/pm-mapper/pm-mapper.jar
-ADD target/classes/mapping.ftl /opt/app/pm-mapper/etc/mapping.ftl
-ADD target/classes/measCollec_plusString.xsd /opt/app/pm-mapper/etc/measCollec_plusString.xsd
-ADD target/classes/reconfigure.sh /opt/app/pm-mapper/etc/reconfigure.sh
+RUN adduser pm-mapper; \
+    chmod a+rwx /var/log/ONAP; \
+    chown -R pm-mapper /opt/app/pm-mapper
 
 USER pm-mapper
+
+COPY ${project.build.directory}/${ext.dep.dir.path}/ ${ext.dep.dir.path}/
+COPY ${project.build.directory}/${JAR} .
+
+COPY ${project.build.directory}/classes/mapping.ftl ./etc/mapping.ftl
+COPY ${project.build.directory}/classes/measCollec_plusString.xsd ./etc/measCollec_plusString.xsd
+COPY ${project.build.directory}/classes/reconfigure.sh ./etc/reconfigure.sh
+COPY --chown=pm-mapper ${project.build.directory}/classes/logback.xml .
+
+RUN echo $(whoami) > ./test.txt
+
+LABEL git.branch="${git.branch}" \
+      git.build.host="${git.build.host}" \
+      git.build.time="${git.build.time}" \
+      git.build.user.email="${git.build.user.email}" \
+      git.build.user.name="${git.build.user.name}" \
+      git.build.version="${git.build.version}" \
+      git.closest.tag.name="${git.closest.tag.name}" \
+      git.commit.id="${git.commit.id}" \
+      git.commit.message.short="${git.commit.message.short}" \
+      git.commit.time="${git.commit.time}" \
+      git.commit.user.email="${git.commit.user.email}" \
+      git.commit.user.name="${git.commit.user.name}"
+
+ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/bin/java -jar ${project.artifactId}-${project.version}.jar -DLogback.configurationFile=/opt/app/pm-mapper/logback.xml"]
+ARG JAR

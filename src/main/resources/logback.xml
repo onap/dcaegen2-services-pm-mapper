@@ -1,4 +1,4 @@
-<configuration>
+<configuration debug="true" scan="true" scanPeriod="10 seconds">
     <property name="outputFilename" value="pm-mapper_output"/>
     <property name="logPath" value="/var/log/ONAP/dcaegen2/services/pm-mapper"/>
     <property name="archivePath" value="${logPath}/archive"/>
@@ -16,8 +16,6 @@
     <property name="pattern" value="%nopexception${p_tim}\t${p_thr}\t${p_lvl}\t${p_log}\t${p_mdc}\t${p_msg}\t${p_exc}\t${p_mak}\t%n"/>
 
     <variable name="logLevel" value="${LOG_LEVEL:-DEBUG}"/>
-
-    <logger name="org.mockserver" level="${mockserver.logLevel:-OFF}"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
