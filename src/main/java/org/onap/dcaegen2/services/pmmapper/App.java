@@ -20,6 +20,7 @@
 
 package org.onap.dcaegen2.services.pmmapper;
 
+import ch.qos.logback.classic.util.ContextInitializer;
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.util.StatusCodes;
@@ -60,6 +61,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App {
+
+    static {
+        System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "/opt/app/pm-mapper/etc/logback.xml");
+    }
+
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
     private static Path mappingTemplate = Paths.get("/opt/app/pm-mapper/etc/mapping.ftl");
     private static Path xmlSchema = Paths.get("/opt/app/pm-mapper/etc/measCollec_plusString.xsd");

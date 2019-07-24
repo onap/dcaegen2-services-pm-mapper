@@ -1,5 +1,6 @@
-<configuration>
+<configuration scan="true" scanPeriod="30 seconds" debug="true">
     <property name="outputFilename" value="pm-mapper_output"/>
+    <property name="outputFilenameReadable" value="pm-mapper_output_readable"/>
     <property name="logPath" value="/var/log/ONAP/dcaegen2/services/pm-mapper"/>
     <property name="archivePath" value="${logPath}/archive"/>
     <property name="maxFileSize" value="50MB"/>
@@ -14,10 +15,10 @@
     <property name="p_mak" value="%replace(%replace(%marker){'\t', '\\\\t'}){'\n','\\\\n'}"/>
     <property name="p_thr" value="%thread"/>
     <property name="pattern" value="%nopexception${p_tim}\t${p_thr}\t${p_lvl}\t${p_log}\t${p_mdc}\t${p_msg}\t${p_exc}\t${p_mak}\t%n"/>
+    <property name="patternReadable" value="%nopexception${p_tim} | ${p_lvl} | ${p_msg}%n"/>
 
-    <variable name="logLevel" value="${LOG_LEVEL:-DEBUG}"/>
 
-    <logger name="org.mockserver" level="${mockserver.logLevel:-OFF}"/>
+    <variable name="logLevel" value="${LOG_LEVEL:-INFO}"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -31,16 +32,34 @@
             <pattern>${pattern}</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-        <FileNamePattern>${archivePath}/${outputFilename}.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+        <FileNamePattern>${logPath}/${outputFilename}.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
         <MaxFileSize>${maxFileSize}</MaxFileSize>
         <MaxHistory>${maxHistory}</MaxHistory>
         <TotalSizeCap>${totalSizeCap}</TotalSizeCap>
       </rollingPolicy>
     </appender>
 
+    <appender name="READABLE-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/${outputFilenameReadable}.log</file>
+        <encoder>
+            <pattern>${patternReadable}</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${logPath}/${outputFilenameReadable}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>1</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
     <root level="${logLevel}" additivity="false">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ROLLING-FILE" />
+        <appender-ref ref="READABLE-FILE" />
     </root>
 
 </configuration>

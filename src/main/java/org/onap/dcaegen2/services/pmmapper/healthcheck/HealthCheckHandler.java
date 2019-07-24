@@ -39,7 +39,7 @@ public class HealthCheckHandler implements HttpHandler {
             exchange.setStatusCode(StatusCodes.OK)
                     .getResponseSender()
                     .send(StatusCodes.OK_STRING);
-
+            logger.unwrap().info("Healthcheck request successful");
         } finally {
             logger.exiting();
         }
