@@ -1,0 +1,9 @@
+Code-Review+1: Joseph O'Leary <joseph.o.leary@est.tech>
+Code-Review+1: Rajendra Jaiswal <rajendra.jaiswal@ericsson.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Tue, 30 Jul 2019 14:36:50 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/92274
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
