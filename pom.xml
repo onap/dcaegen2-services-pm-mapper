@@ -299,7 +299,7 @@
                                 <cleanup>none</cleanup>
                                 <tags>
                                     <tag>${project.version}</tag>
-                                    <tag>${project.version}-${maven.build.timestamp}Z</tag>
+                                    <tag>${project.version}-${maven.build.timestamp}</tag>
                                 </tags>
                             </build>
                         </image>
