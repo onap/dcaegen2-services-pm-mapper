@@ -54,7 +54,7 @@ public class VESPublisher {
             events.forEach(e -> this.publish(e.getVes()));
             logger.unwrap().info("Successfully published VES events to messagerouter.");
         } catch(MRPublisherException e) {
-            logger.unwrap().error("Failed to publish VES event(s) to messagerouter. {}", e.getMessage());
+            logger.unwrap().error("Failed to publish VES event(s) to messagerouter. {}", e);
             return Flux.empty();
         }
         return Flux.just(event);

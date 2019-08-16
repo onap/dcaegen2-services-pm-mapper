@@ -19,7 +19,7 @@
  */
 package org.onap.dcaegen2.services.pmmapper.exceptions;
 
-public class CBSServerError extends Exception {
+public class CBSServerError extends RuntimeException {
     public CBSServerError(String message, Throwable cause) {
         super(message, cause);
     }

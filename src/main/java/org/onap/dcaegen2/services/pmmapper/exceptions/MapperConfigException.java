@@ -19,7 +19,7 @@
  */
 package org.onap.dcaegen2.services.pmmapper.exceptions;
 
-public class MapperConfigException extends Exception {
+public class MapperConfigException extends RuntimeException {
     public MapperConfigException(String message, Throwable cause) {
         super(message, cause);
     }

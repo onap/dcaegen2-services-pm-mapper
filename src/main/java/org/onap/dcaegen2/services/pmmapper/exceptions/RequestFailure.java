@@ -17,13 +17,11 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcaegen2.services.pmmapper.exceptions;
 
-/**
- * Exception indicates that a task has been attempted too many times.
- */
-public class TooManyTriesException extends Exception {
-    public TooManyTriesException(String errorMessage){
-        super(errorMessage);
+public class RequestFailure extends RuntimeException {
+    public RequestFailure(Throwable cause) {
+        super(cause);
     }
 }

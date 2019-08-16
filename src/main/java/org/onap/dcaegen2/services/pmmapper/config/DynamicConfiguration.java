@@ -27,13 +27,16 @@ import java.util.List;
 import lombok.Data;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
+import org.onap.dcaegen2.services.pmmapper.model.ServerHandler;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 
 @Data
-public class DynamicConfiguration implements HttpHandler {
+public class DynamicConfiguration implements HttpHandler, ServerHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(DynamicConfiguration.class));
+    private static final String METHOD = "get";
+    private static final String ENDPOINT_TEMPLATE = "/reconfigure";
     private List<Configurable> configurables;
     private MapperConfig originalConfig;
     private ConfigHandler configHandler;
@@ -86,5 +89,20 @@ public class DynamicConfiguration implements HttpHandler {
         } finally {
             logger.exiting();
         }
+    }
+
+    @Override
+    public String getMethod() {
+        return METHOD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return ENDPOINT_TEMPLATE;
+    }
+
+    @Override
+    public HttpHandler getHandler() {
+        return this;
     }
 }

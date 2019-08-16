@@ -50,10 +50,10 @@ public class MeasSplitter {
         logger.unwrap().debug("Splitting 3GPP xml MeasData to individual MeasCollecFile");
         MeasCollecFile currentMeasurement = converter.convert(event.getBody());
         event.setMeasCollecFile(currentMeasurement);
-        if(currentMeasurement.getMeasData().isEmpty()) {
+        if (currentMeasurement.getMeasData() == null || currentMeasurement.getMeasData().isEmpty()) {
             throw new NoSuchElementException("MeasData is empty.");
         }
-        return currentMeasurement.getMeasData().stream().map( measData -> {
+        return currentMeasurement.getMeasData().stream().map(measData -> {
             Event newEvent  = generateNewEvent(event);
             MeasCollecFile newMeasCollec = generateNewMeasCollec(newEvent,measData);
             newEvent.setMeasCollecFile(newMeasCollec);

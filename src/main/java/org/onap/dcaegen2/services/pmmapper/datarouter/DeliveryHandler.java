@@ -34,6 +34,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 
+import org.onap.dcaegen2.services.pmmapper.model.ServerHandler;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
@@ -47,7 +48,7 @@ import java.util.Optional;
  * Provides an undertow HttpHandler to be used as an endpoint for data router to send events to.
  */
 @Data
-public class DeliveryHandler implements HttpHandler {
+public class DeliveryHandler implements HttpHandler, ServerHandler {
 
     public static final String METADATA_HEADER = "X-DMAAP-DR-META";
     public static final String PUB_ID_HEADER = "X-DMAAP-DR-PUBLISH-ID";
@@ -56,6 +57,8 @@ public class DeliveryHandler implements HttpHandler {
 
     private static final String BAD_METADATA_MESSAGE = "Malformed Metadata.";
     private static final String NO_METADATA_MESSAGE = "Missing Metadata.";
+    private static final String METHOD = "put";
+    private static final String ENDPOINT_TEMPLATE = "/delivery/{filename}";
 
     private Gson metadataBuilder;
 
@@ -115,5 +118,20 @@ public class DeliveryHandler implements HttpHandler {
         } finally {
             logger.exiting();
         }
+    }
+
+    @Override
+    public String getMethod() {
+        return METHOD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return ENDPOINT_TEMPLATE;
+    }
+
+    @Override
+    public HttpHandler getHandler() {
+        return this;
     }
 }

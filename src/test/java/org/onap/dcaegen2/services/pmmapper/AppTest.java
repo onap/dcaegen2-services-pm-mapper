@@ -20,12 +20,17 @@
 
 package org.onap.dcaegen2.services.pmmapper;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpResponse.response;
+import static utils.ConfigUtils.getMapperConfigFromFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,6 +42,12 @@ import java.util.List;
 import com.google.gson.Gson;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
+import org.junit.jupiter.api.BeforeEach;
+import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
+import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
+import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
+import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
+
 import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
 import reactor.core.publisher.Flux;
 
@@ -66,21 +77,79 @@ class AppTest {
     static MockServerClient client;
 
     private static EventMetadata eventMetadata;
+    private static MapperConfig mapperConfig;
+    private static ConfigHandler configHandler;
 
     private static final Path dataDirectory = Paths.get("src/test/resources/mapper_test/mapping_data/");
     private static final Path metadata = Paths.get("src/test/resources/valid_metadata.json");
+    private static final Path template = Paths.get("src/main/resources/mapping.ftl");
     private static final Path schema = Paths.get("src/main/resources/measCollec_plusString.xsd");
+    private static final String config = "valid_mapper_config.json";
+
+    private App objUnderTest;
 
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         mockServer =  startClientAndServer(35454);
         client = new MockServerClient("127.0.0.1", 35454);
+        mapperConfig = getMapperConfigFromFile(config);
     }
 
     @AfterAll
-    public static void teardown() {
+    static void teardown() {
         mockServer.stop();
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        configHandler = mock(ConfigHandler.class);
+    }
+
+    @Test
+    void testDisabledHTTPServer() throws EnvironmentConfigException, CBSServerError,
+                                                 MapperConfigException {
+        MapperConfig mockConfig = Mockito.spy(mapperConfig);
+        when(mockConfig.getEnableHttp()).thenReturn(false);
+        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        objUnderTest = new App(template, schema, configHandler);
+        objUnderTest.setHttpPort(0);
+        objUnderTest.setHttpsPort(0);
+        objUnderTest.start();
+        assertEquals(1, objUnderTest.getApplicationServer().getListenerInfo().size());
+        assertEquals("https", objUnderTest.getApplicationServer().getListenerInfo().get(0).getProtcol());
+        objUnderTest.stop();
+    }
+
+    @Test
+    void testEnabledHTTPServer() throws IOException, EnvironmentConfigException, CBSServerError,
+                                                 MapperConfigException {
+        MapperConfig mockConfig = Mockito.spy(mapperConfig);
+        when(mockConfig.getEnableHttp()).thenReturn(true);
+        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        objUnderTest = new App(template, schema, configHandler);
+        objUnderTest.setHttpPort(0);
+        objUnderTest.setHttpsPort(0);
+        objUnderTest.start();
+        assertEquals(2, objUnderTest.getApplicationServer().getListenerInfo().size());
+        assertEquals("http", objUnderTest.getApplicationServer().getListenerInfo().get(0).getProtcol());
+        objUnderTest.stop();
+    }
+
+    @Test
+    void testConfigFailure() throws EnvironmentConfigException, CBSServerError, MapperConfigException {
+        when(configHandler.getMapperConfig()).thenThrow(MapperConfigException.class); //todo update to point to new single exception
+        assertThrows(IllegalStateException.class, () -> new App(template, schema, configHandler));
+
+    }
+
+    @Test
+    void testServerCreationFailure() throws EnvironmentConfigException, CBSServerError, MapperConfigException {
+        MapperConfig mockConfig = Mockito.spy(mapperConfig);
+        when(mockConfig.getKeyStorePath()).thenReturn("not_a_file");
+        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        assertThrows(IllegalStateException.class, () -> new App(template, schema, configHandler));
+
     }
 
     @Test
@@ -110,7 +179,7 @@ class AppTest {
     }
 
     @Test
-    public void testFilterByFileType_success() {
+    void testFilterByFileType_success() {
         Event mockEvent = Mockito.mock(Event.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
@@ -123,7 +192,7 @@ class AppTest {
     }
 
     @Test
-    public void testFilterByFileType_NonXML() {
+    void testFilterByFileType_NonXML() {
         Event mockEvent = Mockito.mock(Event.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
@@ -136,7 +205,7 @@ class AppTest {
     }
 
     @Test
-    public void testFilterByFileType_throwException() {
+    void testFilterByFileType_throwException() {
         Event mockEvent = Mockito.mock(Event.class);
         MeasFilterHandler mockFilter = Mockito.mock(MeasFilterHandler.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
@@ -148,7 +217,7 @@ class AppTest {
     }
 
     @Test
-    public void testValidateXML_success() throws IOException {
+    void testValidateXML_success() throws IOException {
         XMLValidator mockValidator = new XMLValidator(schema);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
@@ -164,7 +233,7 @@ class AppTest {
     }
 
     @Test
-    public void testValidateXML_failure() throws IOException {
+    void testValidateXML_failure() throws IOException {
         XMLValidator mockValidator = new XMLValidator(schema);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
@@ -180,7 +249,7 @@ class AppTest {
     }
 
     @Test
-    public void testValidateXML_throwException() {
+    void testValidateXML_throwException() {
         Event mockEvent = Mockito.mock(Event.class);
         XMLValidator mockValidator = Mockito.mock(XMLValidator.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
@@ -192,7 +261,7 @@ class AppTest {
     }
 
     @Test
-    public void testFilter_success() {
+    void testFilter_success() {
         Event mockEvent = Mockito.mock(Event.class);
         List<Event> mockEvents = Arrays.asList(mockEvent);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
@@ -201,7 +270,7 @@ class AppTest {
     }
 
     @Test
-    public void testFilter_throwException() {
+    void testFilter_throwException() {
         HttpRequest req = HttpRequest.request();
         client.when(req).respond( response().withStatusCode(200));
 
@@ -222,36 +291,33 @@ class AppTest {
     }
 
     @Test
-    public void testSplit_empty_success() {
+    void testSplit_empty_success() {
         Event mockEvent = Mockito.mock(Event.class);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
         MeasConverter mockMeasConverter = Mockito.mock(MeasConverter.class);
         Flux<List<Event>> splitResult = App.split(new MeasSplitter(mockMeasConverter), mockEvent, mockConfig);
-        splitResult.equals(Flux.<List<Event>>empty());
+        assertEquals(splitResult, Flux.<List<Event>>empty());
     }
 
     @Test
-    public void testSplit_success() {
+    void testSplit_success() {
         Event mockEvent = Mockito.mock(Event.class);
         List<Event> mockEvents = Arrays.asList(mockEvent,mockEvent);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
         MeasSplitter mockSplitter  = Mockito.mock(MeasSplitter.class);
         Mockito.when(mockSplitter.split(mockEvent)).thenReturn(mockEvents);
-
         Flux<List<Event>> splitResult = App.split(mockSplitter, mockEvent, mockConfig);
-
-        splitResult.equals(Flux.just(mockEvents));
+        assertEquals(splitResult.toString(), Flux.just(mockEvents).toString());
     }
 
     @Test
-    public void testMapping_empty_success() {
+    void testMapping_empty_success() {
         Event mockEvent = Mockito.mock(Event.class);
         MeasConverter mockMeasConverter = Mockito.mock(MeasConverter.class);
         List<Event> mockEvents = Arrays.asList(mockEvent);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
         Path mappingTemplate = Paths.get("src/main/resources/mapping.ftl");
         Flux<List<Event>> mappingResult = App.map(new Mapper(mappingTemplate,mockMeasConverter), mockEvents, mockConfig);
-        mappingResult.equals(Flux.<List<Event>>empty());
+        assertEquals(mappingResult, Flux.<List<Event>>empty());
     }
-
 }
