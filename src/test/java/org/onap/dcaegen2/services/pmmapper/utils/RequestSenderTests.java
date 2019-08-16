@@ -70,7 +70,6 @@ public class RequestSenderTests {
         String uuidRegex = "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
         ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(RequestSender.class);
         HttpRequest req = HttpRequest.request();
-
         client.when(req
                 .withHeader(ONAPLogConstants.Headers.REQUEST_ID, uuidRegex)
                 .withHeader(ONAPLogConstants.Headers.INVOCATION_ID, uuidRegex))

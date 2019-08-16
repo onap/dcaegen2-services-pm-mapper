@@ -57,12 +57,12 @@ public class MeasFilterHandler {
         Optional<Filter> filter = Optional.ofNullable(event.getFilter());
         MeasCollecFile measCollecFile = event.getMeasCollecFile();
 
-        if(hasNoFilters(filter)) {
+        if (hasNoFilters(filter)) {
             logger.unwrap().info("Skipping filtering by measTypes as filter config does not contain measTypes.");
             return true;
         }
 
-        if(measCollecFile.getMeasData().isEmpty()) {
+        if (measCollecFile.getMeasData().isEmpty()) {
             logger.unwrap().info("Measurement file will not be processed further as MeasData is empty.");
             return false;
         }
@@ -72,13 +72,12 @@ public class MeasFilterHandler {
         List<MeasInfo> measInfos = measData.getMeasInfo();
         List<MeasInfo> filteredMeasInfos = new ArrayList<>();
 
-        for (int i = 0; i < measInfos.size(); i++) {
-            MeasInfo currentMeasInfo = measInfos.get(i);
+        for (MeasInfo currentMeasInfo : measInfos) {
             List<String> measTypesNode = currentMeasInfo.getMeasTypes();
-            if(!measTypesNode.isEmpty()) {
-                setMeasInfosFromMeasTypes(currentMeasInfo,filteredMeasInfos, filter.get());
-            }else {
-                setMeasInfoFromMeasType(currentMeasInfo,filteredMeasInfos, filter.get());
+            if (measTypesNode != null && !measTypesNode.isEmpty()) {
+                setMeasInfosFromMeasTypes(currentMeasInfo, filteredMeasInfos, filter.get());
+            } else {
+                setMeasInfoFromMeasType(currentMeasInfo, filteredMeasInfos, filter.get());
             }
         }
 
