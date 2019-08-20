@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa425e69_8ffc899b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-08-20T15:05:44Z",
+      "side": 1,
+      "message": "are these needed? appear to be assigned to constants and never changed",
+      "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfee86c0_3f238835",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-08-20T15:05:44Z",
+      "side": 1,
+      "message": "are these needed? appear to be assigned to constants and never changed",
+      "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622b748b_3cdc1b53",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4745
+      },
+      "writtenOn": "2019-08-20T15:05:44Z",
+      "side": 1,
+      "message": "is todo comment still needed?",
+      "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
