@@ -30,5 +30,7 @@ public interface ServerHandler {
 
     String getTemplate();
 
-    HttpHandler getHandler();
+    default HttpHandler getHandler() {
+        return (HttpHandler) this;
+    }
 }

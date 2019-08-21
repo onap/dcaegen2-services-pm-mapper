@@ -51,16 +51,11 @@ public class HealthCheckHandler implements HttpHandler, ServerHandler {
 
     @Override
     public String getMethod() {
-        return METHOD;
+        return HealthCheckHandler.METHOD;
     }
 
     @Override
     public String getTemplate() {
-        return ENDPOINT_TEMPLATE;
-    }
-
-    @Override
-    public HttpHandler getHandler() {
-        return this;
+        return HealthCheckHandler.ENDPOINT_TEMPLATE;
     }
 }
