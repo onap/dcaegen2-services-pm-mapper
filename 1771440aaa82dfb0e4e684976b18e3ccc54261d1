@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbf8f889_438c5a30",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-21T08:27:52Z",
+      "side": 1,
+      "message": "Thanks, was supposed to migrate from the direct setting of the static fields here.\n\nDone.",
+      "parentUuid": "fa425e69_8ffc899b",
+      "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfee86c0_3f238835",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c4f892b9_096dc49e",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-21T08:27:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfee86c0_3f238835",
+      "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622b748b_3cdc1b53",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2019-08-20T15:05:44Z",
       "side": 1,
       "message": "is todo comment still needed?",
+      "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5832cec3_018391a1",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-21T08:27:52Z",
+      "side": 1,
+      "message": "Yep, Thanks for spotting that :)",
+      "parentUuid": "622b748b_3cdc1b53",
       "revId": "1771440aaa82dfb0e4e684976b18e3ccc54261d1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
