@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f98c61fe_c5a8e6c9",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-21T11:48:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac435389_cece42c4",
+      "revId": "12ab0acfd2aa88dde2b65974ced6aebd14c50df6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fedc4915_3487d3be",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2019-08-21T09:20:59Z",
       "side": 1,
       "message": "This is not needed when the exception is put last in the call. Unless only the message is the aim, and not hte whole exception with stack trace.",
+      "range": {
+        "startLine": 57,
+        "startChar": 83,
+        "endLine": 57,
+        "endChar": 86
+      },
+      "revId": "12ab0acfd2aa88dde2b65974ced6aebd14c50df6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d81348c_1fbffc3c",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-21T11:48:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fedc4915_3487d3be",
       "range": {
         "startLine": 57,
         "startChar": 83,
