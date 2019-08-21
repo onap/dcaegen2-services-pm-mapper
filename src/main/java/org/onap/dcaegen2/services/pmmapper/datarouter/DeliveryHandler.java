@@ -122,16 +122,12 @@ public class DeliveryHandler implements HttpHandler, ServerHandler {
 
     @Override
     public String getMethod() {
-        return METHOD;
+        return DeliveryHandler.METHOD;
     }
 
     @Override
     public String getTemplate() {
-        return ENDPOINT_TEMPLATE;
+        return DeliveryHandler.ENDPOINT_TEMPLATE;
     }
 
-    @Override
-    public HttpHandler getHandler() {
-        return this;
-    }
 }

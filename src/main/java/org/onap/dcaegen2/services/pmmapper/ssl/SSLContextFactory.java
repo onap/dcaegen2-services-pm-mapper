@@ -48,7 +48,7 @@ import static java.nio.file.Files.readAllBytes;
 
 public class SSLContextFactory {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(SSLContextFactory.class));
-    private static MapperConfig mapperConfig;
+    private MapperConfig mapperConfig;
 
     public SSLContextFactory(MapperConfig config) {
         mapperConfig = config;
