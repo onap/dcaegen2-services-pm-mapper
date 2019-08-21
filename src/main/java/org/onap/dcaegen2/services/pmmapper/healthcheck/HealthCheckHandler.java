@@ -22,6 +22,7 @@
 
 package org.onap.dcaegen2.services.pmmapper.healthcheck;
 
+import org.onap.dcaegen2.services.pmmapper.model.ServerHandler;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
@@ -30,8 +31,11 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 
-public class HealthCheckHandler implements HttpHandler {
+public class HealthCheckHandler implements HttpHandler, ServerHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(HealthCheckHandler.class));
+    private static final String METHOD = "get";
+    private static final String ENDPOINT_TEMPLATE = "/healthcheck";
+
     @Override
     public void handleRequest(HttpServerExchange exchange) {
         try {
@@ -45,4 +49,18 @@ public class HealthCheckHandler implements HttpHandler {
         }
     }
 
+    @Override
+    public String getMethod() {
+        return METHOD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return ENDPOINT_TEMPLATE;
+    }
+
+    @Override
+    public HttpHandler getHandler() {
+        return this;
+    }
 }

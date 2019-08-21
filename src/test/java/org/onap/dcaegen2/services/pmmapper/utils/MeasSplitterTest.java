@@ -43,7 +43,7 @@ import io.undertow.server.HttpServerExchange;
 import utils.EventUtils;
 
 @ExtendWith(MockitoExtension.class)
-public class MeasSplitterTest {
+class MeasSplitterTest {
     private static final String baseDir = "src/test/resources/split_test/";
     private MeasSplitter objUnderTest;
     private MeasConverter converter;
@@ -57,33 +57,31 @@ public class MeasSplitterTest {
     MapperConfig config;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         converter =  new MeasConverter();
         objUnderTest = new MeasSplitter(converter);
     }
 
-    public void setupBaseEvent() {
+    void setupBaseEvent() {
         Mockito.when(event.getHttpServerExchange()).thenReturn(exchange);
         Mockito.when(event.getMetadata()).thenReturn(meta);
-        Mockito.when(event.getMdc()).thenReturn(new HashMap<String, String>());
+        Mockito.when(event.getMdc()).thenReturn(new HashMap<>());
         Mockito.when(event.getMetadata()).thenReturn(meta);
         Mockito.when(event.getPublishIdentity()).thenReturn("");
     }
 
 
     @Test
-    public void no_measData() {
+    void no_measData() {
         String inputPath = baseDir + "no_measdata";
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         Mockito.when(event.getBody()).thenReturn(inputXml);
 
-        Assertions.assertThrows(NoSuchElementException.class, ()->{
-            objUnderTest.split(event);
-        });
+        Assertions.assertThrows(NoSuchElementException.class, () -> objUnderTest.split(event));
     }
 
     @Test
-    public void typeA_returns_only_one_event() throws JAXBException {
+    void typeA_returns_only_one_event() throws JAXBException {
         String inputPath = baseDir + "meas_results_typeA";
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         MeasCollecFile measToBeSplit = converter.convert(inputXml);
@@ -97,7 +95,7 @@ public class MeasSplitterTest {
     }
 
     @Test
-    public void typeC_returns_multiple_events() throws JAXBException {
+    void typeC_returns_multiple_events() throws JAXBException {
         String inputPath = baseDir + "meas_results_typeC";
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
         setupBaseEvent();
@@ -111,7 +109,7 @@ public class MeasSplitterTest {
         for (int i = 0; i < splitEvents.size(); i++) {
           String measInfoId = splitEvents.get(i).getMeasCollecFile()
                   .getMeasData().get(0).getMeasInfo().get(0).getMeasInfoId();
-          Assertions.assertTrue(measInfoId.equals("measInfoId"+(i+1)));
+            Assertions.assertEquals(measInfoId, "measInfoId" + (i + 1));
         }
     }
 }

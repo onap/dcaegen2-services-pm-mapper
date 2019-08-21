@@ -45,6 +45,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
+import org.onap.dcaegen2.services.pmmapper.exceptions.RequestFailure;
 import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
@@ -99,6 +100,9 @@ class ConfigHandlerTests {
         MapperConfig actualConfig = getMapperConfig();
         JsonObject expectedConfigJson = gson.fromJson(validMapperConfig, JsonObject.class);
         MapperConfig expectedConfig = gson.fromJson(expectedConfigJson, MapperConfig.class);
+        assertEquals(expectedConfig.getPublisherTopicUrl(), actualConfig.getPublisherTopicUrl());
+        assertEquals(expectedConfig.getPublisherUserName(), actualConfig.getPublisherUserName());
+        assertEquals(expectedConfig.getPublisherPassword(), actualConfig.getPublisherPassword());
         assertEquals(expectedConfig, actualConfig);
         assertTrue(logAppender.list.get(1).getMessage().contains("Received pm-mapper configuration from ConfigBinding Service"));
         logAppender.stop();
@@ -106,7 +110,7 @@ class ConfigHandlerTests {
 
     @Test
     void configbinding_server_error() throws Exception {
-        when(sender.send(anyString())).thenThrow(CBSServerError.class);
+        when(sender.send(anyString())).thenThrow(RequestFailure.class);
         assertThrows(CBSServerError.class, this::getMapperConfig);
     }
 
