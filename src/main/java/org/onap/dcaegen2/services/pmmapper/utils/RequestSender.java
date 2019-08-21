@@ -27,10 +27,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.onap.dcaegen2.services.pmmapper.exceptions.RequestFailure;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ServerResponseException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
@@ -56,7 +58,7 @@ public class RequestSender {
      * is set to {@code GET} by default.
      * @see RequestSender#send(String,String,String)
      */
-    public String send(final String urlString) throws Exception {
+    public String send(final String urlString) throws InterruptedException {
         return send("GET", urlString);
     }
 
@@ -65,7 +67,7 @@ public class RequestSender {
      * is set to empty String by default.
      * @see RequestSender#send(String,String,String)
      */
-    public String send(String method, final String urlString) throws Exception {
+    public String send(String method, final String urlString) throws InterruptedException {
        return send(method,urlString,"");
     }
 
@@ -74,7 +76,7 @@ public class RequestSender {
      * is set to empty String by default.
      * @see RequestSender#send(String,String,String,String)
      */
-    public String send(String method, final String urlString, final String body) throws Exception {
+    public String send(String method, final String urlString, final String body) throws InterruptedException {
         return send(method,urlString,body,"");
     }
 
@@ -85,56 +87,47 @@ public class RequestSender {
      * @param body of the request as json
      * @param encodedCredentials base64-encoded username password credentials
      * @return http response body
-     * @throws Exception
+     * @throws InterruptedException
      */
-    public String send(String method, final String urlString, final String body, final String encodedCredentials) throws Exception {
-       String invocationID = Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.INVOCATION_ID))
-            .orElse(logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS).toString());
+    public String send(String method, final String urlString, final String body, final String encodedCredentials)
+             throws InterruptedException {
+        String invocationID = Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.INVOCATION_ID))
+                 .orElse(logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS).toString());
         String requestID =  Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.REQUEST_ID))
-            .orElse( UUID.randomUUID().toString());
+                .orElse(UUID.randomUUID().toString());
         String result = "";
+        boolean status = false;
+        int attempts = 1;
+        try {
+            while (!status && attempts <= MAX_RETRIES) {
+                final URL url = new URL(urlString);
+                final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
 
-        for (int i = 1; i <= MAX_RETRIES; i++) {
-            final URL url = new URL(urlString);
-            final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
-
-
-            if("https".equalsIgnoreCase(url.getProtocol())) {
-                HttpsURLConnection.setDefaultSSLSocketFactory(SSLContext.getDefault().getSocketFactory());
-            }
-
-            if(!encodedCredentials.isEmpty()) {
-                connection.setRequestProperty("Authorization", "Basic " + encodedCredentials);
-            }
-
-            if(!body.isEmpty()) {
-                setMessageBody(connection, body);
-            }
-
-            logger.unwrap().info("Sending {} request to {}.", method, urlString);
-
-            try (InputStream is = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-                result = reader.lines()
-                        .collect(Collectors.joining("\n"));
-                int responseCode = connection.getResponseCode();
-                if (!(isWithinErrorRange(responseCode))) {
-                    logger.unwrap().info("Response code: {}, Server Response Received:\n{}",responseCode, result);
-                    break;
+                if ("https".equalsIgnoreCase(url.getProtocol())) {
+                    HttpsURLConnection.setDefaultSSLSocketFactory(SSLContext.getDefault().getSocketFactory());
                 }
-            } catch (Exception e) {
-                if (retryLimitReached(i)) {
-                    logger.unwrap().error("Execution error: {}", connection.getResponseMessage(), e);
-                    throw new ServerResponseException(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
-                }
-            }
 
-            Thread.sleep(RETRY_INTERVAL);
+                if (!encodedCredentials.isEmpty()) {
+                    connection.setRequestProperty("Authorization", "Basic " + encodedCredentials);
+                }
+
+                if (!body.isEmpty()) {
+                    setMessageBody(connection, body);
+                }
+                result = getResult(attempts, connection);
+                status = !isWithinErrorRange(connection.getResponseCode());
+                attempts++;
+                Thread.sleep(RETRY_INTERVAL);
+            }
+        } catch (IOException | NoSuchAlgorithmException ex) {
+            logger.unwrap().warn("Request failure", ex);
+            throw new RequestFailure(ex);
         }
         return result;
     }
 
-    private HttpURLConnection getHttpURLConnection(String method, URL url, String invocationID, String requestID) throws IOException {
+    private HttpURLConnection getHttpURLConnection(String method, URL url, String invocationID, String requestID)
+                throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(DEFAULT_READ_TIMEOUT);
         connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID);
@@ -160,5 +153,24 @@ public class RequestSender {
 
     private boolean isWithinErrorRange(final int responseCode) {
         return responseCode >= ERROR_START_RANGE;
+    }
+
+    private String getResult(int attemptNumber, HttpURLConnection connection) throws IOException {
+        logger.unwrap().info("Sending {} request to {}.", connection.getRequestMethod(), connection.getURL());
+        String result = "";
+        try (InputStream is = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            result = reader.lines().collect(Collectors.joining("\n"));
+            int responseCode = connection.getResponseCode();
+            if (!(isWithinErrorRange(responseCode))) {
+                logger.unwrap().info("Response code: {}, Server Response Received:\n{}", responseCode, result);
+            }
+        } catch (Exception e) {
+            if (retryLimitReached(attemptNumber)) {
+                logger.unwrap().error("Execution error: {}", connection.getResponseMessage(), e);
+                throw new ServerResponseException(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
+            }
+        }
+        return result;
     }
 }

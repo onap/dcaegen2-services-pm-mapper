@@ -9,7 +9,6 @@
             <job jobId="jobId"/>
             <granPeriod duration="PT900S" endTime="2018-10-02T12:15:00Z"/>
             <repPeriod duration="PT900S"/>
-            <measTypes></measTypes>
             <measType p="1">a</measType>
             <measType p="3">b</measType>
             <measValue measObjLdn="some measObjLdn">

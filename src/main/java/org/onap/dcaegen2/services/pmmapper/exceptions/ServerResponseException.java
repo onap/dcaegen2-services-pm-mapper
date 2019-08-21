@@ -20,7 +20,7 @@
 
 package org.onap.dcaegen2.services.pmmapper.exceptions;
 
-public class ServerResponseException extends Exception {
+public class ServerResponseException extends RuntimeException {
     public ServerResponseException(String message, Throwable cause) {
         super(message, cause);
     }
