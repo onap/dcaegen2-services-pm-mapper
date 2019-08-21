@@ -18,11 +18,12 @@
  * ============LICENSE_END=========================================================
  */
 package org.onap.dcaegen2.pmmapper.messagerouter;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import org.onap.dcaegen2.services.pmmapper.exceptions.RequestFailure;
 import reactor.test.StepVerifier;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +32,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.onap.dcaegen2.services.pmmapper.exceptions.MRPublisherException;
 import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
 import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
@@ -79,7 +79,7 @@ public class VESPublisherTest {
         Event event = mock(Event.class);
         List<Event> events  = Arrays.asList(event,event,event);
         when(event.getVes()).thenReturn(ves);
-        when(sender.send("POST",topicURL,ves,"base64encoded")).thenThrow(Exception.class);
+        when(sender.send("POST",topicURL,ves,"base64encoded")).thenThrow(RequestFailure.class);
 
         Flux<Event> flux = sut.publish(events);
 

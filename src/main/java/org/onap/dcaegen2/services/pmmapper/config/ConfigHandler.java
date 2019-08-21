@@ -63,11 +63,8 @@ public class ConfigHandler {
      * Retrieves PM-Mapper Configuration from DCAE's ConfigBinding Service.
      *
      * @throws EnvironmentConfigException
-     * @throws CBSServerError
-     * @throws MapperConfigException
      */
-    public MapperConfig getMapperConfig() throws EnvironmentConfigException,
-            CBSServerError, MapperConfigException {
+    public MapperConfig getMapperConfig() throws EnvironmentConfigException {
         String mapperConfigJson = "";
         String cbsSocketAddress = this.environmentConfig.getCBSHostName() + ":" + this.environmentConfig.getCBSPort();
         String requestURL = "http://" + cbsSocketAddress + "/service_component/" + this.environmentConfig.getServiceName();
@@ -84,7 +81,7 @@ public class ConfigHandler {
         return convertMapperConfigToObject(mapperConfigJson);
     }
 
-    private MapperConfig convertMapperConfigToObject(String mapperConfigJson) throws MapperConfigException {
+    private MapperConfig convertMapperConfigToObject(String mapperConfigJson) {
         MapperConfig mapperConfig;
         try {
             JsonObject config = new Gson().fromJson(mapperConfigJson, JsonObject.class);

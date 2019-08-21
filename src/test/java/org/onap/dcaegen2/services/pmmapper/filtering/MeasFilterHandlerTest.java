@@ -213,9 +213,7 @@ class MeasFilterHandlerTest {
         when(exchange.getRequestPath())
             .thenReturn(invalidFiletypes.toString());
 
-        invalidFiletypes.forEach(c -> {
-            assertFalse(objUnderTest.filterByFileType(event));
-        });
+        invalidFiletypes.forEach(c -> assertFalse(objUnderTest.filterByFileType(event)));
     }
 
 
@@ -227,7 +225,7 @@ class MeasFilterHandlerTest {
 
     private Event generateEvent(String inputPath, Filter filter) {
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
-        Event event = new Event(exchange, inputXml, metaData, new HashMap<String, String>(), "");
+        Event event = new Event(exchange, inputXml, metaData, new HashMap<>(), "");
         event.setMeasCollecFile(converter.convert(inputXml));
         event.setFilter(filter);
         return event;
