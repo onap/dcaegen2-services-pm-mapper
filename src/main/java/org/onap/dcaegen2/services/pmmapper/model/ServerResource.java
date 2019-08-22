@@ -24,11 +24,24 @@ package org.onap.dcaegen2.services.pmmapper.model;
 
 import io.undertow.server.HttpHandler;
 
-public interface ServerHandler {
+public abstract class ServerResource implements HttpHandler {
+    protected String httpMethod;
+    protected String endpointTemplate;
 
-    String getMethod();
+    public ServerResource(String httpMethod, String endpointTemplate) {
+        this.httpMethod = httpMethod;
+        this.endpointTemplate = endpointTemplate;
+    }
 
-    String getTemplate();
+    public String getHTTPMethod() {
+        return this.httpMethod;
+    }
 
-    HttpHandler getHandler();
+    public String getEndpointTemplate() {
+        return this.endpointTemplate;
+    }
+
+     public HttpHandler getHandler() {
+        return this;
+    }
 }
