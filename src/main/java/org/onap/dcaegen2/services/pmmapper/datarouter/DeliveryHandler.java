@@ -20,6 +20,8 @@
 
 package org.onap.dcaegen2.services.pmmapper.datarouter;
 
+import static io.undertow.util.Methods.PUT_STRING;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
@@ -30,11 +32,10 @@ import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.exceptions.NoMetadataException;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
-import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 
-import org.onap.dcaegen2.services.pmmapper.model.ServerHandler;
+import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
@@ -48,7 +49,7 @@ import java.util.Optional;
  * Provides an undertow HttpHandler to be used as an endpoint for data router to send events to.
  */
 @Data
-public class DeliveryHandler implements HttpHandler, ServerHandler {
+public class DeliveryHandler extends ServerResource {
 
     public static final String METADATA_HEADER = "X-DMAAP-DR-META";
     public static final String PUB_ID_HEADER = "X-DMAAP-DR-PUBLISH-ID";
@@ -57,8 +58,8 @@ public class DeliveryHandler implements HttpHandler, ServerHandler {
 
     private static final String BAD_METADATA_MESSAGE = "Malformed Metadata.";
     private static final String NO_METADATA_MESSAGE = "Missing Metadata.";
-    private static final String METHOD = "put";
-    private static final String ENDPOINT_TEMPLATE = "/delivery/{filename}";
+    private static final String HTTP_METHOD = PUT_STRING;
+    private static final String DELIVERY_ENDPOINT = "/delivery/{filename}";
 
     private Gson metadataBuilder;
 
@@ -69,6 +70,7 @@ public class DeliveryHandler implements HttpHandler, ServerHandler {
      * @param eventReceiver receiver for any inbound events.
      */
     public DeliveryHandler(EventReceiver eventReceiver) {
+        super(HTTP_METHOD, DELIVERY_ENDPOINT);
         this.eventReceiver = eventReceiver;
         this.metadataBuilder = new GsonBuilder()
                 .registerTypeAdapter(EventMetadata.class, new RequiredFieldDeserializer<EventMetadata>())
@@ -92,7 +94,7 @@ public class DeliveryHandler implements HttpHandler, ServerHandler {
      */
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) {
-        try{
+        try {
             logger.entering(new HttpServerExchangeAdapter(httpServerExchange));
             try {
                 Map<String,String> mdc = MDC.getCopyOfContextMap();
@@ -118,20 +120,5 @@ public class DeliveryHandler implements HttpHandler, ServerHandler {
         } finally {
             logger.exiting();
         }
-    }
-
-    @Override
-    public String getMethod() {
-        return METHOD;
-    }
-
-    @Override
-    public String getTemplate() {
-        return ENDPOINT_TEMPLATE;
-    }
-
-    @Override
-    public HttpHandler getHandler() {
-        return this;
     }
 }
