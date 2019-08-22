@@ -22,6 +22,30 @@
       "revId": "356ffbf00f40aa3539938aef4564f8be8bc0d6df",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3c74b7_6f0a9d24",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/DynamicConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T08:43:10Z",
+      "side": 1,
+      "message": "I haven\u0027t added default to this, as it wouldn\u0027t have made sense to do so inside one of the classes that is using it, however I have change the abstract class to support a default method of get.",
+      "parentUuid": "8da5adaa_904b7c8b",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "356ffbf00f40aa3539938aef4564f8be8bc0d6df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
