@@ -20,22 +20,20 @@
 
 package org.onap.dcaegen2.services.pmmapper.config;
 
-import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 import java.util.List;
 import lombok.Data;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
-import org.onap.dcaegen2.services.pmmapper.model.ServerHandler;
+import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 
 @Data
-public class DynamicConfiguration implements HttpHandler, ServerHandler {
+public class DynamicConfiguration extends ServerResource {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(DynamicConfiguration.class));
-    private static final String METHOD = "get";
     private static final String ENDPOINT_TEMPLATE = "/reconfigure";
     private List<Configurable> configurables;
     private MapperConfig originalConfig;
@@ -47,6 +45,7 @@ public class DynamicConfiguration implements HttpHandler, ServerHandler {
      * @param originalConfig original config to compare against.
      */
     public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig) {
+        super(DynamicConfiguration.ENDPOINT_TEMPLATE);
         this.configurables = configurables;
         this.originalConfig = originalConfig;
         this.configHandler = new ConfigHandler();
@@ -89,20 +88,5 @@ public class DynamicConfiguration implements HttpHandler, ServerHandler {
         } finally {
             logger.exiting();
         }
-    }
-
-    @Override
-    public String getMethod() {
-        return METHOD;
-    }
-
-    @Override
-    public String getTemplate() {
-        return ENDPOINT_TEMPLATE;
-    }
-
-    @Override
-    public HttpHandler getHandler() {
-        return this;
     }
 }
