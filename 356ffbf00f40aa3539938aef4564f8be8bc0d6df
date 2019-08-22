@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8da5adaa_904b7c8b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/DynamicConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4599
+      },
+      "writtenOn": "2019-08-22T08:22:24Z",
+      "side": 1,
+      "message": "This could be appended with \u0027DEFAULT\u0027",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "356ffbf00f40aa3539938aef4564f8be8bc0d6df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
