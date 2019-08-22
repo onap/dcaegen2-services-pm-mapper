@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efbb65ad_cdee2296",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/DynamicConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T13:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9632ee23_20cf5a39",
+      "range": {
+        "startLine": 37,
+        "startChar": 52,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "0fea0fa1f507e4d1bff04d9bf1ae7cb772a74595",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cce64b5_792da49d",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/DynamicConfiguration.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-08-22T13:05:45Z",
       "side": 1,
       "message": "Is this qualifier really needed since the constant is delared in this class? To mee it is misleading since I thought that the constant was declared somwehere else.",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 35
+      },
+      "revId": "0fea0fa1f507e4d1bff04d9bf1ae7cb772a74595",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86673880_93397829",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/DynamicConfiguration.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T13:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cce64b5_792da49d",
       "range": {
         "startLine": 48,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6cf07ce9_3eb1bdf5",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T13:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0322352d_f43cf930",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 74
+      },
+      "revId": "0fea0fa1f507e4d1bff04d9bf1ae7cb772a74595",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba06e3fc_f6dd038c",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2019-08-22T13:05:45Z",
       "side": 1,
       "message": "Are the qualifiers really needed since the constants are delared in this class? To mee it is misleading since I thought that the constants were declared somwehere else.",
+      "range": {
+        "startLine": 71,
+        "startChar": 14,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "0fea0fa1f507e4d1bff04d9bf1ae7cb772a74595",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c30840_8ebd1ecf",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T13:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba06e3fc_f6dd038c",
       "range": {
         "startLine": 71,
         "startChar": 14,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a1f49d0a_8f708cc7",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/healthcheck/HealthCheckHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T13:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291e00ea_35de7aec",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 66
+      },
+      "revId": "0fea0fa1f507e4d1bff04d9bf1ae7cb772a74595",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c4dd918_8aa2dcb2",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/healthcheck/HealthCheckHandler.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2019-08-22T13:05:45Z",
       "side": 1,
       "message": "Is this qualifier really needed since the constant is delared in this class? To mee it is misleading since I thought that the constant was declared somwehere else.",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "0fea0fa1f507e4d1bff04d9bf1ae7cb772a74595",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae2d971_82924a73",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/healthcheck/HealthCheckHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2019-08-22T13:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c4dd918_8aa2dcb2",
       "range": {
         "startLine": 38,
         "startChar": 14,
