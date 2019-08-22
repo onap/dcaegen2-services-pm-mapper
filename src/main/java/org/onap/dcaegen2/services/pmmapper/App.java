@@ -42,7 +42,7 @@ import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
-import org.onap.dcaegen2.services.pmmapper.model.ServerHandler;
+import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.onap.dcaegen2.services.pmmapper.utils.DataRouterUtils;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
@@ -89,7 +89,7 @@ public class App {
     private int httpsPort;
 
     private Undertow applicationServer;
-    private List<ServerHandler> serverHandlers;
+    private List<ServerResource> serverResources;
     private Flux<Event> flux;
     private FluxSink<Event> fluxSink;
 
@@ -137,9 +137,9 @@ public class App {
         this.healthCheckHandler = new HealthCheckHandler();
         this.deliveryHandler = new DeliveryHandler(fluxSink::next);
         this.dynamicConfiguration = new DynamicConfiguration(Arrays.asList(mapperConfig), mapperConfig);
-        this.serverHandlers = Arrays.asList(healthCheckHandler, deliveryHandler, dynamicConfiguration);
+        this.serverResources = Arrays.asList(healthCheckHandler, deliveryHandler, dynamicConfiguration);
         try {
-            this.applicationServer = server(this.mapperConfig, this.serverHandlers);
+            this.applicationServer = server(this.mapperConfig, this.serverResources);
         } catch (IOException e) {
             logger.unwrap().error("Failed to create server instance.", e);
             throw new IllegalStateException("Server instantiation failed");
@@ -160,7 +160,7 @@ public class App {
         this.applicationServer.stop();
     }
 
-    private Undertow server(MapperConfig config, List<ServerHandler> serverHandlers) throws IOException {
+    private Undertow server(MapperConfig config, List<ServerResource> serverResources) throws IOException {
         SSLContextFactory sslContextFactory = new SSLContextFactory(config);
         SSLContext sslContext = sslContextFactory.createSSLContext(config);
         SSLContext.setDefault(sslContext);
@@ -169,7 +169,7 @@ public class App {
             builder.addHttpListener(this.httpPort, "0.0.0.0");
         }
         RoutingHandler routes = new RoutingHandler();
-        serverHandlers.forEach(handler -> routes.add(handler.getMethod(), handler.getTemplate(), handler.getHandler()));
+        serverResources.forEach(handler -> routes.add(handler.getHTTPMethod(), handler.getEndpointTemplate(), handler.getHandler()));
         return builder.addHttpsListener(this.httpsPort, "0.0.0.0", sslContext)
                 .setHandler(routes)
                 .build();
