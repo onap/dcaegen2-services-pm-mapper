@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1339f2c_c0d3ded3",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-10-02T15:20:59Z",
+      "side": 1,
+      "message": "single quotes preferred",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 20
+      },
+      "revId": "6267335fad283bc9ec1652af7e8ab9f6d7b715e4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6c3e385_a39956e8",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-10-02T15:20:59Z",
+      "side": 1,
+      "message": "single quotes",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 21
+      },
+      "revId": "6267335fad283bc9ec1652af7e8ab9f6d7b715e4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
