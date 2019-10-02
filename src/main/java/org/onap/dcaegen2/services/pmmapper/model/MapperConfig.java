@@ -29,6 +29,7 @@ import lombok.ToString;
 import org.onap.dcaegen2.services.pmmapper.config.Configurable;
 import org.onap.dcaegen2.services.pmmapper.utils.DMaaPAdapter;
 import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
+import org.onap.dcaegen2.services.pmmapper.utils.MeasFilterConfigAdapter;
 
 @Getter
 @EqualsAndHashCode
@@ -64,6 +65,7 @@ public class MapperConfig implements Configurable {
 
     @GSONRequired
     @SerializedName("pm-mapper-filter")
+    @JsonAdapter(MeasFilterConfigAdapter.class)
     private MeasFilterConfig filterConfig;
 
     @GSONRequired
