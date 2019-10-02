@@ -29,7 +29,7 @@ inputs:
   filter:
     type: string
     description: PM Mapper filter on measInfo, measInfoId, measType, instanceId
-    default: '{ "filters":[]}'
+    default: { "filters":[] }
   enable_http:
     type: boolean
     description: Option to turn on HTTP connections
@@ -99,12 +99,25 @@ inputs:
     type: string
     description: DMAAP Message Router host port
     default: '3905'
+  cpu_limit:
+    type: string
+    default: "1000m"
+  cpu_request:
+    type: string
+    default: "1000m"
+  memory_limit:
+    type: string
+    default: "1024Mi"
+  memory_request:
+    type: string
+    default: "1024Mi"
 
 node_templates:
   pm-feed:
     type: ccsdk.nodes.Feed
     properties:
       feed_name: { get_input: feed_name }
+      useExisting: true
 
   pm-topic:
     type: ccsdk.nodes.Topic
@@ -148,6 +161,13 @@ node_templates:
           dmaap_publisher:
             type: message_router
             dmaap_info: <<pm-topic>>
+      resource_config:
+        limits:
+          cpu: { get_input: cpu_limit }
+          memory: { get_input: memory_limit }
+        requests:
+          cpu: { get_input: cpu_request }
+          memory: { get_input: memory_request }
       docker_config:
         healthcheck:
           endpoint: /healthcheck
