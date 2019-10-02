@@ -1,17 +1,5 @@
 {
-  "pm-mapper-filter": {
-    "filters": [
-      {
-        "pmDefVsn": "V9",
-        "nfType": "NrRadio",
-        "vendor": "Ericsson",
-        "measTypes": [
-          "A",
-          "B"
-        ]
-      }
-    ]
-  },
+  "pm-mapper-filter": "{\"filters\": [{\"pmDefVsn\": \"V9\", \"nfType\": \"NrRadio\", \"vendor\": \"Ericsson\", \"measTypes\": [\"A\", \"B\"]}]}",
   "key_store_path": "src/test/resources/testkeystore.jks.b64",
   "key_store_pass_path": "src/test/resources/password",
   "trust_store_path": "src/test/resources/testkeystore.jks.b64",
