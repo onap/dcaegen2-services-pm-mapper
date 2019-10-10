@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f5a73f8_6966e63e",
+        "filename": "version.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-10-10T15:44:00Z",
+      "side": 1,
+      "message": "Elalto will have active maintenance window. To avoid conflict with elalto bug fixes, the minor version for master/Frankfurt can be set to 2, so 1.2.0 will be better",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 7
+      },
+      "revId": "7601eb5a29fc4c00ea752d42a3e524da54586389",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
