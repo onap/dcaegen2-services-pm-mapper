@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,24 +20,34 @@
 
 package org.onap.dcaegen2.services.pmmapper.filtering;
 
+import com.google.gson.Gson;
+import io.undertow.server.HttpServerExchange;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
+import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import utils.ArgumentCreator;
 import utils.ConfigUtils;
 import utils.EventUtils;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 @PrepareForTest(MapperConfig.class)
@@ -56,7 +66,7 @@ public class MetadataFilterTest {
     private static MapperConfig multipleFilterConfig;
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         validConfig = ConfigUtils.getMapperConfigFromFile(VALID_MAPPER_CONFIG_FILE);
         noFilterConfig = ConfigUtils.getMapperConfigFromFile(NO_FILTER_CONFIG_FILE);
         multipleFilterConfig = ConfigUtils.getMapperConfigFromFile(MULTIPLE_FILTER_CONFIG_FILE);
@@ -89,13 +99,30 @@ public class MetadataFilterTest {
         assertFalse(metadataFilter.filter(testEvent));
     }
 
-    private static List<Event> getEventsWithValidMetadata() throws IOException {
-        Path validDataDirectory = Paths.get(DATA_DIRECTORY.toString() + "/valid/");
-        return EventUtils.eventsFromDirectory(validDataDirectory, VALID_METADATA);
+    private static List<Arguments> getEventsWithValidMetadata() {
+        return getEvents(VALID_METADATA);
     }
 
-    private static List<Event> getEventsWithInvalidMetadata() throws IOException {
-        Path validDataDirectory = Paths.get(DATA_DIRECTORY.toString() + "/valid/");
-        return EventUtils.eventsFromDirectory(validDataDirectory, INCORRECT_METADATA);
+    private static List<Arguments> getEventsWithInvalidMetadata() {
+        return getEvents(INCORRECT_METADATA);
+    }
+
+    private static List<Arguments> getEvents(Path metadataFile) {
+        ArgumentCreator creator = (Path path, EventMetadata metadata) -> {
+            EventMetadata testMetadata = null;
+            try {
+                testMetadata = new Gson().fromJson(new String(Files.readAllBytes(metadataFile)), EventMetadata.class);
+            } catch (IOException e) {
+                fail("Failed to read contents of metadata file");
+            }
+            testMetadata.setFileFormatType(metadata.getFileFormatType());
+            Path testEventPath = Paths.get(path.toString()+"/test.xml");
+            Event testEvent = new Event(mock(
+                    HttpServerExchange.class, RETURNS_DEEP_STUBS),
+                    EventUtils.fileContentsToString(testEventPath), testMetadata, new HashMap<>(), "");
+
+            return Arguments.of(testEvent);
+        };
+        return EventUtils.generateEventArguments(DATA_DIRECTORY, "/nr", creator);
     }
 }

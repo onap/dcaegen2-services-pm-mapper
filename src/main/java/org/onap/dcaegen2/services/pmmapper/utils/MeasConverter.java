@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,19 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.sax.SAXSource;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
+import org.onap.dcaegen2.services.pmmapper.model.Event;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementFile;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.lte.MeasCollecFile;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.nr.MeasDataFile;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * Converts 3GPP PM Measurement xml string to MeasCollecFil and vice versa.
@@ -39,38 +48,57 @@ import org.slf4j.LoggerFactory;
 public class MeasConverter {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasConverter.class));
 
+    public static final String LTE_FILE_TYPE = "org.3GPP.32.435#measCollec";
+    public static final String NR_FILE_TYPE = "org.3GPP.28.550#measData";
+
+
     /**
      * Converts 3GPP Measurement xml string to MeasCollecFile.
      **/
-    public MeasCollecFile convert(String eventBody) {
-        logger.unwrap().debug("Converting 3GPP xml string to MeasCollecFile");
-        MeasCollecFile measCollecFile = null;
+    public MeasurementFile convert(Event event) {
+        logger.unwrap().debug("Converting 3GPP xml string to PM object");
+        Class targetClass = getPMFileClass(event);
         try {
-            JAXBContext jaxbContext = null;
-            jaxbContext = JAXBContext.newInstance(MeasCollecFile.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(targetClass);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            measCollecFile = (MeasCollecFile) unmarshaller.unmarshal(new StringReader(eventBody));
-        } catch (JAXBException e) {
-            throw new MappingException("Unable to convert 3GPP xml to MeasCollecFile", e);
+            SAXParserFactory saxFactory = SAXParserFactory.newInstance();
+            saxFactory.setNamespaceAware(false);
+            XMLReader reader = saxFactory.newSAXParser().getXMLReader();
+            SAXSource source = new SAXSource(reader,new InputSource(new StringReader(event.getBody())));
+            return (MeasurementFile) unmarshaller.unmarshal(source);
+        } catch (JAXBException | ParserConfigurationException | SAXException e) {
+            throw new MappingException("Unable to convert 3GPP xml to PM Measurement", e);
         }
-        return measCollecFile;
     }
 
     /**
      * Converts MeasCollecFile to 3GPP Measurement xml string.
      **/
-    public String convert(MeasCollecFile measCollecFile) {
-        logger.unwrap().debug("Converting MeasCollecFile to 3GPP xml string");
+    public String convert(MeasurementFile measurement) {
+        logger.unwrap().debug("Converting Measurement to 3GPP xml string");
         StringWriter writer = new StringWriter();
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(MeasCollecFile.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(measurement.getClass());
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-            marshaller.marshal(measCollecFile, writer);
+            marshaller.marshal(measurement, writer);
         } catch (JAXBException e) {
-            throw new MappingException("Unable to convert MeasCollecFile to 3GPP xml", e);
+            throw new MappingException("Unable to convert Measurement to 3GPP xml", e);
         }
         return writer.toString();
     }
+
+    private Class getPMFileClass(Event event) {
+        Class pmFileClass;
+        if (event.getMetadata().getFileFormatType().equals(MeasConverter.LTE_FILE_TYPE)) {
+            pmFileClass = MeasCollecFile.class;
+        } else if(event.getMetadata().getFileFormatType().equals(NR_FILE_TYPE)) {
+            pmFileClass = MeasDataFile.class;
+        } else {
+            throw new MappingException("Failed to discover file type with first class support", new RuntimeException());
+        }
+        return pmFileClass;
+    }
+
 }

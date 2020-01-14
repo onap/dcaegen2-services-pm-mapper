@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019 - 2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,35 +20,43 @@
 
 package org.onap.dcaegen2.services.pmmapper.utils;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
 
+import io.undertow.server.HttpServerExchange;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
+import java.util.Properties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
+import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import utils.ArgumentCreator;
 import utils.EventUtils;
 
 
 @ExtendWith(MockitoExtension.class)
 class XMLValidatorTest {
-    private static final Path metadata = Paths.get("src/test/resources/valid_metadata.json");
     private static final Path dataDirectory = Paths.get("src/test/resources/xml_validator_test/test_data/");
-    private static final Path xsd = Paths.get("src/main/resources/measCollec_plusString.xsd");
+    private static final Path schemas = Paths.get("src/main/resources/schemas/");
     private XMLValidator objUnderTest;
 
     @BeforeEach
     void setup() {
-        objUnderTest = new XMLValidator(xsd);
+        objUnderTest = new XMLValidator(schemas);
     }
 
     @Test
@@ -62,26 +70,38 @@ class XMLValidatorTest {
         assertThrows(NullPointerException.class, () -> objUnderTest.validate(null));
     }
 
-    @ParameterizedTest
-    @MethodSource("getValidEvents")
-    void testValidEventsPass(Event testEvent) {
-        assertTrue(objUnderTest.validate(testEvent));
+    @Test
+    void testInvalidSchemaDirectory() {
+        assertThrows(IllegalArgumentException.class, () -> new XMLValidator(Paths.get("fake dir")));
+    }
+
+    @Test
+    void testInvalidSchemaFormat() {
+        assertThrows(IllegalArgumentException.class, () -> new XMLValidator(Paths.get("src/test/resources/invalid_configs")));
     }
 
     @ParameterizedTest
-    @MethodSource("getInvalidEvents")
-    void testInvalidEventsFail(Event testEvent) {
-        assertFalse(objUnderTest.validate(testEvent));
+    @MethodSource("getEvents")
+    void testXmlValidation(boolean validity, Event testEvent) {
+        assertEquals(validity, objUnderTest.validate(testEvent));
     }
 
-    private static List<Event> getValidEvents() throws IOException {
-        Path validDataDirectory = Paths.get(dataDirectory.toString() + "/valid/");
-        return EventUtils.eventsFromDirectory(validDataDirectory, metadata);
+    private static List<Arguments> getEvents() {
+        ArgumentCreator creator = (Path path, EventMetadata metadata) -> {
+            Path props = Paths.get(path.toString()+"/validity.props");
+            Path testEventPath = Paths.get(path.toString()+"/test.xml");
+            Properties validityProps = new Properties();
+            try {
+                validityProps.load(new FileInputStream(props.toFile()));
+            } catch (IOException e) {
+                fail("Failed to load properties for test");
+            }
+            boolean valid = Boolean.parseBoolean(validityProps.getProperty("valid"));
+            Event testEvent = new Event(mock(
+                    HttpServerExchange.class, RETURNS_DEEP_STUBS),
+                    EventUtils.fileContentsToString(testEventPath), metadata, new HashMap<>(), "");
+            return Arguments.of(valid, testEvent);
+        };
+        return EventUtils.generateEventArguments(dataDirectory, "/nr", creator);
     }
-
-    private static List<Event> getInvalidEvents() throws IOException {
-        Path invalidDataDirectory = Paths.get(dataDirectory.toString() + "/invalid/");
-        return EventUtils.eventsFromDirectory(invalidDataDirectory, metadata);
-    }
-
 }

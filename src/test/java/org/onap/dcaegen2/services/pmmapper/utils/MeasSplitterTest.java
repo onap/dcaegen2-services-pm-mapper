@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,98 +18,84 @@
  * ============LICENSE_END=========================================================
  */
 package org.onap.dcaegen2.services.pmmapper.utils;
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.xml.bind.JAXBException;
+import java.util.Properties;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
-import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
 
-import io.undertow.server.HttpServerExchange;
+import utils.ArgumentCreator;
 import utils.EventUtils;
 
 @ExtendWith(MockitoExtension.class)
 class MeasSplitterTest {
     private static final String baseDir = "src/test/resources/split_test/";
     private MeasSplitter objUnderTest;
-    private MeasConverter converter;
-    @Mock
-    HttpServerExchange exchange;
-    @Mock
-    EventMetadata meta;
-    @Mock
-    Event event;
-    @Mock
-    MapperConfig config;
 
     @BeforeEach
     void setup() {
-        converter =  new MeasConverter();
-        objUnderTest = new MeasSplitter(converter);
+        objUnderTest = new MeasSplitter(new MeasConverter());
     }
-
-    void setupBaseEvent() {
-        Mockito.when(event.getHttpServerExchange()).thenReturn(exchange);
-        Mockito.when(event.getMetadata()).thenReturn(meta);
-        Mockito.when(event.getMdc()).thenReturn(new HashMap<>());
-        Mockito.when(event.getMetadata()).thenReturn(meta);
-        Mockito.when(event.getPublishIdentity()).thenReturn("");
-    }
-
 
     @Test
     void no_measData() {
         String inputPath = baseDir + "no_measdata";
+        EventMetadata metadata = new EventMetadata();
+        metadata.setFileFormatType(MeasConverter.LTE_FILE_TYPE);
         String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
-        Mockito.when(event.getBody()).thenReturn(inputXml);
+        Event testEvent = EventUtils.makeMockEvent(inputXml, metadata);
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> objUnderTest.split(event));
+        assertThrows(NoSuchElementException.class, () -> objUnderTest.split(testEvent));
     }
 
-    @Test
-    void typeA_returns_only_one_event() throws JAXBException {
-        String inputPath = baseDir + "meas_results_typeA";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
-        MeasCollecFile measToBeSplit = converter.convert(inputXml);
-        setupBaseEvent();
-        Mockito.when(event.getBody()).thenReturn(inputXml);
-        Mockito.when(event.getMeasCollecFile()).thenReturn(measToBeSplit);
 
-        List<Event> splitEvents = objUnderTest.split(event);
-
-        assertEquals(1,splitEvents.size());
-    }
-
-    @Test
-    void typeC_returns_multiple_events() throws JAXBException {
-        String inputPath = baseDir + "meas_results_typeC";
-        String inputXml = EventUtils.fileContentsToString(Paths.get(inputPath + ".xml"));
-        setupBaseEvent();
-        Mockito.when(event.getBody()).thenReturn(inputXml);
-        MeasCollecFile measToBeSplit = converter.convert(inputXml);
-        Mockito.when(event.getMeasCollecFile()).thenReturn(measToBeSplit);
-
-        List<Event> splitEvents = objUnderTest.split(event);
-
-        assertEquals(3,splitEvents.size());
-        for (int i = 0; i < splitEvents.size(); i++) {
-          String measInfoId = splitEvents.get(i).getMeasCollecFile()
-                  .getMeasData().get(0).getMeasInfo().get(0).getMeasInfoId();
-            Assertions.assertEquals(measInfoId, "measInfoId" + (i + 1));
+    @ParameterizedTest
+    @MethodSource("getEvents")
+    void testSplit(int numberOfEvents, String[] measInfoIds, Event testEvent) {
+        List<Event> splitEvents = objUnderTest.split(testEvent);
+        assertEquals(numberOfEvents, splitEvents.size());
+        for (int i = 0; i<splitEvents.size(); i++) {
+            String measInfoId = splitEvents.get(i).getMeasurement()
+                                        .getMeasurementData().get().get(0).getMeasurementInfo().get(0).getMeasInfoId();
+            assertEquals(measInfoIds[i], measInfoId);
         }
+    }
+
+
+    private static List<Arguments> getEvents() {
+        ArgumentCreator splitterCreator = (Path path, EventMetadata metadata) -> {
+            Path propsPath = Paths.get(path.toString()+"/split.props");
+            Path testEventPath = Paths.get(path.toString()+"/test.xml");
+            Properties splitProperties = new Properties();
+            try {
+                splitProperties.load(new FileInputStream(propsPath.toFile()));
+            } catch (IOException e) {
+                fail("Failed to load properties for test");
+            }
+            int numberOfEvents = Integer.parseInt(splitProperties.getProperty("eventCount"));
+            String [] measInfoIds = splitProperties.getProperty("measInfoIds").split(",");
+            Event testEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testEventPath), metadata);
+            return Arguments.of(numberOfEvents, measInfoIds, testEvent);
+        };
+        return EventUtils.generateEventArguments(Paths.get(baseDir), "/nr", splitterCreator);
     }
 }

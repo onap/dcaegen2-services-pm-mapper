@@ -28,6 +28,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import io.undertow.server.HttpServerExchange;
 import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -38,6 +39,7 @@ import java.nio.file.Paths;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.util.HashMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ProcessEventException;
@@ -162,14 +164,16 @@ public class DataRouterUtilsTest {
         URL mockURL = mock(URL.class);
         HttpsURLConnection mockConnection = mock(HttpsURLConnection.class, RETURNS_DEEP_STUBS);
         when(mockConnection.getResponseCode()).thenReturn(503);
-
+        EventMetadata metadata = new EventMetadata();
+        metadata.setFileFormatType(MeasConverter.LTE_FILE_TYPE);
         when(mockURL.openConnection()).thenReturn(mockConnection);
         when(mockURL.getProtocol()).thenReturn("https");
         when(mockMapperConfig.getDmaapDRDeleteEndpoint()).thenReturn("dmaap-dr-node/delete/");
         when(mockMapperConfig.getSubscriberIdentity()).thenReturn("12");
 
         PowerMockito.whenNew(URL.class).withAnyArguments().thenReturn(mockURL);
-        Event testEvent = EventUtils.makeMockEvent("", mock(EventMetadata.class));
+        Event testEvent = new Event(mock(
+                HttpServerExchange.class, RETURNS_DEEP_STUBS), "", metadata, new HashMap<>(), "12");
         assertThrows(ProcessEventException.class, () -> DataRouterUtils.processEvent(mockMapperConfig, testEvent));
     }
 }
