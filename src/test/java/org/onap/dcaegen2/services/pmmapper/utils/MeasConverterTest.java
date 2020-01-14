@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,25 @@
  */
 package org.onap.dcaegen2.services.pmmapper.utils;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
 
-import java.io.StringReader;
+import io.undertow.server.HttpServerExchange;
 import java.io.StringWriter;
 
+import java.util.HashMap;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
+import org.onap.dcaegen2.services.pmmapper.model.Event;
+import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.lte.MeasCollecFile;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -68,16 +72,23 @@ public class MeasConverterTest {
     }
 
     @Test
-    public void convertToMeasCollec_throws_mappingException() throws JAXBException {
-        PowerMockito.mockStatic(JAXBContext.class);
-        Unmarshaller unmarshallerMock = PowerMockito.mock(Unmarshaller.class);
-        JAXBContext jaxbContext = PowerMockito.mock(JAXBContext.class);
-        PowerMockito.when(JAXBContext.newInstance(MeasCollecFile.class)).thenReturn(jaxbContext);
-        PowerMockito.when(jaxbContext.createUnmarshaller()).thenReturn(unmarshallerMock);
-        PowerMockito.when(unmarshallerMock.unmarshal(Mockito.any(StringReader.class))).thenThrow(JAXBException.class);
-
+    public void convertToMeasCollec_throws_mappingException() {
+        EventMetadata metadata = new EventMetadata();
+        metadata.setFileFormatType(MeasConverter.LTE_FILE_TYPE);
+        Event event = new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS), "xmlString", metadata, new HashMap<>(), "");
         assertThrows(MappingException.class, () -> {
-            objUnderTest.convert("xmlString");
+            objUnderTest.convert(event);
         });
     }
+
+    @Test
+    public void convertToMeasData_throws_mappingException() {
+        EventMetadata metadata = new EventMetadata();
+        metadata.setFileFormatType(MeasConverter.NR_FILE_TYPE);
+        Event event = new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS), "xmlString", metadata, new HashMap<>(), "");
+        assertThrows(MappingException.class, () -> {
+            objUnderTest.convert(event);
+        });
+    }
+
 }

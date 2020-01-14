@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import java.util.NoSuchElementException;
 
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementData;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementFile;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 
@@ -47,33 +47,32 @@ public class MeasSplitter {
      * Splits the MeasCollecFile to multiple MeasCollecFile based on the number of MeasData
      **/
     public List<Event> split(Event event) {
-        logger.unwrap().debug("Splitting 3GPP xml MeasData to individual MeasCollecFile");
-        MeasCollecFile currentMeasurement = converter.convert(event.getBody());
-        event.setMeasCollecFile(currentMeasurement);
-        if (currentMeasurement.getMeasData() == null || currentMeasurement.getMeasData().isEmpty()) {
+        logger.unwrap().debug("Splitting 3GPP xml MeasData to individual Measurements");
+        MeasurementFile currentMeasurement = converter.convert(event);
+        event.setMeasurement(currentMeasurement);
+
+        if (!currentMeasurement.getMeasurementData().isPresent()  || currentMeasurement.getMeasurementData().get().isEmpty()) {
             throw new NoSuchElementException("MeasData is empty.");
         }
-        return currentMeasurement.getMeasData().stream().map(measData -> {
+        return currentMeasurement.getMeasurementData().get().stream().map(measData -> {
             Event newEvent  = generateNewEvent(event);
-            MeasCollecFile newMeasCollec = generateNewMeasCollec(newEvent,measData);
-            newEvent.setMeasCollecFile(newMeasCollec);
+            MeasurementFile newMeasurement = makeMeasurement(newEvent,measData);
+            newEvent.setMeasurement(newMeasurement);
             return newEvent;
         }).collect(Collectors.toList());
     }
 
-    private MeasCollecFile generateNewMeasCollec(Event event, MeasData measData) {
-        MeasCollecFile measCollec = new MeasCollecFile();
-        measCollec.replaceMeasData(Arrays.asList(measData));
-        measCollec.setFileHeader(event.getMeasCollecFile().getFileHeader());
-        measCollec.setFileFooter(event.getMeasCollecFile().getFileFooter());
-        return measCollec;
+    private MeasurementFile makeMeasurement(Event event, MeasurementData measData) {
+        MeasurementFile measurement = converter.convert(event);
+        measurement.replacementMeasurementData(Arrays.asList(measData));
+        return measurement;
     }
 
     private Event generateNewEvent(Event event) {
         Event modifiedEvent =  new Event(event.getHttpServerExchange(),
                 event.getBody(), event.getMetadata(), event.getMdc(),
                 event.getPublishIdentity());
-        modifiedEvent.setMeasCollecFile(event.getMeasCollecFile());
+        modifiedEvent.setMeasurement(event.getMeasurement());
         modifiedEvent.setFilter(event.getFilter());
         return modifiedEvent;
     }

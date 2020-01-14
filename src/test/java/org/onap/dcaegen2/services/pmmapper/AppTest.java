@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -37,6 +38,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -83,7 +85,7 @@ class AppTest {
     private static final Path dataDirectory = Paths.get("src/test/resources/mapper_test/mapping_data/");
     private static final Path metadata = Paths.get("src/test/resources/valid_metadata.json");
     private static final Path template = Paths.get("src/main/resources/mapping.ftl");
-    private static final Path schema = Paths.get("src/main/resources/measCollec_plusString.xsd");
+    private static final Path schema = Paths.get("src/main/resources/schemas/");
     private static final String config = "valid_mapper_config.json";
 
     private App objUnderTest;
@@ -153,8 +155,9 @@ class AppTest {
     }
 
     @Test
-    void testHandleBackPressure() {
-        Event event = utils.EventUtils.makeMockEvent("", mock(EventMetadata.class));
+    void testHandleBackPressure() throws Exception{
+        Event event = new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS),
+                "", mock(EventMetadata.class), new HashMap<>(), "");
         App.handleBackPressure(event);
         verify(event.getHttpServerExchange(), times(1)).setStatusCode(StatusCodes.TOO_MANY_REQUESTS);
         verify(event.getHttpServerExchange(), times(1)).unDispatch();
@@ -166,8 +169,9 @@ class AppTest {
     }
 
     @Test
-    void testReceiveRequest() {
-        Event event = utils.EventUtils.makeMockEvent("", mock(EventMetadata.class));
+    void testReceiveRequest() throws Exception {
+        Event event = new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS),
+                "", mock(EventMetadata.class), new HashMap<>(), "");
         App.receiveRequest(event);
         verify(event.getHttpServerExchange(), times(1)).setStatusCode(StatusCodes.OK);
         verify(event.getHttpServerExchange(), times(1)).unDispatch();
@@ -212,14 +216,14 @@ class AppTest {
     }
 
     @Test
-    void testValidateXML_success() throws IOException {
+    void testValidateXML_success() throws Exception {
         XMLValidator mockValidator = new XMLValidator(schema);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
-        String metadataFileContents = new String(Files.readAllBytes(metadata));
+        String metadataFileContents = new String(Files.readAllBytes(Paths.get(dataDirectory + "/32.435/meas_results/metadata.json")));
         eventMetadata = new Gson().fromJson(metadataFileContents, EventMetadata.class);
 
-        Path testFile = Paths.get(dataDirectory + "/valid_data/meas_results.xml");
+        Path testFile = Paths.get(dataDirectory + "/32.435/meas_results/test.xml");
         Event mockEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testFile), eventMetadata);
 
         boolean result = App.validate(mockValidator, mockEvent, mockConfig);
@@ -228,17 +232,16 @@ class AppTest {
     }
 
     @Test
-    void testValidateXML_failure() throws IOException {
+    void testValidateXML_failure() throws Exception {
         XMLValidator mockValidator = new XMLValidator(schema);
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
 
         String metadataFileContents = new String(Files.readAllBytes(metadata));
         eventMetadata = new Gson().fromJson(metadataFileContents, EventMetadata.class);
-
-        Path testFile = Paths.get("src/test/resources/xml_validator_test/test_data/invalid/no_managed_element.xml");
-        Event mockEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testFile), eventMetadata);
-
-        boolean result = App.validate(mockValidator, mockEvent, mockConfig);
+        Path testFile = Paths.get("src/test/resources/xml_validator_test/test_data/lte/no_managed_element/test.xml");
+        Event event = new Event(mock(HttpServerExchange.class, RETURNS_DEEP_STUBS),
+                EventUtils.fileContentsToString(testFile), eventMetadata, new HashMap<>(), "");
+        boolean result = App.validate(mockValidator, event, mockConfig);
 
         assertFalse(result);
     }

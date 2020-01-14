@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,11 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData.MeasInfo;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData.MeasInfo.MeasType;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData.MeasInfo.MeasValue;
-import org.onap.dcaegen2.services.pmmapper.model.MeasCollecFile.MeasData.MeasInfo.MeasValue.R;
 import org.onap.dcaegen2.services.pmmapper.model.MeasFilterConfig.Filter;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementData;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementFile;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementInfo;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementInfo.MeasValue;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
@@ -55,24 +53,24 @@ public class MeasFilterHandler {
      **/
     public boolean filterByMeasType(Event event) {
         Optional<Filter> filter = Optional.ofNullable(event.getFilter());
-        MeasCollecFile measCollecFile = event.getMeasCollecFile();
+        MeasurementFile measurementFile = event.getMeasurement();
 
         if (hasNoFilters(filter)) {
             logger.unwrap().info("Skipping filtering by measTypes as filter config does not contain measTypes.");
             return true;
         }
 
-        if (measCollecFile.getMeasData().isEmpty()) {
+        if (!measurementFile.getMeasurementData().isPresent() || measurementFile.getMeasurementData().get().isEmpty()) {
             logger.unwrap().info("Measurement file will not be processed further as MeasData is empty.");
             return false;
         }
 
         logger.unwrap().info("Filtering the measurement file by measTypes.");
-        MeasData measData = measCollecFile.getMeasData().get(0);
-        List<MeasInfo> measInfos = measData.getMeasInfo();
-        List<MeasInfo> filteredMeasInfos = new ArrayList<>();
+        MeasurementData measData = measurementFile.getMeasurementData().get().get(0);
+        List<MeasurementInfo> measInfos = measData.getMeasurementInfo();
+        List<MeasurementInfo> filteredMeasInfos = new ArrayList<>();
 
-        for (MeasInfo currentMeasInfo : measInfos) {
+        for (MeasurementInfo currentMeasInfo : measInfos) {
             List<String> measTypesNode = currentMeasInfo.getMeasTypes();
             if (measTypesNode != null && !measTypesNode.isEmpty()) {
                 setMeasInfosFromMeasTypes(currentMeasInfo, filteredMeasInfos, filter.get());
@@ -85,8 +83,8 @@ public class MeasFilterHandler {
             logger.unwrap().info("No filter match from the current measurement file.");
             return false;
         }
-        measData.setMeasInfo(filteredMeasInfos);
-        String filteredXMl = converter.convert(measCollecFile);
+        measData.setMeasurementInfo(filteredMeasInfos);
+        String filteredXMl = converter.convert(measurementFile);
         event.setBody(filteredXMl);
         logger.unwrap().info("Successfully filtered the measurement by measTypes.");
         return true;
@@ -147,8 +145,8 @@ public class MeasFilterHandler {
         return FilenameUtils.getExtension(fileName).equals(XML_EXTENSION);
     }
 
-    private boolean hasMatchingResults(List<MeasType> filteredMeasTypes, MeasValue measValue ) {
-        List<R> filteredResults = new ArrayList<>();
+    private boolean hasMatchingResults(List<MeasurementInfo.MeasType> filteredMeasTypes, MeasValue measValue ) {
+        List<MeasValue.R> filteredResults = new ArrayList<>();
 
         filteredMeasTypes.forEach( mst ->
             measValue.getR().stream()
@@ -164,8 +162,8 @@ public class MeasFilterHandler {
        return hasResults;
     }
 
-    private void setMeasInfoFromMeasType(MeasInfo currentMeasInfo, List<MeasInfo> filteredMeasInfos, Filter filter) {
-        List<MeasType> filteredMeasTypes = currentMeasInfo.getMeasType().stream()
+    private void setMeasInfoFromMeasType(MeasurementInfo currentMeasInfo, List<MeasurementInfo> filteredMeasInfos, Filter filter) {
+        List<MeasurementInfo.MeasType> filteredMeasTypes = currentMeasInfo.getMeasType().stream()
                 .filter(mt -> filter.getMeasTypes().contains(mt.getValue()))
                 .collect(Collectors.toList());
 
@@ -179,7 +177,7 @@ public class MeasFilterHandler {
         }
     }
 
-    private void setMeasInfosFromMeasTypes(MeasInfo currentMeasInfo, List<MeasInfo> filteredMeasInfos, Filter filter) {
+    private void setMeasInfosFromMeasTypes(MeasurementInfo currentMeasInfo, List<MeasurementInfo> filteredMeasInfos, Filter filter) {
         MeasValue currentMeasValue = currentMeasInfo.getMeasValue()
                 .get(0);
         List<String> measTypesNode = currentMeasInfo.getMeasTypes();

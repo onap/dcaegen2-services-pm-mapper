@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import lombok.NonNull;
 
 import java.util.Map;
 import org.onap.dcaegen2.services.pmmapper.model.MeasFilterConfig.Filter;
+import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementFile;
 
 /**
  * Class used to pass around relevant inbound event data.
@@ -42,7 +43,7 @@ public class Event {
     @NonNull
     private String publishIdentity;
 
-    private MeasCollecFile measCollecFile;
+    private MeasurementFile measurement;
 
     private Filter filter;
 
