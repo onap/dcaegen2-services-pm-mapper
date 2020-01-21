@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef23d44d_798ea18c",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/mapping/Mapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-01-21T14:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf3eb7d1_824d2448",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 53
+      },
+      "revId": "dd08b508188d8f6fff39089583ab47646d2628cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea3a72e_6905198c",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/MeasConverter.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "dd08b508188d8f6fff39089583ab47646d2628cd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0b5bef_47b25781",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/MeasConverter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-01-21T14:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea3a72e_6905198c",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 38
+      },
+      "revId": "dd08b508188d8f6fff39089583ab47646d2628cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
