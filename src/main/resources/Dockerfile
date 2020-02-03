@@ -1,6 +1,6 @@
 #
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 Nordix Foundation.
+#  Copyright (C) 2019-2020 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ USER pm-mapper
 COPY ${project.build.directory}/${ext.dep.dir.path}/ ${ext.dep.dir.path}/
 COPY ${project.build.directory}/${JAR} .
 
-COPY ${project.build.directory}/classes/mapping.ftl ./etc/mapping.ftl
-COPY ${project.build.directory}/classes/measCollec_plusString.xsd ./etc/measCollec_plusString.xsd
+COPY ${project.build.directory}/classes/schemas ./etc/schemas/
+COPY ${project.build.directory}/classes/templates ./etc/templates/
 COPY ${project.build.directory}/classes/reconfigure.sh ./etc/reconfigure.sh
 COPY --chown=pm-mapper ${project.build.directory}/classes/logback.xml ./etc/logback.xml
 

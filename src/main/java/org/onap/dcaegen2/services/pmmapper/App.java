@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,8 +71,8 @@ public class App {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
     private static final int HTTP_PORT = 8081;
     private static final int HTTPS_PORT = 8443;
-    private static Path mappingTemplate = Paths.get("/opt/app/pm-mapper/etc/mapping.ftl");
-    private static Path xmlSchema = Paths.get("/opt/app/pm-mapper/etc/measCollec_plusString.xsd");
+    private static Path templates = Paths.get("/opt/app/pm-mapper/etc/templates/");
+    private static Path schemas = Paths.get("/opt/app/pm-mapper/etc/schemas/");
 
     private MapperConfig mapperConfig;
     private MetadataFilter metadataFilter;
@@ -95,13 +95,13 @@ public class App {
 
     /**
      * Creates an instance of the application.
-     * @param mappingTemplate path to template used to convert xml to VES.
-     * @param xmlSchema path to schema used to verify incoming XML will work with template.
+     * @param templatesDirectory path to directory containing templates used for mapping.
+     * @param schemasDirectory path to directory containing schemas used to verify incoming XML will work with templates.
      * @param httpPort http port to start http server on.
      * @param httpsPort https port to start https server on.
      * @param configHandler instance of the ConfigurationHandler used to acquire config.
      */
-    public App(Path mappingTemplate, Path xmlSchema, int httpPort, int httpsPort, ConfigHandler configHandler) {
+    public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler) {
         try {
             this.mapperConfig = configHandler.getMapperConfig();
         } catch (EnvironmentConfigException | CBSServerError | MapperConfigException e) {
@@ -113,9 +113,9 @@ public class App {
         this.metadataFilter = new MetadataFilter(mapperConfig);
         this.measConverter = new MeasConverter();
         this.filterHandler = new MeasFilterHandler(measConverter);
-        this.mapper = new Mapper(mappingTemplate, this.measConverter);
+        this.mapper = new Mapper(templatesDirectory, this.measConverter);
         this.splitter =  new MeasSplitter(measConverter);
-        this.validator = new XMLValidator(xmlSchema);
+        this.validator = new XMLValidator(schemasDirectory);
         this.vesPublisher = new VESPublisher(mapperConfig);
         this.flux = Flux.create(eventFluxSink -> this.fluxSink = eventFluxSink);
 
@@ -176,7 +176,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        new App(mappingTemplate, xmlSchema, HTTP_PORT, HTTPS_PORT, new ConfigHandler()).start();
+        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler()).start();
     }
 
     public static boolean filterByFileType(MeasFilterHandler filterHandler,Event event, MapperConfig config) {

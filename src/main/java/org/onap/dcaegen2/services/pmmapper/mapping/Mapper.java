@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,11 @@ import freemarker.ext.dom.NodeModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import java.util.Optional;
+import java.util.stream.Stream;
 import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
+import org.onap.dcaegen2.services.pmmapper.exceptions.TemplateIdentificationException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.XMLParseException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
@@ -49,23 +52,33 @@ import java.util.UUID;
 
 public class Mapper {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(Mapper.class));
-    private Template mappingTemplate;
+
+    private HashMap<String, Template> templates;
     private MeasConverter converter;
 
-    public Mapper(@NonNull Path pathToTemplate, MeasConverter converter) {
-        logger.unwrap().trace("Constructing Mapper from {}", pathToTemplate);
+    public Mapper(@NonNull Path templatesDirectory, MeasConverter converter) {
+        logger.unwrap().trace("Constructing Mapper from {}", templatesDirectory);
+        templates = new HashMap<>();
         this.converter = converter;
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
         configuration.setTagSyntax(Configuration.ANGLE_BRACKET_TAG_SYNTAX);
-        try {
-            InputStreamReader templateInputStreamReader = new InputStreamReader(Files.newInputStream(pathToTemplate));
-            mappingTemplate = new Template("pm", templateInputStreamReader, configuration, StandardCharsets.UTF_8.name());
+        try (Stream<Path> paths = Files.walk(templatesDirectory)) {
+            paths.filter(Files::isRegularFile)
+                    .forEach(template -> addTemplate(template, configuration));
         } catch (IOException exception) {
-            logger.unwrap().error("Failed to read template from location {}", pathToTemplate, exception);
+            logger.unwrap().error("Failed to walk template directory {}", templatesDirectory, exception);
+            throw new IllegalArgumentException("Failed to walk template directory {}", exception);
+        }
+    }
+    private void addTemplate(Path template, Configuration config) {
+        logger.unwrap().debug("Loading template from {}", template.toString());
+        try (InputStreamReader templateInputStreamReader = new InputStreamReader(Files.newInputStream(template))){
+            templates.put(template.getFileName().toString(), new Template(template.getFileName().toString(), templateInputStreamReader, config, StandardCharsets.UTF_8.name()));
+        } catch (IOException exception) {
+            logger.unwrap().error("Failed to read template from location {}", template, exception);
             throw new IllegalArgumentException("Failed to read template from path", exception);
         }
     }
-
     public List<Event> mapEvents(List<Event> events) {
         events.forEach(event -> event.setVes(this.map(event)));
         return events;
@@ -75,8 +88,8 @@ public class Mapper {
         logger.unwrap().info("Mapping event");
         NodeModel pmNodeModel;
         try {
-            String measCollecFile = converter.convert(event.getMeasCollecFile());
-            pmNodeModel = NodeModel.parse(new InputSource(new StringReader(measCollecFile)));
+            String measurements = converter.convert(event.getMeasurement());
+            pmNodeModel = NodeModel.parse(new InputSource(new StringReader(measurements)));
         } catch (IOException | SAXException | ParserConfigurationException exception) {
             logger.unwrap().error("Failed to parse input as XML", exception);
             throw new XMLParseException("Failed to parse input as XML", exception);
@@ -86,8 +99,10 @@ public class Mapper {
         mappingData.put("metadata", event.getMetadata());
         mappingData.put("eventId", makeEventId());
         StringWriter mappedOutputWriter = new StringWriter();
+        Template template = Optional.ofNullable(templates.get(event.getMetadata().getFileFormatType()))
+                                    .orElseThrow(() -> new TemplateIdentificationException("Failed to identify template"));
         try {
-            mappingTemplate.process(mappingData, mappedOutputWriter);
+            template.process(mappingData, mappedOutputWriter);
         } catch (IOException | TemplateException exception) {
             logger.unwrap().error("Failed to map XML", exception);
             throw new MappingException("Mapping failure", exception);

@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,9 @@
 
 package org.onap.dcaegen2.services.pmmapper.utils;
 
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.stream.Stream;
 import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
@@ -38,20 +41,32 @@ import java.nio.file.Path;
 
 public class XMLValidator {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(Mapper.class));
-    private Schema schema;
-    public XMLValidator(Path xmlSchemaDefinition) {
-        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        try {
-            schema = schemaFactory.newSchema(xmlSchemaDefinition.toFile());
-        } catch (SAXException exception) {
-            logger.unwrap().error("Failed to read schema", exception);
-            throw new IllegalArgumentException("Bad Schema", exception);
+    private HashMap<String, Schema> schemas;
+    private SchemaFactory schemaFactory;
+    public XMLValidator(Path schemaDirectory) {
+        logger.unwrap().trace("Constructing schema from {}", schemaDirectory);
+        schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        schemas = new HashMap<>();
+        try (Stream<Path> paths = Files.walk(schemaDirectory)) {
+            paths.filter(Files::isRegularFile).forEach(this::addSchema);
+        } catch (IOException exception) {
+            logger.unwrap().error("Failed to walk schema directory {}", schemaDirectory, exception);
+            throw new IllegalArgumentException("Failed to walk template directory {}", exception);
         }
     }
 
+    private void addSchema(Path schema) {
+        logger.unwrap().debug("Loading schema from {}", schema.toString());
+        try {
+            schemas.put(schema.getFileName().toString(), schemaFactory.newSchema(schema.toFile()));
+        } catch(SAXException exception) {
+            logger.unwrap().error("Failed to discover a valid schema at {}", schema, exception);
+            throw new IllegalArgumentException("Failed to discover a valid schema from given path", exception);
+        }
+    }
     public boolean validate(@NonNull Event event) {
         try {
-            Validator validator =  schema.newValidator();
+            Validator validator =  schemas.get(event.getMetadata().getFileFormatType()).newValidator();
             validator.validate(new StreamSource(new StringReader(event.getBody())));
             logger.unwrap().info("XML validation successful {}", event);
             return true;
