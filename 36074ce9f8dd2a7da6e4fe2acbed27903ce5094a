@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "6527521a_a7d12059",
+        "filename": "releases/1.3.0.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-02-26T08:16:08Z",
+      "side": 1,
+      "message": "The reason I chose that reference was it\u0027s the commit reference in the repo.\nI can\u0027t find this reference from jenkins in the repository.\nIs this reference for something other than a commit?",
+      "parentUuid": "958604ae_792ece25",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "36074ce9f8dd2a7da6e4fe2acbed27903ce5094a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820dcfc0_dd978335",
         "filename": "releases/1.3.0.yaml",
         "patchSetId": 4
@@ -53,6 +77,24 @@
       "writtenOn": "2020-02-25T22:43:01Z",
       "side": 1,
       "message": "file to be renamed as 1.3.0-container.yaml (to avoid conflict with any nexus2 artifact release of same version)",
+      "revId": "36074ce9f8dd2a7da6e4fe2acbed27903ce5094a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ee1549c_c00ab48c",
+        "filename": "releases/1.3.0.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-02-26T08:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820dcfc0_dd978335",
       "revId": "36074ce9f8dd2a7da6e4fe2acbed27903ce5094a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
