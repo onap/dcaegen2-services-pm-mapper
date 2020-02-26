@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "84dff1c7_b37fdd65",
+        "filename": "releases/1.3.0.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-02-26T14:52:39Z",
+      "side": 1,
+      "message": "Was referring to below on the logs\n\n06:36:54  \u003e git config core.sparsecheckout # timeout\u003d10\n06:36:54  \u003e git checkout -f ae619bf65fcc3fbe9f06e235c0fc32ddcc206f79 # timeout\u003d10\n06:36:55 Commit message: \"Merge \"Add support for TS 28.550/28.532\"\"\n\nae619bf65fcc3fbe9f06e235c0fc32ddcc206f79 refers to merge commit; 255235644c8c302e1e92c41c13be3f3ad5973b16 is the actual change commit. From tagging standpoint either should work, but would be good to align with merge commit.",
+      "parentUuid": "6527521a_a7d12059",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "36074ce9f8dd2a7da6e4fe2acbed27903ce5094a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820dcfc0_dd978335",
         "filename": "releases/1.3.0.yaml",
         "patchSetId": 4
