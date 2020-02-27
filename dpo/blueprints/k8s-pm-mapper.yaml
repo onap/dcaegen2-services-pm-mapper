@@ -1,6 +1,6 @@
 #
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019 Nordix Foundation.
+#  Copyright (C) 2019-2020 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ tosca_definitions_version: cloudify_dsl_1_3
 
 imports:
   - 'http://www.getcloudify.org/spec/cloudify/4.5.5/types.yaml'
-  - 'https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R5/k8splugin/1.6.0/k8splugin_types.yaml'
+  - 'https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R6/k8splugin/1.7.2/k8splugin_types.yaml'
   - 'https://nexus.onap.org/service/local/repositories/raw/content/org.onap.ccsdk.platform.plugins/type_files/dmaap/dmaap.yaml'
 
 inputs:
@@ -144,9 +144,9 @@ node_templates:
       service_component_type: 'dcae-pm-mapper'
       service_component_name_override: 'dcae-pm-mapper'
       application_config:
-        trust_store_path: '/opt/app/pm-mapper/etc/cert/trust.jks.b64'
+        trust_store_path: '/opt/app/pm-mapper/etc/cert/trust.jks'
         trust_store_pass_path: '/opt/app/pm-mapper/etc/cert/trust.pass'
-        key_store_path: '/opt/app/pm-mapper/etc/cert/cert.jks.b64'
+        key_store_path: '/opt/app/pm-mapper/etc/cert/cert.jks'
         key_store_pass_path: '/opt/app/pm-mapper/etc/cert/jks.pass'
         pm-mapper-filter: { get_input: filter }
         enable_http: { get_input: enable_http }
