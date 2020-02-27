@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Robertas Rimkus <robertas.rimkus@est.tech>
+Code-Review+1: Ephraim Martin <ephraim.martin@est.tech>
+Code-Review+1: Joseph O'Leary <joseph.o.leary@est.tech>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Thu, 27 Feb 2020 16:57:12 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/102467
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
