@@ -12,9 +12,9 @@
       }
     ]
   },
-  "key_store_path": "src/test/resources/testkeystore.jks.b64",
+  "key_store_path": "src/test/resources/testkeystore.jks",
   "key_store_pass_path": "src/test/resources/password",
-  "trust_store_path": "src/test/resources/testkeystore.jks.b64",
+  "trust_store_path": "src/test/resources/testkeystore.jks",
   "trust_store_pass_path": null,
   "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
   "dmaap_dr_feed_name": "bulk_pm_feed",
