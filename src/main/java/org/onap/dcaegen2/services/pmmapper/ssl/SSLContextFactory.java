@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,15 +103,13 @@ public class SSLContextFactory {
 
     private KeyStore loadKeyStore(String path, String passwordPath) throws IOException, NoSuchAlgorithmException {
         String type = "JKS";
-        String encodedKeystore = new String(readAllBytes(Paths.get(path)));
         String password = getPassword(passwordPath);
-
-        KeyStore keyStore = null;
+        KeyStore keyStore;
 
         try {
             keyStore = KeyStore.getInstance(type);
-            byte[] decodedKeystore = Base64.getMimeDecoder().decode(encodedKeystore);
-            InputStream stream = new ByteArrayInputStream(decodedKeystore);
+            byte[] keystoreBytes = readAllBytes(Paths.get(path));
+            InputStream stream = new ByteArrayInputStream(keystoreBytes);
             keyStore.load(stream, password.toCharArray());
         } catch(KeyStoreException | CertificateException e) {
             logger.unwrap().error("Failed to load Keystore from given configuration.", e);
