@@ -16,6 +16,24 @@
       "revId": "732932155b1bde692fa98848529d0771ccf6faa4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a1848cd_1691085b",
+        "filename": "dpo/blueprints/k8s-pm-mapper.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5038
+      },
+      "writtenOn": "2020-02-27T17:03:29Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "12b4b888_8c8d86b3",
+      "revId": "732932155b1bde692fa98848529d0771ccf6faa4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
