@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2019-2020 Nordix Foundation.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import org.mockserver.verify.VerificationTimes;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -49,7 +50,7 @@ import utils.LoggingUtils;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(RequestSender.class)
-
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 public class RequestSenderTests {
     private static ClientAndServer mockServer;
     private MockServerClient client = mockClient();

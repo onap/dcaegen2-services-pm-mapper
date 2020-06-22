@@ -38,7 +38,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
@@ -96,6 +95,6 @@ class MeasSplitterTest {
             Event testEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testEventPath), metadata);
             return Arguments.of(numberOfEvents, measInfoIds, testEvent);
         };
-        return EventUtils.generateEventArguments(Paths.get(baseDir), "/nr", splitterCreator);
+        return EventUtils.generateEventArguments(Paths.get(baseDir), "nr", splitterCreator);
     }
 }

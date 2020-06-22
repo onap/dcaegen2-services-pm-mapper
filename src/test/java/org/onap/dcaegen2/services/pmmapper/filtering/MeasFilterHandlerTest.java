@@ -48,10 +48,12 @@ import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementF
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 
 import io.undertow.server.HttpServerExchange;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import utils.ArgumentCreator;
 import utils.EventUtils;
 
 @ExtendWith(MockitoExtension.class)
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.parsers.*", "org.xml.*", "javax.management.*"})
 class MeasFilterHandlerTest {
 
     private static final Path FILTER_DIRECTORY = Paths.get("src/test/resources/filter_test/");
@@ -181,7 +183,7 @@ class MeasFilterHandlerTest {
             testEvent.setFilter(generateValidFilter());
             return Arguments.of(expectedEvent, testEvent);
         };
-        return EventUtils.generateEventArguments(FILTER_DIRECTORY, "/nr", creator);
+        return EventUtils.generateEventArguments(FILTER_DIRECTORY, "nr", creator);
 
     }
 

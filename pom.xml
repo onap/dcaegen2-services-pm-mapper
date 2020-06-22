@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ============LICENSE_START=======================================================
-   Copyright (C) 2019 Nordix Foundation.
+   Copyright (C) 2019-2020 Nordix Foundation.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 
     <groupId>org.onap.dcaegen2.services</groupId>
     <artifactId>pm-mapper</artifactId>
-    <version>1.3.1-SNAPSHOT</version>
+    <version>1.3.2-SNAPSHOT</version>
 
     <parent>
         <groupId>org.onap.oparent</groupId>
@@ -48,11 +48,13 @@
         <gson.version>2.8.5</gson.version>
         <freemarker.version>2.3.28</freemarker.version>
         <commons.io.version>2.6</commons.io.version>
-        <!-- Testing.Test Dependencies -->
+        <xml.version>2.3.1</xml.version>
+        <jaxb.version>2.3.0.1</jaxb.version>
+        <!-- Testing Test Dependencies -->
         <junit.version>5.3.2</junit.version>
         <mockito.version>2.23.4</mockito.version>
         <mockito-ju5-ext.version>2.23.4</mockito-ju5-ext.version>
-        <powermock.version>2.0.0</powermock.version>
+        <powermock.version>2.0.7</powermock.version>
         <mockserver.version>3.10.8</mockserver.version>
         <junit4.version>4.12</junit4.version>
         <jsonschema.version>1.3.0</jsonschema.version>
@@ -76,8 +78,8 @@
         <sonar.jacoco.reportPaths>${project.build.directory}/coverage-reports/jacoco.exec</sonar.jacoco.reportPaths>
         <sonar.jacoco.itReportPath>${project.build.directory}/coverage-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
         <sonar.projectVersion>${project.version}</sonar.projectVersion>
-        <compiler.target.version>1.8</compiler.target.version>
-        <compiler.source.version>1.8</compiler.source.version>
+        <compiler.target.version>1.11</compiler.target.version>
+        <compiler.source.version>1.11</compiler.source.version>
         <onap.logging.version>1.2.2</onap.logging.version>
         <classpath.separator>@@</classpath.separator>
         <pmmapper.main.class>org.onap.dcaegen2.services.pmmapper.App</pmmapper.main.class>
@@ -101,6 +103,21 @@
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
             <version>${undertow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${xml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${xml.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

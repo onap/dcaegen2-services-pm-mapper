@@ -17,11 +17,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #
-FROM openjdk:8u171-jre-alpine
+FROM openjdk:11.0.7-jre-slim
 
 WORKDIR /opt/app/pm-mapper
 
-RUN apk --no-cache add curl
+RUN apt-get update && \
+        apt-get install --no-recommends -y curl nano && \
+         apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/log/ONAP
 
@@ -54,5 +57,5 @@ LABEL git.branch="${git.branch}" \
       git.commit.user.name="${git.commit.user.name}"
 
 
-ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/bin/java -jar ${project.artifactId}-${project.version}.jar"]
+ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/local/openjdk-11/bin/java -jar ${project.artifactId}-${project.version}.jar"]
 ARG JAR

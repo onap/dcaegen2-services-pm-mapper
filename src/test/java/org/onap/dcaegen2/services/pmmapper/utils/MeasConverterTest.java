@@ -23,29 +23,27 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 
 import io.undertow.server.HttpServerExchange;
-import java.io.StringWriter;
 
 import java.util.HashMap;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MappingException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.measurement.lte.MeasCollecFile;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({JAXBContext.class})
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.parsers.*", "org.xml.*", "javax.management.*"})
 public class MeasConverterTest {
-
     private MeasConverter objUnderTest;
 
     @Before
@@ -56,15 +54,10 @@ public class MeasConverterTest {
     public void convertToString_throws_mappingException() throws Exception {
         MeasCollecFile file = new MeasCollecFile();
         PowerMockito.mockStatic(JAXBContext.class);
-        Marshaller marshallerMock = PowerMockito.mock(Marshaller.class);
         JAXBContext jaxbContext = PowerMockito.mock(JAXBContext.class);
-        StringWriter w = Mockito.mock(StringWriter.class);
-        PowerMockito.whenNew(StringWriter.class).withNoArguments().thenReturn(w);
         PowerMockito.when(JAXBContext.newInstance(MeasCollecFile.class)).thenReturn(jaxbContext);
-        PowerMockito.when(jaxbContext.createMarshaller()).thenReturn(marshallerMock);
         PowerMockito.doThrow(new JAXBException("",""))
-       .when(marshallerMock).marshal( Mockito.any(MeasCollecFile.class)
-               ,Mockito.any(StringWriter.class));
+       .when(jaxbContext).createMarshaller();
 
         assertThrows(MappingException.class, () -> {
               objUnderTest.convert(file);

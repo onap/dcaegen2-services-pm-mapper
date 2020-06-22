@@ -24,6 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.onap.dcaegen2.services.pmmapper.exceptions.RequestFailure;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import reactor.test.StepVerifier;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +44,7 @@ import reactor.core.publisher.Flux;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(EnvironmentConfig.class)
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 public class VESPublisherTest {
 
     private static String topicURL = "http://mr/topic";
