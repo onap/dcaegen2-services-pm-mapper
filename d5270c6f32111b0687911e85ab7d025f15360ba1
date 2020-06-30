@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46de317_06447994",
+        "filename": "src/main/resources/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-06-30T22:26:18Z",
+      "side": 1,
+      "message": "We may have further work here (based on REQ-379 to align with recommended version and use ONAP/base image - https://git.onap.org/integration/docker/onap-java11/tree/Dockerfile) for Guilin.\n\nThe current base image may not be an issue, however there is on-going discussion (if alpine image should be created/maintained) between TSC and SECCOM.\n\nWill approve this now. Will create separate jira once TSC confirms on target base image and if further work is required to align.",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "d5270c6f32111b0687911e85ab7d025f15360ba1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
