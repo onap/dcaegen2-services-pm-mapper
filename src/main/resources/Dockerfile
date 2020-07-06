@@ -22,7 +22,7 @@ FROM openjdk:11.0.7-jre-slim
 WORKDIR /opt/app/pm-mapper
 
 RUN apt-get update && \
-        apt-get install --no-recommends -y curl nano && \
+        apt-get install --no-install-recommends -y curl nano && \
          apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
