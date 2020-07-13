@@ -28,7 +28,6 @@ import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
-
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import com.google.gson.GsonBuilder;
@@ -73,9 +72,6 @@ public class ConfigHandler {
             mapperConfigJson = sender.send(requestURL);
         } catch (Exception exception) {
             throw new CBSServerError("Error connecting to Configbinding Service: ", exception);
-        } finally {
-            logger.unwrap().info("Received pm-mapper configuration from ConfigBinding Service: \n");
-            logger.unwrap().debug(mapperConfigJson);
         }
 
         return convertMapperConfigToObject(mapperConfigJson);

@@ -44,4 +44,15 @@ public class SubscriberConfig {
     @GSONRequired
     @SerializedName("subscriber_id")
     private String subscriberId;
+
+    @Override
+    public String toString() {
+        return "SubscriberConfig{" +
+                "username=" + username +
+                ", password= *****" +
+                ", drLocation='" + drLocation + '\'' +
+                ", deliveryUrl='" + deliveryUrl + '\'' +
+                ", subscriberId='" + subscriberId + '\'' +
+                '}';
+    }
 }

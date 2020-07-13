@@ -10,7 +10,7 @@
     <property name="p_lvl" value="%level"/>
     <property name="p_log" value="%logger"/>
     <property name="p_mdc" value="%replace(%replace(%mdc){'\t','\\\\t'}){'\n', '\\\\n'}"/>
-    <property name="p_msg" value="%replace(%replace(%msg){'\t', '\\\\t'}){'\n','\\\\n'}"/>
+    <property name="p_msg" value="%replace(%replace(%replace(%replace(%msg){'\t', '\\\\t'}){'\n','\\\\n'}){'&quot;aaf_password&quot;: &quot;[^&quot;]*&quot;' , '&quot;aaf_password&quot;: *****'}){'&quot;password&quot;: &quot;[^&quot;]*&quot;' , '&quot;password&quot;: *****'}"/>
     <property name="p_exc" value="%replace(%replace(%rootException){'\t', '\\\\t'}){'\n','\\\\n'}"/>
     <property name="p_mak" value="%replace(%replace(%marker){'\t', '\\\\t'}){'\n','\\\\n'}"/>
     <property name="p_thr" value="%thread"/>
