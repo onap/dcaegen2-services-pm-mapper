@@ -25,7 +25,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.onap.dcaegen2.services.pmmapper.config.Configurable;
 import org.onap.dcaegen2.services.pmmapper.utils.DMaaPAdapter;
 import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
@@ -34,7 +33,6 @@ import org.onap.dcaegen2.services.pmmapper.utils.MeasFilterConfigAdapter;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
-@ToString
 public class MapperConfig implements Configurable {
 
     public static final String CLIENT_NAME = "pm-mapper";
@@ -111,5 +109,22 @@ public class MapperConfig implements Configurable {
             this.aafUsername = mapperConfig.getAafUsername();
             this.aafPassword = mapperConfig.getAafPassword();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MapperConfig{" +
+                "enableHttp=" + enableHttp +
+                ", keyStorePath='" + keyStorePath + '\'' +
+                ", keyStorePassPath='" + keyStorePassPath + '\'' +
+                ", trustStorePath='" + trustStorePath + '\'' +
+                ", trustStorePassPath='" + trustStorePassPath + '\'' +
+                ", dmaapDRDeleteEndpoint='" + dmaapDRDeleteEndpoint + '\'' +
+                ", filterConfig=" + filterConfig +
+                ", aafUsername='" + aafUsername + '\'' +
+                ", aafPassword= *****" +
+                ", subscriberConfig=" + subscriberConfig +
+                ", publisherConfig=" + publisherConfig +
+                '}';
     }
 }

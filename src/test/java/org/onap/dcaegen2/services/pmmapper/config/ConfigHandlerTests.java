@@ -104,7 +104,6 @@ class ConfigHandlerTests {
         assertEquals(expectedConfig.getPublisherUserName(), actualConfig.getPublisherUserName());
         assertEquals(expectedConfig.getPublisherPassword(), actualConfig.getPublisherPassword());
         assertEquals(expectedConfig, actualConfig);
-        assertTrue(logAppender.list.get(1).getMessage().contains("Received pm-mapper configuration from ConfigBinding Service"));
         logAppender.stop();
     }
 
