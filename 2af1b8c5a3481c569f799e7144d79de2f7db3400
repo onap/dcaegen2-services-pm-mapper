@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e9c9ca_1ec14626",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/model/MapperConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 3793
+      },
+      "writtenOn": "2020-07-14T09:17:29Z",
+      "side": 1,
+      "message": "worth considering is instead of overriding whole class define property aafPassword as some class eg. Password and override toString of this class only.",
+      "range": {
+        "startLine": 125,
+        "startChar": 13,
+        "endLine": 125,
+        "endChar": 40
+      },
+      "revId": "2af1b8c5a3481c569f799e7144d79de2f7db3400",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
