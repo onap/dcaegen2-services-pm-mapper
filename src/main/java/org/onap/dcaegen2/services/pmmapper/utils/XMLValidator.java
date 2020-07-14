@@ -24,12 +24,10 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.stream.Stream;
 import lombok.NonNull;
-import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
-
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -40,7 +38,7 @@ import java.io.StringReader;
 import java.nio.file.Path;
 
 public class XMLValidator {
-    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(Mapper.class));
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(XMLValidator.class));
     private HashMap<String, Schema> schemas;
     private SchemaFactory schemaFactory;
     public XMLValidator(Path schemaDirectory) {
@@ -68,10 +66,11 @@ public class XMLValidator {
         try {
             Validator validator =  schemas.get(event.getMetadata().getFileFormatType()).newValidator();
             validator.validate(new StreamSource(new StringReader(event.getBody())));
-            logger.unwrap().info("XML validation successful {}", event);
+            logger.unwrap().info("XML validation successful");
+            logger.unwrap().debug(String.valueOf(event));
             return true;
         } catch (SAXException | IOException exception) {
-            logger.unwrap().info("XML validation failed {}", event, exception);
+            logger.unwrap().error("XML validation failed {}", event, exception);
             return false;
         }
     }
