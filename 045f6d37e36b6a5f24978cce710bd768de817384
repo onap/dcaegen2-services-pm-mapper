@@ -45,6 +45,30 @@
       "revId": "045f6d37e36b6a5f24978cce710bd768de817384",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e6fe51_876c28ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3793
+      },
+      "writtenOn": "2020-07-15T12:18:54Z",
+      "side": 1,
+      "message": "There will be further changes including case from jira. We treat DCAEGEN2-1958 as simply adjust log level so that user can easily know what is going one.",
+      "parentUuid": "458d06fc_6b432361",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "045f6d37e36b6a5f24978cce710bd768de817384",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
