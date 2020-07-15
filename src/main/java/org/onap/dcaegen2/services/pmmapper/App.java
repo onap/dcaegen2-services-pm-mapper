@@ -213,6 +213,7 @@ public class App {
         try {
             hasMatchingFilter = filterHandler.filterByMeasType(events);
             if(!hasMatchingFilter) {
+                logger.unwrap().info("No filter match from all measurement files.");
                 sendEventProcessed(config,event);
             }
         } catch (Exception exception) {
@@ -223,25 +224,25 @@ public class App {
     }
 
     public static Flux<List<Event>> map(Mapper mapper, List<Event> events, MapperConfig config) {
-        List<Event> mappedEvents  = new ArrayList<>();
+        List<Event> mappedEvents;
         try {
             mappedEvents = mapper.mapEvents(events);
         } catch (Exception exception) {
             logger.unwrap().error("Unable to map XML to VES",exception);
             sendEventProcessed(config,events.get(0));
-            return Flux.<List<Event>>empty();
+            return Flux.empty();
         }
         return Flux.just(mappedEvents);
     }
 
     public static Flux<List<Event>> split(MeasSplitter splitter, Event event, MapperConfig config) {
-        List<Event> splitEvents  = new ArrayList<>();
+        List<Event> splitEvents;
         try {
             splitEvents = splitter.split(event);
         } catch (Exception exception) {
             logger.unwrap().error("Unable to split MeasCollecFile",exception);
             sendEventProcessed(config,event);
-            return Flux.<List<Event>>empty();
+            return Flux.empty();
         }
         return Flux.just(splitEvents);
     }

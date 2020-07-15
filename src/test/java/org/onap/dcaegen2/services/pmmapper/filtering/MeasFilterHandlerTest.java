@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +59,7 @@ class MeasFilterHandlerTest {
 
     private static final Path FILTER_DIRECTORY = Paths.get("src/test/resources/filter_test/");
     private static final String baseDir = "src/test/resources/filter_test/";
-    private static MeasConverter converter = new MeasConverter();
+    private static final MeasConverter converter = new MeasConverter();
     private MeasFilterHandler objUnderTest;
     @Mock
     private HttpServerExchange exchange;
@@ -101,10 +102,25 @@ class MeasFilterHandlerTest {
     }
 
     @Test
+    void remove_all_events_that_does_not_match_filter() {
+        String inputPath = baseDir + "lte/meas_type_and_r_manyinfo/test.xml";
+
+        Filter noMatchFilter = new MeasFilterConfig().new Filter();
+        noMatchFilter.setMeasTypes(Arrays.asList("ad", "bs"));
+        Event eventNoMatch = generateEvent(inputPath, noMatchFilter);
+
+        List<Event> events = new ArrayList<>();
+        events.add(eventNoMatch);
+        events.add(eventNoMatch);
+        assertFalse(objUnderTest.filterByMeasType(events));
+        assertEquals(0, events.size());
+    }
+
+    @Test
     void skip_mapping_when_MeasData_isEmpty() {
         String inputPath = baseDir + "lte/meas_results/test.xml";
         Event event = generateEvent(inputPath, generateValidFilter());
-        event.getMeasurement().replacementMeasurementData(Arrays.asList());
+        event.getMeasurement().replacementMeasurementData(Collections.emptyList());
 
         assertFalse(objUnderTest.filterByMeasType(event));
     }
@@ -114,7 +130,7 @@ class MeasFilterHandlerTest {
         String inputPath = baseDir + "lte/meas_results/test.xml";
 
         Filter emptyMeastypesFilter = new MeasFilterConfig().new Filter();
-        emptyMeastypesFilter.setMeasTypes(Arrays.asList());
+        emptyMeastypesFilter.setMeasTypes(Collections.emptyList());
 
         Event event = generateEvent(inputPath, emptyMeastypesFilter);
         MeasurementFile originalMeasCollec = event.getMeasurement();
@@ -170,7 +186,7 @@ class MeasFilterHandlerTest {
         Filter filter;
         filter = new MeasFilterConfig().new Filter();
         filter.setDictionaryVersion("1.0");
-        filter.setMeasTypes(Arrays.asList("a", "b"));
+        filter.setMeasTypes(Arrays.asList("a", "b", "aab.*", ".*3"));
         return filter;
     }
 
