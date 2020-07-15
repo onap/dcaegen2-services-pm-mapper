@@ -33,13 +33,14 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpResponse.response;
 import static utils.ConfigUtils.getMapperConfigFromFile;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Collections;
 
 import com.google.gson.Gson;
 import io.undertow.server.HttpServerExchange;
@@ -261,7 +262,7 @@ class AppTest {
     @Test
     void testFilter_success() {
         Event mockEvent = Mockito.mock(Event.class);
-        List<Event> mockEvents = Arrays.asList(mockEvent);
+        List<Event> mockEvents = new LinkedList<>(Collections.singletonList(mockEvent));
         MapperConfig mockConfig = Mockito.mock(MapperConfig.class);
         boolean result = App.filter(new MeasFilterHandler(new MeasConverter()), mockEvents, mockConfig);
         assertTrue(result);

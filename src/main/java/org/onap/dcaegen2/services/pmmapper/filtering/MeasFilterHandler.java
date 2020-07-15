@@ -21,8 +21,11 @@
 package org.onap.dcaegen2.services.pmmapper.filtering;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
@@ -68,16 +71,9 @@ public class MeasFilterHandler {
         logger.unwrap().info("Filtering the measurement file by measTypes.");
         MeasurementData measData = measurementFile.getMeasurementData().get().get(0);
         List<MeasurementInfo> measInfos = measData.getMeasurementInfo();
-        List<MeasurementInfo> filteredMeasInfos = new ArrayList<>();
+        List<Pattern> filterPatternList = getPatternsFromFilters(filter);
 
-        for (MeasurementInfo currentMeasInfo : measInfos) {
-            List<String> measTypesNode = currentMeasInfo.getMeasTypes();
-            if (measTypesNode != null && !measTypesNode.isEmpty()) {
-                setMeasInfosFromMeasTypes(currentMeasInfo, filteredMeasInfos, filter.get());
-            } else {
-                setMeasInfoFromMeasType(currentMeasInfo, filteredMeasInfos, filter.get());
-            }
-        }
+        List<MeasurementInfo> filteredMeasInfos = filterMeasInfos(measInfos, filterPatternList);
 
         if (filteredMeasInfos.isEmpty()) {
             logger.unwrap().info("No filter match from the current measurement file.");
@@ -90,27 +86,43 @@ public class MeasFilterHandler {
         return true;
     }
 
+    private List<MeasurementInfo> filterMeasInfos(List<MeasurementInfo> measInfos, List<Pattern> filterPatternList) {
+        List<MeasurementInfo> filteredMeasInfos = new LinkedList<>();
+        for (MeasurementInfo currentMeasInfo : measInfos) {
+            List<String> measTypesNode = currentMeasInfo.getMeasTypes();
+            if (measTypesNode != null && !measTypesNode.isEmpty()) {
+                getFilteredMeasInfosFromMeasTypes(currentMeasInfo, filterPatternList).ifPresent(filteredMeasInfos::add);
+            } else {
+                getFilteredMeasInfoFromMeasType(currentMeasInfo, filterPatternList).ifPresent(filteredMeasInfos::add);
+            }
+        }
+        return  filteredMeasInfos;
+    }
+
+    private List<Pattern> getPatternsFromFilters(Optional<Filter> filters) {
+        List<Pattern> patternList = new LinkedList<>();
+        for (String filter : filters.get().getMeasTypes()) {
+            tryToCompileFilter(filter).ifPresent(patternList::add);
+        }
+        return patternList;
+    }
+    private Optional<Pattern> tryToCompileFilter(String measType) {
+        try {
+            return Optional.of(Pattern.compile("^" + measType + "$"));
+        } catch (PatternSyntaxException exception) {
+            logger.unwrap().warn("Can not parse measType filter: ", exception);
+        }
+        return Optional.empty();
+    }
+
     /**
      * Filters each measInfo node in the list for measTypes that match the given measTypes from filters.
      **/
     public boolean filterByMeasType(List<Event> events) {
-        boolean hasMatchAnyFilter = false;
-        for (int i = 0; i < events.size(); i++) {
-            Event currentEvent = events.get(i);
-            boolean hasMatchingFilter = filterByMeasType(currentEvent);
-            if (hasMatchingFilter) {
-                hasMatchAnyFilter = true;
-            } else {
-                events.remove(events.get(i));
-            }
-        }
-
-        if (!hasMatchAnyFilter) {
-            logger.unwrap().info("No filter match from all measurement files.");
-            return false;
-        }
-
-        return true;
+        List<Event> filteredList = events.stream().filter(this::filterByMeasType).collect(Collectors.toList());
+        events.clear();
+        events.addAll(filteredList);
+        return !events.isEmpty();
     }
 
     private boolean hasNoFilters(Optional<Filter> filter) {
@@ -162,9 +174,9 @@ public class MeasFilterHandler {
        return hasResults;
     }
 
-    private void setMeasInfoFromMeasType(MeasurementInfo currentMeasInfo, List<MeasurementInfo> filteredMeasInfos, Filter filter) {
+    private Optional<MeasurementInfo> getFilteredMeasInfoFromMeasType(MeasurementInfo currentMeasInfo, List<Pattern> filters) {
         List<MeasurementInfo.MeasType> filteredMeasTypes = currentMeasInfo.getMeasType().stream()
-                .filter(mt -> filter.getMeasTypes().contains(mt.getValue()))
+                .filter(mt -> matchFilters(filters, mt.getValue()))
                 .collect(Collectors.toList());
 
         if(!filteredMeasTypes.isEmpty()) {
@@ -173,11 +185,16 @@ public class MeasFilterHandler {
                     .collect(Collectors.toList());
             currentMeasInfo.replaceMeasType(filteredMeasTypes);
             currentMeasInfo.replaceMeasValue(filteredMeasValues);
-            filteredMeasInfos.add(currentMeasInfo);
+            return Optional.of(currentMeasInfo);
         }
+        return Optional.empty();
     }
 
-    private void setMeasInfosFromMeasTypes(MeasurementInfo currentMeasInfo, List<MeasurementInfo> filteredMeasInfos, Filter filter) {
+    private boolean matchFilters(List<Pattern> filters, String measType) {
+        return filters.stream().anyMatch(filter -> filter.matcher(measType).matches());
+    }
+
+    private Optional<MeasurementInfo> getFilteredMeasInfosFromMeasTypes(MeasurementInfo currentMeasInfo, List<Pattern> filters) {
         MeasValue currentMeasValue = currentMeasInfo.getMeasValue()
                 .get(0);
         List<String> measTypesNode = currentMeasInfo.getMeasTypes();
@@ -187,8 +204,7 @@ public class MeasFilterHandler {
         List<String> filteredMeasTypes = new ArrayList<>();
         for (int j = 0; j < measTypesNode.size(); j++) {
             String currentMeasType = measTypesNode.get(j);
-            List<String> measTypeFilters = filter.getMeasTypes();
-            if (measTypeFilters.contains(currentMeasType)) {
+            if (matchFilters(filters, currentMeasType)) {
                 filteredMeasTypes.add(currentMeasType);
                 filteredMeasResults.add(measResultsNode.get(j));
             }
@@ -197,8 +213,9 @@ public class MeasFilterHandler {
         if (!filteredMeasTypes.isEmpty()) {
             currentMeasInfo.replaceMeasTypes(filteredMeasTypes);
             currentMeasValue.replaceMeasResults(filteredMeasResults);
-            filteredMeasInfos.add(currentMeasInfo);
+            return Optional.of(currentMeasInfo);
         }
+        return Optional.empty();
     }
 
 }
