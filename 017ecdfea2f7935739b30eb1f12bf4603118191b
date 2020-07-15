@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f66cf9_3c8fed7f",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/ConfigHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-07-15T12:38:30Z",
+      "side": 0,
+      "message": "Are we removing this because it\u0027s less noise or because we don\u0027t want the passwords to be visible in logs? (I thought the point of the toString update was to obscure the passwords right?)",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "017ecdfea2f7935739b30eb1f12bf4603118191b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
