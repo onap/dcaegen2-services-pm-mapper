@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f3cc0f_2b9da078",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-07-15T12:02:34Z",
+      "side": 1,
+      "message": "I think we try to keep commit titles in the imperative mood\nhttps://en.wikipedia.org/wiki/Imperative_mood\n\nso I guess it would be something like:\nChange log level for telemetry file from INFO to Debug",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "045f6d37e36b6a5f24978cce710bd768de817384",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458d06fc_6b432361",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-07-15T12:02:34Z",
+      "side": 1,
+      "message": "Is this the correct Jira or would there be further changes to completely close this Jira?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "045f6d37e36b6a5f24978cce710bd768de817384",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
