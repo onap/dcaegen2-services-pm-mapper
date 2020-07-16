@@ -1,4 +1,4 @@
-<measDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData">
+<measDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/32_series/32.435#measCollec">
     <measData>
         <measEntity swVersion="r0.1" localDn="Dublin"/>
         <measInfo measInfoId="some meas info id">

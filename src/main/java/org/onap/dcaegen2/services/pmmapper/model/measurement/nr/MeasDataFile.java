@@ -20,22 +20,16 @@
 
 package org.onap.dcaegen2.services.pmmapper.model.measurement.nr;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.Optional;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 import lombok.Data;
 import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementData;
 import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementFile;
 import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementInfo;
+
+import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -43,7 +37,7 @@ import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementI
         "measData",
         "fileFooter"
 })
-@XmlRootElement(name = "MeasDataFile")
+@XmlRootElement(name = "measDataFile")
 @Data
 public class MeasDataFile implements MeasurementFile {
 
@@ -68,7 +62,7 @@ public class MeasDataFile implements MeasurementFile {
         measData.clear();
         measurementData.forEach(measurementDatum -> {
             MeasData measDatum = new MeasData();
-            measDatum.setMeasuredEntity((MeasData.MeasuredEntity) measurementDatum.getManagedEntity());
+            measDatum.setMeasEntity((MeasData.MeasEntity) measurementDatum.getManagedEntity());
             measDatum.setMeasInfo(measurementDatum.getMeasurementInfo());
             this.measData.add(measDatum);
         });
@@ -81,7 +75,7 @@ public class MeasDataFile implements MeasurementFile {
     @Data
     public static class FileFooter {
 
-        @XmlElement(name = "MeasData", required = true)
+        @XmlElement(name = "measData", required = true)
         protected MeasDataFile.FileFooter.MeasData measData;
 
         @XmlAccessorType(XmlAccessType.FIELD)
@@ -104,7 +98,7 @@ public class MeasDataFile implements MeasurementFile {
     public static class FileHeader {
         @XmlElement(required = true)
         protected MeasDataFile.FileHeader.FileSender fileSender;
-        @XmlElement(name = "MeasData", required = true)
+        @XmlElement(name = "measData", required = true)
         protected MeasDataFile.FileHeader.MeasData measData;
         @XmlAttribute(name = "fileFormatVersion", required = true)
         protected String fileFormatVersion;
@@ -137,14 +131,13 @@ public class MeasDataFile implements MeasurementFile {
 
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-            "measuredEntity",
+    @XmlType(name = "", propOrder = {"measEntity",
             "measInfo"
     })
     @Data
     public static class MeasData implements MeasurementData {
         @XmlElement(required = true)
-        protected MeasDataFile.MeasData.MeasuredEntity measuredEntity;
+        protected MeasEntity measEntity;
         @XmlElement()
         protected List<MeasurementInfo> measInfo;
 
@@ -160,13 +153,13 @@ public class MeasDataFile implements MeasurementFile {
 
         @Override
         public Object getManagedEntity() {
-            return this.measuredEntity;
+            return this.measEntity;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "")
         @Data
-        public static class MeasuredEntity {
+        public static class MeasEntity {
             @XmlAttribute(name = "localDn")
             protected String localDn;
             @XmlAttribute(name = "userLabel")

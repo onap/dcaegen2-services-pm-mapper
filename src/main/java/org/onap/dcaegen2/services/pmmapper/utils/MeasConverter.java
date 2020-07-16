@@ -49,8 +49,8 @@ public class MeasConverter {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasConverter.class));
 
     public static final String LTE_FILE_TYPE = "org.3GPP.32.435#measCollec";
-    public static final String NR_FILE_TYPE = "org.3GPP.28.550#measData";
-
+    public static final String NR_FILE_TYPE = "org.3GPP.28.532#measData";
+    public static final String NOT_SUPPORTED_TYPE = "not_supported_type";
 
     /**
      * Converts 3GPP Measurement xml string to MeasCollecFile.

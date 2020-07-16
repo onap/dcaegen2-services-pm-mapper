@@ -43,6 +43,8 @@ import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 
 public class EventUtils {
 
+    private static final String LTE_QUALIFIER = "/lte";
+    private static final String NR_QUALIFIER = "/nr";
 
     /**
      * Reads contents of files inside the eventBodyDirectory, combines contents with metadata to make an Event Object.
@@ -59,18 +61,18 @@ public class EventUtils {
                        .map(contents -> EventUtils.makeMockEvent(contents, eventMetadata))
                        .collect(Collectors.toList());
     }
+
     /**
      * Create a List of Arguments containing an Event (Defaults to LTE events), and an expected outcome.
      * Fails test in the event of failure to read a file.
      * @param baseDirectory Directory containing multiple formats of events separated by a directory.
-     * @param nrQualifier String representing a unique part of the path that will exist only in the NR path.
      * @param argCreator Callback to method that will generate the appropriate set of arguments for each test.
      */
-    public static List<Arguments> generateEventArguments(Path baseDirectory, String nrQualifier, ArgumentCreator argCreator ) {
+    public static List<Arguments> generateEventArguments(Path baseDirectory, ArgumentCreator argCreator ) {
         List<Arguments> events = new ArrayList<>();
         try (Stream<Path> paths = Files.list(baseDirectory)) {
             paths.filter(Files::isDirectory).forEach(path -> {
-                String fileFormatType = path.toString().contains(nrQualifier) ? MeasConverter.NR_FILE_TYPE : MeasConverter.LTE_FILE_TYPE;
+                String fileFormatType = readFileFormatFromPath(path.toString());
                 EventMetadata eventMetadata = new EventMetadata();
                 eventMetadata.setFileFormatType(fileFormatType);
                 events.addAll(getEventsArgument(path, eventMetadata, argCreator));
@@ -79,6 +81,12 @@ public class EventUtils {
             TestCase.fail("IOException occurred while generating test data");
         }
         return events;
+    }
+
+    private static String readFileFormatFromPath(String path) {
+        if (path.contains(NR_QUALIFIER)) return MeasConverter.NR_FILE_TYPE;
+        if (path.contains(LTE_QUALIFIER)) return MeasConverter.LTE_FILE_TYPE;
+        return MeasConverter.NOT_SUPPORTED_TYPE;
     }
 
     /**

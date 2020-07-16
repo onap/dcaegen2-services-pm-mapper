@@ -96,6 +96,6 @@ class MeasSplitterTest {
             Event testEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testEventPath), metadata);
             return Arguments.of(numberOfEvents, measInfoIds, testEvent);
         };
-        return EventUtils.generateEventArguments(Paths.get(baseDir), "/nr", splitterCreator);
+        return EventUtils.generateEventArguments(Paths.get(baseDir), splitterCreator);
     }
 }
