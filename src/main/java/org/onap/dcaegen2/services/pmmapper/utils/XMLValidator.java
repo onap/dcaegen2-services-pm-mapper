@@ -24,10 +24,13 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.stream.Stream;
 import lombok.NonNull;
+import org.onap.dcaegen2.services.pmmapper.exceptions.NotSupportedFormatTypeException;
+import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
+
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -62,9 +65,10 @@ public class XMLValidator {
             throw new IllegalArgumentException("Failed to discover a valid schema from given path", exception);
         }
     }
+
     public boolean validate(@NonNull Event event) {
         try {
-            Validator validator =  schemas.get(event.getMetadata().getFileFormatType()).newValidator();
+            Validator validator = getValidatorForAccordingFileFormat(event.getMetadata().getFileFormatType());
             validator.validate(new StreamSource(new StringReader(event.getBody())));
             logger.unwrap().info("XML validation successful");
             logger.unwrap().debug(String.valueOf(event));
@@ -72,6 +76,15 @@ public class XMLValidator {
         } catch (SAXException | IOException exception) {
             logger.unwrap().error("XML validation failed {}", event, exception);
             return false;
+        } catch (NotSupportedFormatTypeException exception) {
+            logger.unwrap().error("XML validation failed - given file format type is not supported. {}", event, exception);
+            return false;
         }
+    }
+
+    private Validator getValidatorForAccordingFileFormat(String fileFormatType) throws NotSupportedFormatTypeException {
+        Schema schema = schemas.get(fileFormatType);
+        if (schema == null) throw new NotSupportedFormatTypeException(fileFormatType);
+        return schema.newValidator();
     }
 }
