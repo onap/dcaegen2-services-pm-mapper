@@ -19,9 +19,9 @@
   ============LICENSE_END=========================================================
  -->
 <#compress>
-<#assign fileHeader = xml.MeasDataFile.fileHeader>
-<#assign fileFooter = xml.MeasDataFile.fileFooter>
-<#assign measData = xml.MeasDataFile.measData>
+<#assign fileHeader = xml.measDataFile.fileHeader>
+<#assign fileFooter = xml.measDataFile.fileFooter>
+<#assign measData = xml.measDataFile.measData>
 <#setting datetime_format="iso">
 {
     "event": {
@@ -42,8 +42,8 @@
     "sourceName": "${metadata.sourceName}",
     "reportingEntityName": "",
     "priority": "Normal",
-    "startEpochMicrosec": ${fileHeader.MeasData.@beginTime?datetime?long?c},
-    "lastEpochMicrosec": ${fileFooter.MeasData.@endTime?datetime?long?c},
+    "startEpochMicrosec": ${fileHeader.measData.@beginTime?datetime?long?c},
+    "lastEpochMicrosec": ${fileFooter.measData.@endTime?datetime?long?c},
     "version": "4.0",
     "vesEventListenerVersion": "7.1",
     "timeZoneOffset": "${metadata.timeZoneOffset}"
@@ -116,9 +116,9 @@
 <#macro measDataCollection>
 {
     "granularityPeriod": ${measData.measInfo.granPeriod.@endTime[0]!?datetime?long?c},
-    "measuredEntityUserName": "${measData.measuredEntity.@userLabel[0]!}",
-    "measuredEntityDn": "${measData.measuredEntity.@localDn[0]!}",
-    "measuredEntitySoftwareVersion": "${measData.measuredEntity.@swVersion[0]!}",
+    "measuredEntityUserName": "${measData.measEntity.@userLabel[0]!}",
+    "measuredEntityDn": "${measData.measEntity.@localDn[0]!}",
+    "measuredEntitySoftwareVersion": "${measData.measEntity.@swVersion[0]!}",
     "measInfoList": <@measInfoList/>
 }
 </#macro>

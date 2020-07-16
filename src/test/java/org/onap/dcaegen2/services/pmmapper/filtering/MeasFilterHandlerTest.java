@@ -181,7 +181,7 @@ class MeasFilterHandlerTest {
             testEvent.setFilter(generateValidFilter());
             return Arguments.of(expectedEvent, testEvent);
         };
-        return EventUtils.generateEventArguments(FILTER_DIRECTORY, "/nr", creator);
+        return EventUtils.generateEventArguments(FILTER_DIRECTORY, creator);
 
     }
 
