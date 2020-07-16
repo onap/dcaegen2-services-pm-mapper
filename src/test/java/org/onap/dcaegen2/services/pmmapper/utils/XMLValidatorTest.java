@@ -102,6 +102,6 @@ class XMLValidatorTest {
                     EventUtils.fileContentsToString(testEventPath), metadata, new HashMap<>(), "");
             return Arguments.of(valid, testEvent);
         };
-        return EventUtils.generateEventArguments(dataDirectory, "nr", creator);
+        return EventUtils.generateEventArguments(dataDirectory, creator);
     }
 }

@@ -120,9 +120,9 @@ class MapperTest {
         doThrow(new TemplateException(mock(Environment.class))).when(mappingTemplateMock)
                 .process(any(), any());
         HashMap<String, Template> templates = new HashMap<>();
-        templates.put("org.3GPP.28.550#measData", mappingTemplateMock);
+        templates.put("org.3GPP.28.532#measData", mappingTemplateMock);
         Whitebox.setInternalState(objUnderTest, "templates", templates);
-        Path testFile = Paths.get(dataDirectory + "/28.550/no_measdata/test.xml");
+        Path testFile = Paths.get(dataDirectory + "/28.532/no_measdata/test.xml");
         Event testEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testFile), fifthGenerationMetadata);
         assertThrows(MappingException.class, () -> objUnderTest.map(testEvent));
     }
@@ -185,7 +185,7 @@ class MapperTest {
             Event testEvent = EventUtils.makeMockEvent(EventUtils.fileContentsToString(testEventPath), eventMetadata);
             return Arguments.of(testEvent);
         };
-        return EventUtils.generateEventArguments(dataDirectory, "/28.550", creator);
+        return EventUtils.generateEventArguments(dataDirectory, creator);
     }
 }
 

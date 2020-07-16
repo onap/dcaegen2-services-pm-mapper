@@ -1,10 +1,10 @@
-<MeasDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData">
+<measDataFile xmlns="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData">
     <fileHeader fileFormatVersion="32.435 V10.0" vendorName="FooBar Ltd" dnPrefix="some dnPrefix">
         <fileSender senderName="Dublin"/>
-        <MeasData beginTime="2018-10-02T12:00:00+01:00"/>
+        <measData beginTime="2018-10-02T12:00:00+01:00"/>
     </fileHeader>
     <measData>
-        <measuredEntity localDn="Dublin" swVersion="r0.1"/>
+        <measEntity localDn="Dublin" swVersion="r0.1"/>
         <measInfo measInfoId="some measInfoId">
             <job jobId="jobId"/>
             <granPeriod duration="PT900S" endTime="2018-10-02T12:15:00Z"/>
@@ -27,6 +27,6 @@
         </measInfo>
     </measData>
     <fileFooter>
-        <MeasData endTime="2018-10-02T12:15:00+01:00"/>
+        <measData endTime="2018-10-02T12:15:00+01:00"/>
     </fileFooter>
-</MeasDataFile>
+</measDataFile>

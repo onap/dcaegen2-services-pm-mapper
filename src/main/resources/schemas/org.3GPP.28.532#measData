@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  3GPP TS 28.550 Measurements data XML file format definition
+  3GPP TS 28.532 Measurements data XML file format definition
   data file XML schema
   measData.xsd
 -->
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:md="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData" targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.550#measData" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:md="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData" targetNamespace="http://www.3gpp.org/ftp/specs/archive/28_series/28.532#measData" elementFormDefault="qualified">
     <!-- Measurement collection data file root XML element -->
-    <element name="MeasDataFile">
+    <element name="measDataFile">
         <complexType>
             <sequence>
                 <element name="fileHeader">
@@ -14,29 +14,29 @@
                         <sequence>
                             <element name="fileSender">
                                 <complexType>
-                                    <attribute name="senderName" type="string" use="optional"/>
-                                    <attribute name="senderType" type="string" use="optional"/>
+                                    <attribute name="senderName" type="string" use="optional" />
+                                    <attribute name="senderType" type="string" use="optional" />
                                 </complexType>
                             </element>
-                            <element name="MeasData">
+                            <element name="measData">
                                 <complexType>
-                                    <attribute name="beginTime" type="dateTime" use="required"/>
+                                    <attribute name="beginTime" type="dateTime" use="required" />
                                 </complexType>
                             </element>
                         </sequence>
-                        <attribute name="fileFormatVersion" type="string" use="required"/>
-                        <attribute name="vendorName" type="string" use="optional"/>
-                        <attribute name="dnPrefix" type="string" use="optional"/>
+                        <attribute name="fileFormatVersion" type="string" use="required" />
+                        <attribute name="vendorName" type="string" use="optional" />
+                        <attribute name="dnPrefix" type="string" use="optional" />
                     </complexType>
                 </element>
                 <element name="measData" minOccurs="0" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
-                            <element name="measuredEntity">
+                            <element name="measEntity">
                                 <complexType>
-                                    <attribute name="userLabel" type="string" use="optional"/>
-                                    <attribute name="localDn" type="string" use="optional"/>
-                                    <attribute name="swVersion" type="string" use="optional"/>
+                                    <attribute name="userLabel" type="string" use="optional" />
+                                    <attribute name="localDn" type="string" use="optional" />
+                                    <attribute name="swVersion" type="string" use="optional" />
                                 </complexType>
                             </element>
                             <element name="measInfo" minOccurs="0" maxOccurs="unbounded">
@@ -44,31 +44,31 @@
                                     <sequence>
                                         <element name="job" minOccurs="0">
                                             <complexType>
-                                                <attribute name="jobId" type="string" use="required"/>
+                                                <attribute name="jobId" type="string" use="required" />
                                             </complexType>
                                         </element>
                                         <element name="granPeriod">
                                             <complexType>
-                                                <attribute name="duration" type="duration" use="required"/>
-                                                <attribute name="endTime" type="dateTime" use="required"/>
+                                                <attribute name="duration" type="duration" use="required" />
+                                                <attribute name="endTime" type="dateTime" use="required" />
                                             </complexType>
                                         </element>
                                         <element name="repPeriod" minOccurs="0">
                                             <complexType>
-                                                <attribute name="duration" type="duration" use="required"/>
+                                                <attribute name="duration" type="duration" use="required" />
                                             </complexType>
                                         </element>
                                         <choice>
                                             <element name="measTypes">
                                                 <simpleType>
-                                                    <list itemType="Name"/>
+                                                    <list itemType="Name" />
                                                 </simpleType>
                                             </element>
                                             <element name="measType" minOccurs="0" maxOccurs="unbounded">
                                                 <complexType>
                                                     <simpleContent>
                                                         <extension base="Name">
-                                                            <attribute name="p" type="positiveInteger" use="required"/>
+                                                            <attribute name="p" type="positiveInteger" use="required" />
                                                         </extension>
                                                     </simpleContent>
                                                 </complexType>
@@ -80,26 +80,26 @@
                                                     <choice>
                                                         <element name="measResults">
                                                             <simpleType>
-                                                                <list itemType="md:measResultType"/>
+                                                                <list itemType="md:measResultType" />
                                                             </simpleType>
                                                         </element>
                                                         <element name="r" minOccurs="0" maxOccurs="unbounded">
                                                             <complexType>
                                                                 <simpleContent>
                                                                     <extension base="md:measResultType">
-                                                                        <attribute name="p" type="positiveInteger" use="required"/>
+                                                                        <attribute name="p" type="positiveInteger" use="required" />
                                                                     </extension>
                                                                 </simpleContent>
                                                             </complexType>
                                                         </element>
                                                     </choice>
-                                                    <element name="suspect" type="boolean" minOccurs="0"/>
+                                                    <element name="suspect" type="boolean" minOccurs="0" />
                                                 </sequence>
-                                                <attribute name="measObjLdn" type="string" use="required"/>
+                                                <attribute name="measObjLdn" type="string" use="required" />
                                             </complexType>
                                         </element>
                                     </sequence>
-                                    <attribute name="measInfoId" type="string" use="optional"/>
+                                    <attribute name="measInfoId" type="string" use="optional" />
                                 </complexType>
                             </element>
                         </sequence>
@@ -108,9 +108,9 @@
                 <element name="fileFooter">
                     <complexType>
                         <sequence>
-                            <element name="MeasData">
+                            <element name="measData">
                                 <complexType>
-                                    <attribute name="endTime" type="dateTime" use="required"/>
+                                    <attribute name="endTime" type="dateTime" use="required" />
                                 </complexType>
                             </element>
                         </sequence>
@@ -123,7 +123,7 @@
         <union memberTypes="integer float string">
             <simpleType>
                 <restriction base="string">
-                    <enumeration value="NULL"/>
+                    <enumeration value="NULL" />
                 </restriction>
             </simpleType>
         </union>
