@@ -23,11 +23,14 @@ package org.onap.dcaegen2.services.pmmapper.utils;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.stream.Stream;
+
 import lombok.NonNull;
+import org.onap.dcaegen2.services.pmmapper.exceptions.NotSupportedFormatTypeException;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
+
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -41,6 +44,7 @@ public class XMLValidator {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(XMLValidator.class));
     private HashMap<String, Schema> schemas;
     private SchemaFactory schemaFactory;
+
     public XMLValidator(Path schemaDirectory) {
         logger.unwrap().trace("Constructing schema from {}", schemaDirectory);
         schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -57,14 +61,15 @@ public class XMLValidator {
         logger.unwrap().debug("Loading schema from {}", schema.toString());
         try {
             schemas.put(schema.getFileName().toString(), schemaFactory.newSchema(schema.toFile()));
-        } catch(SAXException exception) {
+        } catch (SAXException exception) {
             logger.unwrap().error("Failed to discover a valid schema at {}", schema, exception);
             throw new IllegalArgumentException("Failed to discover a valid schema from given path", exception);
         }
     }
+
     public boolean validate(@NonNull Event event) {
         try {
-            Validator validator =  schemas.get(event.getMetadata().getFileFormatType()).newValidator();
+            Validator validator = getValidatorForAccordingFileFormat(event.getMetadata().getFileFormatType());
             validator.validate(new StreamSource(new StringReader(event.getBody())));
             logger.unwrap().info("XML validation successful");
             logger.unwrap().debug(String.valueOf(event));
@@ -72,6 +77,17 @@ public class XMLValidator {
         } catch (SAXException | IOException exception) {
             logger.unwrap().error("XML validation failed {}", event, exception);
             return false;
+        } catch (NotSupportedFormatTypeException exception) {
+            logger.unwrap().error("XML validation failed - given file format type is not supported. {}", event, exception);
+            return false;
         }
+    }
+
+    private Validator getValidatorForAccordingFileFormat(String fileFormatType) throws NotSupportedFormatTypeException {
+        Schema schema = schemas.get(fileFormatType);
+        if (schema == null) {
+            throw new NotSupportedFormatTypeException(fileFormatType);
+        }
+        return schema.newValidator();
     }
 }

@@ -123,6 +123,6 @@ public class MetadataFilterTest {
 
             return Arguments.of(testEvent);
         };
-        return EventUtils.generateEventArguments(DATA_DIRECTORY, "/nr", creator);
+        return EventUtils.generateEventArguments(DATA_DIRECTORY, creator);
     }
 }
