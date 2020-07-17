@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4125d38b_d9767a78",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/model/measurement/nr/MeasDataFile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-07-17T09:57:01Z",
+      "side": 1,
+      "message": "Try to avoid wildcard imports.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "966cb59f89ab84b310026f1e3fd851a0cbd062d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b36be2_32b878c1",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/MeasConverter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-07-17T09:57:01Z",
+      "side": 1,
+      "message": "Not sure about using snake case in Java code.",
+      "range": {
+        "startLine": 53,
+        "startChar": 53,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "966cb59f89ab84b310026f1e3fd851a0cbd062d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb9ccc7_2edffe20",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/XMLValidator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-07-17T09:57:01Z",
+      "side": 1,
+      "message": "Try to stick to the classic {} style.\n        if (schema \u003d\u003d null) {\n            throw new NotSupportedFormatTypeException(fileFormatType);\n        }",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "966cb59f89ab84b310026f1e3fd851a0cbd062d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa27dc36_4a99a8f4",
+        "filename": "src/test/java/utils/EventUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-07-17T09:57:01Z",
+      "side": 1,
+      "message": "Try to stick to the classic {} style.",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 24
+      },
+      "revId": "966cb59f89ab84b310026f1e3fd851a0cbd062d3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
