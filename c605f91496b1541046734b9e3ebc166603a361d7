@@ -22,6 +22,30 @@
       "revId": "c605f91496b1541046734b9e3ebc166603a361d7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b6486e_155ea240",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6726
+      },
+      "writtenOn": "2020-07-17T12:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54526351_bd6fae61",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "c605f91496b1541046734b9e3ebc166603a361d7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
