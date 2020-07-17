@@ -69,6 +69,30 @@
       "revId": "045f6d37e36b6a5f24978cce710bd768de817384",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e273cfb7_d7346a80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-07-17T07:22:18Z",
+      "side": 1,
+      "message": "I\u0027m merging this, however, in the future if your intent is to do more activity for a specific Jira, especially when the activity has such a common theme, it\u0027s probably better to do it in fewer commits. This is a very small commit probably should have done a more generic \"log correction\" commit that sweeps multiple packages rather than having a commit that has a net 9 character change, that doesn\u0027t result in the referenced Jira getting closed.",
+      "parentUuid": "e3e6fe51_876c28ee",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "045f6d37e36b6a5f24978cce710bd768de817384",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
