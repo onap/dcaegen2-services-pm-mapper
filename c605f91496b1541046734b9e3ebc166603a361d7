@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54526351_bd6fae61",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-07-17T09:34:34Z",
+      "side": 1,
+      "message": "Minor comment. Try to avoid using wildcard import.",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "c605f91496b1541046734b9e3ebc166603a361d7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
