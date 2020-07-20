@@ -1405,7 +1405,7 @@
       "type": "object",
       "properties": {
         "formatVersion": {
-          "description": "3gpp PM reporting file format version from pre-standard TS 28.550 v2.0.0",
+          "description": "3gpp PM reporting file format version from pre-standard TS 28.532 v2.0.0",
           "type": "string"
         },
         "granularityPeriod": {
@@ -1423,15 +1423,15 @@
           "items": { "type": "string" }
         },
         "measuredEntityDn": {
-          "description": "distinguished name per 3GPP TS 28.550",
+          "description": "distinguished name per 3GPP TS 28.532",
           "type": "string"
         },
         "measuredEntitySoftwareVersion": {
-          "description": "software version for the NF providing the PM data as specified in 3GPP TS 28.550",
+          "description": "software version for the NF providing the PM data as specified in 3GPP TS 28.532",
           "type": "string"
         },
         "measuredEntityUserName": {
-          "description": "user definable name for the measured object per 3GPP TS 28.550",
+          "description": "user definable name for the measured object per 3GPP TS 28.532",
           "type": "string"
         }
       },
@@ -2178,7 +2178,7 @@
       "required": [ "otherFieldsVersion" ]
     },
     "perf3gppFields": {
-      "description": "fields for 3GPP PM format events, based on 3GPP TS 28.550, belonging to the 'perf3gpp' domain of the commonEventHeader domain enumeration",
+      "description": "fields for 3GPP PM format events, based on 3GPP TS 28.532, belonging to the 'perf3gpp' domain of the commonEventHeader domain enumeration",
       "type": "object",
       "properties": {
         "eventAddlFields": {"$ref": "#/definitions/hashMap"},
