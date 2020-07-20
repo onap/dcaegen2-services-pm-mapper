@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6537a52_f5dcfe0f",
+        "filename": "src/test/java/utils/EventUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-07-20T08:22:31Z",
+      "side": 1,
+      "message": "This is not system agnostic, windows is using \\, unix based systems use /.\nBetter to use something like the File.separator",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 50
+      },
+      "revId": "0f968ca4cfc3ab585e4ac21209d4c1251865e508",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086984b8_400199ce",
+        "filename": "src/test/java/utils/EventUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-07-20T08:22:31Z",
+      "side": 1,
+      "message": "See above comment",
+      "range": {
+        "startLine": 47,
+        "startChar": 48,
+        "endLine": 47,
+        "endChar": 49
+      },
+      "revId": "0f968ca4cfc3ab585e4ac21209d4c1251865e508",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
