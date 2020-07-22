@@ -305,7 +305,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>onap/${project.groupId}.${project.artifactId}</name>
+                            <name>onap/${project.groupId}.${project.artifactId}:${project.version}</name>
                             <registry>${onap.nexus.dockerregistry.daily}</registry>
                             <build>
                                 <contextDir>${project.basedir}</contextDir>
@@ -315,7 +315,6 @@
                                 </args>
                                 <cleanup>none</cleanup>
                                 <tags>
-                                    <tag>${project.version}</tag>
                                     <tag>${project.version}-${maven.build.timestamp}Z</tag>
                                 </tags>
                             </build>
