@@ -45,7 +45,8 @@ import org.slf4j.LoggerFactory;
 public class MeasFilterHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasFilterHandler.class));
     public static final String XML_EXTENSION = "xml";
-    private MeasConverter converter;
+    private static final String PM_TYPE_REGEX = "PM\\d{12}\\+\\d{4,}";
+    private final MeasConverter converter;
 
     public MeasFilterHandler(MeasConverter converter) {
         this.converter = converter;
@@ -140,17 +141,46 @@ public class MeasFilterHandler {
         boolean isXML = isXMLFile(fileName);
         boolean isValidPMType = isValidPMType(fileName);
         if(!isXML) {
-            logger.unwrap().info("PM measurement file must have an extension of .{}", XML_EXTENSION);
+            logger.unwrap().warn("PM measurement file must have an extension of .{}", XML_EXTENSION);
         }
         if(!isValidPMType) {
-            logger.unwrap().info("PM measurement file type not supported");
+            logger.unwrap().warn("PM measurement file type not supported");
         }
 
         return  isXML && isValidPMType;
     }
 
     private boolean isValidPMType(String fileName) {
-        return fileName.startsWith("C") || fileName.startsWith("A");
+        if (fileName.startsWith("C") || fileName.startsWith("A")){
+            return true;
+        } else if (fileName.startsWith("PM")){
+            return validPMType(fileName);
+        }
+        return false;
+    }
+
+    private boolean validPMType(String fileName) {
+        if(isValidType(fileName)){
+            if(isSpecificDataExtension(fileName)){
+                return validSpecificDataExtension(fileName);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isValidType(String fileName) {
+        return fileName.matches(PM_TYPE_REGEX +".*\\.xml");
+    }
+
+    private boolean isSpecificDataExtension(String fileName) {
+        return fileName.matches(PM_TYPE_REGEX +"[A-Z].*\\.xml");
+    }
+
+    private boolean validSpecificDataExtension(String fileName) {
+        String[] pmTypes = fileName.split(PM_TYPE_REGEX);
+        return isValidPMType(pmTypes[1]);
+
     }
 
     private boolean isXMLFile(String fileName) {
