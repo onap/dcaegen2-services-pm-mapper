@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
+ *  Copyright (C) 2020 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -143,17 +144,20 @@ class MeasFilterHandlerTest {
 
     @Test
     void valid_fileType() {
+        List<String> validFileTypes = Arrays.asList("Apm.xml", "Cpm.xml", "PM202007171301+020024C202007171207+0200-1215+0200_45678.xml", "PM202007171301-0100999A202007171207+0200-1215+0200_45678.xml");
         Event event = mock(Event.class);
         when(event.getHttpServerExchange()).thenReturn(exchange);
-        when(exchange.getRequestPath()).thenReturn("Apm.xml","Cpm.xml");
-        assertTrue(objUnderTest.filterByFileType(event));
-        assertTrue(objUnderTest.filterByFileType(event));
+        validFileTypes.forEach(fileName -> {
+            when(exchange.getRequestPath())
+                    .thenReturn(fileName);
+            assertTrue(objUnderTest.filterByFileType(event));
+        } );
     }
 
     @Test
     void invalid_fileType() {
+        List<String> invalidFileTypes = Arrays.asList("Bpm.xml","Dpm.xml","Apm.xml.gz","Apm.xm1","asdf","bsdf", "B202007171207+0200-1215+0200_45678.xml", "PM202007171301+020024B202007171207+0200-1215+0200_45678.xml", "PMC202007171301+020024C202007171207+0200-1215+0200_45678.xml" , "PM202007171301-020024.xml");
         Event event = mock(Event.class);
-        List<String> invalidFileTypes = Arrays.asList("Bpm.xml","Dpm.xml","Apm.xml.gz","Apm.xm1","asdf","bsdf");
         when(event.getHttpServerExchange()).thenReturn(exchange);
         invalidFileTypes.forEach(fileName -> {
             when(exchange.getRequestPath())
@@ -212,5 +216,4 @@ class MeasFilterHandlerTest {
         return EventUtils.generateEventArguments(FILTER_DIRECTORY, creator);
 
     }
-
 }
