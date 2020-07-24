@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
@@ -45,7 +46,9 @@ import org.slf4j.LoggerFactory;
 public class MeasFilterHandler {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(MeasFilterHandler.class));
     public static final String XML_EXTENSION = "xml";
-    private MeasConverter converter;
+    private static final String GENERIC_PM_TYPE_WITH_SPECIFIC_DATA_EXTENSION_REGEX = "PM\\d{12}[+-]\\d{4,}([A-D]).*\\.xml";
+    private static final String LEGACY_PM_TYPE_REGEX = "([A-D]).*\\.xml";
+    private final MeasConverter converter;
 
     public MeasFilterHandler(MeasConverter converter) {
         this.converter = converter;
@@ -96,7 +99,7 @@ public class MeasFilterHandler {
                 getFilteredMeasInfoFromMeasType(currentMeasInfo, filterPatternList).ifPresent(filteredMeasInfos::add);
             }
         }
-        return  filteredMeasInfos;
+        return filteredMeasInfos;
     }
 
     private List<Pattern> getPatternsFromFilters(Optional<Filter> filters) {
@@ -106,6 +109,7 @@ public class MeasFilterHandler {
         }
         return patternList;
     }
+
     private Optional<Pattern> tryToCompileFilter(String measType) {
         try {
             return Optional.of(Pattern.compile("^" + measType + "$"));
@@ -135,43 +139,71 @@ public class MeasFilterHandler {
      **/
     public boolean filterByFileType(Event event) {
         logger.unwrap().debug("Filtering the measurement by file type.");
-        String requestPath  = event.getHttpServerExchange().getRequestPath();
-        String fileName = requestPath.substring(requestPath.lastIndexOf('/')+1);
+        String requestPath = event.getHttpServerExchange().getRequestPath();
+        String fileName = requestPath.substring(requestPath.lastIndexOf('/') + 1);
         boolean isXML = isXMLFile(fileName);
         boolean isValidPMType = isValidPMType(fileName);
-        if(!isXML) {
-            logger.unwrap().info("PM measurement file must have an extension of .{}", XML_EXTENSION);
+        if (!isXML) {
+            logger.unwrap().warn("PM measurement file must have an extension of .{}", XML_EXTENSION);
         }
-        if(!isValidPMType) {
-            logger.unwrap().info("PM measurement file type not supported");
+        if (!isValidPMType) {
+            logger.unwrap().warn("PM measurement file type not supported");
         }
-
-        return  isXML && isValidPMType;
+        return isXML && isValidPMType;
     }
 
     private boolean isValidPMType(String fileName) {
-        return fileName.startsWith("C") || fileName.startsWith("A");
+        String pmType;
+        if(fileName.startsWith("PM")){
+            pmType = getPMTypeConventionWithSpec28532(fileName);
+        }else {
+            pmType = getPMTypeConventionWithSpec32434(fileName);
+        }
+        return isSupportedPMType(pmType);
+    }
+
+    private String getPMTypeConventionWithSpec28532(String fileName) {
+        Pattern convention28532 = Pattern.compile(GENERIC_PM_TYPE_WITH_SPECIFIC_DATA_EXTENSION_REGEX);
+        return getPMType(fileName, convention28532);
+    }
+
+    private String getPMTypeConventionWithSpec32434(String fileName) {
+        Pattern convention32434 = Pattern.compile(LEGACY_PM_TYPE_REGEX);
+        return getPMType(fileName, convention32434);
+    }
+
+    private String getPMType(String fileName, Pattern pattern) {
+        String pmType = "";
+        Matcher matcher = pattern.matcher(fileName);
+        if(matcher.find()){
+            pmType = matcher.group(1);
+        }
+        return pmType;
+    }
+
+    private boolean isSupportedPMType(String pmType) {
+        return pmType.equals("A") || pmType.equals("C");
     }
 
     private boolean isXMLFile(String fileName) {
         return FilenameUtils.getExtension(fileName).equals(XML_EXTENSION);
     }
 
-    private boolean hasMatchingResults(List<MeasurementInfo.MeasType> filteredMeasTypes, MeasValue measValue ) {
+    private boolean hasMatchingResults(List<MeasurementInfo.MeasType> filteredMeasTypes, MeasValue measValue) {
         List<MeasValue.R> filteredResults = new ArrayList<>();
 
-        filteredMeasTypes.forEach( mst ->
-            measValue.getR().stream()
-                .filter(r -> mst.getP().equals(r.getP()))
-                .findFirst()
-                .ifPresent(filteredResults::add)
+        filteredMeasTypes.forEach(mst ->
+                measValue.getR().stream()
+                        .filter(r -> mst.getP().equals(r.getP()))
+                        .findFirst()
+                        .ifPresent(filteredResults::add)
         );
 
-        boolean hasResults  = !filteredResults.isEmpty();
-        if(hasResults) {
-           measValue.replaceR(filteredResults);
+        boolean hasResults = !filteredResults.isEmpty();
+        if (hasResults) {
+            measValue.replaceR(filteredResults);
         }
-       return hasResults;
+        return hasResults;
     }
 
     private Optional<MeasurementInfo> getFilteredMeasInfoFromMeasType(MeasurementInfo currentMeasInfo, List<Pattern> filters) {
@@ -179,9 +211,9 @@ public class MeasFilterHandler {
                 .filter(mt -> matchFilters(filters, mt.getValue()))
                 .collect(Collectors.toList());
 
-        if(!filteredMeasTypes.isEmpty()) {
+        if (!filteredMeasTypes.isEmpty()) {
             List<MeasValue> filteredMeasValues = currentMeasInfo.getMeasValue().stream()
-                    .filter( mv -> hasMatchingResults(filteredMeasTypes, mv))
+                    .filter(mv -> hasMatchingResults(filteredMeasTypes, mv))
                     .collect(Collectors.toList());
             currentMeasInfo.replaceMeasType(filteredMeasTypes);
             currentMeasInfo.replaceMeasValue(filteredMeasValues);
