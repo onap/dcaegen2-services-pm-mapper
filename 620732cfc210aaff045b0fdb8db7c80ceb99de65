@@ -22,6 +22,30 @@
       "revId": "620732cfc210aaff045b0fdb8db7c80ceb99de65",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e0ced6_8bf00dc2",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 6726
+      },
+      "writtenOn": "2020-07-29T12:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ddd446_57859b15",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 41
+      },
+      "revId": "620732cfc210aaff045b0fdb8db7c80ceb99de65",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
