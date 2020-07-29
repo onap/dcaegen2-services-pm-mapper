@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70ddd446_57859b15",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 3793
+      },
+      "writtenOn": "2020-07-29T05:56:13Z",
+      "side": 1,
+      "message": "I would prefer you to refer to specification 32.435  for A..., C... and 28.532 for PM...[A,C]...\nInstead of concatenation in matches method have all regex as statics.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 41
+      },
+      "revId": "620732cfc210aaff045b0fdb8db7c80ceb99de65",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
