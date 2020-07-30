@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb5b1191_9e05a256",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/filtering/MeasFilterHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-07-30T01:11:03Z",
+      "side": 1,
+      "message": "copyright 2020 Nokia",
+      "revId": "ad56af58d4f7fe3ea4217cb91068262cecce5784",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
