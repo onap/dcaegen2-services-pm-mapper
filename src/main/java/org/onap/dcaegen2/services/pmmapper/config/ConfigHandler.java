@@ -74,7 +74,6 @@ public class ConfigHandler {
         } catch (Exception exception) {
             throw new CBSServerError("Error connecting to Configbinding Service: ", exception);
         }
-
         return convertMapperConfigToObject(mapperConfigJson);
     }
 
@@ -90,7 +89,7 @@ public class ConfigHandler {
             String exceptionMessage = "Error parsing configuration, mapper config:\n" + mapperConfigJson;
             throw new MapperConfigException(exceptionMessage, exception);
         }
-
+        logger.unwrap().info("Received pm-mapper configuration from ConfigBinding Service");
         logger.unwrap().debug("Mapper configuration:\n{}", mapperConfig);
         return mapperConfig;
     }
