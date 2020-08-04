@@ -67,26 +67,34 @@ public class DynamicConfiguration extends ServerResource {
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
         try {
             logger.entering(new HttpServerExchangeAdapter(httpServerExchange));
-            MapperConfig config = configHandler.getMapperConfig();
-            int responseCode = StatusCodes.OK;
-            String responseMessage = StatusCodes.OK_STRING;
-
-            if (!this.originalConfig.equals(config)) {
-                logger.unwrap().info("Configuration update detected.");
-                logger.unwrap().info("Reconfiguring configurables");
-                try {
-                    applyConfiguration(config);
-                    this.originalConfig = config;
-                } catch (ReconfigurationException e) {
-                    responseCode = StatusCodes.INTERNAL_SERVER_ERROR;
-                    responseMessage = StatusCodes.INTERNAL_SERVER_ERROR_STRING;
-                    logger.unwrap().error("Failed to apply configuration update, reverting to original config", e);
-                    applyConfiguration(this.originalConfig);
-                }
-            }
+            boolean reconfigured = reconfigure();
+            int responseCode = reconfigured? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR;
+            String responseMessage = reconfigured ? StatusCodes.OK_STRING : StatusCodes.INTERNAL_SERVER_ERROR_STRING;
             httpServerExchange.setStatusCode(responseCode).getResponseSender().send(responseMessage);
         } finally {
             logger.exiting();
         }
+    }
+
+    /**
+     * @return Boolean to indicate if configuration attempt was successful
+     * @throws Exception If environment config cannot be read, or if re-applying the original config fails
+     */
+    public boolean reconfigure() throws Exception {
+        boolean success = true;
+        MapperConfig config = configHandler.getMapperConfig();
+        if (!this.originalConfig.equals(config)) {
+            logger.unwrap().info("Configuration update detected.");
+            logger.unwrap().info("Reconfiguring configurables");
+            try {
+                applyConfiguration(config);
+                this.originalConfig = config;
+            } catch (ReconfigurationException e) {
+                success = false;
+                logger.unwrap().error("Failed to apply configuration update, reverting to original config", e);
+                applyConfiguration(this.originalConfig);
+            }
+        }
+        return success;
     }
 }
