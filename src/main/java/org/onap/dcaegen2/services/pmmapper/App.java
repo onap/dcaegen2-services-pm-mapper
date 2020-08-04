@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
+import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 import javax.net.ssl.SSLContext;
@@ -60,6 +61,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Data
 public class App {
@@ -70,6 +72,8 @@ public class App {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(App.class));
     private static final int HTTP_PORT = 8081;
     private static final int HTTPS_PORT = 8443;
+    private static final int INITIAL_RECONFIGURATION_PERIOD = 60;
+    private static final int RECONFIGURATION_PERIOD = 60;
     private static Path templates = Paths.get("/opt/app/pm-mapper/etc/templates/");
     private static Path schemas = Paths.get("/opt/app/pm-mapper/etc/schemas/");
 
@@ -91,6 +95,7 @@ public class App {
     private List<ServerResource> serverResources;
     private Flux<Event> flux;
     private FluxSink<Event> fluxSink;
+    private Scheduler configScheduler;
 
     /**
      * Creates an instance of the application.
@@ -117,6 +122,7 @@ public class App {
         this.validator = new XMLValidator(schemasDirectory);
         this.vesPublisher = new VESPublisher(mapperConfig);
         this.flux = Flux.create(eventFluxSink -> this.fluxSink = eventFluxSink);
+        this.configScheduler = Schedulers.newSingle("Config");
 
         this.flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
@@ -133,6 +139,7 @@ public class App {
                 .concatMap(this.vesPublisher::publish)
                 .subscribe(event -> App.sendEventProcessed(this.mapperConfig, event));
 
+        this.configScheduler.schedulePeriodically(this::reconfigure, INITIAL_RECONFIGURATION_PERIOD, RECONFIGURATION_PERIOD, TimeUnit.SECONDS);
         this.healthCheckHandler = new HealthCheckHandler();
         this.deliveryHandler = new DeliveryHandler(fluxSink::next);
         this.dynamicConfiguration = new DynamicConfiguration(Arrays.asList(mapperConfig), mapperConfig);
@@ -150,6 +157,7 @@ public class App {
      */
     public void start() {
         this.applicationServer.start();
+        this.configScheduler.start();
     }
 
     /**
@@ -157,6 +165,7 @@ public class App {
      */
     public void stop() {
         this.applicationServer.stop();
+        this.configScheduler.dispose();
     }
 
     private Undertow server(MapperConfig config, List<ServerResource> serverResources) throws IOException {
@@ -172,6 +181,14 @@ public class App {
         return builder.addHttpsListener(this.httpsPort, "0.0.0.0", sslContext)
                 .setHandler(routes)
                 .build();
+    }
+
+    private void reconfigure() {
+        try {
+            this.dynamicConfiguration.reconfigure();
+        } catch (Exception e) {
+            logger.unwrap().error("Failed to reconfigure service.", e);
+        }
     }
 
     public static void main(String[] args) {

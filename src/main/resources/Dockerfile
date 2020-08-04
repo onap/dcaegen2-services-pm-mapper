@@ -57,5 +57,5 @@ LABEL git.branch="${git.branch}" \
       git.commit.user.name="${git.commit.user.name}"
 
 
-ENTRYPOINT ["/bin/sh", "-c", "nohup sh etc/reconfigure.sh & /usr/local/openjdk-11/bin/java -jar ${project.artifactId}-${project.version}.jar"]
+ENTRYPOINT ["/usr/local/openjdk-11/bin/java", "-jar", "${project.artifactId}-${project.version}.jar"]
 ARG JAR
