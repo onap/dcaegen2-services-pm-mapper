@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba6abad_4864daab",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-08-13T13:37:01Z",
+      "side": 1,
+      "message": "Is this needed or could you not just set the delay in the method call?",
+      "range": {
+        "startLine": 75,
+        "startChar": 29,
+        "endLine": 75,
+        "endChar": 65
+      },
+      "revId": "8dd7bc29d939539d953f44439358839ff268dae8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa22e9b_719a7d14",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/DynamicConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2020-08-13T13:37:01Z",
+      "side": 1,
+      "message": "Unused.",
+      "range": {
+        "startLine": 27,
+        "startChar": 54,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "8dd7bc29d939539d953f44439358839ff268dae8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
