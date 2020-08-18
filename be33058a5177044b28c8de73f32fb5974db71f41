@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27fda492_16e3e0e6",
+        "filename": "src/main/resources/reconfigure.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-08-18T14:32:13Z",
+      "side": 1,
+      "message": "As reconfiguration is scheduled - is this script required/used?",
+      "revId": "be33058a5177044b28c8de73f32fb5974db71f41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
