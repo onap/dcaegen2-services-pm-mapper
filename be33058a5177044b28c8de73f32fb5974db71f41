@@ -34,6 +34,24 @@
       "revId": "be33058a5177044b28c8de73f32fb5974db71f41",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a065978a_e616abfe",
+        "filename": "src/main/resources/reconfigure.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-08-20T13:57:58Z",
+      "side": 1,
+      "message": "Yes policy-handler supports script execution (but this has to be identified in blueprint). As I dint find such config on pm-mapper blueprint, was checking if required.\n\nWe can certainly add this later if necessary.",
+      "parentUuid": "69b22deb_95ba988a",
+      "revId": "be33058a5177044b28c8de73f32fb5974db71f41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
