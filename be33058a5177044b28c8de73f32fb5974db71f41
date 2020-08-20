@@ -16,6 +16,24 @@
       "revId": "be33058a5177044b28c8de73f32fb5974db71f41",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b22deb_95ba988a",
+        "filename": "src/main/resources/reconfigure.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-08-20T13:46:06Z",
+      "side": 1,
+      "message": "It\u0027s not needed now, I guess the reason I was leaving it, was if at some point we decided to use monitoring policy, I recall reading that the policy handler could use a script on the pod to trigger an update.\n\nI can remove for now and we can just look in the history if we want to revisit this approach.",
+      "parentUuid": "27fda492_16e3e0e6",
+      "revId": "be33058a5177044b28c8de73f32fb5974db71f41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
