@@ -84,6 +84,10 @@ public class MapperConfig implements Configurable {
     @JsonAdapter(DMaaPAdapter.class)
     private PublisherConfig publisherConfig;
 
+    @GSONRequired
+    @SerializedName("kpi_config")
+    private String kpiConfig;
+
     public String getSubscriberIdentity() {
         return this.getSubscriberConfig().getSubscriberId();
     }
@@ -108,6 +112,7 @@ public class MapperConfig implements Configurable {
             this.dmaapDRDeleteEndpoint = mapperConfig.getDmaapDRDeleteEndpoint();
             this.aafUsername = mapperConfig.getAafUsername();
             this.aafPassword = mapperConfig.getAafPassword();
+            this.kpiConfig = mapperConfig.getKpiConfig();
         }
     }
 
@@ -125,6 +130,7 @@ public class MapperConfig implements Configurable {
                 ", aafPassword= *****" +
                 ", subscriberConfig=" + subscriberConfig +
                 ", publisherConfig=" + publisherConfig +
+                ", kpiConfig=" + kpiConfig +
                 '}';
     }
 }
