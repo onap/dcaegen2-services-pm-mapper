@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 China Mobile.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
  * ============LICENSE_END=========================================================
  */
 
-package org.onap.dcaegen2.services.pmmapper.messagerouter;
+package org.onap.dcaegen2.services.pmmapper.kpi.computation;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -33,33 +33,27 @@ import org.slf4j.LoggerFactory;
 
 import reactor.core.publisher.Flux;
 
-public class VESPublisher {
-    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(VESPublisher.class));
+/**
+ * KPI computation and published.
+ *
+ * @author Kai Lu
+ */
+public class KpiPublisher {
+
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(KpiPublisher.class));
     private RequestSender sender;
     private MapperConfig config;
 
-    public VESPublisher(MapperConfig config) {
+    public KpiPublisher(MapperConfig config) {
         this(config, new RequestSender());
     }
 
-    public VESPublisher(MapperConfig config, RequestSender sender) {
+    public KpiPublisher(MapperConfig config, RequestSender sender) {
         this.sender = sender;
         this.config = config;
     }
 
-    public Flux<List<Event>> publish(List<Event> events) {
-        logger.unwrap().info("Publishing VES events to messagerouter.");
-        try {
-            events.forEach(e -> this.publish(e.getVes()));
-            logger.unwrap().info("Successfully published VES events to messagerouter.");
-        } catch (MRPublisherException e) {
-            logger.unwrap().error("Failed to publish VES event(s) to messagerouter.", e);
-            return Flux.empty();
-        }
-        return Flux.just(events);
-    }
-
-    private void publish(String ves) {
+    private void publishToDMaap(String ves) {
         try {
             String topicUrl = config.getPublisherTopicUrl();
             ves = ves.replaceAll("\n", "");
@@ -72,4 +66,34 @@ public class VESPublisher {
             throw new MRPublisherException(e.getMessage(), e);
         }
     }
+
+    /**
+     * do KPI computation.
+     *
+     * @param events    events
+     * @return Kpi event list
+     *
+     */
+    public Flux<List<Event>> kpiComputation(List<Event> events) {
+        logger.unwrap().info("Publishing KPI VES events to messagerouter.");
+        try {
+            events.forEach(e -> this.checkAndDoComputation(e));
+            logger.unwrap().info("KPI computation done successfully");
+        } catch (Exception e) {
+            logger.unwrap().error("KPI computation done failed.", e);
+            return Flux.empty();
+        }
+        return Flux.just(events);
+    }
+
+    private void checkAndDoComputation(Event event) {
+    	String ves = event.getVes();
+        List<String> vesList = KpiComputation.checkAndDoComputation(ves, config);
+        if (vesList == null || vesList.size() <= 0) {
+        	logger.unwrap().info("NO kpi data generated of event", event);
+        } else {
+            vesList.forEach(v -> publishToDMaap(v));
+        }
+    }
+
 }
