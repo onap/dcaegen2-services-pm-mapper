@@ -1,6 +1,7 @@
-/*-
+/*
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
+ *  Copyright (C) 2020 China Mobile.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +43,7 @@ import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
+import org.onap.dcaegen2.services.pmmapper.kpi.computation.KpiPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.onap.dcaegen2.services.pmmapper.utils.DataRouterUtils;
@@ -97,6 +99,8 @@ public class App {
     private FluxSink<Event> fluxSink;
     private Scheduler configScheduler;
 
+    private KpiPublisher kpiPublisher;
+
     /**
      * Creates an instance of the application.
      * @param templatesDirectory path to directory containing templates used for mapping.
@@ -124,6 +128,7 @@ public class App {
         this.flux = Flux.create(eventFluxSink -> this.fluxSink = eventFluxSink);
         this.configScheduler = Schedulers.newSingle("Config");
 
+        this.kpiPublisher = new KpiPublisher(mapperConfig);
         this.flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
                 .limitRate(1)
@@ -137,7 +142,8 @@ public class App {
                 .filter(events -> App.filter(this.filterHandler, events, this.mapperConfig))
                 .concatMap(events -> App.map(this.mapper, events, this.mapperConfig))
                 .concatMap(this.vesPublisher::publish)
-                .subscribe(event -> App.sendEventProcessed(this.mapperConfig, event));
+                .concatMap(this.kpiPublisher::kpiComputation)
+                .subscribe(events -> App.sendEventProcessed(this.mapperConfig, events.get(0)));
 
         this.configScheduler.schedulePeriodically(this::reconfigure, INITIAL_RECONFIGURATION_PERIOD, RECONFIGURATION_PERIOD, TimeUnit.SECONDS);
         this.healthCheckHandler = new HealthCheckHandler();
