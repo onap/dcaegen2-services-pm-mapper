@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (c) 2020 China Mobile.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +26,7 @@ import java.util.Base64;
 import java.util.List;
 
 import org.onap.dcaegen2.services.pmmapper.exceptions.MRPublisherException;
+import org.onap.dcaegen2.services.pmmapper.kpi.computation.KpiComputation;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
@@ -60,7 +62,7 @@ public class VESPublisher {
         return Flux.just(event);
     }
 
-    private void publish(String ves) {
+    private void publishToDMaap(String ves) {
         try {
             String topicUrl = config.getPublisherTopicUrl();
             ves = ves.replaceAll("\n", "");
@@ -73,4 +75,18 @@ public class VESPublisher {
             throw new MRPublisherException(e.getMessage(), e);
         }
     }
+
+    private void publish(String ves) {
+
+    	List<String> vesList = KpiComputation.checkAndDoComputation(ves, config);
+    	if (vesList == null || vesList.size() <= 0) {
+            publishToDMaap(ves);
+    	} else {
+    		vesList.add(ves);
+    		vesList.forEach( v -> {
+    			publishToDMaap(v);
+    		} );
+    	}
+    }
+
 }
