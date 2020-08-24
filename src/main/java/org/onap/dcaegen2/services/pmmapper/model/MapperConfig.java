@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 China Mobile.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,6 +85,10 @@ public class MapperConfig implements Configurable {
     @JsonAdapter(DMaaPAdapter.class)
     private PublisherConfig publisherConfig;
 
+    @GSONRequired
+    @SerializedName("kpi_config")
+    private String kpiConfig;
+
     public String getSubscriberIdentity() {
         return this.getSubscriberConfig().getSubscriberId();
     }
@@ -108,6 +113,7 @@ public class MapperConfig implements Configurable {
             this.dmaapDRDeleteEndpoint = mapperConfig.getDmaapDRDeleteEndpoint();
             this.aafUsername = mapperConfig.getAafUsername();
             this.aafPassword = mapperConfig.getAafPassword();
+            this.kpiConfig = mapperConfig.getKpiConfig();
         }
     }
 
@@ -125,6 +131,7 @@ public class MapperConfig implements Configurable {
                 ", aafPassword= *****" +
                 ", subscriberConfig=" + subscriberConfig +
                 ", publisherConfig=" + publisherConfig +
+                ", kpiConfig=" + kpiConfig +
                 '}';
     }
 }
