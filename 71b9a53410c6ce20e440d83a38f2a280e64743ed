@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5611fc62_2926d48b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-08-31T12:38:30Z",
+      "side": 1,
+      "message": "Small suggestion here, This is the PM Mapper repo, so its probably fair to assume any commit in here is an enhancement for it.\nI think we should try to keep our git commit first line in the imperative mood so something like:\nAdd KPI Monitoring Enhancements\nMight work a little better, with the Jira revealing the information about the e2e networking slicing, however if you want to work in that this is for E2E networking slicing then:\nAdd KPI Monitoring Enhancements for E2E Network Slicing might be ok too.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 60
+      },
+      "revId": "71b9a53410c6ce20e440d83a38f2a280e64743ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d5b5d4_f16af1fa",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-08-31T12:38:30Z",
+      "side": 1,
+      "message": "Please use 4 spaces to represent a tab.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 2
+      },
+      "revId": "71b9a53410c6ce20e440d83a38f2a280e64743ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4900a771_c4ed8ffb",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-08-31T12:38:30Z",
+      "side": 1,
+      "message": "For production the application is using GSON for JSON, please migrate all of your Jackson code to GSON.\nThe reason for this was at the time of design SECCOM prohibted use of Jackson due to vulnerabilities, https://wiki.onap.org/display/DW/Fixing+Vulnerabilities+in+the+ONAP+Code+Base not sure if they are fixed as of now, if they are then you can either stick with jackson and migrate the entire codebase to Jackson or migrate the new functionality (which I would prefer).",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 15
+      },
+      "revId": "71b9a53410c6ce20e440d83a38f2a280e64743ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
