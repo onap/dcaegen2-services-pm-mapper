@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c46190b_73084fed",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/BaseDynamicPropertiesProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class and public methods",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a39f34_7d059e5a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/BaseModule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class and public methods",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d241b85d_b65d4e4b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/JsonToJavaObjectBiFunction.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class and public methods",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429a8b53_10f5ed63",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/KpiJsonConversion.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class and public methods",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991b0de0_d200e8ba",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasDataCollection.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7f0c42_9cc631b8",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a73a89_88a1730a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasInfoId.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c8e7fa_22461eb5",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasResult.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new files should have javadoc on class",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b8dd5b_145dd763",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasTypes.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "class javadoc?",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96d5bab_a6ddcfef",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasValues.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "class javadoc?",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf615ad1_64deb337",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/PMEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "class javadoc?",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205f43af_07afbf03",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/Perf3gppFields.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "class javadoc?",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40b7847_30f17e6e",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/VesEvent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "class javadoc?",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0518e3d_41a2fdac",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/VesJsonConversion.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new code should have javadoc on class and public methods",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c12075_7c119be7",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/exception/KpiComputationException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new code should have javadoc on class",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564af323_e9bcfef8",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "new code should have javadoc on class and public methods",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbb8389_55c8f1e5",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/model/MapperConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-01T17:58:55Z",
+      "side": 1,
+      "message": "update copyright?",
+      "revId": "efbd1e7a36d9e71a41a9addbd741c1d23dabf355",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
