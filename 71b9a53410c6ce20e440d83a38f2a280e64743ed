@@ -116,6 +116,30 @@
       "revId": "71b9a53410c6ce20e440d83a38f2a280e64743ed",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa841078_0fd37b1d",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-03T16:20:46Z",
+      "side": 1,
+      "message": "Hey Lukai,\nThe codebase is already using GSON to manage JSON in production, we shouldn\u0027t be using GSON and Jackson in the production codebase to manage JSON, better to stick to one, as it is already using GSON, probably better to migrate this new code to use GSON.",
+      "parentUuid": "e0eebd24_b5cd69eb",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 15
+      },
+      "revId": "71b9a53410c6ce20e440d83a38f2a280e64743ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
