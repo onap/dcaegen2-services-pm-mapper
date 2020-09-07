@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d32e94_745b5fb2",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-07T12:53:40Z",
+      "side": 1,
+      "message": "The Intent for this class is to remain a publisher for VES to MR.\n\nYou need to move this logic into its own unit, and integrate that unit in the parallel flux in \nthe App class.\nYou shouldn\u0027t embed the entire KPI business logic into this class.\n\n\nas an aside if you are not publishing VES then we can look at refactoring this too, since it is already using a string it would probably just be a name change to the class.",
+      "revId": "925f8f607eddb7bfbd90fe1ce28d26e25f437b18",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
