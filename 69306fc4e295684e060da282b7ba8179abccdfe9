@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b1a9c68_bb53ddef",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiComputation.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-14T13:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b03d62_7fe7d079",
+      "revId": "69306fc4e295684e060da282b7ba8179abccdfe9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9c35476_e842021a",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/exception/KpiComputationException.java",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c0c27788_b03d67dc",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/exception/KpiComputationException.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-14T13:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c35476_e842021a",
+      "revId": "69306fc4e295684e060da282b7ba8179abccdfe9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c18c43cb_d42f48c2",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
         "patchSetId": 18
@@ -50,6 +86,24 @@
       "revId": "69306fc4e295684e060da282b7ba8179abccdfe9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7e0da1_a657d1df",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-14T13:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c18c43cb_d42f48c2",
+      "revId": "69306fc4e295684e060da282b7ba8179abccdfe9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

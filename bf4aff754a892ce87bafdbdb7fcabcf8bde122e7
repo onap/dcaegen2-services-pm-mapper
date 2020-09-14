@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd9b2547_8fe6e3ce",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-14T13:43:51Z",
+      "side": 1,
+      "message": "please add\nCopyright 2020 China Mobile",
+      "revId": "bf4aff754a892ce87bafdbdb7fcabcf8bde122e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bb4787_faecf3e1",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-14T13:43:51Z",
+      "side": 1,
+      "message": "Why did the China Mobile notice go away? The code IS different from the base version you had started from.\nCopyright 2020 China Mobile",
+      "revId": "bf4aff754a892ce87bafdbdb7fcabcf8bde122e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2157c74_ad8d892d",
+        "filename": "src/test/java/org/onap/dcaegen2/pmmapper/messagerouter/VESPublisherTest.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-14T13:43:51Z",
+      "side": 1,
+      "message": "please add\nCopyright 2020 China Mobile",
+      "revId": "bf4aff754a892ce87bafdbdb7fcabcf8bde122e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
