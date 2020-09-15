@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "186fea81_3e682cbc",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-15T09:23:47Z",
+      "side": 1,
+      "message": "Given this is attempting to publish VES events, you shouldnt integrate the VES publishing into the KPI Computation unit itself, you should have that as a separate action on this stream.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 61
+      },
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f14147_9c05a243",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiComputation.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-15T09:23:47Z",
+      "side": 1,
+      "message": "Try to keep your methods doing one thing where possible, methods with an \"and\" in their signature are generally a smell for bad design",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877275ce_488b5986",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiComputation.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-15T09:23:47Z",
+      "side": 1,
+      "message": "Can you look at the command pattern for this piece of code\nhttps://en.wikipedia.org/wiki/Command_pattern\n\nIt would improve the design a significantly.",
+      "range": {
+        "startLine": 108,
+        "startChar": 15,
+        "endLine": 176,
+        "endChar": 13
+      },
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9584c3c2_c0a24ad4",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiPublisher.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-15T09:23:47Z",
+      "side": 1,
+      "message": "I dont think you need another Publisher for this, just have the KPI computation unit return everything it needs to be published and do the publishing in a separate action on the stream in the App class reusing the existing VES publisher.",
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
