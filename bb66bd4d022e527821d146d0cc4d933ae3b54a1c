@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a1d63a0_9ee698e0",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6065
+      },
+      "writtenOn": "2020-09-15T11:30:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "186fea81_3e682cbc",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 61
+      },
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f14147_9c05a243",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiComputation.java",
         "patchSetId": 46
@@ -36,6 +60,30 @@
       "writtenOn": "2020-09-15T09:23:47Z",
       "side": 1,
       "message": "Try to keep your methods doing one thing where possible, methods with an \"and\" in their signature are generally a smell for bad design",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4533f30f_2777b52d",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiComputation.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6065
+      },
+      "writtenOn": "2020-09-15T11:30:18Z",
+      "side": 1,
+      "message": "thanks for your comments, will improve the design:)",
+      "parentUuid": "c0f14147_9c05a243",
       "range": {
         "startLine": 67,
         "startChar": 31,
