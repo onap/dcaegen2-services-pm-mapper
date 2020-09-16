@@ -133,6 +133,24 @@
       "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87543c6d_931e43b2",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/KpiPublisher.java",
+        "patchSetId": 46
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6065
+      },
+      "writtenOn": "2020-09-16T03:18:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9584c3c2_c0a24ad4",
+      "revId": "bb66bd4d022e527821d146d0cc4d933ae3b54a1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
