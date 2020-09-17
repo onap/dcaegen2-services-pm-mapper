@@ -39,7 +39,6 @@ COPY ${project.build.directory}/${JAR} .
 
 COPY ${project.build.directory}/classes/schemas ./etc/schemas/
 COPY ${project.build.directory}/classes/templates ./etc/templates/
-COPY ${project.build.directory}/classes/reconfigure.sh ./etc/reconfigure.sh
 COPY --chown=pm-mapper ${project.build.directory}/classes/logback.xml ./etc/logback.xml
 
 
