@@ -16,6 +16,24 @@
       "revId": "fc5c5a68deda99c1e8f9273f47166ca656a23f2a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26597d9a_e08505d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4023
+      },
+      "writtenOn": "2020-09-18T07:31:40Z",
+      "side": 1,
+      "message": "I will add them to the Jira for now seeing as this is merged.\nWill do in the commit in future.",
+      "parentUuid": "baca65af_b3cef58a",
+      "revId": "fc5c5a68deda99c1e8f9273f47166ca656a23f2a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
