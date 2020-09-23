@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2020 China Mobile.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,9 +48,8 @@ public class VESPublisher {
         this.config = config;
     }
 
-    public Flux<Event> publish(List<Event> events) {
+    public Flux<List<Event>> publish(List<Event> events) {
         logger.unwrap().info("Publishing VES events to messagerouter.");
-        Event event = events.get(0);
         try {
             events.forEach(e -> this.publish(e.getVes()));
             logger.unwrap().info("Successfully published VES events to messagerouter.");
@@ -57,7 +57,7 @@ public class VESPublisher {
             logger.unwrap().error("Failed to publish VES event(s) to messagerouter.", e);
             return Flux.empty();
         }
-        return Flux.just(event);
+        return Flux.just(events);
     }
 
     private void publish(String ves) {
@@ -73,4 +73,5 @@ public class VESPublisher {
             throw new MRPublisherException(e.getMessage(), e);
         }
     }
+
 }
