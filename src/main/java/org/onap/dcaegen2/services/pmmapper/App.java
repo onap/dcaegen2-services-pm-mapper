@@ -1,6 +1,8 @@
+
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
+ *  Copyright (C) 2020 China Mobile.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  * ============LICENSE_END=========================================================
  */
+
+package org.onap.dcaegen2.services.pmmapper;
 
 package org.onap.dcaegen2.services.pmmapper;
 
@@ -42,6 +46,7 @@ import org.onap.dcaegen2.services.pmmapper.messagerouter.VESPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
+import org.onap.dcaegen2.services.pmmapper.kpi.service.KpiPublisher;
 import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.onap.dcaegen2.services.pmmapper.utils.DataRouterUtils;
@@ -90,13 +95,12 @@ public class App {
     private HealthCheckHandler healthCheckHandler;
     private int httpPort;
     private int httpsPort;
-
     private Undertow applicationServer;
     private List<ServerResource> serverResources;
     private Flux<Event> flux;
     private FluxSink<Event> fluxSink;
     private Scheduler configScheduler;
-
+    private KpiPublisher kpiPublisher;
     /**
      * Creates an instance of the application.
      * @param templatesDirectory path to directory containing templates used for mapping.
@@ -107,13 +111,6 @@ public class App {
      */
     public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler) {
         try {
-            this.mapperConfig = configHandler.getMapperConfig();
-        } catch (EnvironmentConfigException | CBSServerError | MapperConfigException e) {
-            logger.unwrap().error("Failed to acquire initial configuration, Application cannot start", e);
-            throw new IllegalStateException("Config acquisition failed");
-        }
-        this.httpPort = httpPort;
-        this.httpsPort = httpsPort;
         this.metadataFilter = new MetadataFilter(mapperConfig);
         this.measConverter = new MeasConverter();
         this.filterHandler = new MeasFilterHandler(measConverter);
@@ -123,7 +120,7 @@ public class App {
         this.vesPublisher = new VESPublisher(mapperConfig);
         this.flux = Flux.create(eventFluxSink -> this.fluxSink = eventFluxSink);
         this.configScheduler = Schedulers.newSingle("Config");
-
+        this.kpiPublisher = new KpiPublisher(vesPublisher);
         this.flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
                 .limitRate(1)
@@ -137,8 +134,9 @@ public class App {
                 .filter(events -> App.filter(this.filterHandler, events, this.mapperConfig))
                 .concatMap(events -> App.map(this.mapper, events, this.mapperConfig))
                 .concatMap(this.vesPublisher::publish)
-                .subscribe(event -> App.sendEventProcessed(this.mapperConfig, event));
-
+                .concatMap(this.kpiPublisher::kpiComputation)
+                .concatMap(this.vesPublisher::publish)
+                .subscribe(events -> App.sendEventProcessed(this.mapperConfig, events.get(0)));
         this.configScheduler.schedulePeriodically(this::reconfigure, INITIAL_RECONFIGURATION_PERIOD, RECONFIGURATION_PERIOD, TimeUnit.SECONDS);
         this.healthCheckHandler = new HealthCheckHandler();
         this.deliveryHandler = new DeliveryHandler(fluxSink::next);
@@ -151,7 +149,6 @@ public class App {
             throw new IllegalStateException("Server instantiation failed");
         }
     }
-
     /**
      * Starts the application server.
      */
@@ -159,7 +156,6 @@ public class App {
         this.applicationServer.start();
         this.configScheduler.start();
     }
-
     /**
      * Stops the application server.
      */
@@ -167,7 +163,6 @@ public class App {
         this.applicationServer.stop();
         this.configScheduler.dispose();
     }
-
     private Undertow server(MapperConfig config, List<ServerResource> serverResources) throws IOException {
         SSLContextFactory sslContextFactory = new SSLContextFactory(config);
         SSLContext sslContext = sslContextFactory.createSSLContext(config);
@@ -182,7 +177,6 @@ public class App {
                 .setHandler(routes)
                 .build();
     }
-
     private void reconfigure() {
         try {
             this.dynamicConfiguration.reconfigure();
@@ -190,11 +184,9 @@ public class App {
             logger.unwrap().error("Failed to reconfigure service.", e);
         }
     }
-
     public static void main(String[] args) {
         new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler()).start();
     }
-
     public static boolean filterByFileType(MeasFilterHandler filterHandler,Event event, MapperConfig config) {
         boolean hasValidFileName = false;
         try {
@@ -208,7 +200,6 @@ public class App {
         }
         return hasValidFileName;
     }
-
     public static boolean validate(XMLValidator validator, Event event, MapperConfig config) {
         boolean isValidXML = false;
         try {
@@ -222,7 +213,6 @@ public class App {
         }
         return isValidXML;
     }
-
     public static boolean filter(MeasFilterHandler filterHandler, List<Event> events, MapperConfig config) {
         Event event = events.get(0);
         boolean hasMatchingFilter = false;
@@ -238,7 +228,6 @@ public class App {
         }
         return hasMatchingFilter;
     }
-
     public static Flux<List<Event>> map(Mapper mapper, List<Event> events, MapperConfig config) {
         List<Event> mappedEvents;
         try {
@@ -250,7 +239,6 @@ public class App {
         }
         return Flux.just(mappedEvents);
     }
-
     public static Flux<List<Event>> split(MeasSplitter splitter, Event event, MapperConfig config) {
         List<Event> splitEvents;
         try {
@@ -262,7 +250,6 @@ public class App {
         }
         return Flux.just(splitEvents);
     }
-
     public static void sendEventProcessed(MapperConfig config, Event event) {
       try {
           DataRouterUtils.processEvent(config, event);
@@ -270,7 +257,6 @@ public class App {
           logger.unwrap().error("Process event failure", exception);
       }
     }
-
     /**
      * Takes the exchange from an event, responds with a 429 and un-dispatches the exchange.
      * @param event to be ignored.
@@ -284,7 +270,6 @@ public class App {
         event.getHttpServerExchange()
                 .unDispatch();
     }
-
     /**
      * Takes the exchange from an event, responds with a 200 and un-dispatches the exchange.
      * @param event to be received.
