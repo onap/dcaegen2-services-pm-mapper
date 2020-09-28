@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e219ae1_332d25c1",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/CommandHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "please don\u0027t just repeat the name of the class",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e45be9e_0f5a44a7",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/computation/SumKpiComputation.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "please don\u0027t just repeat the name of the class",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb27802b_cd0fd63a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/BaseDynamicPropertiesProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "please don\u0027t just repeat the name of the class",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bc15c6_e5eefe98",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/BaseModule.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "please don\u0027t just repeat the name of the class",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb70f8e5_24fe794a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/ControlLoopSchemaType.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "please don\u0027t just repeat the name of the class",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c90b48_2df3b94c",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/config/MethodForKpi.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "please don\u0027t just repeat the name of the class",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8118428_5465b778",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasDataCollection.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "What\u0027s a Measment? Did you mean Measurement?",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec38c1b_1ae5e923",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "does MesaInfo stand for Measurement Information ?",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11047e2_e422d883",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/kpi/datamodule/MeasInfoId.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2020-09-28T15:44:47Z",
+      "side": 1,
+      "message": "does MeasInfo stand for Measurement Information?",
+      "revId": "1c5ea678d7c1bab4be89acaf05c3cc35c3077966",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
