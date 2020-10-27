@@ -100,6 +100,9 @@ public class RequestSender {
         int attempts = 1;
         try {
             while (!status && attempts <= MAX_RETRIES) {
+                if(attempts != 1) {
+                    Thread.sleep(RETRY_INTERVAL);
+                }
                 final URL url = new URL(urlString);
                 final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
 
@@ -117,7 +120,6 @@ public class RequestSender {
                 result = getResult(attempts, connection);
                 status = !isWithinErrorRange(connection.getResponseCode());
                 attempts++;
-                Thread.sleep(RETRY_INTERVAL);
             }
         } catch (IOException | NoSuchAlgorithmException ex) {
             logger.unwrap().warn("Request failure", ex);
