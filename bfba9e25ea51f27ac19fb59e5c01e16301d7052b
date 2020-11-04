@@ -22,6 +22,30 @@
       "revId": "bfba9e25ea51f27ac19fb59e5c01e16301d7052b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc67044_dfc9e367",
+        "filename": "releases/1.4.2-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-11-04T18:52:36Z",
+      "side": 1,
+      "message": "You\u0027re right, thanks. Updated job to 490",
+      "parentUuid": "70b48826_5ceb66e8",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "bfba9e25ea51f27ac19fb59e5c01e16301d7052b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
