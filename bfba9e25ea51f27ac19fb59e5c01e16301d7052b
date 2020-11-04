@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70b48826_5ceb66e8",
+        "filename": "releases/1.4.2-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-11-04T18:49:12Z",
+      "side": 1,
+      "message": "image not generated from job#489 (looks like this is from #490); either update the job or snapshot tag to be released",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "bfba9e25ea51f27ac19fb59e5c01e16301d7052b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
