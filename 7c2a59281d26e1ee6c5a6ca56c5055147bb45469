@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a536f873_d9734650",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-12-04T11:25:29Z",
+      "side": 1,
+      "message": "Add summary of released changes",
+      "revId": "7c2a59281d26e1ee6c5a6ca56c5055147bb45469",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2879390a_caf5a26d",
+        "filename": "releases/1.5.0-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2020-12-04T11:25:29Z",
+      "side": 1,
+      "message": "ref doesn\u0027t match released commit\nyou can get ref from the jenkins job ( https://jenkins.onap.org/view/dcaegen2/job/dcaegen2-services-pm-mapper-maven-docker-stage-master/519/ marked as Revision )\n\nit is a commit revision that is going to get tagged as well in repo (so you can for example do: git checkout 1.5.0 , and you should get the state of 1.5.0 container)",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "7c2a59281d26e1ee6c5a6ca56c5055147bb45469",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
