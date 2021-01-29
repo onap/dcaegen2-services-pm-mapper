@@ -36,7 +36,6 @@ USER pm-mapper
 
 COPY ${project.build.directory}/${ext.dep.dir.path}/ ${ext.dep.dir.path}/
 COPY ${project.build.directory}/${JAR} .
-
 COPY ${project.build.directory}/classes/schemas ./etc/schemas/
 COPY ${project.build.directory}/classes/templates ./etc/templates/
 COPY --chown=pm-mapper ${project.build.directory}/classes/logback.xml ./etc/logback.xml
