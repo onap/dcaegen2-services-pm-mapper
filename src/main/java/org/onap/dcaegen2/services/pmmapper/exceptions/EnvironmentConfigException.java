@@ -23,4 +23,7 @@ public class EnvironmentConfigException extends Exception {
     public EnvironmentConfigException(String message) {
         super(message);
     }
+    public EnvironmentConfigException(String message, Throwable throwable) {
+        super(message + throwable);
+    }
 }
