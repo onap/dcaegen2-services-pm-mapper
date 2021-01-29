@@ -41,6 +41,7 @@ COPY ${project.build.directory}/classes/schemas ./etc/schemas/
 COPY ${project.build.directory}/classes/templates ./etc/templates/
 COPY --chown=pm-mapper ${project.build.directory}/classes/logback.xml ./etc/logback.xml
 
+ENV PROCESSING_LIMIT_RATE=54
 
 LABEL git.branch="${git.branch}" \
       git.build.host="${git.build.host}" \
