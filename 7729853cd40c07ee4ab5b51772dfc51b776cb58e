@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d5ff62_cda74907",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/Environment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-02-01T08:13:42Z",
+      "side": 1,
+      "message": "Please add suffix \"reader\" or something like that.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "7729853cd40c07ee4ab5b51772dfc51b776cb58e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e032e86_0f263eb9",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/FilesProcessingConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-02-01T08:13:42Z",
+      "side": 1,
+      "message": "I suggest to add \"is not defined or has wrong value\" or something similar. Eg \"128.0\" cannot be parse to Integer.",
+      "range": {
+        "startLine": 39,
+        "startChar": 55,
+        "endLine": 39,
+        "endChar": 71
+      },
+      "revId": "7729853cd40c07ee4ab5b51772dfc51b776cb58e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
