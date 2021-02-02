@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ed53133_ce177f9b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/FilesProcessingConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-02-02T11:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e46859_f7c12e56",
+      "range": {
+        "startLine": 21,
+        "startChar": 44,
+        "endLine": 21,
+        "endChar": 49
+      },
+      "revId": "25e318f71ff9f9c22daed217a5e8f30b3972db2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b755173_9f8b7629",
         "filename": "src/main/resources/Dockerfile",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "25e318f71ff9f9c22daed217a5e8f30b3972db2f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671248da_57892845",
+        "filename": "src/main/resources/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-02-02T11:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b755173_9f8b7629",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "25e318f71ff9f9c22daed217a5e8f30b3972db2f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
