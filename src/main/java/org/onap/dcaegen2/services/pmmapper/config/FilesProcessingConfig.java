@@ -33,8 +33,13 @@ public class FilesProcessingConfig {
 
     private static final String ENV_LIMIT_RATE = "PROCESSING_LIMIT_RATE";
     private static final int DEFAULT_LIMIT_RATE = 1;
-    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(FilesProcessingConfig.class));
-    private EnvironmentReader environmentReader;
+    private static final String ENV_THREADS_MULTIPLIER = "THREADS_MULTIPLIER";
+    private static final String ENV_PROCESSING_THREADS_COUNT = "PROCESSING_THREADS_COUNT";
+    private static final int DEFAULT_MULTIPLIER = 1;
+
+    private static final ONAPLogAdapter logger = new ONAPLogAdapter(
+        LoggerFactory.getLogger(FilesProcessingConfig.class));
+    private final EnvironmentReader environmentReader;
 
     /**
      * Creates a FilesProcessingConfig
@@ -61,6 +66,26 @@ public class FilesProcessingConfig {
         }
     }
 
+    /**
+     * Provides reactor parallel threads count from environment variable.
+     *
+     * @throws EnvironmentConfigException
+     * @returns value of threads count
+     */
+    public int getThreadsCount() throws EnvironmentConfigException {
+        logger.unwrap().info("Attempt to read threads configuration");
+        int processingThreadsCount = getProcessingThreadsCount();
+        int threadsMultiplier = getThreadsMultiplier();
+        int processingThreadsAmount = processingThreadsCount * threadsMultiplier;
+
+        logger.unwrap().info(
+            "Processing threads configuration: Processing threads count - {}, Processing threads multiplier - {} ",
+            processingThreadsCount, threadsMultiplier);
+        logger.unwrap().info("Amount of files processing threads: {} ", processingThreadsAmount);
+
+        return processingThreadsAmount;
+    }
+
     private Integer parseIntegerValue(String val) throws NumberFormatException {
         Integer value = Integer.valueOf(val);
         logger.unwrap().info(ENV_LIMIT_RATE + " value is: " + value);
@@ -70,5 +95,40 @@ public class FilesProcessingConfig {
     private int getDefaultLimitRate() {
         logger.unwrap().info(ENV_LIMIT_RATE + " env not present. Setting limit rate to default value: " + DEFAULT_LIMIT_RATE);
         return DEFAULT_LIMIT_RATE;
+    }
+
+    private int getThreadsMultiplier() throws EnvironmentConfigException {
+        try {
+            return Optional.ofNullable(environmentReader.getVariable(ENV_THREADS_MULTIPLIER))
+                .map(Integer::valueOf)
+                .orElseGet(this::getDefaultMultiplier);
+        } catch (NumberFormatException exception) {
+            throw new EnvironmentConfigException(
+                ENV_THREADS_MULTIPLIER + " environment variable has incorrect value.\n", exception);
+        }
+    }
+
+    private int getDefaultMultiplier() {
+        logger.unwrap().info(ENV_THREADS_MULTIPLIER +
+            " env not present. Setting multiplier to default value: " + DEFAULT_MULTIPLIER);
+        return DEFAULT_MULTIPLIER;
+    }
+
+    private int getProcessingThreadsCount() throws EnvironmentConfigException {
+        try {
+            return Optional.ofNullable(environmentReader.getVariable(ENV_PROCESSING_THREADS_COUNT))
+                .map(Integer::valueOf)
+                .orElseGet(this::getDefaultThreadsCount);
+        } catch (NumberFormatException exception) {
+            throw new EnvironmentConfigException(
+                ENV_PROCESSING_THREADS_COUNT + " environment variable has incorrect value.\n", exception);
+        }
+    }
+
+    private int getDefaultThreadsCount() {
+        int defaultThreadsCount = Runtime.getRuntime().availableProcessors();
+        logger.unwrap().info(ENV_PROCESSING_THREADS_COUNT +
+                " env not present. Setting threads count to available cores: " + defaultThreadsCount);
+        return defaultThreadsCount;
     }
 }
