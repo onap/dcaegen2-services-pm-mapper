@@ -22,6 +22,30 @@
       "revId": "52191ef89ccc287903fedab0aa270193b6aca4b4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b7e853_e912dbcf",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/exceptions/EnvironmentConfigException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-02-03T14:45:28Z",
+      "side": 1,
+      "message": "But then the original exception will not be printed.\nInstead of:\nPROCESSING_LIMIT_RATE environment variable has incorrect value.\njava.lang.NumberFormatException: For input string: \"not-an-int\"\n\nWe will get: \nPROCESSING_LIMIT_RATE environment variable has incorrect value.",
+      "parentUuid": "33178452_1935fa12",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "52191ef89ccc287903fedab0aa270193b6aca4b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
