@@ -26,7 +26,11 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException
 public class FilesProcessingConfig {
 
     private static final String ENV_LIMIT_RATE = "PROCESSING_LIMIT_RATE";
-    private EnvironmentReader environmentReader;
+    private static final String ENV_THREADS_MULTIPLIER = "THREADS_MULTIPLIER";
+    private static final String ENV_PROCESSING_THREADS_COUNT = "PROCESSING_THREADS_COUNT";
+    private static final int DEFAULT_MULTIPLIER = 1;
+
+    private final EnvironmentReader environmentReader;
 
     public FilesProcessingConfig(EnvironmentReader environmentReader) {
         this.environmentReader = environmentReader;
@@ -39,5 +43,20 @@ public class FilesProcessingConfig {
                 ENV_LIMIT_RATE + " environment variable is not defined or has incorrect value. It must be defined prior to pm-mapper initialization."));
     }
 
+    public int getThreadsCount() {
+        return getProcessingThreadsCount() * getThreadsMultiplier();
+    }
+
+    private int getThreadsMultiplier() {
+        return Optional.ofNullable(environmentReader.getVariable(ENV_THREADS_MULTIPLIER))
+            .map(Integer::valueOf)
+            .orElse(DEFAULT_MULTIPLIER);
+    }
+
+    private int getProcessingThreadsCount() {
+        return Optional.ofNullable(environmentReader.getVariable(ENV_PROCESSING_THREADS_COUNT))
+            .map(Integer::valueOf)
+            .orElse(Runtime.getRuntime().availableProcessors());
+    }
 
 }

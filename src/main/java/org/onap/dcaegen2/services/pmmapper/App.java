@@ -45,6 +45,8 @@ import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
 import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.onap.dcaegen2.services.pmmapper.utils.DataRouterUtils;
+import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentReader;
+import org.onap.dcaegen2.services.pmmapper.utils.FilesProcessingConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasSplitter;
 import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
@@ -65,6 +67,9 @@ import java.util.concurrent.TimeUnit;
 
 @Data
 public class App {
+
+    private static final int PREFETCH_ONE_PER_THREAD = 1;
+
     static {
         System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "/opt/app/pm-mapper/etc/logback.xml");
     }
@@ -76,6 +81,8 @@ public class App {
     private static final int RECONFIGURATION_PERIOD = 60;
     private static Path templates = Paths.get("/opt/app/pm-mapper/etc/templates/");
     private static Path schemas = Paths.get("/opt/app/pm-mapper/etc/schemas/");
+
+    private final FilesProcessingConfig processingConfig;
 
     private MapperConfig mapperConfig;
     private MetadataFilter metadataFilter;
@@ -105,13 +112,16 @@ public class App {
      * @param httpsPort https port to start https server on.
      * @param configHandler instance of the ConfigurationHandler used to acquire config.
      */
-    public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler) {
+    public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler, FilesProcessingConfig filesProcessingConfig)
+        throws EnvironmentConfigException {
         try {
             this.mapperConfig = configHandler.getMapperConfig();
         } catch (EnvironmentConfigException | CBSServerError | MapperConfigException e) {
             logger.unwrap().error("Failed to acquire initial configuration, Application cannot start", e);
             throw new IllegalStateException("Config acquisition failed");
         }
+        this.processingConfig = filesProcessingConfig;
+
         this.httpPort = httpPort;
         this.httpsPort = httpsPort;
         this.metadataFilter = new MetadataFilter(mapperConfig);
@@ -126,9 +136,9 @@ public class App {
 
         this.flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
-                .limitRate(1)
-                .parallel()
-                .runOn(Schedulers.newParallel(""), 1)
+                .limitRate(processingConfig.getLimitRate())
+                .parallel(processingConfig.getThreadsCount())
+                .runOn(Schedulers.newParallel("Thread", processingConfig.getThreadsCount()), PREFETCH_ONE_PER_THREAD)
                 .doOnNext(event -> MDC.setContextMap(event.getMdc()))
                 .filter(this.metadataFilter::filter)
                 .filter(event -> App.filterByFileType(this.filterHandler, event, this.mapperConfig))
@@ -191,8 +201,9 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
-        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler()).start();
+    public static void main(String[] args) throws EnvironmentConfigException {
+        FilesProcessingConfig processingConfig = new FilesProcessingConfig(new EnvironmentReader());
+        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler(), processingConfig).start();
     }
 
     public static boolean filterByFileType(MeasFilterHandler filterHandler,Event event, MapperConfig config) {

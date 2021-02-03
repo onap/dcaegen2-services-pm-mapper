@@ -51,6 +51,7 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 
+import org.onap.dcaegen2.services.pmmapper.utils.FilesProcessingConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
 import reactor.core.publisher.Flux;
 
@@ -76,6 +77,8 @@ import utils.EventUtils;
 @ExtendWith(MockitoExtension.class)
 class AppTest {
 
+    public static final int WANTED_NUMBER_OF_INVOCATIONS_1 = 1;
+    public static final int WANTED_NUMBER_OF_INVOCATIONS_2 = 2;
     static ClientAndServer mockServer;
     static MockServerClient client;
 
@@ -91,6 +94,7 @@ class AppTest {
 
     private App objUnderTest;
 
+    private final FilesProcessingConfig processingConfig = mock(FilesProcessingConfig.class);
 
     @BeforeAll
     static void setup() {
@@ -105,8 +109,10 @@ class AppTest {
     }
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws EnvironmentConfigException {
         configHandler = mock(ConfigHandler.class);
+        when(this.processingConfig.getLimitRate()).thenReturn(1);
+        when(this.processingConfig.getThreadsCount()).thenReturn(1);
     }
 
     @Test
@@ -115,7 +121,7 @@ class AppTest {
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getEnableHttp()).thenReturn(false);
         when(configHandler.getMapperConfig()).thenReturn(mockConfig);
-        objUnderTest = new App(template, schema, 0, 0, configHandler);
+        objUnderTest = new App(template, schema, 0, 0, configHandler, processingConfig);
         objUnderTest.start();
         assertEquals(1, objUnderTest.getApplicationServer().getListenerInfo().size());
         assertEquals("https", objUnderTest.getApplicationServer().getListenerInfo().get(0).getProtcol());
@@ -127,7 +133,7 @@ class AppTest {
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getEnableHttp()).thenReturn(true);
         when(configHandler.getMapperConfig()).thenReturn(mockConfig);
-        objUnderTest = new App(template, schema, 0, 0, configHandler);
+        objUnderTest = new App(template, schema, 0, 0, configHandler, processingConfig);
         objUnderTest.start();
         assertEquals(2, objUnderTest.getApplicationServer().getListenerInfo().size());
         assertEquals("http", objUnderTest.getApplicationServer().getListenerInfo().get(0).getProtcol());
@@ -137,7 +143,7 @@ class AppTest {
     @Test
     void testConfigFailure() throws EnvironmentConfigException, CBSServerError, MapperConfigException {
         when(configHandler.getMapperConfig()).thenThrow(MapperConfigException.class);
-        assertThrows(IllegalStateException.class, () -> new App(template, schema, 0, 0, configHandler));
+        assertThrows(IllegalStateException.class, () -> new App(template, schema, 0, 0, configHandler, processingConfig));
 
     }
 
@@ -146,7 +152,7 @@ class AppTest {
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getKeyStorePath()).thenReturn("not_a_file");
         when(configHandler.getMapperConfig()).thenReturn(mockConfig);
-        assertThrows(IllegalStateException.class, () -> new App(template, schema, 0, 0, configHandler));
+        assertThrows(IllegalStateException.class, () -> new App(template, schema, 0, 0, configHandler, processingConfig));
 
     }
 
@@ -319,4 +325,19 @@ class AppTest {
         Flux<List<Event>> mappingResult = App.map(new Mapper(mappingTemplate,mockMeasConverter), mockEvents, mockConfig);
         assertEquals(mappingResult, Flux.<List<Event>>empty());
     }
+
+    @Test
+    void filesProcessingConfiguration_IsReadInMainApp() throws Exception {
+        MapperConfig mockConfig = Mockito.spy(mapperConfig);
+        when(mockConfig.getEnableHttp()).thenReturn(true);
+        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        objUnderTest = new App(template, schema, 0, 0, configHandler, processingConfig);
+        objUnderTest.start();
+
+        verify(processingConfig, times(WANTED_NUMBER_OF_INVOCATIONS_1)).getLimitRate();
+        verify(processingConfig, times(WANTED_NUMBER_OF_INVOCATIONS_2)).getThreadsCount();
+
+        objUnderTest.stop();
+    }
+
 }
