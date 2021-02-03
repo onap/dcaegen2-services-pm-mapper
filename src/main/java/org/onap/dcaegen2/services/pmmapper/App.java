@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +31,8 @@ import lombok.Data;
 import lombok.NonNull;
 import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
 import org.onap.dcaegen2.services.pmmapper.config.DynamicConfiguration;
+import org.onap.dcaegen2.services.pmmapper.config.EnvironmentReader;
+import org.onap.dcaegen2.services.pmmapper.config.FilesProcessingConfig;
 import org.onap.dcaegen2.services.pmmapper.datarouter.DeliveryHandler;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
@@ -65,6 +68,9 @@ import java.util.concurrent.TimeUnit;
 
 @Data
 public class App {
+
+    private static final int PREFETCH_ONE_PER_THREAD = 1;
+
     static {
         System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "/opt/app/pm-mapper/etc/logback.xml");
     }
@@ -76,6 +82,8 @@ public class App {
     private static final int RECONFIGURATION_PERIOD = 60;
     private static Path templates = Paths.get("/opt/app/pm-mapper/etc/templates/");
     private static Path schemas = Paths.get("/opt/app/pm-mapper/etc/schemas/");
+
+    private final FilesProcessingConfig processingConfig;
 
     private MapperConfig mapperConfig;
     private MetadataFilter metadataFilter;
@@ -105,13 +113,16 @@ public class App {
      * @param httpsPort https port to start https server on.
      * @param configHandler instance of the ConfigurationHandler used to acquire config.
      */
-    public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler) {
+    public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler, FilesProcessingConfig filesProcessingConfig)
+        throws EnvironmentConfigException {
         try {
             this.mapperConfig = configHandler.getMapperConfig();
         } catch (EnvironmentConfigException | CBSServerError | MapperConfigException e) {
             logger.unwrap().error("Failed to acquire initial configuration, Application cannot start", e);
             throw new IllegalStateException("Config acquisition failed");
         }
+        this.processingConfig = filesProcessingConfig;
+
         this.httpPort = httpPort;
         this.httpsPort = httpsPort;
         this.metadataFilter = new MetadataFilter(mapperConfig);
@@ -124,11 +135,13 @@ public class App {
         this.flux = Flux.create(eventFluxSink -> this.fluxSink = eventFluxSink);
         this.configScheduler = Schedulers.newSingle("Config");
 
+        int processingThreads = processingConfig.getThreadsCount();
+
         this.flux.onBackpressureDrop(App::handleBackPressure)
                 .doOnNext(App::receiveRequest)
-                .limitRate(1)
-                .parallel()
-                .runOn(Schedulers.newParallel(""), 1)
+                .limitRate(processingConfig.getLimitRate())
+                .parallel(processingThreads)
+                .runOn(Schedulers.newParallel("Thread", processingThreads), PREFETCH_ONE_PER_THREAD)
                 .doOnNext(event -> MDC.setContextMap(event.getMdc()))
                 .filter(this.metadataFilter::filter)
                 .filter(event -> App.filterByFileType(this.filterHandler, event, this.mapperConfig))
@@ -191,8 +204,9 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
-        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler()).start();
+    public static void main(String[] args) throws EnvironmentConfigException {
+        FilesProcessingConfig processingConfig = new FilesProcessingConfig(new EnvironmentReader());
+        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler(), processingConfig).start();
     }
 
     public static boolean filterByFileType(MeasFilterHandler filterHandler,Event event, MapperConfig config) {
