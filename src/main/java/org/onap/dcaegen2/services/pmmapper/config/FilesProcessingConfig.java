@@ -33,6 +33,10 @@ public class FilesProcessingConfig {
 
     private static final String ENV_LIMIT_RATE = "PROCESSING_LIMIT_RATE";
     private static final int DEFAULT_LIMIT_RATE = 1;
+    private static final String ENV_THREADS_MULTIPLIER = "THREADS_MULTIPLIER";
+    private static final String ENV_PROCESSING_THREADS_COUNT = "PROCESSING_THREADS_COUNT";
+    private static final int DEFAULT_MULTIPLIER = 1;
+
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(FilesProcessingConfig.class));
     private EnvironmentReader environmentReader;
 
@@ -61,8 +65,24 @@ public class FilesProcessingConfig {
         }
     }
 
+    public int getThreadsCount() {
+        return getProcessingThreadsCount() * getThreadsMultiplier();
+    }
+
     private int getDefaultLimitRate() {
         logger.unwrap().info(ENV_LIMIT_RATE + " env not present. Setting limit rate to default value: " + DEFAULT_LIMIT_RATE);
         return DEFAULT_LIMIT_RATE;
+    }
+
+    private int getThreadsMultiplier() {
+        return Optional.ofNullable(environmentReader.getVariable(ENV_THREADS_MULTIPLIER))
+            .map(Integer::valueOf)
+            .orElse(DEFAULT_MULTIPLIER);
+    }
+
+    private int getProcessingThreadsCount() {
+        return Optional.ofNullable(environmentReader.getVariable(ENV_PROCESSING_THREADS_COUNT))
+            .map(Integer::valueOf)
+            .orElse(Runtime.getRuntime().availableProcessors());
     }
 }

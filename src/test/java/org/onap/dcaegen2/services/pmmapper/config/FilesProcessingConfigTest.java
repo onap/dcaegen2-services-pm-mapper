@@ -32,6 +32,14 @@ public class FilesProcessingConfigTest {
 
     private static final String ENV_LIMIT_RATE = "PROCESSING_LIMIT_RATE";
 
+    private static final String ENV_THREADS_MULTIPLIER = "THREADS_MULTIPLIER";
+    private static final String ENV_PROCESSING_THREADS_COUNT = "PROCESSING_THREADS_COUNT";
+    private static final String THREADS_4 = "4";
+    private static final String MULTIPLIER_3 = "3";
+
+    private static final int EXPECTED_4 = 4;
+    private static final int EXPECTED_12 = 12;
+
     private EnvironmentReader mockEnvironmentReader = mock(EnvironmentReader.class);
     private FilesProcessingConfig filesProcessingConfig;
 
@@ -62,5 +70,47 @@ public class FilesProcessingConfigTest {
         int limitRate = filesProcessingConfig.getLimitRate();
 
         assertEquals(1, limitRate);
+    }
+
+    @Test
+    public void shouldReturnCorrectThreadsCount_whenVariableIsSet() {
+        when(mockEnvironmentReader.getVariable(ENV_PROCESSING_THREADS_COUNT)).thenReturn(THREADS_4);
+        when(mockEnvironmentReader.getVariable(ENV_THREADS_MULTIPLIER)).thenReturn(MULTIPLIER_3);
+
+        filesProcessingConfig = new FilesProcessingConfig(mockEnvironmentReader);
+        int threadsCount = filesProcessingConfig.getThreadsCount();
+
+        assertEquals(EXPECTED_12, threadsCount);
+    }
+
+    @Test
+    public void shouldReturnCorrectThreadsCount_whenVariableMultiplierIsNotSet() {
+
+        when(mockEnvironmentReader.getVariable(ENV_PROCESSING_THREADS_COUNT)).thenReturn(THREADS_4);
+
+        filesProcessingConfig = new FilesProcessingConfig(mockEnvironmentReader);
+        int threadsCount = filesProcessingConfig.getThreadsCount();
+
+        assertEquals(EXPECTED_4, threadsCount);
+    }
+
+    @Test
+    public void shouldReturnCorrectThreadsCount_whenVariableThreadsIsNotSet() {
+        when(mockEnvironmentReader.getVariable(ENV_THREADS_MULTIPLIER)).thenReturn(MULTIPLIER_3);
+
+        filesProcessingConfig = new FilesProcessingConfig(mockEnvironmentReader);
+        int threadsCount = filesProcessingConfig.getThreadsCount();
+        int expected = Runtime.getRuntime().availableProcessors() * Integer.parseInt(MULTIPLIER_3);
+
+        assertEquals(expected, threadsCount);
+    }
+
+    @Test
+    public void shouldReturnCorrectThreadsCount_whenVariableThreadsAndMultiplierIsNotSet() {
+        filesProcessingConfig = new FilesProcessingConfig(mockEnvironmentReader);
+        int threadsCount = filesProcessingConfig.getThreadsCount();
+        int expected = Runtime.getRuntime().availableProcessors();
+
+        assertEquals(expected, threadsCount);
     }
 }
