@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11e36a8f_f66466b2",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-02-03T14:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "132034bc_15ea25c9",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "da890746a6bc8fbdf83326519b475a1cd413930a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7119c8_4753c908",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "da890746a6bc8fbdf83326519b475a1cd413930a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7518f04_6d11adf4",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-02-03T14:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7119c8_4753c908",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 48
+      },
+      "revId": "da890746a6bc8fbdf83326519b475a1cd413930a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
