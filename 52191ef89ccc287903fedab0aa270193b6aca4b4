@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33178452_1935fa12",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/exceptions/EnvironmentConfigException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-02-03T14:41:00Z",
+      "side": 1,
+      "message": "super(message, throwable)",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "52191ef89ccc287903fedab0aa270193b6aca4b4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
