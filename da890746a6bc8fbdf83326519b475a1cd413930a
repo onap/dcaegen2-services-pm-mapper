@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132034bc_15ea25c9",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-02-03T13:18:14Z",
+      "side": 1,
+      "message": "Could change to \"return\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "da890746a6bc8fbdf83326519b475a1cd413930a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7119c8_4753c908",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-02-03T13:18:14Z",
+      "side": 1,
+      "message": "Consider to add new constructor with message and throw-able parameters",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 48
+      },
+      "revId": "da890746a6bc8fbdf83326519b475a1cd413930a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
