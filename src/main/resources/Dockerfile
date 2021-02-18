@@ -17,20 +17,16 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #
-FROM openjdk:11.0.7-jre-slim
+FROM nexus3.onap.org:10001/onap/integration-java11:latest
 
 WORKDIR /opt/app/pm-mapper
 
-RUN apt-get update && \
-        apt-get install --no-install-recommends -y curl nano && \
-         apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /var/log/ONAP
-
-RUN adduser pm-mapper; \
-    chmod a+rwx /var/log/ONAP; \
-    chown -R pm-mapper /opt/app/pm-mapper
+USER root
+RUN apk add --no-cache curl && \
+    mkdir -p /var/log/ONAP && \
+    adduser pm-mapper && \
+    chmod u=rw /var/log/ONAP && \
+    chown -R pm-mapper /opt/app/pm-mapper /var/log/ONAP
 
 USER pm-mapper
 
