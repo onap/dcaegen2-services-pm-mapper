@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "598be755_688d42fa",
+        "filename": "src/main/resources/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2021-02-22T18:15:21Z",
+      "side": 1,
+      "message": "specifiy released tag",
+      "range": {
+        "startLine": 20,
+        "startChar": 51,
+        "endLine": 20,
+        "endChar": 57
+      },
+      "revId": "2620177671dbd51c6bd84a8a87aaee707ce514ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
