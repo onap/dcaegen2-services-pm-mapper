@@ -87,6 +87,8 @@
         <pmmapper.main.class>org.onap.dcaegen2.services.pmmapper.App</pmmapper.main.class>
         <dep.dir.name>libs</dep.dir.name>
         <ext.dep.dir.path>${dep.dir.name}/external</ext.dep.dir.path>
+
+        <docker-image.tag.latest>latest</docker-image.tag.latest>
     </properties>
 
     <dependencies>
@@ -307,7 +309,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>onap/${project.groupId}.${project.artifactId}</name>
+                            <name>onap/${project.groupId}.${project.artifactId}:${docker-image.tag.latest}</name>
                             <registry>${onap.nexus.dockerregistry.daily}</registry>
                             <build>
                                 <contextDir>${project.basedir}</contextDir>
