@@ -1,6 +1,7 @@
 #
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019-2020 Nordix Foundation.
+#  Copyright (C) 2021 Samsung Electronics.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,28 +18,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #
-FROM openjdk:11.0.7-jre-slim
+FROM nexus3.onap.org:10001/onap/integration-java11:8.0.0
 
 WORKDIR /opt/app/pm-mapper
 
-RUN apt-get update && \
-        apt-get install --no-install-recommends -y curl nano && \
-         apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
+ARG user=pm-mapper
+ARG group=onap
 
-RUN mkdir -p /var/log/ONAP
+USER root
+RUN apk add --no-cache curl && \
+    mkdir -p /var/log/ONAP && \
+    adduser $user $group && \
+    chmod u=rw /var/log/ONAP && \
+    chown -R $user /opt/app/pm-mapper /var/log/ONAP
 
-RUN adduser pm-mapper; \
-    chmod a+rwx /var/log/ONAP; \
-    chown -R pm-mapper /opt/app/pm-mapper
-
-USER pm-mapper
+USER $user
 
 COPY ${project.build.directory}/${ext.dep.dir.path}/ ${ext.dep.dir.path}/
 COPY ${project.build.directory}/${JAR} .
 COPY ${project.build.directory}/classes/schemas ./etc/schemas/
 COPY ${project.build.directory}/classes/templates ./etc/templates/
-COPY --chown=pm-mapper ${project.build.directory}/classes/logback.xml ./etc/logback.xml
+COPY --chown=$user ${project.build.directory}/classes/logback.xml ./etc/logback.xml
 
 
 LABEL git.branch="${git.branch}" \

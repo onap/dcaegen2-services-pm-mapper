@@ -3,6 +3,7 @@
   ============LICENSE_START=======================================================
    Copyright (C) 2019-2020 Nordix Foundation.
    Copyright (C) 2020-2021 Nokia. All rights reserved.
+   Copyright (C) 2021 Samsung Electronics. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -33,7 +34,7 @@
 
     <groupId>org.onap.dcaegen2.services</groupId>
     <artifactId>pm-mapper</artifactId>
-    <version>1.5.1-SNAPSHOT</version>
+    <version>1.5.2-SNAPSHOT</version>
 
 
     <name>dcaegen2-services-pm-mapper</name>
