@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc3d782_739b9b65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-02-25T06:33:48Z",
+      "side": 1,
+      "message": "Please add summary of changes to commit message.",
+      "revId": "f9f0f890c93c80245c0abfab9804241a2e467b4e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
