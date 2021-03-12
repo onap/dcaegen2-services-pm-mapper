@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2020 Nordix Foundation.
+ * Copyright (C) 2020 Nordix Foundation.
+ * Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +22,7 @@ package org.onap.dcaegen2.services.pmmapper.model;
 
 import io.undertow.server.HttpServerExchange;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 import java.util.Map;
@@ -31,6 +33,7 @@ import org.onap.dcaegen2.services.pmmapper.model.measurement.common.MeasurementF
  * Class used to pass around relevant inbound event data.
  */
 @Data
+@EqualsAndHashCode
 public class Event {
     @NonNull
     private HttpServerExchange httpServerExchange;
