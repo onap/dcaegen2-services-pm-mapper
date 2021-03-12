@@ -48,6 +48,7 @@ import org.onap.dcaegen2.services.pmmapper.healthcheck.HealthCheckHandler;
 import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.ssl.SSLContextFactory;
 import org.onap.dcaegen2.services.pmmapper.utils.DataRouterUtils;
+import org.onap.dcaegen2.services.pmmapper.utils.IncomingEventsCache;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasSplitter;
 import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
@@ -82,6 +83,7 @@ public class App {
     private static final int RECONFIGURATION_PERIOD = 60;
     private static Path templates = Paths.get("/opt/app/pm-mapper/etc/templates/");
     private static Path schemas = Paths.get("/opt/app/pm-mapper/etc/schemas/");
+    private static final IncomingEventsCache eventsCache = IncomingEventsCache.INSTANCE;
 
     private final FilesProcessingConfig processingConfig;
 
@@ -138,6 +140,7 @@ public class App {
         int processingThreads = processingConfig.getThreadsCount();
 
         this.flux.onBackpressureDrop(App::handleBackPressure)
+                .filter(event -> !isCached(event.getPublishIdentity()))
                 .doOnNext(App::receiveRequest)
                 .limitRate(processingConfig.getLimitRate())
                 .parallel(processingThreads)
@@ -202,6 +205,14 @@ public class App {
         } catch (Exception e) {
             logger.unwrap().error("Failed to reconfigure service.", e);
         }
+    }
+
+    private boolean isCached(String id) {
+        boolean isPresent = eventsCache.contains(id);
+        if(isPresent) {
+            logger.unwrap().info("Skipping. This event is already waiting in cache to be processed: ", id);
+        }
+        return isPresent;
     }
 
     public static void main(String[] args) throws EnvironmentConfigException {
@@ -280,6 +291,7 @@ public class App {
     public static void sendEventProcessed(MapperConfig config, Event event) {
       try {
           DataRouterUtils.processEvent(config, event);
+          eventsCache.remove(event.getPublishIdentity());
       } catch (ProcessEventException exception) {
           logger.unwrap().error("Process event failure", exception);
       }
@@ -300,11 +312,12 @@ public class App {
     }
 
     /**
-     * Takes the exchange from an event, responds with a 200 and un-dispatches the exchange.
+     * Adds received event to cache, takes the exchange from an event, responds with a 200 and un-dispatches the exchange.
      * @param event to be received.
      */
     public static void receiveRequest(@NonNull Event event) {
         logger.unwrap().debug("Event will be processed, responding with 200");
+        eventsCache.add(event.getPublishIdentity());
         event.getHttpServerExchange()
                 .setStatusCode(StatusCodes.OK)
                 .getResponseSender()
