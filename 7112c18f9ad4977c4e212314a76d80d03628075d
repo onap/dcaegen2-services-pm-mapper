@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09ba7cf_92c44172",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-03-16T12:26:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the filter be after doOnNext? Now there won\u0027t be any explicit response sent to the client.",
+      "range": {
+        "startLine": 143,
+        "startChar": 16,
+        "endLine": 143,
+        "endChar": 71
+      },
+      "revId": "7112c18f9ad4977c4e212314a76d80d03628075d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
