@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dbd5529_e0c57b6a",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-03-17T08:38:35Z",
+      "side": 1,
+      "message": "Is the PowerMockRunner needed here?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 2
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6068cfb3_08e15091",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-03-17T08:38:35Z",
+      "side": 1,
+      "message": "Can the exception be thrown?",
+      "range": {
+        "startLine": 50,
+        "startChar": 52,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
