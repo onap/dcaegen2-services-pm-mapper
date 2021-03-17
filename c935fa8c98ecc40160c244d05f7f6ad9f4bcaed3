@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24a2acdc_1496663a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-17T09:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c106c4_e5620b67",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c8065ce_294fa044",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCache.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21be0fd_620c4726",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-17T09:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c8065ce_294fa044",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c5798060_8e926fcd",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-17T09:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2bf2208_58f74f06",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6068cfb3_08e15091",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
         "patchSetId": 6
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "975b23d1_db522009",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-17T09:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6068cfb3_08e15091",
+      "range": {
+        "startLine": 50,
+        "startChar": 52,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa95c688_5b666c0d",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
         "patchSetId": 6
@@ -137,6 +233,30 @@
       "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b827a7_d67de4bc",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3699
+      },
+      "writtenOn": "2021-03-17T09:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa95c688_5b666c0d",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 50
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
