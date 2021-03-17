@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "45c106c4_e5620b67",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-17T08:46:38Z",
+      "side": 1,
+      "message": "Keep private static final together",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8065ce_294fa044",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCache.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-17T08:46:38Z",
+      "side": 1,
+      "message": "This method is used only in test and it change object state. I know - it is singleton and it is difficult to test. Please remove it. In test you can keep all keys in list, add annotations @After execute \"remove\" on each key.",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dbd5529_e0c57b6a",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
         "patchSetId": 6
@@ -25,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "d2bf2208_58f74f06",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-17T08:46:38Z",
+      "side": 1,
+      "message": "It could be const",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6068cfb3_08e15091",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
         "patchSetId": 6
@@ -41,6 +110,29 @@
         "startChar": 52,
         "endLine": 50,
         "endChar": 63
+      },
+      "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa95c688_5b666c0d",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/IncomingEventsCacheTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-03-17T08:46:38Z",
+      "side": 1,
+      "message": "It could be const",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 50
       },
       "revId": "c935fa8c98ecc40160c244d05f7f6ad9f4bcaed3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
