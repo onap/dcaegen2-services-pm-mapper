@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95169939_cef7015e",
+        "filename": "pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-03-25T01:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b17a9d_e3647c7a",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "558437a83ac24fc4449a4b7708f3ebcef97fe124",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c52340c8_3356799f",
         "filename": "src/main/resources/Dockerfile",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "558437a83ac24fc4449a4b7708f3ebcef97fe124",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f13160d_8b70d74b",
+        "filename": "src/main/resources/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-03-25T01:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52340c8_3356799f",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "558437a83ac24fc4449a4b7708f3ebcef97fe124",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3701fe16_f2afe45d",
+        "filename": "src/main/resources/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-03-25T01:03:58Z",
+      "side": 1,
+      "message": "has no impact on anything unless other users are added to the group, done",
+      "parentUuid": "df27b122_085f680d",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "558437a83ac24fc4449a4b7708f3ebcef97fe124",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959d0e05_fac20abe",
         "filename": "src/main/resources/Dockerfile",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "558437a83ac24fc4449a4b7708f3ebcef97fe124",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14474df0_9ce8ae16",
+        "filename": "src/main/resources/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 7352
+      },
+      "writtenOn": "2021-03-25T01:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959d0e05_fac20abe",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "558437a83ac24fc4449a4b7708f3ebcef97fe124",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
