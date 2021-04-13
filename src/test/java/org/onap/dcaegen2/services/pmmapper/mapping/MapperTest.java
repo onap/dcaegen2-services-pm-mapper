@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +43,7 @@ import java.util.List;
 
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +81,7 @@ class MapperTest {
 
 
     @BeforeAll
-    static void classSetup() throws IOException {
+    static void classSetup() throws IOException, JSONException {
         JSONObject ves = new JSONObject(new String(Files.readAllBytes(schema)));
         vesSchema = SchemaLoader.load(ves);
 
@@ -97,7 +99,7 @@ class MapperTest {
 
     @ParameterizedTest
     @MethodSource("getValidEvents")
-    void testValidEvent(Event testEvent) {
+    void testValidEvent(Event testEvent) throws JSONException {
         vesSchema.validate(new JSONObject(objUnderTest.map(testEvent)));
     }
 

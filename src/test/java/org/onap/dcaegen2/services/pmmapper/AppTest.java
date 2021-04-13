@@ -62,7 +62,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockserver.client.server.MockServerClient;
+import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.onap.dcaegen2.services.pmmapper.filtering.MeasFilterHandler;

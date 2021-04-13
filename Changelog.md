@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.6.0] - 25/03/2021
 ### Changed
+- Utilize DMaaP-Client in PM-Mapper
 - Switched Dockerfile to integration image (alpine-based)
 
 ## [1.5.2] - 18/03/2021

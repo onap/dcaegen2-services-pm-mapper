@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +22,7 @@
 package org.onap.dcaegen2.services.pmmapper.exceptions;
 
 public class MRPublisherException extends RuntimeException{
-    public MRPublisherException(String message, Throwable cause) {
-        super(message, cause);
+    public MRPublisherException(String message) {
+        super(message);
     }
-
 }
