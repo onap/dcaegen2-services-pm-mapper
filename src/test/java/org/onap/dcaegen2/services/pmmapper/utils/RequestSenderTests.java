@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,15 +31,15 @@ import java.net.URL;
 import java.net.UnknownHostException;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockserver.client.server.MockServerClient;
+import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpStatusCode;
 import org.mockserver.verify.VerificationTimes;
-import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -53,7 +54,7 @@ import utils.LoggingUtils;
 @PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 public class RequestSenderTests {
     private static ClientAndServer mockServer;
-    private MockServerClient client = mockClient();
+    private final MockServerClient client = mockClient();
 
     @BeforeClass
     public static void setup() {
@@ -63,6 +64,11 @@ public class RequestSenderTests {
     @AfterClass
     public static void teardown() {
         mockServer.stop();
+    }
+
+    @Before
+    public void setUp() {
+        client.reset();
     }
 
     @Test
@@ -84,11 +90,10 @@ public class RequestSenderTests {
         assertTrue(logAppender.list.get(1).getMessage().contains("Sending"));
         assertTrue(logAppender.list.get(2).getMessage().contains("Received"));
         logAppender.stop();
-        client.clear(req);
     }
 
     @Test
-    public void host_unavailable_retry_mechanism() throws Exception {
+    public void host_unavailable_retry_mechanism() {
         PowerMockito.mockStatic(Thread.class);
 
         client.when(request())
@@ -99,7 +104,6 @@ public class RequestSenderTests {
         });
 
         client.verify(request(), VerificationTimes.exactly(5));
-        client.clear(request());
     }
 
     @Test
@@ -114,7 +118,6 @@ public class RequestSenderTests {
         });
 
         client.verify(request(), VerificationTimes.exactly(0));
-        client.clear(request());
     }
 
     private MockServerClient mockClient() {
