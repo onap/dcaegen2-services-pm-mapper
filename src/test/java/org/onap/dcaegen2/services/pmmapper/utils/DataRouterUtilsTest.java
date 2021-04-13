@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 - 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +66,7 @@ public class DataRouterUtilsTest {
     private static MapperConfig validConfig;
     private SSLContextFactory sslContextFactory;
     private static final Path validConfigPath = Paths.get("src/test/resources/valid_mapper_config.json");
+    private static final String DELETE = "DELETE";
 
     @Test
     public void processEventSuccessful() throws Exception {
@@ -94,7 +96,7 @@ public class DataRouterUtilsTest {
 
         Event testEvent = EventUtils.makeMockEvent("", mock(EventMetadata.class), publishIdentity);
         assertEquals(serviceResponse,  DataRouterUtils.processEvent(mockMapperConfig, testEvent));
-        verify(mockConnection, times(1)).setRequestMethod(RequestSender.DELETE);
+        verify(mockConnection, times(1)).setRequestMethod(DELETE);
     }
 
     @Test
@@ -117,7 +119,7 @@ public class DataRouterUtilsTest {
 
         Event testEvent = EventUtils.makeMockEvent("", mock(EventMetadata.class), publishIdentity);
         assertEquals(serviceResponse,  DataRouterUtils.processEvent(mockMapperConfig, testEvent));
-        verify(mockConnection, times(1)).setRequestMethod(RequestSender.DELETE);
+        verify(mockConnection, times(1)).setRequestMethod(DELETE);
     }
 
     @Test
@@ -148,7 +150,7 @@ public class DataRouterUtilsTest {
         PowerMockito.whenNew(URL.class).withAnyArguments().thenReturn(mockURL);
         Event testEvent = EventUtils.makeMockEvent("", mock(EventMetadata.class), publishIdentity);
         assertEquals(serviceResponse, DataRouterUtils.processEvent(mockMapperConfig, testEvent));
-        verify(mockConnection, times(5)).setRequestMethod(RequestSender.DELETE);
+        verify(mockConnection, times(5)).setRequestMethod(DELETE);
     }
 
     @Test

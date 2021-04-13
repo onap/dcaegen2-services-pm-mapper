@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2021 Nokia.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,30 +29,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.onap.dcaegen2.services.pmmapper.exceptions.RequestFailure;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ServerResponseException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
+import org.onap.dcaegen2.services.sdk.rest.services.dmaap.client.ContentType;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.onap.logging.ref.slf4j.ONAPLogConstants;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import org.jboss.logging.MDC;
 
 public class RequestSender {
-    private static final int MAX_RETRIES = 5;
-    private static final int RETRY_INTERVAL = 1000;
     private static final String SERVER_ERROR_MESSAGE = "Error on Server";
     private static final int ERROR_START_RANGE = 300;
-    private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(RequestSender.class));
-    public static final String DELETE = "DELETE";
-    public static final String DEFAULT_CONTENT_TYPE = "text/plain";
-    public static final int DEFAULT_READ_TIMEOUT = 5000;
+    private static final ONAPLogAdapter LOGGER = new ONAPLogAdapter(LoggerFactory.getLogger(RequestSender.class));
 
     /**
      * Works just like {@link RequestSender#send(method,urlString)}, except {@code method }
@@ -91,20 +85,16 @@ public class RequestSender {
      */
     public String send(String method, final String urlString, final String body, final String encodedCredentials)
              throws InterruptedException {
-        String invocationID = Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.INVOCATION_ID))
-                 .orElse(logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS).toString());
-        String requestID =  Optional.ofNullable((String)MDC.get(ONAPLogConstants.MDCs.REQUEST_ID))
-                .orElse(UUID.randomUUID().toString());
         String result = "";
         boolean status = false;
-        int attempts = 1;
+        int attempts = 0;
         try {
-            while (!status && attempts <= MAX_RETRIES) {
-                if(attempts != 1) {
-                    Thread.sleep(RETRY_INTERVAL);
+            while (!status && attempts <= SendersConfig.MAX_RETRIES) {
+                if(attempts != 0) {
+                    Thread.sleep(SendersConfig.RETRY_INTERVAL.toMillis());
                 }
                 final URL url = new URL(urlString);
-                final HttpURLConnection connection = getHttpURLConnection(method, url, invocationID, requestID);
+                final HttpURLConnection connection = getHttpURLConnection(method, url);
 
                 if ("https".equalsIgnoreCase(url.getProtocol())) {
                     HttpsURLConnection.setDefaultSSLSocketFactory(SSLContext.getDefault().getSocketFactory());
@@ -122,26 +112,25 @@ public class RequestSender {
                 attempts++;
             }
         } catch (IOException | NoSuchAlgorithmException ex) {
-            logger.unwrap().warn("Request failure", ex);
+            LOGGER.unwrap().warn("Request failure", ex);
             throw new RequestFailure(ex);
         }
         return result;
     }
 
-    private HttpURLConnection getHttpURLConnection(String method, URL url, String invocationID, String requestID)
+    private HttpURLConnection getHttpURLConnection(String method, URL url)
                 throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setReadTimeout(DEFAULT_READ_TIMEOUT);
-        connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, requestID);
-        connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, invocationID);
+        connection.setReadTimeout((int) SendersConfig.READ_TIMEOUT.toMillis());
+        connection.setRequestProperty(ONAPLogConstants.Headers.REQUEST_ID, LoggingUtils.requestID());
+        connection.setRequestProperty(ONAPLogConstants.Headers.INVOCATION_ID, LoggingUtils.invocationID(LOGGER));
         connection.setRequestProperty(ONAPLogConstants.Headers.PARTNER_NAME, MapperConfig.CLIENT_NAME);
         connection.setRequestMethod(method);
-
         return connection;
     }
 
     private void setMessageBody(HttpURLConnection connection, String body) throws IOException {
-        connection.setRequestProperty("Content-Type",DEFAULT_CONTENT_TYPE);
+        connection.setRequestProperty("Content-Type", ContentType.TEXT_PLAIN.toString());
         connection.setDoOutput(true);
         OutputStream outputStream = connection.getOutputStream();
         outputStream.write(body.getBytes(StandardCharsets.UTF_8));
@@ -150,7 +139,7 @@ public class RequestSender {
     }
 
     private boolean retryLimitReached(final int retryCount) {
-        return retryCount >= MAX_RETRIES;
+        return retryCount >= SendersConfig.MAX_RETRIES;
     }
 
     private boolean isWithinErrorRange(final int responseCode) {
@@ -158,18 +147,18 @@ public class RequestSender {
     }
 
     private String getResult(int attemptNumber, HttpURLConnection connection) throws IOException {
-        logger.unwrap().info("Sending {} request to {}.", connection.getRequestMethod(), connection.getURL());
+        LOGGER.unwrap().info("Sending {} request to {}.", connection.getRequestMethod(), connection.getURL());
         String result = "";
         try (InputStream is = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
             result = reader.lines().collect(Collectors.joining("\n"));
             int responseCode = connection.getResponseCode();
             if (!(isWithinErrorRange(responseCode))) {
-                logger.unwrap().info("Response code: {}, Server Response Received:\n{}", responseCode, result);
+                LOGGER.unwrap().info("Response code: {}, Server Response Received:\n{}", responseCode, result);
             }
         } catch (Exception e) {
             if (retryLimitReached(attemptNumber)) {
-                logger.unwrap().error("Execution error: {}", connection.getResponseMessage(), e);
+                LOGGER.unwrap().error("Execution error: {}", connection.getResponseMessage(), e);
                 throw new ServerResponseException(SERVER_ERROR_MESSAGE + ": " + connection.getResponseMessage(), e);
             }
         }
