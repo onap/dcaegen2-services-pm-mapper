@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60840509_e526d0ec",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T15:16:28Z",
+      "side": 1,
+      "message": "Use just Optional. Vavr is third-part dependency (from SDK) and could be easy replaced by Optional, as before.",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 21
+      },
+      "revId": "77d44a7f9bc9373ab78be9c1b83cd5f2bd12c012",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
