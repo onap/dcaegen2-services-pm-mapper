@@ -22,6 +22,30 @@
       "revId": "179f42db9b3d167606d102ec4f5212481533f961",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d322fcf_7a9fb797",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T12:26:16Z",
+      "side": 1,
+      "message": "Yes, it is never used so i will delete this line and stay with default",
+      "parentUuid": "49ab2e62_1f3ba257",
+      "range": {
+        "startLine": 89,
+        "startChar": 23,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "179f42db9b3d167606d102ec4f5212481533f961",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
