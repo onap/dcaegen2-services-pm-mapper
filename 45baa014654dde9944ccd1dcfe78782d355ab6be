@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3a2aca_2cd967a4",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/exceptions/MRPublisherException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "I think it is unused now.",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacdf37d_33d848c0",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "Consider: firstEvent sounds better",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831e6f8a_c35bb0e5",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "errorResume / fluxErrorResume or something like that.",
+      "range": {
+        "startLine": 63,
+        "startChar": 37,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11f09a1_4d7ebdb3",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "You can use static import here",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893978c2_c1b8623b",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "Use orElseGet\n.orElseGet( () -\u003e logger.invoke(ONAPLogConstants.InvocationMode.SYNCHRONOUS).toString());\n\norElse is execute even if Optional exists \nhttps://www.baeldung.com/java-optional-or-else-vs-or-else-get",
+      "range": {
+        "startLine": 38,
+        "startChar": 19,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f042b3_03f5751c",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "As above",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 23
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22519424_38a92dc8",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "Consider to provide methods for SenderConfig witch return integer values. It is casting in many places, but could be casting in one single method :)",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a117e4_dc487c91",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSenderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-04-14T14:06:56Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
