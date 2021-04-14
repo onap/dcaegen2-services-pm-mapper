@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8bd675b_48eecfba",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/exceptions/MRPublisherException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3a2aca_2cd967a4",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aacdf37d_33d848c0",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2021-04-14T14:06:56Z",
       "side": 1,
       "message": "Consider: firstEvent sounds better",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6939a1d_acca378e",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "because of java is a strongly typed language i do not see any reason for class name suffix in variable name, imo duplicated information, someone who will be want to change \"Event\" to different class will has to change(remember about it) variable as well",
+      "parentUuid": "aacdf37d_33d848c0",
       "range": {
         "startLine": 55,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b5893cf_948b8e60",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "similar to above, method name should(usually) not contain information about returned type",
+      "parentUuid": "831e6f8a_c35bb0e5",
+      "range": {
+        "startLine": 63,
+        "startChar": 37,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f11f09a1_4d7ebdb3",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSender.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3ecd71_80741d9a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11f09a1_4d7ebdb3",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "373e230b_4df65a36",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "893978c2_c1b8623b",
+      "range": {
+        "startLine": 38,
+        "startChar": 19,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25f042b3_03f5751c",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5b9af785_92bddae6",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25f042b3_03f5751c",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 23
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22519424_38a92dc8",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2021-04-14T14:06:56Z",
       "side": 1,
       "message": "Consider to provide methods for SenderConfig witch return integer values. It is casting in many places, but could be casting in one single method :)",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99287055_01f87693",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "different variables are used for different reason",
+      "parentUuid": "22519424_38a92dc8",
       "range": {
         "startLine": 124,
         "startChar": 34,
@@ -183,6 +351,30 @@
       "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50fc012_e3c2853c",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSenderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a117e4_dc487c91",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
