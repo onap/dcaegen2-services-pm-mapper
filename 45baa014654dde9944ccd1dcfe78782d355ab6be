@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "57098063_cfb803ed",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T14:46:41Z",
+      "side": 1,
+      "message": "i do not want to have that rigid code",
+      "parentUuid": "e6939a1d_acca378e",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "831e6f8a_c35bb0e5",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/messagerouter/VESPublisher.java",
         "patchSetId": 2
