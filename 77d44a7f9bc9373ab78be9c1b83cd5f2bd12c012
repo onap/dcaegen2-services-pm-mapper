@@ -22,6 +22,30 @@
       "revId": "77d44a7f9bc9373ab78be9c1b83cd5f2bd12c012",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c146a7_6e9f5b27",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/LoggingUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T15:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60840509_e526d0ec",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 21
+      },
+      "revId": "77d44a7f9bc9373ab78be9c1b83cd5f2bd12c012",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

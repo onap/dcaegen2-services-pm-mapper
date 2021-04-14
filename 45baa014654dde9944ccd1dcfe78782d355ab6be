@@ -403,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "519e634a_ae62fa38",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-14T15:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99287055_01f87693",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "45baa014654dde9944ccd1dcfe78782d355ab6be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58a117e4_dc487c91",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/DmaapRequestSenderTest.java",
         "patchSetId": 2
