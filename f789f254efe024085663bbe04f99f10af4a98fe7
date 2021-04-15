@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d886058_3b372ccc",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-15T13:59:35Z",
+      "side": 1,
+      "message": "new commit created: https://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/120570",
+      "parentUuid": "21b4e32a_cc317b6b",
+      "range": {
+        "startLine": 56,
+        "startChar": 15,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "f789f254efe024085663bbe04f99f10af4a98fe7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f7a2731_a4084b97",
         "filename": "pom.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f789f254efe024085663bbe04f99f10af4a98fe7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d203901_8544ea09",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6931
+      },
+      "writtenOn": "2021-04-15T13:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f7a2731_a4084b97",
+      "range": {
+        "startLine": 128,
+        "startChar": 29,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "f789f254efe024085663bbe04f99f10af4a98fe7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
