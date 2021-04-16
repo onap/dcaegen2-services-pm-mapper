@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.6.0] - 25/03/2021
+## [1.6.0] - 16/04/2021
 ### Changed
 - Utilize DMaaP-Client in PM-Mapper
 - Switched Dockerfile to integration image (alpine-based)
