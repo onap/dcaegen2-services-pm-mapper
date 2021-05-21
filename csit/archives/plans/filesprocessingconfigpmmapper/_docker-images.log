@@ -1,0 +1,7 @@
+nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest
+nexus3.onap.org:10001/onap/dmaap/datarouter-node
+nexus3.onap.org:10001/onap/dmaap/datarouter-prov
+nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest
+nexus3.onap.org:10001/consul:latest
+nexus3.onap.org:10001/mariadb:10.2.14
+nexus3.onap.org:10001/node:10-slim

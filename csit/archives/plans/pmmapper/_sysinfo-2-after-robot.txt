@@ -1,0 +1,30 @@
+> top -bn1 | head -3
+top - 12:18:45 up 23:03,  1 user,  load average: 0,89, 0,81, 0,60
+Tasks: 280 total,   1 running, 204 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0,8 us,  0,2 sy,  0,0 ni, 98,9 id,  0,1 wa,  0,0 hi,  0,0 si,  0,0 st
+
+> free -h
+              total        used        free      shared  buff/cache   available
+Mem:            23G        1,9G         15G         47M        6,3G         21G
+Swap:          2,0G          0B        2,0G
+
+> docker ps
+CONTAINER ID   IMAGE                                                                                COMMAND                  CREATED         STATUS                   PORTS                                                                   NAMES
+3b9efb3b3d88   onap/org.onap.dcaegen2.services.pm-mapper:latest                                     "java -jar pm-mapper…"   2 minutes ago   Up 2 minutes             0.0.0.0:8081->8081/tcp                                                  pmmapper
+cd562926dc43   nexus3.onap.org:10001/onap/dmaap/datarouter-node                                     "sh startup.sh"          2 minutes ago   Up 2 minutes             0.0.0.0:9090->8080/tcp, 0.0.0.0:9443->8443/tcp                          datarouter-node
+744a1eb34a70   nexus3.onap.org:10001/onap/dmaap/datarouter-prov                                     "sh startup.sh"          2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:8080->8080/tcp, 0.0.0.0:8443->8443/tcp, 0.0.0.0:443->8443/tcp   datarouter-prov
+a7e9751483e1   node:10-slim                                                                         "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes                                                                                     mr-simulator
+c75840e07cdc   nexus3.onap.org:10001/consul:latest                                                  "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes             8300-8302/tcp, 8500/tcp, 8301-8302/udp, 8600/tcp, 8600/udp              consul
+fb34879af6fd   mariadb:10.2.14                                                                      "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:3306->3306/tcp                                                  mariadb
+aeb34e3a13ac   nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest   "/entrypoint.sh /sta…"   2 minutes ago   Up 2 minutes             80/tcp, 443/tcp, 10000/tcp                                              cbs
+
+> docker stats --no-stream
+CONTAINER ID   NAME              CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+3b9efb3b3d88   pmmapper          0.09%     207.7MiB / 23.31GiB   0.87%     74.1kB / 44kB     0B / 86kB         44
+cd562926dc43   datarouter-node   0.31%     168.4MiB / 23.31GiB   0.71%     83.3kB / 99.4kB   0B / 53.2kB       88
+744a1eb34a70   datarouter-prov   0.12%     204.1MiB / 23.31GiB   0.85%     56.7kB / 60kB     0B / 0B           52
+a7e9751483e1   mr-simulator      0.00%     8.645MiB / 23.31GiB   0.04%     23.6kB / 2.01kB   0B / 0B           7
+c75840e07cdc   consul            1.00%     18.09MiB / 23.31GiB   0.08%     24.8kB / 15.4kB   0B / 4.1kB        11
+fb34879af6fd   mariadb           3.95%     100.1MiB / 23.31GiB   0.42%     41.2kB / 36.1kB   10.3MB / 23.1MB   32
+aeb34e3a13ac   cbs               0.01%     64.98MiB / 23.31GiB   0.27%     23.2kB / 15.9kB   0B / 8.19kB       6
+

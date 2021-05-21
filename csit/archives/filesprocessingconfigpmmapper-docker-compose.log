@@ -1,0 +1,738 @@
+Attaching to datarouter-node, datarouter-prov, cbs, consul, mariadb, mr-simulator
+[36mcbs                |[0m Checking for script in /app/prestart.sh
+[36mcbs                |[0m Running script /app/prestart.sh
+[36mcbs                |[0m Running inside /app/prestart.sh, you could add migrations to this file, e.g.:
+[36mcbs                |[0m 
+[36mcbs                |[0m #! /usr/bin/env bash
+[36mcbs                |[0m 
+[36mcbs                |[0m # Let the DB start
+[36mcbs                |[0m sleep 10;
+[36mcbs                |[0m # Run migrations
+[36mcbs                |[0m alembic upgrade head
+[36mcbs                |[0m 
+[36mcbs                |[0m /usr/lib/python2.7/dist-packages/supervisor/options.py:298: UserWarning: Supervisord is running as root and it is searching for its configuration file in default locations (including its current working directory); you probably want to specify a "-c" argument specifying an absolute path to a configuration file for improved security.
+[36mcbs                |[0m   'Supervisord is running as root and it is searching '
+[36mcbs                |[0m 2021-05-21 09:11:32,488 CRIT Supervisor running as root (no user in config file)
+[36mcbs                |[0m 2021-05-21 09:11:32,488 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+[36mcbs                |[0m 2021-05-21 09:11:32,497 INFO RPC interface 'supervisor' initialized
+[36mcbs                |[0m 2021-05-21 09:11:32,497 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+[36mcbs                |[0m 2021-05-21 09:11:32,497 INFO supervisord started with pid 1
+[36mcbs                |[0m 2021-05-21 09:11:33,500 INFO spawned: 'nginx' with pid 11
+[36mcbs                |[0m 2021-05-21 09:11:33,501 INFO spawned: 'uwsgi' with pid 12
+[36mcbs                |[0m [uWSGI] getting INI configuration from /app/uwsgi.ini
+[36mcbs                |[0m [uWSGI] getting INI configuration from /etc/uwsgi/uwsgi.ini
+[36mcbs                |[0m 
+[36mcbs                |[0m ;uWSGI instance configuration
+[36mcbs                |[0m [uwsgi]
+[36mcbs                |[0m cheaper = 2
+[36mcbs                |[0m processes = 16
+[36mcbs                |[0m ini = /app/uwsgi.ini
+[36mcbs                |[0m module = app.main
+[36mcbs                |[0m callable = app
+[36mcbs                |[0m ini = /etc/uwsgi/uwsgi.ini
+[36mcbs                |[0m socket = /tmp/uwsgi.sock
+[36mcbs                |[0m chown-socket = nginx:nginx
+[36mcbs                |[0m chmod-socket = 664
+[36mcbs                |[0m hook-master-start = unix_signal:15 gracefully_kill_them_all
+[36mcbs                |[0m need-app = true
+[36mcbs                |[0m die-on-term = true
+[36mcbs                |[0m show-config = true
+[36mcbs                |[0m ;end of configuration
+[36mcbs                |[0m 
+[36mcbs                |[0m *** Starting uWSGI 2.0.18 (64bit) on [Fri May 21 09:11:33 2021] ***
+[36mcbs                |[0m compiled with version: 6.3.0 20170516 on 16 May 2019 03:07:24
+[36mcbs                |[0m os: Linux-5.4.0-65-generic #73~18.04.1-Ubuntu SMP Tue Jan 19 09:02:24 UTC 2021
+[36mcbs                |[0m nodename: 973ff3acc9cf
+[36mcbs                |[0m machine: x86_64
+[36mcbs                |[0m clock source: unix
+[36mcbs                |[0m pcre jit disabled
+[36mcbs                |[0m detected number of CPU cores: 4
+[36mcbs                |[0m current working directory: /app
+[36mcbs                |[0m detected binary path: /usr/local/bin/uwsgi
+[36mcbs                |[0m your memory page size is 4096 bytes
+[36mcbs                |[0m detected max file descriptor number: 1048576
+[36mcbs                |[0m lock engine: pthread robust mutexes
+[36mcbs                |[0m thunder lock: disabled (you can enable it with --thunder-lock)
+[36mcbs                |[0m uwsgi socket 0 bound to UNIX address /tmp/uwsgi.sock fd 3
+[36mcbs                |[0m uWSGI running as root, you can use --uid/--gid/--chroot options
+[36mcbs                |[0m *** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+[36mcbs                |[0m Python version: 3.6.8 (default, May  8 2019, 05:35:00)  [GCC 6.3.0 20170516]
+[36mcbs                |[0m *** Python threads support is disabled. You can enable it with --enable-threads ***
+[36mcbs                |[0m Python main interpreter initialized at 0x55f905ba80c0
+[36mcbs                |[0m uWSGI running as root, you can use --uid/--gid/--chroot options
+[36mcbs                |[0m *** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+[36mcbs                |[0m your server socket listen backlog is limited to 100 connections
+[36mcbs                |[0m your mercy for graceful operations on workers is 60 seconds
+[36mcbs                |[0m mapped 1239640 bytes (1210 KB) for 16 cores
+[36mcbs                |[0m *** Operational MODE: preforking ***
+[36mcbs                |[0m 2021-05-21 09:11:34,543 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+[36mcbs                |[0m 2021-05-21 09:11:34,543 INFO success: uwsgi entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+[36mcbs                |[0m WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x55f905ba80c0 pid: 12 (default app)
+[36mcbs                |[0m uWSGI running as root, you can use --uid/--gid/--chroot options
+[36mcbs                |[0m *** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+[36mcbs                |[0m *** uWSGI is running in multiple interpreter mode ***
+[36mcbs                |[0m spawned uWSGI master process (pid: 12)
+[36mcbs                |[0m spawned uWSGI worker 1 (pid: 15, cores: 1)
+[36mcbs                |[0m spawned uWSGI worker 2 (pid: 16, cores: 1)
+[36mcbs                |[0m running "unix_signal:15 gracefully_kill_them_all" (master-start)...
+[36mcbs                |[0m [pid: 15|app: 0|req: 1/1] 172.18.0.8 () {40 vars in 632 bytes} [Fri May 21 09:11:49 2021] GET /service_component/pmmapper => generated 981 bytes in 21 msecs (HTTP/1.1 200) 3 headers in 128 bytes (1 switches on core 0)
+[36mcbs                |[0m 172.18.0.8 - - [21/May/2021:09:11:49 +0000] "GET /service_component/pmmapper HTTP/1.1" 200 981 "-" "Java/11.0.9.1" "-"
+[36mcbs                |[0m [pid: 16|app: 0|req: 1/2] 172.18.0.8 () {40 vars in 630 bytes} [Fri May 21 09:12:13 2021] GET /service_component/pmmapper => generated 981 bytes in 18 msecs (HTTP/1.1 200) 3 headers in 128 bytes (1 switches on core 0)
+[36mcbs                |[0m 172.18.0.8 - - [21/May/2021:09:12:13 +0000] "GET /service_component/pmmapper HTTP/1.1" 200 981 "-" "Java/11.0.7" "-"
+[36mcbs                |[0m [pid: 16|app: 0|req: 2/3] 172.18.0.8 () {40 vars in 630 bytes} [Fri May 21 09:13:13 2021] GET /service_component/pmmapper => generated 981 bytes in 13 msecs (HTTP/1.1 200) 3 headers in 128 bytes (1 switches on core 0)
+[36mcbs                |[0m 172.18.0.8 - - [21/May/2021:09:13:13 +0000] "GET /service_component/pmmapper HTTP/1.1" 200 981 "-" "Java/11.0.7" "-"
+[36mcbs                |[0m 172.18.0.8 - - [21/May/2021:09:13:37 +0000] "GET /service_component/pmmapper HTTP/1.1" 200 981 "-" "Java/11.0.7" "-"
+[36mcbs                |[0m [pid: 15|app: 0|req: 2/4] 172.18.0.8 () {40 vars in 630 bytes} [Fri May 21 09:13:37 2021] GET /service_component/pmmapper => generated 981 bytes in 8 msecs (HTTP/1.1 200) 3 headers in 128 bytes (1 switches on core 0)
+[36mcbs                |[0m 172.18.0.8 - - [21/May/2021:09:14:35 +0000] "GET /service_component/pmmapper HTTP/1.1" 200 981 "-" "Java/11.0.7" "-"
+[36mcbs                |[0m [pid: 15|app: 0|req: 3/5] 172.18.0.8 () {40 vars in 630 bytes} [Fri May 21 09:14:35 2021] GET /service_component/pmmapper => generated 981 bytes in 8 msecs (HTTP/1.1 200) 3 headers in 128 bytes (1 switches on core 0)
+[33mconsul             |[0m ==> Starting Consul agent...
+[33mconsul             |[0m            Version: '1.9.5'
+[33mconsul             |[0m            Node ID: '1db33329-582a-37c7-4a67-7f4dee1d2567'
+[33mconsul             |[0m          Node name: '68e1dfd54306'
+[33mconsul             |[0m         Datacenter: 'dc1' (Segment: '<all>')
+[33mconsul             |[0m             Server: true (Bootstrap: false)
+[33mconsul             |[0m        Client Addr: [0.0.0.0] (HTTP: 8500, HTTPS: -1, gRPC: 8502, DNS: 8600)
+[33mconsul             |[0m       Cluster Addr: 127.0.0.1 (LAN: 8301, WAN: 8302)
+[33mconsul             |[0m            Encrypt: Gossip: false, TLS-Outgoing: false, TLS-Incoming: false, Auto-Encrypt-TLS: false
+[33mconsul             |[0m 
+[33mconsul             |[0m ==> Log data will now stream in as it occurs:
+[33mconsul             |[0m 
+[33mconsul             |[0m     2021-05-21T09:11:32.320Z [INFO]  agent.server.raft: initial configuration: index=1 servers="[{Suffrage:Voter ID:1db33329-582a-37c7-4a67-7f4dee1d2567 Address:127.0.0.1:8300}]"
+[33mconsul             |[0m     2021-05-21T09:11:32.320Z [INFO]  agent.server.raft: entering follower state: follower="Node at 127.0.0.1:8300 [Follower]" leader=
+[33mconsul             |[0m     2021-05-21T09:11:32.321Z [INFO]  agent.server.serf.wan: serf: EventMemberJoin: 68e1dfd54306.dc1 127.0.0.1
+[33mconsul             |[0m     2021-05-21T09:11:32.321Z [INFO]  agent.server.serf.lan: serf: EventMemberJoin: 68e1dfd54306 127.0.0.1
+[33mconsul             |[0m     2021-05-21T09:11:32.321Z [INFO]  agent.router: Initializing LAN area manager
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent.server: Adding LAN server: server="68e1dfd54306 (Addr: tcp/127.0.0.1:8300) (DC: dc1)"
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent.server: Handled event for server in area: event=member-join server=68e1dfd54306.dc1 area=wan
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent: Started DNS server: address=0.0.0.0:8600 network=tcp
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent: Started DNS server: address=0.0.0.0:8600 network=udp
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent: Starting server: address=[::]:8500 network=tcp protocol=http
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [WARN]  agent: DEPRECATED Backwards compatibility with pre-1.9 metrics enabled. These metrics will be removed in a future version of Consul. Set `telemetry { disable_compat_1.9 = true }` to disable them.
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent: started state syncer
+[33mconsul             |[0m ==> Consul agent running!
+[33mconsul             |[0m     2021-05-21T09:11:32.322Z [INFO]  agent: Started gRPC server: address=[::]:8502 network=tcp
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [WARN]  agent.server.raft: heartbeat timeout reached, starting election: last-leader=
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [INFO]  agent.server.raft: entering candidate state: node="Node at 127.0.0.1:8300 [Candidate]" term=2
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [DEBUG] agent.server.raft: votes: needed=1
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [DEBUG] agent.server.raft: vote granted: from=1db33329-582a-37c7-4a67-7f4dee1d2567 term=2 tally=1
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [INFO]  agent.server.raft: election won: tally=1
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [INFO]  agent.server.raft: entering leader state: leader="Node at 127.0.0.1:8300 [Leader]"
+[33mconsul             |[0m     2021-05-21T09:11:32.367Z [INFO]  agent.server: cluster leadership acquired
+[33mconsul             |[0m     2021-05-21T09:11:32.368Z [DEBUG] agent.server: Cannot upgrade to new ACLs: leaderMode=0 mode=0 found=true leader=127.0.0.1:8300
+[33mconsul             |[0m     2021-05-21T09:11:32.368Z [INFO]  agent.server: New leader elected: payload=68e1dfd54306
+[33mconsul             |[0m     2021-05-21T09:11:32.369Z [INFO]  agent.leader: started routine: routine="federation state anti-entropy"
+[33mconsul             |[0m     2021-05-21T09:11:32.369Z [INFO]  agent.leader: started routine: routine="federation state pruning"
+[33mconsul             |[0m     2021-05-21T09:11:32.369Z [DEBUG] agent.server.autopilot: autopilot is now running
+[33mconsul             |[0m     2021-05-21T09:11:32.369Z [DEBUG] agent.server.autopilot: state update routine is now running
+[33mconsul             |[0m     2021-05-21T09:11:32.370Z [DEBUG] connect.ca.consul: consul CA provider configured: id=07:80:c8:de:f6:41:86:29:8f:9c:b8:17:d6:48:c2:d5:c5:5c:7f:0c:03:f7:cf:97:5a:a7:c1:68:aa:23:ae:81 is_primary=true
+[33mconsul             |[0m     2021-05-21T09:11:32.379Z [INFO]  agent.server.connect: initialized primary datacenter CA with provider: provider=consul
+[33mconsul             |[0m     2021-05-21T09:11:32.379Z [INFO]  agent.leader: started routine: routine="intermediate cert renew watch"
+[33mconsul             |[0m     2021-05-21T09:11:32.379Z [INFO]  agent.leader: started routine: routine="CA root pruning"
+[33mconsul             |[0m     2021-05-21T09:11:32.379Z [DEBUG] agent.server: successfully established leadership: duration=11.68251ms
+[33mconsul             |[0m     2021-05-21T09:11:32.379Z [INFO]  agent.server: member joined, marking health alive: member=68e1dfd54306
+[33mconsul             |[0m     2021-05-21T09:11:32.591Z [INFO]  agent.server: federation state anti-entropy synced
+[33mconsul             |[0m     2021-05-21T09:11:32.622Z [DEBUG] agent: Skipping remote check since it is managed automatically: check=serfHealth
+[33mconsul             |[0m     2021-05-21T09:11:32.623Z [INFO]  agent: Synced node info
+[33mconsul             |[0m     2021-05-21T09:11:32.623Z [DEBUG] agent: Node info in sync
+[33mconsul             |[0m     2021-05-21T09:11:34.057Z [DEBUG] agent: Skipping remote check since it is managed automatically: check=serfHealth
+[33mconsul             |[0m     2021-05-21T09:11:34.057Z [DEBUG] agent: Node info in sync
+[33mconsul             |[0m     2021-05-21T09:11:46.477Z [WARN]  agent: Service name will not be discoverable via DNS due to invalid characters. Valid characters include all alpha-numerics and dashes.: service=config_binding_service
+[33mconsul             |[0m     2021-05-21T09:11:46.481Z [DEBUG] agent: Node info in sync
+[33mconsul             |[0m     2021-05-21T09:11:46.481Z [INFO]  agent: Synced service: service=cbs
+[33mconsul             |[0m     2021-05-21T09:11:46.481Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/agent/service/register from=172.18.0.1:58582 latency=4.245472ms
+[33mconsul             |[0m     2021-05-21T09:11:46.481Z [DEBUG] agent: Node info in sync
+[33mconsul             |[0m     2021-05-21T09:11:46.481Z [DEBUG] agent: Service in sync: service=cbs
+[33mconsul             |[0m     2021-05-21T09:11:46.505Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/kv/pmmapper?dc=dc1 from=172.18.0.1:58584 latency=519.256µs
+[33mconsul             |[0m     2021-05-21T09:11:49.878Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/txn from=172.18.0.5:53606 latency=1.290729ms
+[33mconsul             |[0m     2021-05-21T09:12:13.362Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/txn from=172.18.0.5:53638 latency=388.346µs
+[33mconsul             |[0m     2021-05-21T09:13:13.982Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/txn from=172.18.0.5:53762 latency=360.207µs
+[33mconsul             |[0m     2021-05-21T09:13:20.439Z [DEBUG] agent: Skipping remote check since it is managed automatically: check=serfHealth
+[33mconsul             |[0m     2021-05-21T09:13:20.439Z [DEBUG] agent: Node info in sync
+[33mconsul             |[0m     2021-05-21T09:13:20.439Z [DEBUG] agent: Service in sync: service=cbs
+[33mconsul             |[0m     2021-05-21T09:13:32.327Z [DEBUG] agent.router.manager: Rebalanced servers, new active server: number_of_servers=1 active_server="68e1dfd54306.dc1 (Addr: tcp/127.0.0.1:8300) (DC: dc1)"
+[33mconsul             |[0m     2021-05-21T09:13:32.328Z [DEBUG] agent.router.manager: Rebalanced servers, new active server: number_of_servers=1 active_server="68e1dfd54306 (Addr: tcp/127.0.0.1:8300) (DC: dc1)"
+[33mconsul             |[0m     2021-05-21T09:13:37.324Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/txn from=172.18.0.5:53770 latency=268.99µs
+[33mconsul             |[0m     2021-05-21T09:14:35.032Z [DEBUG] agent.http: Request finished: method=PUT url=/v1/txn from=172.18.0.5:53854 latency=271.792µs
+[33mconsul             |[0m     2021-05-21T09:14:51.283Z [DEBUG] agent: Skipping remote check since it is managed automatically: check=serfHealth
+[33mconsul             |[0m     2021-05-21T09:14:51.283Z [DEBUG] agent: Node info in sync
+[33mconsul             |[0m     2021-05-21T09:14:51.284Z [DEBUG] agent: Service in sync: service=cbs
+[34mmariadb            |[0m Initializing database
+[34mmariadb            |[0m 
+[34mmariadb            |[0m PLEASE REMEMBER TO SET A PASSWORD FOR THE MariaDB root USER !
+[34mmariadb            |[0m To do so, start the server, then issue the following commands:
+[34mmariadb            |[0m 
+[34mmariadb            |[0m '/usr/bin/mysqladmin' -u root password 'new-password'
+[34mmariadb            |[0m '/usr/bin/mysqladmin' -u root -h  password 'new-password'
+[34mmariadb            |[0m 
+[34mmariadb            |[0m Alternatively you can run:
+[34mmariadb            |[0m '/usr/bin/mysql_secure_installation'
+[34mmariadb            |[0m 
+[34mmariadb            |[0m which will also give you the option of removing the test
+[34mmariadb            |[0m databases and anonymous user created by default.  This is
+[34mmariadb            |[0m strongly recommended for production servers.
+[34mmariadb            |[0m 
+[34mmariadb            |[0m See the MariaDB Knowledgebase at http://mariadb.com/kb or the
+[34mmariadb            |[0m MySQL manual for more instructions.
+[34mmariadb            |[0m 
+[34mmariadb            |[0m Please report any problems at http://mariadb.org/jira
+[34mmariadb            |[0m 
+[34mmariadb            |[0m The latest information about MariaDB is available at http://mariadb.org/.
+[34mmariadb            |[0m You can find additional information about the MySQL part at:
+[34mmariadb            |[0m http://dev.mysql.com
+[34mmariadb            |[0m Consider joining MariaDB's strong and vibrant community:
+[34mmariadb            |[0m https://mariadb.org/get-involved/
+[34mmariadb            |[0m 
+[34mmariadb            |[0m Database initialized
+[34mmariadb            |[0m MySQL init process in progress...
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] mysqld (mysqld 10.2.14-MariaDB-10.2.14+maria~jessie) starting as process 100 ...
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Uses event mutexes
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Compressed tables use zlib 1.2.8
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Using Linux native AIO
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Number of pools: 1
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Using SSE2 crc32 instructions
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Initializing buffer pool, total size = 256M, instances = 1, chunk size = 128M
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Completed initialization of buffer pool
+[34mmariadb            |[0m 2021-05-21  9:11:36 139971731502848 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+[36;1mmr-simulator       |[0m Listening on 3904...
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[36;1mmr-simulator       |[0m received message
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Highest supported file format is Barracuda.
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: 128 out of 128 rollback segments are active.
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Creating shared tablespace for temporary tables
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] InnoDB: 5.7.21 started; log sequence number 1619987
+[34mmariadb            |[0m 2021-05-21  9:11:36 139971356776192 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+[34mmariadb            |[0m 2021-05-21  9:11:36 139971356776192 [Note] InnoDB: Buffer pool(s) load completed at 210521  9:11:36
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] Plugin 'FEEDBACK' is disabled.
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Warning] 'user' entry 'root@9201efd8babe' ignored in --skip-name-resolve mode.
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Warning] 'proxies_priv' entry '@% root@9201efd8babe' ignored in --skip-name-resolve mode.
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] Reading of all Master_info entries succeded
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] Added new Master_info '' to hash table
+[34mmariadb            |[0m 2021-05-21  9:11:36 139972468393856 [Note] mysqld: ready for connections.
+[34mmariadb            |[0m Version: '10.2.14-MariaDB-10.2.14+maria~jessie'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  mariadb.org binary distribution
+[34mmariadb            |[0m Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+[34mmariadb            |[0m 2021-05-21  9:11:39 139972184041216 [Warning] 'proxies_priv' entry '@% root@9201efd8babe' ignored in --skip-name-resolve mode.
+[34mmariadb            |[0m 
+[34mmariadb            |[0m 2021-05-21  9:11:39 139972183738112 [Note] mysqld (initiated by: unknown): Normal shutdown
+[34mmariadb            |[0m 2021-05-21  9:11:39 139972183738112 [Note] Event Scheduler: Purging the queue. 0 events
+[34mmariadb            |[0m 2021-05-21  9:11:39 139971608426240 [Note] InnoDB: FTS optimize thread exiting.
+[34mmariadb            |[0m 2021-05-21  9:11:39 139972183738112 [Note] InnoDB: Starting shutdown...
+[34mmariadb            |[0m 2021-05-21  9:11:39 139971356776192 [Note] InnoDB: Dumping buffer pool(s) to /var/lib/mysql/ib_buffer_pool
+[34mmariadb            |[0m 2021-05-21  9:11:39 139971356776192 [Note] InnoDB: Buffer pool(s) dump completed at 210521  9:11:39
+[34mmariadb            |[0m 2021-05-21  9:11:40 139972183738112 [Note] InnoDB: Shutdown completed; log sequence number 1620015
+[34mmariadb            |[0m 2021-05-21  9:11:40 139972183738112 [Note] InnoDB: Removed temporary tablespace data file: "ibtmp1"
+[34mmariadb            |[0m 2021-05-21  9:11:40 139972183738112 [Note] mysqld: Shutdown complete
+[34mmariadb            |[0m 
+[34mmariadb            |[0m 
+[34mmariadb            |[0m MySQL init process done. Ready for start up.
+[34mmariadb            |[0m 
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] mysqld (mysqld 10.2.14-MariaDB-10.2.14+maria~jessie) starting as process 1 ...
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Uses event mutexes
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Compressed tables use zlib 1.2.8
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Using Linux native AIO
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Number of pools: 1
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Using SSE2 crc32 instructions
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Initializing buffer pool, total size = 256M, instances = 1, chunk size = 128M
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Completed initialization of buffer pool
+[34mmariadb            |[0m 2021-05-21  9:11:40 140494648198912 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+[34mmariadb            |[0m 2021-05-21  9:11:40 140495385622400 [Note] InnoDB: Highest supported file format is Barracuda.
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] InnoDB: 128 out of 128 rollback segments are active.
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] InnoDB: Creating shared tablespace for temporary tables
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] InnoDB: 5.7.21 started; log sequence number 1620015
+[34mmariadb            |[0m 2021-05-21  9:11:41 140494277437184 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+[34mmariadb            |[0m 2021-05-21  9:11:41 140494277437184 [Note] InnoDB: Buffer pool(s) load completed at 210521  9:11:41
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] Plugin 'FEEDBACK' is disabled.
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] Server socket created on IP: '::'.
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Warning] 'proxies_priv' entry '@% root@9201efd8babe' ignored in --skip-name-resolve mode.
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] Reading of all Master_info entries succeded
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] Added new Master_info '' to hash table
+[34mmariadb            |[0m 2021-05-21  9:11:41 140495385622400 [Note] mysqld: ready for connections.
+[34mmariadb            |[0m Version: '10.2.14-MariaDB-10.2.14+maria~jessie'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
+[34mmariadb            |[0m 2021-05-21  9:11:43 140495095715584 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:11:53 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:12:03 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:12:13 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:12:23 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:12:34 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:12:44 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:12:54 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:13:04 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:13:15 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:13:25 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:13:35 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:13:45 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:13:55 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:14:06 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:14:16 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:14:26 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:14:36 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:14:46 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:14:56 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:15:07 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:15:17 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[34mmariadb            |[0m 2021-05-21  9:15:27 140494623020800 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+[32mdatarouter-node    |[0m this is LIB /opt/app/datartr/lib
+[32mdatarouter-node    |[0m this is ETC /opt/app/datartr/etc
+[32mdatarouter-node    |[0m 09:11:46,677 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+[32mdatarouter-node    |[0m 09:11:46,680 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+[32mdatarouter-node    |[0m 09:11:46,682 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/opt/app/datartr/etc/logback.xml]
+[32mdatarouter-node    |[0m 09:11:46,685 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs multiple times on the classpath.
+[32mdatarouter-node    |[0m 09:11:46,685 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [file:/opt/app/datartr/etc/logback.xml]
+[32mdatarouter-node    |[0m 09:11:46,685 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [jar:file:/opt/app/datartr/lib/datarouter-node-jar-with-dependencies.jar!/logback.xml]
+[32mdatarouter-node    |[0m 09:11:46,964 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+[32mdatarouter-node    |[0m 09:11:46,976 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - Will scan for changes in [file:/opt/app/datartr/etc/logback.xml] 
+[32mdatarouter-node    |[0m 09:11:46,976 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - Setting ReconfigureOnChangeTask scanning period to 3 seconds
+[32mdatarouter-node    |[0m 09:11:46,982 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+[32mdatarouter-node    |[0m 09:11:46,985 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+[32mdatarouter-node    |[0m 09:11:46,992 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[32mdatarouter-node    |[0m 09:11:47,099 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[32mdatarouter-node    |[0m 09:11:47,101 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [Audit]
+[32mdatarouter-node    |[0m 09:11:47,118 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@5ae50ce6 - Will use zip compression
+[32mdatarouter-node    |[0m 09:11:47,122 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[32mdatarouter-node    |[0m 09:11:47,128 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Audit] - Active log file name: /var/log/onap/datarouter/audit.log
+[32mdatarouter-node    |[0m 09:11:47,128 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Audit] - File property is set to [/var/log/onap/datarouter/audit.log]
+[32mdatarouter-node    |[0m 09:11:47,130 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[32mdatarouter-node    |[0m 09:11:47,131 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncAudit]
+[32mdatarouter-node    |[0m 09:11:47,132 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [Audit] to ch.qos.logback.classic.AsyncAppender[asyncAudit]
+[32mdatarouter-node    |[0m 09:11:47,132 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncAudit] - Attaching appender named [Audit] to AsyncAppender.
+[32mdatarouter-node    |[0m 09:11:47,133 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncAudit] - Setting discardingThreshold to 51
+[32mdatarouter-node    |[0m 09:11:47,133 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[32mdatarouter-node    |[0m 09:11:47,133 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [Metrics]
+[32mdatarouter-node    |[0m 09:11:47,135 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@6f96c77 - Will use zip compression
+[32mdatarouter-node    |[0m 09:11:47,136 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Metrics] - Active log file name: /var/log/onap/datarouter/metrics.log
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Metrics] - File property is set to [/var/log/onap/datarouter/metrics.log]
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncMetrics]
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [Metrics] to ch.qos.logback.classic.AsyncAppender[asyncMetrics]
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncMetrics] - Attaching appender named [Metrics] to AsyncAppender.
+[32mdatarouter-node    |[0m 09:11:47,138 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncMetrics] - Setting discardingThreshold to 51
+[32mdatarouter-node    |[0m 09:11:47,139 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[32mdatarouter-node    |[0m 09:11:47,139 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [Debug]
+[32mdatarouter-node    |[0m 09:11:47,141 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@be64738 - Will use zip compression
+[32mdatarouter-node    |[0m 09:11:47,142 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[32mdatarouter-node    |[0m 09:11:47,143 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Debug] - Active log file name: /var/log/onap/datarouter/debug.log
+[32mdatarouter-node    |[0m 09:11:47,143 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Debug] - File property is set to [/var/log/onap/datarouter/debug.log]
+[32mdatarouter-node    |[0m 09:11:47,143 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[35mdatarouter-prov    |[0m this is LIB /opt/app/datartr/lib
+[35mdatarouter-prov    |[0m this is ETC /opt/app/datartr/etc
+[35mdatarouter-prov    |[0m 09:11:45,915 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+[35mdatarouter-prov    |[0m 09:11:45,917 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+[35mdatarouter-prov    |[0m 09:11:45,918 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/opt/app/datartr/etc/logback.xml]
+[35mdatarouter-prov    |[0m 09:11:45,920 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs multiple times on the classpath.
+[35mdatarouter-prov    |[0m 09:11:45,920 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [file:/opt/app/datartr/etc/logback.xml]
+[35mdatarouter-prov    |[0m 09:11:45,920 |-WARN in ch.qos.logback.classic.LoggerContext[default] - Resource [logback.xml] occurs at [jar:file:/opt/app/datartr/lib/datarouter-prov-jar-with-dependencies.jar!/logback.xml]
+[35mdatarouter-prov    |[0m 09:11:46,245 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - Will scan for changes in [file:/opt/app/datartr/etc/logback.xml] 
+[35mdatarouter-prov    |[0m 09:11:46,245 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - Setting ReconfigureOnChangeTask scanning period to 3 seconds
+[35mdatarouter-prov    |[0m 09:11:46,253 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+[35mdatarouter-prov    |[0m 09:11:46,261 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+[35mdatarouter-prov    |[0m 09:11:46,270 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[35mdatarouter-prov    |[0m 09:11:46,313 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[35mdatarouter-prov    |[0m 09:11:46,315 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [EELF]
+[35mdatarouter-prov    |[0m 09:11:46,329 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@7ee955a8 - Will use zip compression
+[35mdatarouter-prov    |[0m 09:11:46,334 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[35mdatarouter-prov    |[0m 09:11:46,339 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[EELF] - Active log file name: /opt/app/datartr/logs/apicalls.log
+[35mdatarouter-prov    |[0m 09:11:46,339 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[EELF] - File property is set to [/opt/app/datartr/logs/apicalls.log]
+[35mdatarouter-prov    |[0m 09:11:46,340 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[35mdatarouter-prov    |[0m 09:11:46,342 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncEELF]
+[35mdatarouter-prov    |[0m 09:11:46,343 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [EELF] to ch.qos.logback.classic.AsyncAppender[asyncEELF]
+[35mdatarouter-prov    |[0m 09:11:46,344 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELF] - Attaching appender named [EELF] to AsyncAppender.
+[35mdatarouter-prov    |[0m 09:11:46,344 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELF] - Setting discardingThreshold to 51
+[35mdatarouter-prov    |[0m 09:11:46,345 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[35mdatarouter-prov    |[0m 09:11:46,345 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [EELFError]
+[35mdatarouter-prov    |[0m 09:11:46,348 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@769f71a9 - Will use zip compression
+[35mdatarouter-prov    |[0m 09:11:46,349 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[35mdatarouter-prov    |[0m 09:11:46,350 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[EELFError] - Active log file name: /opt/app/datartr/logs/errors.log
+[35mdatarouter-prov    |[0m 09:11:46,350 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[EELFError] - File property is set to [/opt/app/datartr/logs/errors.log]
+[35mdatarouter-prov    |[0m 09:11:46,351 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[35mdatarouter-prov    |[0m 09:11:46,351 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncEELFError]
+[35mdatarouter-prov    |[0m 09:11:46,351 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [EELFError] to ch.qos.logback.classic.AsyncAppender[asyncEELFError]
+[35mdatarouter-prov    |[0m 09:11:46,351 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELFError] - Attaching appender named [EELFError] to AsyncAppender.
+[35mdatarouter-prov    |[0m 09:11:46,351 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELFError] - Setting discardingThreshold to 51
+[35mdatarouter-prov    |[0m 09:11:46,352 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[35mdatarouter-prov    |[0m 09:11:46,352 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [jettylog]
+[35mdatarouter-prov    |[0m 09:11:46,354 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@be64738 - Will use zip compression
+[35mdatarouter-prov    |[0m 09:11:46,355 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[35mdatarouter-prov    |[0m 09:11:46,359 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[jettylog] - Active log file name: /opt/app/datartr/logs/jetty.log
+[35mdatarouter-prov    |[0m 09:11:46,359 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[jettylog] - File property is set to [/opt/app/datartr/logs/jetty.log]
+[35mdatarouter-prov    |[0m 09:11:46,359 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[32mdatarouter-node    |[0m 09:11:47,143 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncDebug]
+[32mdatarouter-node    |[0m 09:11:47,144 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [Debug] to ch.qos.logback.classic.AsyncAppender[asyncDebug]
+[32mdatarouter-node    |[0m 09:11:47,144 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncDebug] - Attaching appender named [Debug] to AsyncAppender.
+[32mdatarouter-node    |[0m 09:11:47,144 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncDebug] - Setting discardingThreshold to 51
+[32mdatarouter-node    |[0m 09:11:47,144 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[32mdatarouter-node    |[0m 09:11:47,144 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [Error]
+[32mdatarouter-node    |[0m 09:11:47,146 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@3ba9ad43 - Will use zip compression
+[32mdatarouter-node    |[0m 09:11:47,147 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[32mdatarouter-node    |[0m 09:11:47,148 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Error] - Active log file name: /var/log/onap/datarouter/error.log
+[32mdatarouter-node    |[0m 09:11:47,148 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Error] - File property is set to [/var/log/onap/datarouter/error.log]
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncError]
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [Error] to ch.qos.logback.classic.AsyncAppender[asyncError]
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncError] - Attaching appender named [Error] to AsyncAppender.
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncError] - Setting discardingThreshold to 51
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[32mdatarouter-node    |[0m 09:11:47,149 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [Jetty]
+[32mdatarouter-node    |[0m 09:11:47,151 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@49d904ec - Will use zip compression
+[32mdatarouter-node    |[0m 09:11:47,152 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Jetty] - Active log file name: /var/log/onap/datarouter/jetty.log
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[Jetty] - File property is set to [/var/log/onap/datarouter/jetty.log]
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncJettyLog]
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [Jetty] to ch.qos.logback.classic.AsyncAppender[asyncJettyLog]
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncJettyLog] - Attaching appender named [Jetty] to AsyncAppender.
+[32mdatarouter-node    |[0m 09:11:47,154 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncJettyLog] - Setting discardingThreshold to 51
+[32mdatarouter-node    |[0m 09:11:47,155 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.att.eelf] to INFO
+[32mdatarouter-node    |[0m 09:11:47,155 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf] to false
+[32mdatarouter-node    |[0m 09:11:47,155 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncAudit] to Logger[com.att.eelf]
+[32mdatarouter-node    |[0m 09:11:47,155 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf] to false
+[32mdatarouter-node    |[0m 09:11:47,155 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncMetrics] to Logger[com.att.eelf]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf] to false
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncDebug] to Logger[com.att.eelf]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf.error] to false
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncError] to Logger[com.att.eelf.error]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [log4j.logger.org.eclipse.jetty] to false
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncJettyLog] to Logger[log4j.logger.org.eclipse.jetty]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncAudit] to Logger[ROOT]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncMetrics] to Logger[ROOT]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncDebug] to Logger[ROOT]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncError] to Logger[ROOT]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncJettyLog] to Logger[ROOT]
+[32mdatarouter-node    |[0m 09:11:47,156 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+[32mdatarouter-node    |[0m 09:11:47,157 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@48e4374 - Registering current configuration as safe fallback point
+[32mdatarouter-node    |[0m 
+[32mdatarouter-node    |[0m 2021-05-21T09:11:47.280+0000 INIT [cadi] https.protocols set by cadi_protocols in CADI Properties
+[32mdatarouter-node    |[0m 2021-05-21T09:11:47.281+0000 INIT [cadi] jdk.tls.client.protocols set from Default Protocols
+[32mdatarouter-node    |[0m 2021-05-21T09:11:47.283+0000 INIT [cadi] Loading CADI Properties from /opt/app/osaaf/local/org.onap.dmaap-dr.location.props
+[32mdatarouter-node    |[0m 2021-05-21T09:11:47.283+0000 INIT [cadi] Loading CADI Properties from /opt/app/osaaf/local/org.onap.dmaap-dr.cred.props
+[32mdatarouter-node    |[0m 2021-05-21T09:11:47.285+0000 INIT [cadi] cadi_keyfile points to /opt/app/osaaf/local/org.onap.dmaap-dr.keyfile
+[35mdatarouter-prov    |[0m 09:11:46,360 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncEELFjettylog]
+[35mdatarouter-prov    |[0m 09:11:46,360 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [jettylog] to ch.qos.logback.classic.AsyncAppender[asyncEELFjettylog]
+[35mdatarouter-prov    |[0m 09:11:46,361 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELFjettylog] - Attaching appender named [jettylog] to AsyncAppender.
+[35mdatarouter-prov    |[0m 09:11:46,361 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELFjettylog] - Setting discardingThreshold to 51
+[35mdatarouter-prov    |[0m 09:11:46,362 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.rolling.RollingFileAppender]
+[35mdatarouter-prov    |[0m 09:11:46,362 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [EELFDebug]
+[35mdatarouter-prov    |[0m 09:11:46,365 |-INFO in ch.qos.logback.core.rolling.FixedWindowRollingPolicy@3d680b5a - Will use zip compression
+[35mdatarouter-prov    |[0m 09:11:46,366 |-INFO in ch.qos.logback.core.joran.action.NestedComplexPropertyIA - Assuming default type [ch.qos.logback.classic.encoder.PatternLayoutEncoder] for [encoder] property
+[35mdatarouter-prov    |[0m 09:11:46,371 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[EELFDebug] - Active log file name: /opt/app/datartr/logs/debug.log
+[35mdatarouter-prov    |[0m 09:11:46,371 |-INFO in ch.qos.logback.core.rolling.RollingFileAppender[EELFDebug] - File property is set to [/opt/app/datartr/logs/debug.log]
+[35mdatarouter-prov    |[0m 09:11:46,372 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.classic.AsyncAppender]
+[35mdatarouter-prov    |[0m 09:11:46,372 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [asyncEELFDebug]
+[35mdatarouter-prov    |[0m 09:11:46,372 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [EELFDebug] to ch.qos.logback.classic.AsyncAppender[asyncEELFDebug]
+[35mdatarouter-prov    |[0m 09:11:46,372 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELFDebug] - Attaching appender named [EELFDebug] to AsyncAppender.
+[35mdatarouter-prov    |[0m 09:11:46,373 |-INFO in ch.qos.logback.classic.AsyncAppender[asyncEELFDebug] - Setting discardingThreshold to 51
+[35mdatarouter-prov    |[0m 09:11:46,374 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.att.eelf] to INFO
+[35mdatarouter-prov    |[0m 09:11:46,374 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf] to false
+[35mdatarouter-prov    |[0m 09:11:46,374 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELF] to Logger[com.att.eelf]
+[35mdatarouter-prov    |[0m 09:11:46,375 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.att.eelf.error] to ERROR
+[35mdatarouter-prov    |[0m 09:11:46,375 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf.error] to false
+[35mdatarouter-prov    |[0m 09:11:46,375 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELFError] to Logger[com.att.eelf.error]
+[35mdatarouter-prov    |[0m 09:11:46,375 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [log4j.logger.org.eclipse.jetty] to ERROR
+[35mdatarouter-prov    |[0m 09:11:46,375 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [log4j.logger.org.eclipse.jetty] to false
+[35mdatarouter-prov    |[0m 09:11:46,376 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELFjettylog] to Logger[log4j.logger.org.eclipse.jetty]
+[35mdatarouter-prov    |[0m 09:11:46,376 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.att.eelf.debug] to DEBUG
+[35mdatarouter-prov    |[0m 09:11:46,376 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting additivity of logger [com.att.eelf.debug] to false
+[35mdatarouter-prov    |[0m 09:11:46,376 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELFDebug] to Logger[com.att.eelf.debug]
+[35mdatarouter-prov    |[0m 09:11:46,376 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to INFO
+[35mdatarouter-prov    |[0m 09:11:46,377 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELF] to Logger[ROOT]
+[35mdatarouter-prov    |[0m 09:11:46,377 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELFError] to Logger[ROOT]
+[35mdatarouter-prov    |[0m 09:11:46,377 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELFjettylog] to Logger[ROOT]
+[35mdatarouter-prov    |[0m 09:11:46,377 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [asyncEELFDebug] to Logger[ROOT]
+[35mdatarouter-prov    |[0m 09:11:46,377 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+[35mdatarouter-prov    |[0m 09:11:46,378 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@470f1802 - Registering current configuration as safe fallback point
+[35mdatarouter-prov    |[0m 2021-05-21T09:11:47.042+0000 INIT [cadi] https.protocols set by cadi_protocols in CADI Properties
+[35mdatarouter-prov    |[0m 2021-05-21T09:11:47.043+0000 INIT [cadi] jdk.tls.client.protocols set from Default Protocols
+[35mdatarouter-prov    |[0m 2021-05-21T09:11:47.044+0000 INIT [cadi] Loading CADI Properties from /opt/app/osaaf/local/org.onap.dmaap-dr.location.props
+[35mdatarouter-prov    |[0m 2021-05-21T09:11:47.046+0000 INIT [cadi] Loading CADI Properties from /opt/app/osaaf/local/org.onap.dmaap-dr.cred.props
+[35mdatarouter-prov    |[0m 2021-05-21T09:11:47.047+0000 INIT [cadi] cadi_keyfile points to /opt/app/osaaf/local/org.onap.dmaap-dr.keyfile
+[35mdatarouter-prov    |[0m Server@42f33b5d{STARTED}[9.4.20.v20190813] - STARTED
+[35mdatarouter-prov    |[0m += QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  += ReservedThreadExecutor@4de41af9{s=0/4,p=0} - STARTED
+[35mdatarouter-prov    |[0m |  +> threads size=10
+[35mdatarouter-prov    |[0m |     +> 27 qtp1457263953-27 SELECTING RUNNABLE @ java.base@11.0.9.1/sun.nio.ch.EPoll.wait(Native Method)
+[35mdatarouter-prov    |[0m |     +> 23 qtp1457263953-23 SELECTING RUNNABLE @ java.base@11.0.9.1/sun.nio.ch.EPoll.wait(Native Method)
+[35mdatarouter-prov    |[0m |     +> 25 qtp1457263953-25 SELECTING RUNNABLE @ java.base@11.0.9.1/sun.nio.ch.EPoll.wait(Native Method)
+[35mdatarouter-prov    |[0m |     +> 29 qtp1457263953-29 IDLE TIMED_WAITING @ java.base@11.0.9.1/jdk.internal.misc.Unsafe.park(Native Method)
+[35mdatarouter-prov    |[0m |     +> 28 qtp1457263953-28-acceptor-0@27de7972-ServerConnector@1583741e{SSL,[ssl, http/1.1]}{0.0.0.0:8443} ACCEPTING RUNNABLE @ java.base@11.0.9.1/sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method) prio=3
+[35mdatarouter-prov    |[0m |     +> 24 qtp1457263953-24-acceptor-0@1889e92e-ServerConnector@27d5a580{HTTP/1.1,[http/1.1]}{0.0.0.0:8080} ACCEPTING RUNNABLE @ java.base@11.0.9.1/sun.nio.ch.ServerSocketChannelImpl.accept0(Native Method) prio=3
+[35mdatarouter-prov    |[0m |     +> 22 qtp1457263953-22 SELECTING RUNNABLE @ java.base@11.0.9.1/sun.nio.ch.EPoll.wait(Native Method)
+[35mdatarouter-prov    |[0m |     +> 26 qtp1457263953-26 IDLE TIMED_WAITING @ java.base@11.0.9.1/jdk.internal.misc.Unsafe.park(Native Method)
+[35mdatarouter-prov    |[0m |     +> 30 qtp1457263953-30 IDLE TIMED_WAITING @ java.base@11.0.9.1/jdk.internal.misc.Unsafe.park(Native Method)
+[35mdatarouter-prov    |[0m |     +> 31 qtp1457263953-31 IDLE TIMED_WAITING @ java.base@11.0.9.1/jdk.internal.misc.Unsafe.park(Native Method)
+[35mdatarouter-prov    |[0m += NCSARequestLog@56ace400{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  += RequestLogWriter@47404bea{STARTED} - STARTED
+[35mdatarouter-prov    |[0m += ServerConnector@27d5a580{HTTP/1.1,[http/1.1]}{0.0.0.0:8080} - STARTED
+[35mdatarouter-prov    |[0m |  +~ Server@42f33b5d{STARTED}[9.4.20.v20190813] - STARTED
+[35mdatarouter-prov    |[0m |  +~ QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  += ScheduledExecutorScheduler@305f7627{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  +- org.eclipse.jetty.io.ArrayByteBufferPool@5d018107
+[35mdatarouter-prov    |[0m |  += HttpConnectionFactory@16b2bb0c[HTTP/1.1] - STARTED
+[35mdatarouter-prov    |[0m |  |  +- HttpConfiguration@6cbcf243{32768/8192,8192/8192,https://:8443,[]}
+[35mdatarouter-prov    |[0m |  |     +> customizers size=0
+[35mdatarouter-prov    |[0m |  |     +> formEncodedMethods size=2
+[35mdatarouter-prov    |[0m |  |     |  +> POST
+[35mdatarouter-prov    |[0m |  |     |  +> PUT
+[35mdatarouter-prov    |[0m |  |     +> outputBufferSize=32768
+[35mdatarouter-prov    |[0m |  |     +> outputAggregationSize=8192
+[35mdatarouter-prov    |[0m |  |     +> requestHeaderSize=8192
+[35mdatarouter-prov    |[0m |  |     +> responseHeaderSize=8192
+[35mdatarouter-prov    |[0m |  |     +> headerCacheSize=4096
+[35mdatarouter-prov    |[0m |  |     +> secureScheme=https
+[35mdatarouter-prov    |[0m |  |     +> securePort=8443
+[35mdatarouter-prov    |[0m |  |     +> idleTimeout=-1
+[35mdatarouter-prov    |[0m |  |     +> blockingTimeout=-1
+[35mdatarouter-prov    |[0m |  |     +> sendDateHeader=false
+[35mdatarouter-prov    |[0m |  |     +> sendServerVersion=true
+[35mdatarouter-prov    |[0m |  |     +> sendXPoweredBy=false
+[35mdatarouter-prov    |[0m |  |     +> delayDispatchUntilContent=true
+[35mdatarouter-prov    |[0m |  |     +> persistentConnectionsEnabled=true
+[35mdatarouter-prov    |[0m |  |     +> maxErrorDispatches=10
+[35mdatarouter-prov    |[0m |  |     +> minRequestDataRate=0
+[35mdatarouter-prov    |[0m |  |     +> minResponseDataRate=0
+[35mdatarouter-prov    |[0m |  |     +> cookieCompliance=RFC6265
+[35mdatarouter-prov    |[0m |  |     +> setRequestCookieCompliance=RFC6265
+[35mdatarouter-prov    |[0m |  |     +> notifyRemoteAsyncErrors=true
+[35mdatarouter-prov    |[0m |  += SelectorManager@ServerConnector@27d5a580{HTTP/1.1,[http/1.1]}{0.0.0.0:8080} - STARTED
+[35mdatarouter-prov    |[0m |  |  += ManagedSelector@31e75d13{STARTED} id=0 keys=0 selected=0 updates=0 - STARTED
+[35mdatarouter-prov    |[0m |  |  |  += EatWhatYouKill@a5b0b86/SelectorProducer@4763c727/PRODUCING/p=false/QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}][pc=0,pic=0,pec=0,epc=0]@2021-05-21T09:11:50.091651Z - STARTED
+[35mdatarouter-prov    |[0m |  |  |  |  +- SelectorProducer@4763c727
+[35mdatarouter-prov    |[0m |  |  |  |  +~ QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  |  |  +> updates @ 2021-05-21T09:11:50.085603Z size=0
+[35mdatarouter-prov    |[0m |  |  |  +> keys @ 2021-05-21T09:11:50.08825Z size=0
+[35mdatarouter-prov    |[0m |  |  += ManagedSelector@72445aba{STARTED} id=1 keys=0 selected=0 updates=0 - STARTED
+[35mdatarouter-prov    |[0m |  |     += EatWhatYouKill@61bcd567/SelectorProducer@1c80e49b/PRODUCING/p=false/QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}][pc=0,pic=0,pec=0,epc=0]@2021-05-21T09:11:50.10787Z - STARTED
+[35mdatarouter-prov    |[0m |  |     |  +- SelectorProducer@1c80e49b
+[35mdatarouter-prov    |[0m |  |     |  +~ QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  |     +> updates @ 2021-05-21T09:11:50.095515Z size=0
+[35mdatarouter-prov    |[0m |  |     +> keys @ 2021-05-21T09:11:50.095848Z size=0
+[35mdatarouter-prov    |[0m |  +- sun.nio.ch.ServerSocketChannelImpl[/0.0.0.0:8080]
+[35mdatarouter-prov    |[0m |  +- qtp1457263953-24-acceptor-0@1889e92e-ServerConnector@27d5a580{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+[35mdatarouter-prov    |[0m += ServerConnector@1583741e{SSL,[ssl, http/1.1]}{0.0.0.0:8443} - STARTED
+[35mdatarouter-prov    |[0m |  +~ Server@42f33b5d{STARTED}[9.4.20.v20190813] - STARTED
+[35mdatarouter-prov    |[0m |  +~ QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  += ScheduledExecutorScheduler@458342d3{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  +- org.eclipse.jetty.io.ArrayByteBufferPool@15c25153
+[35mdatarouter-prov    |[0m |  += SslConnectionFactory@5b367418{SSL->HTTP/1.1} - STARTED
+[35mdatarouter-prov    |[0m |  |  += SslContextFactory@1fdfafd2[provider=null,keyStore=file:///opt/app/osaaf/local/org.onap.dmaap-dr.p12,trustStore=file:///opt/app/osaaf/local/org.onap.dmaap-dr.trust.jks] - STARTED
+[35mdatarouter-prov    |[0m |  |     +> trustAll=false
+[35mdatarouter-prov    |[0m |  |     +> Protocol Selections
+[35mdatarouter-prov    |[0m |  |     |  +> Enabled size=2
+[35mdatarouter-prov    |[0m |  |     |  |  +> TLSv1.1
+[35mdatarouter-prov    |[0m |  |     |  |  +> TLSv1.2
+[35mdatarouter-prov    |[0m |  |     |  +> Disabled size=4
+[35mdatarouter-prov    |[0m |  |     |     +> SSLv2Hello - ConfigExcluded:'SSLv2Hello', ConfigIncluded:NotSelected
+[35mdatarouter-prov    |[0m |  |     |     +> SSLv3 - ConfigExcluded:'SSLv3', ConfigIncluded:NotSelected JVM:disabled
+[35mdatarouter-prov    |[0m |  |     |     +> TLSv1 - ConfigIncluded:NotSelected
+[35mdatarouter-prov    |[0m |  |     |     +> TLSv1.3 - ConfigIncluded:NotSelected
+[35mdatarouter-prov    |[0m |  |     +> Cipher Suite Selections
+[35mdatarouter-prov    |[0m |  |        +> Enabled size=45
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_DSS_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_DSS_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_DSS_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_DSS_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_DSS_WITH_AES_256_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_DSS_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_RSA_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_RSA_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_EMPTY_RENEGOTIATION_INFO_SCSV
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_RSA_WITH_AES_128_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_RSA_WITH_AES_128_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_RSA_WITH_AES_128_GCM_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_RSA_WITH_AES_256_CBC_SHA
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_RSA_WITH_AES_256_CBC_SHA256
+[35mdatarouter-prov    |[0m |  |        |  +> TLS_RSA_WITH_AES_256_GCM_SHA384
+[35mdatarouter-prov    |[0m |  |        +> Disabled size=0
+[35mdatarouter-prov    |[0m |  += HttpConnectionFactory@36060e[HTTP/1.1] - STARTED
+[35mdatarouter-prov    |[0m |  |  +- HttpConfiguration@2692b61e{32768/8192,8192/8192,https://:8443,[]}
+[35mdatarouter-prov    |[0m |  |     +> customizers size=0
+[35mdatarouter-prov    |[0m |  |     +> formEncodedMethods size=2
+[35mdatarouter-prov    |[0m |  |     |  +> POST
+[35mdatarouter-prov    |[0m |  |     |  +> PUT
+[35mdatarouter-prov    |[0m |  |     +> outputBufferSize=32768
+[35mdatarouter-prov    |[0m |  |     +> outputAggregationSize=8192
+[35mdatarouter-prov    |[0m |  |     +> requestHeaderSize=8192
+[35mdatarouter-prov    |[0m |  |     +> responseHeaderSize=8192
+[35mdatarouter-prov    |[0m |  |     +> headerCacheSize=4096
+[35mdatarouter-prov    |[0m |  |     +> secureScheme=https
+[35mdatarouter-prov    |[0m |  |     +> securePort=8443
+[35mdatarouter-prov    |[0m |  |     +> idleTimeout=-1
+[35mdatarouter-prov    |[0m |  |     +> blockingTimeout=-1
+[35mdatarouter-prov    |[0m |  |     +> sendDateHeader=false
+[35mdatarouter-prov    |[0m |  |     +> sendServerVersion=true
+[35mdatarouter-prov    |[0m |  |     +> sendXPoweredBy=false
+[35mdatarouter-prov    |[0m |  |     +> delayDispatchUntilContent=true
+[35mdatarouter-prov    |[0m |  |     +> persistentConnectionsEnabled=true
+[35mdatarouter-prov    |[0m |  |     +> maxErrorDispatches=10
+[35mdatarouter-prov    |[0m |  |     +> minRequestDataRate=0
+[35mdatarouter-prov    |[0m |  |     +> minResponseDataRate=0
+[35mdatarouter-prov    |[0m |  |     +> cookieCompliance=RFC6265
+[35mdatarouter-prov    |[0m |  |     +> setRequestCookieCompliance=RFC6265
+[35mdatarouter-prov    |[0m |  |     +> notifyRemoteAsyncErrors=true
+[35mdatarouter-prov    |[0m |  += SelectorManager@ServerConnector@1583741e{SSL,[ssl, http/1.1]}{0.0.0.0:8443} - STARTED
+[35mdatarouter-prov    |[0m |  |  += ManagedSelector@7b64240d{STARTED} id=0 keys=0 selected=0 updates=0 - STARTED
+[35mdatarouter-prov    |[0m |  |  |  += EatWhatYouKill@62fad19/SelectorProducer@47dbb1e2/PRODUCING/p=false/QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}][pc=0,pic=0,pec=0,epc=0]@2021-05-21T09:11:50.158788Z - STARTED
+[35mdatarouter-prov    |[0m |  |  |  |  +- SelectorProducer@47dbb1e2
+[35mdatarouter-prov    |[0m |  |  |  |  +~ QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  |  |  +> updates @ 2021-05-21T09:11:50.153153Z size=0
+[35mdatarouter-prov    |[0m |  |  |  +> keys @ 2021-05-21T09:11:50.157736Z size=0
+[35mdatarouter-prov    |[0m |  |  += ManagedSelector@74cadd41{STARTED} id=1 keys=0 selected=0 updates=0 - STARTED
+[35mdatarouter-prov    |[0m |  |     += EatWhatYouKill@2e54db99/SelectorProducer@55e8ec2f/PRODUCING/p=false/QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}][pc=0,pic=0,pec=0,epc=0]@2021-05-21T09:11:50.161643Z - STARTED
+[35mdatarouter-prov    |[0m |  |     |  +- SelectorProducer@55e8ec2f
+[35mdatarouter-prov    |[0m |  |     |  +~ QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}] - STARTED
+[35mdatarouter-prov    |[0m |  |     +> updates @ 2021-05-21T09:11:50.160219Z size=0
+[35mdatarouter-prov    |[0m |  |     +> keys @ 2021-05-21T09:11:50.160633Z size=0
+[35mdatarouter-prov    |[0m |  +- sun.nio.ch.ServerSocketChannelImpl[/0.0.0.0:8443]
+[35mdatarouter-prov    |[0m |  +- qtp1457263953-28-acceptor-0@27de7972-ServerConnector@1583741e{SSL,[ssl, http/1.1]}{0.0.0.0:8443}
+[35mdatarouter-prov    |[0m += HandlerCollection@4f2613d1{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  += ContextHandlerCollection@6d24ffa1{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  |  += o.e.j.s.ServletContextHandler@1506f20f{/,null,AVAILABLE} - STARTED
+[35mdatarouter-prov    |[0m |  |     += ServletHandler@65a4798f{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  |     |  +> listeners ServletHandler@65a4798f{STARTED} size=0
+[35mdatarouter-prov    |[0m |  |     |  +> filters ServletHandler@65a4798f{STARTED} size=1
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.utils.ThrottleFilter-52de51b6@52de51b6==org.onap.dmaap.datarouter.provisioning.utils.ThrottleFilter,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |     +> org.onap.dmaap.datarouter.provisioning.utils.ThrottleFilter@773f7880
+[35mdatarouter-prov    |[0m |  |     |  +> filterMappings ServletHandler@65a4798f{STARTED} size=1
+[35mdatarouter-prov    |[0m |  |     |  |  +> [/publish/*]/[]/[REQUEST]=>org.onap.dmaap.datarouter.provisioning.utils.ThrottleFilter-52de51b6
+[35mdatarouter-prov    |[0m |  |     |  +> servlets ServletHandler@65a4798f{STARTED} size=11
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.FeedServlet-7e276594@36b66976==org.onap.dmaap.datarouter.provisioning.FeedServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.FeedServlet@350ec41e
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.FeedLogServlet-e84a8e1@e500e919==org.onap.dmaap.datarouter.provisioning.FeedLogServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.FeedLogServlet@69637b10
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.PublishServlet-56aaaecd@38c2099a==org.onap.dmaap.datarouter.provisioning.PublishServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.PublishServlet@71984c3
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.SubscribeServlet-5ddea849@48892f5b==org.onap.dmaap.datarouter.provisioning.SubscribeServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.SubscribeServlet@165b2f7f
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.StatisticsServlet-58fb7731@b5d6d6ab==org.onap.dmaap.datarouter.provisioning.StatisticsServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.StatisticsServlet@5536379e
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.SubLogServlet-349c1daf@e903b332==org.onap.dmaap.datarouter.provisioning.SubLogServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.SubLogServlet@277f7dd3
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.GroupServlet-aafcffa@411c3860==org.onap.dmaap.datarouter.provisioning.GroupServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.GroupServlet@6c8bca63
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.SubscriptionServlet-5f7b97da@40d6053f==org.onap.dmaap.datarouter.provisioning.SubscriptionServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.SubscriptionServlet@2364305a
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.InternalServlet-395b56bb@e37e417c==org.onap.dmaap.datarouter.provisioning.InternalServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.InternalServlet@470a696f
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.RouteServlet-315f43d5@630be5cd==org.onap.dmaap.datarouter.provisioning.RouteServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |  |  +> org.onap.dmaap.datarouter.provisioning.RouteServlet@1bc715b8
+[35mdatarouter-prov    |[0m |  |     |  |  +> org.onap.dmaap.datarouter.provisioning.DRFeedsServlet-640f11a1@abc8350==org.onap.dmaap.datarouter.provisioning.DRFeedsServlet,jsp=null,order=-1,inst=true,async=true - STARTED
+[35mdatarouter-prov    |[0m |  |     |  |     +> org.onap.dmaap.datarouter.provisioning.DRFeedsServlet@292d1c71
+[35mdatarouter-prov    |[0m |  |     |  +> servletMappings ServletHandler@65a4798f{STARTED} size=11
+[35mdatarouter-prov    |[0m |  |     |     +> [/feed/*]=>org.onap.dmaap.datarouter.provisioning.FeedServlet-7e276594
+[35mdatarouter-prov    |[0m |  |     |     +> [/feedlog/*]=>org.onap.dmaap.datarouter.provisioning.FeedLogServlet-e84a8e1
+[35mdatarouter-prov    |[0m |  |     |     +> [/publish/*]=>org.onap.dmaap.datarouter.provisioning.PublishServlet-56aaaecd
+[35mdatarouter-prov    |[0m |  |     |     +> [/subscribe/*]=>org.onap.dmaap.datarouter.provisioning.SubscribeServlet-5ddea849
+[35mdatarouter-prov    |[0m |  |     |     +> [/statistics/*]=>org.onap.dmaap.datarouter.provisioning.StatisticsServlet-58fb7731
+[35mdatarouter-prov    |[0m |  |     |     +> [/sublog/*]=>org.onap.dmaap.datarouter.provisioning.SubLogServlet-349c1daf
+[35mdatarouter-prov    |[0m |  |     |     +> [/group/*]=>org.onap.dmaap.datarouter.provisioning.GroupServlet-aafcffa
+[35mdatarouter-prov    |[0m |  |     |     +> [/subs/*]=>org.onap.dmaap.datarouter.provisioning.SubscriptionServlet-5f7b97da
+[35mdatarouter-prov    |[0m |  |     |     +> [/internal/*]=>org.onap.dmaap.datarouter.provisioning.InternalServlet-395b56bb
+[35mdatarouter-prov    |[0m |  |     |     +> [/internal/route/*]=>org.onap.dmaap.datarouter.provisioning.RouteServlet-315f43d5
+[35mdatarouter-prov    |[0m |  |     |     +> [/]=>org.onap.dmaap.datarouter.provisioning.DRFeedsServlet-640f11a1
+[35mdatarouter-prov    |[0m |  |     +> No ClassLoader
+[35mdatarouter-prov    |[0m |  |     +> eventListeners o.e.j.s.ServletContextHandler@1506f20f{/,null,AVAILABLE} size=0
+[35mdatarouter-prov    |[0m |  |     +> handler attributes o.e.j.s.ServletContextHandler@1506f20f{/,null,AVAILABLE} size=1
+[35mdatarouter-prov    |[0m |  |     |  +> org.eclipse.jetty.server.Executor=QueuedThreadPool[qtp1457263953]@56dc1551{STARTED,10<=10<=200,i=4,r=4,q=0}[ReservedThreadExecutor@4de41af9{s=0/4,p=0}]
+[35mdatarouter-prov    |[0m |  |     +> context attributes o.e.j.s.ServletContextHandler@1506f20f{/,null,AVAILABLE} size=1
+[35mdatarouter-prov    |[0m |  |     |  +> org.eclipse.jetty.util.DecoratedObjectFactory=org.eclipse.jetty.util.DecoratedObjectFactory[decorators=1]
+[35mdatarouter-prov    |[0m |  |     +> initparams o.e.j.s.ServletContextHandler@1506f20f{/,null,AVAILABLE} size=0
+[35mdatarouter-prov    |[0m |  += DefaultHandler@3f1c5af9{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |  += RequestLogHandler@1c55f277{STARTED} - STARTED
+[35mdatarouter-prov    |[0m |     +~ NCSARequestLog@56ace400{STARTED} - STARTED
+[35mdatarouter-prov    |[0m += ErrorHandler@5ddabb18{STARTED} - STARTED
+[35mdatarouter-prov    |[0m +> jdk.internal.loader.ClassLoaders$AppClassLoader@6356695f
+[35mdatarouter-prov    |[0m    +> jdk.internal.loader.ClassLoaders$PlatformClassLoader@3e8f7922
+[35mdatarouter-prov    |[0m key: +- bean, += managed, +~ unmanaged, +? auto, +: iterable, +] array, +@ map, +> undefined
