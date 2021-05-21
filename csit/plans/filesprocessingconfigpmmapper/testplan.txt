@@ -1,0 +1,3 @@
+# Test suites are relative paths under [dcaegen2/services/pm-mapper.git]/csit/tests/.
+# Place the suites in run order.
+filesprocessingconfigpmmapper
