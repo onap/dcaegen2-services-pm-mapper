@@ -15,7 +15,7 @@ ${NR_VALID_METADATA_PATH}                ${ASSETS_PATH}/valid_metadata.json
 ${CLI_EXEC_CLI_PM_LOG_CLEAR}             docker exec pmmapper /bin/sh -c "echo -n "" > /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1
 ${CLI_EXEC_LOGS_LIST}                    docker exec datarouter-node /bin/sh -c "ls /opt/app/datartr/logs"
-${DOCKER_CLIENT_IMAGE}                   nexus3.onap.org:10001/onap/org.onap.dcaegen2.services.pm-mapper:latest
+${DOCKER_CLIENT_IMAGE}                   onap/org.onap.dcaegen2.services.pm-mapper:latest
 ${CLIENT_CONTAINER_NAME}                 pmmapper
 ${FILE_PATH}                             ${ASSETS_PATH}/ABigFile.xml
 ${CONFIG_ENVS_1_1}                       ${ASSETS_PATH}/config_1_1.env

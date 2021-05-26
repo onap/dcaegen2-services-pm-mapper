@@ -6,6 +6,8 @@ class DockerContainerManager:
 
     def run_pmmapper_container(self, client_image, container_name, path_to_env, dr_node_ip, mr_ip):
         client = docker.from_env()
+        images = client.images.list()
+        print(images)
         environment = EnvsReader().read_env_list_from_file(path_to_env)
         environment.append("CONFIG_BINDING_SERVICE_SERVICE_HOST=172.18.0.5")
         environment.append("CONFIG_BINDING_SERVICE_SERVICE_PORT=10000")
