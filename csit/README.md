@@ -36,3 +36,9 @@ cd csit
 ./run-project-csit.sh
 ```
 
+To run any individual suite, use run-csit.sh with appropriate plans subdirectory, for example:
+
+```bash
+./run-csit.sh plans/pmmapper
+```
+

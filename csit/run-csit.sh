@@ -128,7 +128,7 @@ then
 fi
 
 if [ -z "$WORKSPACE" ]; then
-    export WORKSPACE=$(git rev-parse --show-toplevel)
+    export WORKSPACE=$(git rev-parse --show-toplevel)/csit
 fi
 
 if [ -f "${WORKSPACE}/${1}/testplan.txt" ]; then

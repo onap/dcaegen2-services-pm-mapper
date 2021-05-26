@@ -30,4 +30,6 @@ for dir in plans/*/
 do
     dir=${dir%*/}  # remove the trailing /
    ./run-csit.sh ${dir} ${TESTOPTIONS}
+   ((i+=$?))
 done
+exit $i
