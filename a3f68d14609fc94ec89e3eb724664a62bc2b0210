@@ -22,6 +22,30 @@
       "revId": "a3f68d14609fc94ec89e3eb724664a62bc2b0210",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69a6e8b_084bf54f",
+        "filename": "csit/tests/filesprocessingconfigpmmapper/filesprocessingconfigpmmapper.robot",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3949
+      },
+      "writtenOn": "2021-05-26T15:09:10Z",
+      "side": 1,
+      "message": "This is what I already tried in patch 6, and the result is what we see in https://jenkins.onap.org/job/dcaegen2-services-pm-mapper-review-verification-maven-master/3/\n\nAlso, the removal worked for me locally, it only fails in Jenkins (!?)",
+      "parentUuid": "e3182f12_3d7acee1",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 63
+      },
+      "revId": "a3f68d14609fc94ec89e3eb724664a62bc2b0210",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
