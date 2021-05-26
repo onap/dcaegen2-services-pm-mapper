@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3182f12_3d7acee1",
+        "filename": "csit/tests/filesprocessingconfigpmmapper/filesprocessingconfigpmmapper.robot",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2021-05-26T14:54:47Z",
+      "side": 1,
+      "message": "My guess would be that we need to remove the repo here (to supress image pull) as the mvn job tags images as\nonap/org.onap.dcaegen2.services.pm-mapper:latest\n\nWe\u0027ll fix that in another commit.",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 63
+      },
+      "revId": "a3f68d14609fc94ec89e3eb724664a62bc2b0210",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
