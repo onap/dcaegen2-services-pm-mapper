@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9ccf43_22941dac",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-26T06:43:39Z",
+      "side": 1,
+      "message": "Please add tag \"latest\" to keep common image style",
+      "range": {
+        "startLine": 5,
+        "startChar": 58,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "8bdfd88f6e366b7cbce612f2ad78748a7229cd96",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200a1021_dc51e533",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-26T06:43:39Z",
+      "side": 1,
+      "message": "\"latest\" as above",
+      "range": {
+        "startLine": 29,
+        "startChar": 57,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "8bdfd88f6e366b7cbce612f2ad78748a7229cd96",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f37a2c_30e23588",
+        "filename": "csit/plans/pmmapper/docker-compose.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-26T06:43:39Z",
+      "side": 1,
+      "message": "\"latest\"",
+      "revId": "8bdfd88f6e366b7cbce612f2ad78748a7229cd96",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc461a57_b05c38ee",
+        "filename": "csit/plans/pmmapper/docker-compose.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-26T06:43:39Z",
+      "side": 1,
+      "message": "\"latest\"",
+      "revId": "8bdfd88f6e366b7cbce612f2ad78748a7229cd96",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
