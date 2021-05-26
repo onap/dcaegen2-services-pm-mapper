@@ -1,2 +1,3 @@
 env.properties
 archives/
+*.pyc
