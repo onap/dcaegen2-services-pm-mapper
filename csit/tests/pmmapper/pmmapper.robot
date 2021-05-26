@@ -186,6 +186,9 @@ CheckLog
     [Arguments]                     ${cli_exec_log_Path}             ${string_to_check_in_log}
     ${cli_cmd_output}=              Run Process                      ${cli_exec_log_Path}                     shell=yes
     Log                             ${cli_cmd_output.stdout}
+    Log To Console                  STDOUT: ${cli_cmd_output.stdout}
+    Log To Console                  STDERR: ${cli_cmd_output.stderr}
+    Log To Console                  RC: ${cli_cmd_output.rc}
     Should Be Equal As Strings      ${cli_cmd_output.rc}             0
     Should Contain                  ${cli_cmd_output.stdout}         ${string_to_check_in_log}
 
