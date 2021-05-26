@@ -78,6 +78,18 @@ for i in {1..5}; do
 done
 [ "$containers_ok" = "false" ] && echo "Error: required container not running." && exit 1
 
+#Data Router healthcheck
+for i in $(seq 10); do
+  curl -sf 'http://localhost:8080/internal/prov' -o /dev/null
+  curl_status=$?
+  if [ curl_status -eq 0 ]; then
+      break
+    else
+      sleep 2
+  fi
+done
+
+
 # Data Router Configuration.
 docker exec -i datarouter-prov sh -c \
     "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$GATEWAY_IP"
