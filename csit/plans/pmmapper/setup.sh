@@ -70,7 +70,7 @@ for i in {1..5}; do
     fi
 done
 [ "$containers_ok" = "false" ] && echo "Error: required container not running." && exit 1
-
+sleep 20
 # Data Router Configuration.
 docker exec -i datarouter-prov sh -c \
     "curl -k  -X PUT https://$DR_PROV_IP:8443/internal/api/NODES?val=dmaap-dr-node\|$GATEWAY_IP"

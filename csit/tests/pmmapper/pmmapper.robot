@@ -37,6 +37,8 @@ ${CLI_EXEC_PM_FILTER_regex}              curl 'http://${CONSUL_IP}:8500/v1/kv/pm
 ${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_MR_LOG}                            cat /tmp/mr.log
 
+${CLI_EXEC_LOGS_LIST}                    docker exec datarouter-node /bin/sh -c "ls /opt/app/datartr/logs"
+
 
 *** Test Cases ***
 Verify PM Mapper Receive Configuraton From Config Binding Service
@@ -199,3 +201,17 @@ ClearLogs
 CleanSessionsAndLogs
     Delete All Sessions
     ClearLogs
+
+
+GetLogsOutput
+    ${filesString}=                   Run Process                      ${CLI_EXEC_LOGS_LIST}                     shell=yes
+    ${filesList}=                     Get Log Files List               ${filesString.stdout}
+    ${output}=                        Set Variable                     ${EMPTY}
+    FOR                               ${file}                          IN                                        @{filesList}
+                                      ${file_path}=                    Catenate                                  SEPARATOR=    "cat /opt/app/datartr/logs/      ${file}       "
+                                      ${exec}=                         Catenate                                  docker exec datarouter-node /bin/sh -c      ${file_path}
+                                      ${single_file}=                  Run Process                               ${exec}         shell=yes
+                                      ${output}=                       Catenate                                  SEPARATOR=\n         ${output}                  ${single_file.stdout}
+                                      Log                              ${output}
+    END
+    [Return]                          ${output}
