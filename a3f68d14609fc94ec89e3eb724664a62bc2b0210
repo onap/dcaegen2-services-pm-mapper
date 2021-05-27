@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "53e4bccb_247d499d",
+        "filename": "csit/plans/pmmapper/docker-compose.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-27T06:25:58Z",
+      "side": 1,
+      "message": "nexus3.onap.org:10001/node:10-slim\nTo avoid docker pull limit request.",
+      "revId": "a3f68d14609fc94ec89e3eb724664a62bc2b0210",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9d2ed6_15a2e9b1",
+        "filename": "csit/plans/pmmapper/docker-compose.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-27T06:25:58Z",
+      "side": 1,
+      "message": "nexus3.onap.org:10001/mariadb:10.2.14\nTo avoid docker pull limit request",
+      "revId": "a3f68d14609fc94ec89e3eb724664a62bc2b0210",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3182f12_3d7acee1",
         "filename": "csit/tests/filesprocessingconfigpmmapper/filesprocessingconfigpmmapper.robot",
         "patchSetId": 8
