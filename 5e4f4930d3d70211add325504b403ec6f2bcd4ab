@@ -22,6 +22,30 @@
       "revId": "5e4f4930d3d70211add325504b403ec6f2bcd4ab",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fcaa77_d257bd59",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2021-05-28T14:08:31Z",
+      "side": 1,
+      "message": "I agree with You that sleep is bad practice. I guess that is DMAAP problem which is \"running\" ... but not ready to receive requests.\nI will try to use dmaap healthcheck in other MR.",
+      "parentUuid": "40977459_0ebe7ca4",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 8
+      },
+      "revId": "5e4f4930d3d70211add325504b403ec6f2bcd4ab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
