@@ -71,7 +71,16 @@ for i in {1..5}; do
 done
 [ "$containers_ok" = "false" ] && echo "Error: required container not running." && exit 1
 
-sleep 10
+for i in $(seq 10); do
+  curl -sf 'http://localhost:8080/internal/prov' -o /dev/null
+if [ $? -eq 0 ]; then
+      echo "UP"
+      break
+    else
+      echo "Waiting.."
+      sleep 2
+fi
+done
 
 # Data Router Configuration.
 docker exec -i datarouter-prov sh -c \
