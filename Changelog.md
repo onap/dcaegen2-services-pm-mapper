@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Update io.undertow:undertow-core to version 2.2.9.Final
 - Update org.freemarker:freemarker to version 2.3.31
+- Update oparent to version 3.2.0
 
 ## [1.6.0] - 16/04/2021
 ### Changed
