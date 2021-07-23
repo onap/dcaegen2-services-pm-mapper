@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.0]
+### Changed
+- Update io.undertow:undertow-core to version 2.2.9.Final
+- Update org.freemarker:freemarker to version 2.3.31
+
 ## [1.6.0] - 16/04/2021
 ### Changed
 - Utilize DMaaP-Client in PM-Mapper
