@@ -1,0 +1,11 @@
+#!/bin/bash
+
+export GATEWAY_IP=172.18.0.1
+export DR_NODE_IP=172.18.0.2
+export DR_PROV_IP=172.18.0.3
+export CONSUL_IP=172.18.0.4
+export CBS_IP=172.18.0.5
+export MARIADB_IP=172.18.0.6
+export NODE_IP=172.18.0.7
+export PMMAPPER_IP=172.18.0.8
+export FILES_PUBLISHER_IP=172.18.0.9

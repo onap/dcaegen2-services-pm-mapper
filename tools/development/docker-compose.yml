@@ -1,0 +1,116 @@
+version: '3.3'
+
+services:
+  datarouter-prov:
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov
+    container_name: datarouter-prov
+    hostname: dmaap-dr-prov
+    ports:
+     - "443:8443"
+     - "8443:8443"
+     - "8080:8080"
+    volumes:
+     - ./dr-mount/provserver.properties:/opt/app/datartr/etc/provserver.properties
+    depends_on:
+      - mariadb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://dmaap-dr-prov:8080/internal/prov"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      pmmapper-network:
+        ipv4_address: $DR_PROV_IP
+    extra_hosts:
+      - "dmaap-dr-node:$DR_NODE_IP"
+      - "dcae-pm-mapper:$PMMAPPER_IP"
+
+  datarouter-node:
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node
+    container_name: datarouter-node
+    hostname: dmaap-dr-node
+    ports:
+     - "9443:8443"
+     - "9090:8080"
+    volumes:
+     - ./dr-mount/node.properties:/opt/app/datartr/etc/node.properties
+    depends_on:
+      - datarouter-prov
+    networks:
+      pmmapper-network:
+        ipv4_address: $DR_NODE_IP
+    extra_hosts:
+      - "dmaap-dr-prov:$DR_PROV_IP"
+      - "dcae-pm-mapper:$PMMAPPER_IP"
+
+  node:
+    image: nexus3.onap.org:10001/node:10-slim
+    container_name: mr-simulator
+    volumes:
+      - ./message-router/mrserver.js:/tmp/mrserver.js
+    command:
+      nodejs /tmp/mrserver.js
+    networks:
+      pmmapper-network:
+        ipv4_address: $NODE_IP
+
+  mariadb:
+    image: nexus3.onap.org:10001/mariadb:10.2.14
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: datarouter
+      MYSQL_DATABASE: datarouter
+      MYSQL_USER: datarouter
+      MYSQL_PASSWORD: datarouter
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--silent"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    networks:
+      pmmapper-network:
+        ipv4_address: $MARIADB_IP
+
+  consul:
+    container_name: consul
+    image: nexus3.onap.org:10001/consul:latest
+    ports:
+    - "8500:8500"
+    networks:
+      pmmapper-network:
+        ipv4_address: $CONSUL_IP
+
+  cbs:
+    container_name: cbs
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest
+    environment:
+       CONSUL_HOST: $CONSUL_IP
+    networks:
+      pmmapper-network:
+        ipv4_address: $CBS_IP
+
+
+  files-publisher:
+    container_name: files-publisher
+    build:
+      context: .
+      dockerfile: files-publisher/Dockerfile
+    volumes:
+    - ./files-publisher/files/:/files/
+    extra_hosts:
+      - "dmaap-dr-prov:$DR_PROV_IP"
+      - "dmaap-dr-node:$DR_NODE_IP"
+    networks:
+      pmmapper-network:
+        ipv4_address: $FILES_PUBLISHER_IP
+
+
+networks:
+  pmmapper-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
