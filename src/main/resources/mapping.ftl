@@ -115,7 +115,7 @@
 
 <#macro measDataCollection>
 {
-    "granularityPeriod": ${measData.measInfo.granPeriod.@endTime[0]!?datetime?long?c},
+    "granularityPeriod": ${measData.measInfo.granPeriod.@durationInSeconds[0]!?number},
     "measuredEntityUserName": "${measData.managedElement.@userLabel[0]!}",
     "measuredEntityDn": "${measData.managedElement.@localDn[0]!}",
     "measuredEntitySoftwareVersion": "${measData.managedElement.@swVersion[0]!}",

@@ -72,7 +72,7 @@ public class Mapper {
     }
     private void addTemplate(Path template, Configuration config) {
         logger.unwrap().debug("Loading template from {}", template.toString());
-        try (InputStreamReader templateInputStreamReader = new InputStreamReader(Files.newInputStream(template))){
+        try (InputStreamReader templateInputStreamReader = new InputStreamReader(Files.newInputStream(template))) {
             templates.put(template.getFileName().toString(), new Template(template.getFileName().toString(), templateInputStreamReader, config, StandardCharsets.UTF_8.name()));
         } catch (IOException exception) {
             logger.unwrap().error("Failed to read template from location {}", template, exception);
@@ -100,7 +100,7 @@ public class Mapper {
         mappingData.put("eventId", makeEventId());
         StringWriter mappedOutputWriter = new StringWriter();
         Template template = Optional.ofNullable(templates.get(event.getMetadata().getFileFormatType()))
-                                    .orElseThrow(() -> new TemplateIdentificationException("Failed to identify template"));
+                .orElseThrow(() -> new TemplateIdentificationException("Failed to identify template"));
         try {
             template.process(mappingData, mappedOutputWriter);
         } catch (IOException | TemplateException exception) {
@@ -111,7 +111,7 @@ public class Mapper {
         return mappedOutputWriter.toString();
     }
 
-    private String makeEventId(){
+    private String makeEventId() {
         return UUID.randomUUID().toString();
     }
 
