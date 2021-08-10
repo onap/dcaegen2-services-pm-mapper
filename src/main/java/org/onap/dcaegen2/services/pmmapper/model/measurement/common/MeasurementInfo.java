@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2020 Nordix Foundation.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,6 +64,10 @@ public class MeasurementInfo {
         @XmlAttribute(name = "endTime", required = true)
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar endTime;
+        @XmlAttribute(name = "durationInSeconds", required = true)
+        protected int getDurationInSeconds() {
+            return duration.getSeconds();
+        }
     }
 
 
