@@ -383,6 +383,7 @@
                 <version>${surefire.version}</version>
                 <configuration combine.self="override">
                     <useSystemClassLoader>false</useSystemClassLoader>
+                    <threadCount>1</threadCount>
                 </configuration>
             </plugin>
             <plugin>
