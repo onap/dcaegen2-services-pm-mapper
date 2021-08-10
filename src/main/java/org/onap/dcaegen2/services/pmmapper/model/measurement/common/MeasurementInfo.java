@@ -63,6 +63,10 @@ public class MeasurementInfo {
         @XmlAttribute(name = "endTime", required = true)
         @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar endTime;
+        @XmlAttribute(name = "durationInSeconds", required = true)
+        protected int getDurationInSeconds() {
+            return duration.getSeconds();
+        }
     }
 
 
