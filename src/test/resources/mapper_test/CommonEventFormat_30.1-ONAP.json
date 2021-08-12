@@ -1454,9 +1454,10 @@
           ]
         },
         "measTypes": {
+          "description": "types of measurement",
           "oneOf": [
-            { "$ref": "#/definitions/measTypesInteger" },
-            { "$ref": "#/definitions/measTypesString" }
+            {"$ref": "#/definitions/measTypesListString"},
+            {"$ref": "#/definitions/measTypesListInteger"}
           ]
         },
         "measValuesList": {
@@ -1553,29 +1554,65 @@
       "additionalProperties": false,
       "required": ["p", "sValue"]
     },
+    "measTypesListString": {
+      "description": "array of string types",
+      "type": "object",
+      "properties":  {
+        "sMeasTypesList": {
+          "description": "array of types",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/measTypesString"
+          }
+        }
+      },
+      "required": [ "sMeasTypesList"]
+    },
+    "measTypesListInteger": {
+      "description": "array of integer types",
+      "type": "object",
+      "properties":  {
+        "iMeasTypesList": {
+          "description": "array of types",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/measTypesInteger"
+          }
+        }
+      },
+      "required": [ "iMeasTypesList"]
+    },
     "measTypesInteger": {
-      "description": "object containing an array of integer measurement identifiers associated with the measurement results",
+      "description": "integer type associated with the measurement results",
       "type": "object",
       "properties": {
-        "iMeasTypesList": {
-          "type": "array",
-          "items": { "type": "integer" }
+        "p": {
+          "description": "integer reference to the counter",
+          "type": "integer"
+        },
+        "iValue": {
+          "description": "integer counter value",
+          "type": "integer"
         }
       },
       "additionalProperties": false,
-      "required": ["iMeasTypesList"]
+      "required": ["p", "iValue"]
     },
     "measTypesString": {
-      "description": "object containing an array of string measurement identifiers associated with the measurement results",
+      "description": "string type associated with the measurement results",
       "type": "object",
       "properties": {
-        "sMeasTypesList": {
-          "type": "array",
-          "items": { "type": "string" }
+        "p": {
+          "description": "integer reference to the counter",
+          "type": "integer"
+        },
+        "sValue": {
+          "description": "string counter value",
+          "type": "string"
         }
       },
       "additionalProperties": false,
-      "required": ["sMeasTypesList"]
+      "required": ["p", "sValue"]
     },
     "measurementFields": {
       "description": "measurement fields",

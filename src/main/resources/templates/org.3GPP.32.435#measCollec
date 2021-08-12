@@ -56,11 +56,17 @@
     "sMeasTypesList":[
      <#if measInfo.measType?has_content>
        <#list measInfo.measType as measType>
-       "${measType}"<#sep>,</#sep>
+            {
+                "p": ${measType.@p},
+                "sValue": "${measType}"
+            }<#sep>,</#sep>
        </#list>
      <#else>
        <#list measInfo.measTypes?split(" ") as measType>
-       "${measType}"<#sep>,</#sep>
+            {
+                "p": ${measType?index+1},
+                "sValue": "${measType}"
+            }<#sep>,</#sep>
    </#list>
  </#if>
     ]
