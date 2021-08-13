@@ -86,7 +86,7 @@ public class RequestSenderTests {
         String result = new RequestSender().send(url);
 
         client.verify(req, VerificationTimes.atLeast(1));
-        assertEquals(result, "ResponseBody");
+        assertEquals("ResponseBody", result);
         assertTrue(logAppender.list.get(1).getMessage().contains("Sending"));
         assertTrue(logAppender.list.get(2).getMessage().contains("Received"));
         logAppender.stop();

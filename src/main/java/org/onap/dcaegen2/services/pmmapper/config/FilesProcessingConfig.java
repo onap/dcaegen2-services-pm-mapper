@@ -35,6 +35,7 @@ public class FilesProcessingConfig {
     private static final int DEFAULT_LIMIT_RATE = 1;
     private static final String ENV_THREADS_MULTIPLIER = "THREADS_MULTIPLIER";
     private static final String ENV_PROCESSING_THREADS_COUNT = "PROCESSING_THREADS_COUNT";
+    private static final String ENV_VARIABLE_INCORRECT_MSG = " environment variable has incorrect value.\n";
     private static final int DEFAULT_MULTIPLIER = 1;
 
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(
@@ -61,7 +62,7 @@ public class FilesProcessingConfig {
                 .orElseGet(this::getDefaultLimitRate);
         } catch (NumberFormatException exception) {
             throw new EnvironmentConfigException(
-                ENV_LIMIT_RATE + " environment variable has incorrect value.\n"
+                    ENV_LIMIT_RATE + ENV_VARIABLE_INCORRECT_MSG
                     , exception);
         }
     }
@@ -88,7 +89,7 @@ public class FilesProcessingConfig {
 
     private Integer parseIntegerValue(String val) throws NumberFormatException {
         Integer value = Integer.valueOf(val);
-        logger.unwrap().info(ENV_LIMIT_RATE + " value is: " + value);
+        logger.unwrap().info(ENV_LIMIT_RATE + " value is: {}", value);
         return value;
     }
 
@@ -104,7 +105,7 @@ public class FilesProcessingConfig {
                 .orElseGet(this::getDefaultMultiplier);
         } catch (NumberFormatException exception) {
             throw new EnvironmentConfigException(
-                ENV_THREADS_MULTIPLIER + " environment variable has incorrect value.\n", exception);
+                    ENV_THREADS_MULTIPLIER + ENV_VARIABLE_INCORRECT_MSG, exception);
         }
     }
 
@@ -121,14 +122,14 @@ public class FilesProcessingConfig {
                 .orElseGet(this::getDefaultThreadsCount);
         } catch (NumberFormatException exception) {
             throw new EnvironmentConfigException(
-                ENV_PROCESSING_THREADS_COUNT + " environment variable has incorrect value.\n", exception);
+                    ENV_PROCESSING_THREADS_COUNT + ENV_VARIABLE_INCORRECT_MSG, exception);
         }
     }
 
     private int getDefaultThreadsCount() {
         int defaultThreadsCount = Runtime.getRuntime().availableProcessors();
         logger.unwrap().info(ENV_PROCESSING_THREADS_COUNT +
-                " env not present. Setting threads count to available cores: " + defaultThreadsCount);
+                " env not present. Setting threads count to available cores: {}", defaultThreadsCount);
         return defaultThreadsCount;
     }
 }

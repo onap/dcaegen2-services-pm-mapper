@@ -211,7 +211,7 @@ public class App {
     private boolean isCached(String id) {
         boolean isPresent = eventsCache.contains(id);
         if(isPresent) {
-            logger.unwrap().info("Skipping. This event is already waiting in cache to be processed: " + id);
+            logger.unwrap().info("Skipping. This event is already waiting in cache to be processed: {}", id);
         }
         return isPresent;
     }

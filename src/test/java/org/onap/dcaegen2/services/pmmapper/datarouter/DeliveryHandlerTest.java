@@ -125,10 +125,10 @@ class DeliveryHandlerTest {
         objUnderTest.handleRequest(httpServerExchange);
         verify(eventReceiver, times(1)).receive(any(Event.class));
 
-        assertEquals(logAppender.list.get(0).getMarker().getName(), "ENTRY");
+        assertEquals("ENTRY", logAppender.list.get(0).getMarker().getName());
         assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("InvocationID"));
         assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("RequestID"));
-        assertEquals(logAppender.list.get(1).getMarker().getName(), "EXIT");
+        assertEquals("EXIT", logAppender.list.get(1).getMarker().getName());
         logAppender.stop();
     }
 }

@@ -42,7 +42,7 @@ public class MeasFilterConfigAdapter extends TypeAdapter<MeasFilterConfig> {
 
     @Override
     public MeasFilterConfig read(JsonReader jsonReader) throws IOException {
-        JsonElement rootElement = new JsonParser().parse(jsonReader);
+        JsonElement rootElement = JsonParser.parseReader(jsonReader);
         if (rootElement.isJsonObject()) {
             logger.unwrap().debug("Reading filter as an object.");
             return new Gson().fromJson(rootElement, MeasFilterConfig.class);

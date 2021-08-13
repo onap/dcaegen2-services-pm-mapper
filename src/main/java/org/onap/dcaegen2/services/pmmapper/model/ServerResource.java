@@ -32,19 +32,21 @@ public abstract class ServerResource implements HttpHandler {
 
     /**
      * Creates a new server resource with a custom method and endpoint.
+     *
      * @param httpMethod Method that the resource should be accessible by.
      * @param endpointTemplate Endpoint that the resource should be accessible by.
      */
-    public ServerResource(String httpMethod, String endpointTemplate) {
+    protected ServerResource(String httpMethod, String endpointTemplate) {
         this.httpMethod = httpMethod;
         this.endpointTemplate = endpointTemplate;
     }
 
     /**
      * Creates a new server resource with a custom endpoint and method 'get'.
+     *
      * @param endpointTemplate Endpoint that the resource should be accessible by.
      */
-    public ServerResource(String endpointTemplate) {
+    protected ServerResource(String endpointTemplate) {
         this.httpMethod = GET_STRING;
         this.endpointTemplate = endpointTemplate;
     }
