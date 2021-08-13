@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,20 +64,23 @@ class MeasFilterConfigAdapterTest {
     @Test
     void testInvalidConfigObject() throws IOException {
         String filter = "{\"filters\": \"invalid\"}";
-        assertThrows(JsonSyntaxException.class, () -> objUnderTest.read(new JsonReader(new StringReader(filter))));
+        JsonReader jsonReader = new JsonReader(new StringReader(filter));
+        assertThrows(JsonSyntaxException.class, () -> objUnderTest.read(jsonReader));
     }
 
     @Test
     void testInvalidConfigString() throws IOException {
-        String filter ="\"{\\\"filters\\\": [{\"pmDefVsn\":\\\"V9\\\", \\\"nfType\\\": \\\"NrRadio\\\"," +
+        String filter = "\"{\\\"filters\\\": [{\"pmDefVsn\":\\\"V9\\\", \\\"nfType\\\": \\\"NrRadio\\\"," +
                 "\\\"vendor\\\": \\\"Ericsson\\\", \\\"measTypes\\\": [\\\"A\\\", \\\"B\\\"]}]}\"";
-        assertThrows(JsonSyntaxException.class, () -> objUnderTest.read(new JsonReader(new StringReader(filter))));
+        JsonReader jsonReader = new JsonReader(new StringReader(filter));
+        assertThrows(JsonSyntaxException.class, () -> objUnderTest.read(jsonReader));
     }
 
     @Test
     void testUnsupportedJSONType() throws IOException {
         String filter = "[]";
-        assertThrows(UnsupportedOperationException.class, () -> objUnderTest.read(new JsonReader(new StringReader(filter))));
+        JsonReader jsonReader = new JsonReader(new StringReader(filter));
+        assertThrows(UnsupportedOperationException.class, () -> objUnderTest.read(jsonReader));
     }
 
     @Test

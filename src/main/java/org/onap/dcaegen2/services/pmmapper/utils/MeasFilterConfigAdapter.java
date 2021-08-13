@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +43,7 @@ public class MeasFilterConfigAdapter extends TypeAdapter<MeasFilterConfig> {
 
     @Override
     public MeasFilterConfig read(JsonReader jsonReader) throws IOException {
-        JsonElement rootElement = new JsonParser().parse(jsonReader);
+        JsonElement rootElement = JsonParser.parseReader(jsonReader);
         if (rootElement.isJsonObject()) {
             logger.unwrap().debug("Reading filter as an object.");
             return new Gson().fromJson(rootElement, MeasFilterConfig.class);

@@ -2,6 +2,7 @@
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
  *  Copyright (C) 2021 Nokia.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +31,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.gson.Gson;
+
 import freemarker.core.Environment;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -59,6 +61,7 @@ import org.onap.dcaegen2.services.pmmapper.model.Event;
 import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.powermock.reflect.Whitebox;
+
 import utils.ArgumentCreator;
 import utils.EventUtils;
 
@@ -74,8 +77,8 @@ class MapperTest {
 
     private static final Path schema = Paths.get("src/test/resources/mapper_test/CommonEventFormat_30.1-ONAP.json");
     private static final Path METADATA_DIRECTORY = Paths.get("src/test/resources/metadata/");
-    private static final Path FIFTH_GENERATION_METADATA = Paths.get(METADATA_DIRECTORY.toString()+"/valid_5g_metadata.json");
-    private static final Path FOURTH_GENERATION_METADATA = Paths.get(METADATA_DIRECTORY.toString()+"/valid_4g_metadata.json");
+    private static final Path FIFTH_GENERATION_METADATA = Paths.get(METADATA_DIRECTORY.toString() + "/valid_5g_metadata.json");
+    private static final Path FOURTH_GENERATION_METADATA = Paths.get(METADATA_DIRECTORY.toString() + "/valid_4g_metadata.json");
     private static final Path TEMPLATES_DIRECTORY = Paths.get("src/main/resources/templates/");
     private static final Path dataDirectory = Paths.get("src/test/resources/mapper_test/mapping_data/");
 
@@ -88,7 +91,7 @@ class MapperTest {
         String fourthGenMetadataFileContents = new String(Files.readAllBytes(FOURTH_GENERATION_METADATA));
         fourthGenerationMetadata = new Gson().fromJson(fourthGenMetadataFileContents, EventMetadata.class);
         String fifthGenMetadataFileContents = new String(Files.readAllBytes(FIFTH_GENERATION_METADATA));
-        fifthGenerationMetadata =  new Gson().fromJson(fifthGenMetadataFileContents, EventMetadata.class);
+        fifthGenerationMetadata = new Gson().fromJson(fifthGenMetadataFileContents, EventMetadata.class);
         converter = new MeasConverter();
     }
 
@@ -131,25 +134,27 @@ class MapperTest {
 
     @Test
     void testFailureToParseLte() {
-        assertThrows(MappingException.class, () ->
-                objUnderTest.map(EventUtils.makeMockEvent("not xml", fourthGenerationMetadata)));
+        assertThrows(MappingException.class, () -> EventUtils.makeMockEvent("not xml", fourthGenerationMetadata));
     }
 
     @Test
     void testFailureToParseNr() {
-        assertThrows(MappingException.class, () ->
-                 objUnderTest.map(EventUtils.makeMockEvent("not xml", fifthGenerationMetadata)));
+        assertThrows(MappingException.class, () -> EventUtils.makeMockEvent("not xml", fifthGenerationMetadata));
     }
 
     @Test
     void testInvalidPath() {
-        assertThrows(IllegalArgumentException.class, () -> new Mapper(Paths.get("not a path"),converter));
+        Path path = Paths.get("not a path");
+        assertThrows(IllegalArgumentException.class, () -> new Mapper(path, converter));
     }
 
     @Test
     void testInvalidTemplateDirectory() {
-        assertThrows(IllegalArgumentException.class, () -> new Mapper(Paths.get("fake dir"), new MeasConverter()));
+        Path path = Paths.get("fake dir");
+        MeasConverter measConverter = new MeasConverter();
+        assertThrows(IllegalArgumentException.class, () -> new Mapper(path, measConverter));
     }
+
     @Test
     void testTemplateNotFound() {
         EventMetadata testMetadata = mock(EventMetadata.class);
@@ -161,7 +166,7 @@ class MapperTest {
 
     @Test
     void testNullPath() {
-        assertThrows(NullPointerException.class, () -> new Mapper(null,converter));
+        assertThrows(NullPointerException.class, () -> new Mapper(null, converter));
     }
 
     @Test
@@ -176,8 +181,8 @@ class MapperTest {
 
     static List<Arguments> getValidEvents() {
         ArgumentCreator creator = (Path path, EventMetadata metadata) -> {
-            Path testEventPath = Paths.get(path.toString()+"/test.xml");
-            Path metadataPath = Paths.get(path.toString()+"/metadata.json");
+            Path testEventPath = Paths.get(path.toString() + "/test.xml");
+            Path metadataPath = Paths.get(path.toString() + "/metadata.json");
             EventMetadata eventMetadata = null;
             try {
                 eventMetadata = new Gson().fromJson(new String(Files.readAllBytes(metadataPath)), EventMetadata.class);

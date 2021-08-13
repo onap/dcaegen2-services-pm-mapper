@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -125,10 +126,10 @@ class DeliveryHandlerTest {
         objUnderTest.handleRequest(httpServerExchange);
         verify(eventReceiver, times(1)).receive(any(Event.class));
 
-        assertEquals(logAppender.list.get(0).getMarker().getName(), "ENTRY");
+        assertEquals("ENTRY", logAppender.list.get(0).getMarker().getName());
         assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("InvocationID"));
         assertNotNull(logAppender.list.get(0).getMDCPropertyMap().get("RequestID"));
-        assertEquals(logAppender.list.get(1).getMarker().getName(), "EXIT");
+        assertEquals("EXIT", logAppender.list.get(1).getMarker().getName());
         logAppender.stop();
     }
 }
