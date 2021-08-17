@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4c6b101_b1e7e734",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/model/measurement/common/MeasurementInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5335
+      },
+      "writtenOn": "2021-08-17T07:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d764cdf5_f9131286",
+      "revId": "f899a17c84c2187bdb0735d2567b2742e5c6825f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc8df45_a7808a54",
         "filename": "src/main/resources/mapping.ftl",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f899a17c84c2187bdb0735d2567b2742e5c6825f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d064bc_566b3772",
+        "filename": "src/main/resources/mapping.ftl",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5335
+      },
+      "writtenOn": "2021-08-17T07:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc8df45_a7808a54",
+      "revId": "f899a17c84c2187bdb0735d2567b2742e5c6825f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3ceb46c_20e04649",
+        "filename": "src/main/resources/templates/org.3GPP.28.532#measData",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5335
+      },
+      "writtenOn": "2021-08-17T07:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8caaca4c_afe99d26",
+      "revId": "f899a17c84c2187bdb0735d2567b2742e5c6825f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33cd9bd9_573fdce0",
         "filename": "src/main/resources/templates/org.3GPP.32.435#measCollec",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "f899a17c84c2187bdb0735d2567b2742e5c6825f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9e157e_8a7ad6d3",
+        "filename": "src/main/resources/templates/org.3GPP.32.435#measCollec",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5335
+      },
+      "writtenOn": "2021-08-17T07:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33cd9bd9_573fdce0",
+      "revId": "f899a17c84c2187bdb0735d2567b2742e5c6825f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
