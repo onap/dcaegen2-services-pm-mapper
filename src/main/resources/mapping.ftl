@@ -2,6 +2,7 @@
 <#--
   ============LICENSE_START=======================================================
    Copyright (C) 2019 Nordix Foundation.
+   Copyright (C) 2021 Samsung Electronics.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -115,7 +116,7 @@
 
 <#macro measDataCollection>
 {
-    "granularityPeriod": ${measData.measInfo.granPeriod.@endTime[0]!?datetime?long?c},
+    "granularityPeriod": ${measData.measInfo.granPeriod.@durationInSeconds[0]!},
     "measuredEntityUserName": "${measData.managedElement.@userLabel[0]!}",
     "measuredEntityDn": "${measData.managedElement.@localDn[0]!}",
     "measuredEntitySoftwareVersion": "${measData.managedElement.@swVersion[0]!}",

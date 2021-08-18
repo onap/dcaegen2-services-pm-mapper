@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.1]
+### Changed
+- Fix granularityPeriod mapping
+
 ## [1.7.0] - 29/07/2021
 ### Changed
 - Update io.undertow:undertow-core to version 2.2.9.Final
