@@ -1,0 +1,9 @@
+distribution_type: 'container'
+version: '1.7.1'
+project: 'dcaegen2-services-pm-mapper'
+log_dir: 'dcaegen2-services-pm-mapper-maven-docker-stage-master/780/'
+containers:
+  - name: 'org.onap.dcaegen2.services.pm-mapper'
+    version: '1.7.1-20210818T145848ZZ'
+container_release_tag: '1.7.1'
+ref: '3fed8c65b87599dba92f4f878b026419f609f15a'
