@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Joanna Jeremicz <joanna.jeremicz@nokia.com>
+Submitted-by: Joanna Jeremicz <joanna.jeremicz@nokia.com>
+Submitted-at: Thu, 19 Aug 2021 08:44:24 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/123379
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
