@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b38074f_5abe4fc2",
+        "filename": "Changelog.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2021-08-20T20:33:40Z",
+      "side": 1,
+      "message": "Entry needed for 1.5.3",
+      "revId": "60ddd2ee8a163fb659a12d716501885daac288d0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
