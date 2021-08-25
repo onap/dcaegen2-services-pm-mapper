@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec856805_65960cc0",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/App.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "f68fd1f7_ffece405",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275fe869_063c5031",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3bb43c_2690a45a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/config/FilesProcessingConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "275fe869_063c5031",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a568f1dc_c01b1d87",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/model/ServerResource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "d8cb3e1a_6f11d995",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccbc2bc7_6451fcbb",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8ed5bf_486dee8a",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "ccbc2bc7_6451fcbb",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9d08c4e5_3de02bdd",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/utils/MeasFilterConfigAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "54e8b615_4a8c6281",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "707df594_7f36a961",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandlerTest.java",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7382e51d_9eb35879",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/datarouter/DeliveryHandlerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "707df594_7f36a961",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f4c827f4_89d0bbb2",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/mapping/MapperTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "cb93ad2b_3dbea75c",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ce83deb_e7334af9",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/MeasFilterConfigAdapterTest.java",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "882cca6f_c3936c87",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/MeasFilterConfigAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "3ce83deb_e7334af9",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0779dc_67bbc041",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSenderTests.java",
         "patchSetId": 1
@@ -152,6 +296,24 @@
       "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94b97ae_99a75c84",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/utils/RequestSenderTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7825
+      },
+      "writtenOn": "2021-08-25T09:01:46Z",
+      "side": 1,
+      "message": "Copyright (C) 2021 Samsung Electronics has been added",
+      "parentUuid": "ea0779dc_67bbc041",
+      "revId": "50bcd035887098e1e98f470b623e1640dbe88f6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
