@@ -2,6 +2,7 @@
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
  *  Copyright (C) 2021 Nokia.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,7 +87,7 @@ public class RequestSenderTests {
         String result = new RequestSender().send(url);
 
         client.verify(req, VerificationTimes.atLeast(1));
-        assertEquals(result, "ResponseBody");
+        assertEquals("ResponseBody", result);
         assertTrue(logAppender.list.get(1).getMessage().contains("Sending"));
         assertTrue(logAppender.list.get(2).getMessage().contains("Received"));
         logAppender.stop();

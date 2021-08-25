@@ -2,6 +2,7 @@
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
  *  Copyright (C) 2021 Nokia.
+ *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -211,7 +212,7 @@ public class App {
     private boolean isCached(String id) {
         boolean isPresent = eventsCache.contains(id);
         if(isPresent) {
-            logger.unwrap().info("Skipping. This event is already waiting in cache to be processed: " + id);
+            logger.unwrap().info("Skipping. This event is already waiting in cache to be processed: {}", id);
         }
         return isPresent;
     }
