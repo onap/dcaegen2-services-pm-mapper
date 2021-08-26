@@ -1,16 +1,27 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.7.1] - 18/08/2021
+## [1.7.2] - 26/08/2021
+
 ### Changed
+
+- Fix issues reported by Sonar
+
+## [1.7.1] - 18/08/2021
+
+### Changed
+
 - Add pm-mapper local development tools
 - Fix granularityPeriod mapping
 
 ## [1.7.0] - 29/07/2021
+
 ### Changed
+
 - Update io.undertow:undertow-core to version 2.2.9.Final
 - Update org.freemarker:freemarker to version 2.3.31
 - Update oparent to version 3.2.0
