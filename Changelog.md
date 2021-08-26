@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.2] - 26/08/2021
+### Changed
+- Fix issues reported by Sonar
+
 ## [1.7.1] - 18/08/2021
 ### Changed
 - Add pm-mapper local development tools
