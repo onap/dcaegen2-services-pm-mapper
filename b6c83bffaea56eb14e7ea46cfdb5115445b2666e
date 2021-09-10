@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Tony Hansen <tony@att.com>
+Submitted-by: Tony Hansen <tony@att.com>
+Submitted-at: Fri, 10 Sep 2021 14:20:27 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/124016
+Project: dcaegen2/services/pm-mapper
+Branch: refs/heads/master
