@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright (C) 2021 NOKIA
+# Copyright (C) 2021-2022 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,9 +19,10 @@ IMAGE=onap/org.onap.dcaegen2.services.pm-mapper:latest
 
 docker run -d -p 8081:8081 \
   --mount type=bind,source="$PWD/certs",target="/opt/app/pm-mapper/etc/certs/" \
-  -e "CONFIG_BINDING_SERVICE_SERVICE_HOST=$CBS_IP" \
-  -e "CONFIG_BINDING_SERVICE_SERVICE_PORT=10000" \
+  -e "CONFIG_BINDING_SERVICE=$CBS_IP" \
+  -e "CONSUL_HOST=$CBS_IP" \
   -e "HOSTNAME=pmmapper" \
+  -e "CONFIG_BINDING_SERVICE_SERVICE_PORT=10000" \
   -e "PROCESSING_LIMIT_RATE=1" \
   -e "THREADS_MULTIPLIER=1" \
   -e "PROCESSING_THREADS_COUNT=1" \

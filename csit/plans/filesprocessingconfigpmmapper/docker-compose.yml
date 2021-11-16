@@ -99,8 +99,9 @@ services:
     depends_on:
       - datarouter-prov
     environment:
-       CONFIG_BINDING_SERVICE_SERVICE_HOST: $CBS_IP
        CONFIG_BINDING_SERVICE_SERVICE_PORT: 10000
+       CONFIG_BINDING_SERVICE: $CBS_IP
+       CONSUL_HOST: $CBS_IP
        HOSTNAME: pmmapper
     networks:
       pmmapper-network:
