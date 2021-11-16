@@ -48,6 +48,8 @@ curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT \
       -H 'X-Requested-With: XMLHttpRequest' \
       --data @$TEST_PLANS_DIR/assets/config.json
 
+docker rm pmmapper
+sleep 30
 docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d pmmapper
 sleep 2
 
