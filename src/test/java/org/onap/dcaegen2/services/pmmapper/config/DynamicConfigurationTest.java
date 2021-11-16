@@ -20,12 +20,14 @@
 
 package org.onap.dcaegen2.services.pmmapper.config;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -38,6 +40,10 @@ import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsClientConfiguration;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
+import reactor.core.publisher.Mono;
 import utils.ConfigUtils;
 import java.util.ArrayList;
 import utils.FileUtils;
@@ -51,6 +57,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+//@Disabled
 @ExtendWith(MockitoExtension.class)
 class DynamicConfigurationTest {
     private static final String VALID_MAPPER_CONFIG_FILE = "valid_mapper_config.json";
@@ -61,10 +68,10 @@ class DynamicConfigurationTest {
     private MapperConfig originalMapperConfig;
     private static ConfigHandler configHandler;
 
-    @Mock
+    @Mock(lenient = true)
     private static RequestSender sender;
 
-    @Mock
+    @Mock(lenient = true)
     private static EnvironmentConfig config;
 
     @BeforeAll
@@ -78,7 +85,7 @@ class DynamicConfigurationTest {
         when(sender.send(any())).thenReturn(mapperConfig);
         originalMapperConfig = ConfigUtils.getMapperConfigFromFile(VALID_MAPPER_CONFIG_FILE);
         configurables = new ArrayList<>();
-        objUnderTest = new DynamicConfiguration(configurables, originalMapperConfig);
+        objUnderTest = new DynamicConfiguration(configurables, originalMapperConfig, new ConfigHandler());
     }
 
     @Test
@@ -158,4 +165,30 @@ class DynamicConfigurationTest {
         originalMapperConfig.reconfigure(inboundConfig);
         assertEquals(originalMapperConfig, inboundConfig);
     }
+
+    @Test
+    void testMapper() {
+        ConfigHandler configHandler = new ConfigHandler();
+        String expectedConfig = FileUtils.getFileContents(VALID_MAPPER_CONFIG_FILE);
+
+//        JsonObject jsonObject = new JsonObject(expectedConfig);
+        JsonObject config = new Gson().fromJson(expectedConfig, JsonObject.class);
+        Mono<JsonObject> just = Mono.just(config);
+
+//
+        final CbsClientConfiguration config2 = mock(CbsClientConfiguration.class);
+//        when(config2.appName()).thenReturn("test");
+        CbsClient cbsClient = mock(CbsClient.class);
+        CbsRequest cbsRequest = mock(CbsRequest.class);
+        when(cbsClient.get(any())).thenReturn(just);
+
+//        cbsClient.get(cbsRequest).subscribe();
+        MapperConfig mapperConfig1 = configHandler.getMockedClient(cbsClient, cbsRequest);
+        System.out.println(mapperConfig1);
+
+        JsonObject wrongConfig = new Gson().fromJson("{\"test\": \"test\"}", JsonObject.class);
+        when(cbsClient.get(any())).thenReturn(Mono.just(wrongConfig));
+
+    }
+
 }

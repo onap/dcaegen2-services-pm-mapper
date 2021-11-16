@@ -20,12 +20,11 @@
 
 package org.onap.dcaegen2.services.pmmapper.config;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -35,109 +34,138 @@ import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.onap.dcaegen2.services.pmmapper.exceptions.CBSConfigException;
-import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
-import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
-import org.onap.dcaegen2.services.pmmapper.exceptions.RequestFailure;
-import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
-import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
-
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
+import reactor.core.publisher.Mono;
 import utils.FileUtils;
 import utils.LoggingUtils;
 
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class ConfigHandlerTests {
     private static String validMapperConfig;
-    private static String HOSTNAME = "pm-mapper-service-name";
-    private static String CBS_HOST = "cbs_host";
-    private static int CBS_PORT = 10000;
-    private static Path invalidConfigsDirectory = Paths.get("src/test/resources/invalid_configs/");
+    private static String validMapperConfigChanged;
 
-    private Gson gson = new Gson();
+    private static final Path INVALID_CONFIGS_DIRECTORY = Paths.get("src/test/resources/invalid_configs/");
+    private static final String EXPECTED_ERROR_MESSAGE_IN_LOG = "Unexpected error occurred during fetching configuration";
+    private static final String EXPECTED_CHANGED_VALUE = "https://dmaap-dr-node:8443/delete_changed";
 
-    @Mock
-    private RequestSender sender;
 
-    @Mock
-    private static EnvironmentConfig config;
+    private final Gson gson = new Gson();
+    private final CbsClient cbsClient = mock(CbsClient.class);
+    private final CbsRequest cbsRequest = mock(CbsRequest.class);
+
 
     @BeforeAll
-    static void beforeAll() throws Exception {
+    static void beforeAll() {
         validMapperConfig = FileUtils.getFileContents("valid_mapper_config.json");
-        config = mock(EnvironmentConfig.class);
-        when(config.getServiceName()).thenReturn(HOSTNAME);
-        when(config.getCBSPort()).thenReturn(CBS_PORT);
+        validMapperConfigChanged = FileUtils.getFileContents("valid_mapper_config_after_change.json");
     }
 
     @BeforeEach
     void setup() throws Exception {
-        when(config.getCBSHostName()).thenReturn(CBS_HOST);
+        Mono<JsonObject> just = createMonoJsonObject(validMapperConfig);
+        when(cbsClient.get(any())).thenReturn(just);
     }
 
     @Test
     void getMapperConfig_success() throws Exception {
-        when(config.getCBSHostName()).thenReturn(CBS_HOST);
-        when(config.getServiceName()).thenReturn(HOSTNAME);
-        when(config.getCBSPort()).thenReturn(CBS_PORT);
+        MapperConfig expectedConfig = gson.fromJson(validMapperConfig, MapperConfig.class);
 
         ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(ConfigHandler.class);
-        String validCbsUrlMapperConfig = "http://" + CBS_HOST + ":" + CBS_PORT + "/service_component/" + HOSTNAME;
-        when(sender.send(validCbsUrlMapperConfig)).thenReturn(validMapperConfig);
-        MapperConfig actualConfig = getMapperConfig();
-        JsonObject expectedConfigJson = gson.fromJson(validMapperConfig, JsonObject.class);
-        MapperConfig expectedConfig = gson.fromJson(expectedConfigJson, MapperConfig.class);
+        MapperConfig actualConfig = new ConfigHandler(cbsClient, cbsRequest).getMapperConfig();
+
         assertEquals(expectedConfig.getPublisherTopicUrl(), actualConfig.getPublisherTopicUrl());
         assertEquals(expectedConfig.getPublisherUserName(), actualConfig.getPublisherUserName());
         assertEquals(expectedConfig.getPublisherPassword(), actualConfig.getPublisherPassword());
         assertEquals(expectedConfig, actualConfig);
         logAppender.stop();
+
     }
 
     @Test
-    void configbinding_server_error() throws Exception {
-        when(sender.send(anyString())).thenThrow(RequestFailure.class);
-        assertThrows(CBSServerError.class, this::getMapperConfig);
+    void configuration_should_can_be_changed() throws EnvironmentConfigException {
+        MapperConfig expectedConfig = gson.fromJson(validMapperConfig, MapperConfig.class);
+        Mono<JsonObject> just = createMonoJsonObject(validMapperConfig);
+
+        when(cbsClient.get(any())).thenReturn(just);
+        ConfigHandler configHandler = new ConfigHandler(cbsClient, cbsRequest);
+
+        MapperConfig actualConfig = configHandler.getInitialConfiguration();
+        assertEquals(expectedConfig.getDmaapDRDeleteEndpoint(), actualConfig.getDmaapDRDeleteEndpoint());
+
+        Mono<JsonObject> justChanged = createMonoJsonObject(validMapperConfigChanged);
+        when(cbsClient.get(any())).thenReturn(justChanged);
+        MapperConfig changedConfig = configHandler.getMapperConfig();
+
+        System.out.println(changedConfig.getDmaapDRDeleteEndpoint());
+        assertEquals(EXPECTED_CHANGED_VALUE, changedConfig.getDmaapDRDeleteEndpoint());
     }
 
     @Test
-    void configbinding_server_host_missing() throws Exception {
-        when(config.getCBSHostName()).thenThrow(EnvironmentConfigException.class);
-        assertThrows(EnvironmentConfigException.class, this::getMapperConfig);
+    void should_throw_exception_when_configuration_is_not_initialized() {
+        String wrongConfigJson = "{\"test\": \"test\"}";
+        Mono<JsonObject> just = createMonoJsonObject(wrongConfigJson);
+
+        when(cbsClient.get(any())).thenReturn(just);
+
+        ConfigHandler configHandler = new ConfigHandler(cbsClient, cbsRequest);
+        assertThrows(EnvironmentConfigException.class, configHandler::getMapperConfig);
     }
 
     @Test
-    void mapper_parse_invalid_json_mapper_config() throws Exception {
-        when(sender.send(anyString())).thenReturn("mapper config with incorrect format");
-        assertThrows(MapperConfigException.class, this::getMapperConfig);
+    void mapper_parse_invalid_json_mapper_config() {
+        String wrongConfigJson = "{\"test\": \"test\"}";
+        Mono<JsonObject> just = createMonoJsonObject(wrongConfigJson);
+
+        when(cbsClient.get(any())).thenReturn(just);
+        ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(ConfigHandler.class);
+        new ConfigHandler(cbsClient, cbsRequest).getInitialConfiguration();
+
+        assertConfigurationErrorIsLogged(logAppender);
+        logAppender.stop();
     }
 
     @ParameterizedTest
     @MethodSource("getInvalidConfigs")
     void parse_valid_json_bad_values_mapper_config(String mapperConfig) throws Exception {
-        when(sender.send(anyString())).thenReturn(mapperConfig);
-        assertThrows(MapperConfigException.class, this::getMapperConfig);
+        Mono<JsonObject> just = createMonoJsonObject(mapperConfig);
+
+        when(cbsClient.get(any())).thenReturn(just);
+        ListAppender<ILoggingEvent> logAppender = LoggingUtils.getLogListAppender(ConfigHandler.class);
+        new ConfigHandler(cbsClient, cbsRequest).getInitialConfiguration();
+
+        assertConfigurationErrorIsLogged(logAppender);
+        logAppender.stop();
     }
 
-    private MapperConfig getMapperConfig()
-            throws UnknownHostException, EnvironmentConfigException, CBSConfigException, Exception {
-        return new ConfigHandler(sender, config).getMapperConfig();
+    private void assertConfigurationErrorIsLogged(ListAppender<ILoggingEvent> logAppender) {
+        boolean containMessage = logAppender.list.stream()
+            .anyMatch(iLoggingEvent -> iLoggingEvent.getFormattedMessage().contains(EXPECTED_ERROR_MESSAGE_IN_LOG));
+        assertTrue(containMessage);
     }
+
+    private Mono<JsonObject> createMonoJsonObject(String stringJson) {
+        JsonObject configJson = new Gson().fromJson(stringJson, JsonObject.class);
+        return Mono.just(configJson);
+    }
+
 
     private static List<String> getInvalidConfigs() throws IOException {
-        return FileUtils.getFilesFromDirectory(invalidConfigsDirectory);
+        return FileUtils.getFilesFromDirectory(INVALID_CONFIGS_DIRECTORY);
     }
 }
