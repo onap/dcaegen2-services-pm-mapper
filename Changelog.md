@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 24/01/2022
+### Changed
+- Switch configuration provider to CBS Client - DCAE SDK
+
 ## [1.7.2] - 26/08/2021
 ### Changed
 - Fix issues reported by Sonar

@@ -47,8 +47,8 @@ import com.google.gson.Gson;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 import org.junit.jupiter.api.BeforeEach;
+import org.mockito.MockSettings;
 import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
-import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 
@@ -120,7 +120,7 @@ class AppTest {
 
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getEnableHttp()).thenReturn(false);
-        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        when(configHandler.getInitialConfiguration()).thenReturn(mockConfig);
         objUnderTest = new App(template, schema, 0, 0, configHandler, processingConfig);
         objUnderTest.start();
         assertEquals(1, objUnderTest.getApplicationServer().getListenerInfo().size());
@@ -132,7 +132,7 @@ class AppTest {
     void testEnabledHTTPServer() throws Exception {
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getEnableHttp()).thenReturn(true);
-        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        when(configHandler.getInitialConfiguration()).thenReturn(mockConfig);
         objUnderTest = new App(template, schema, 0, 0, configHandler, processingConfig);
         objUnderTest.start();
         assertEquals(2, objUnderTest.getApplicationServer().getListenerInfo().size());
@@ -141,17 +141,17 @@ class AppTest {
     }
 
     @Test
-    void testConfigFailure() throws EnvironmentConfigException, CBSServerError, MapperConfigException {
-        when(configHandler.getMapperConfig()).thenThrow(MapperConfigException.class);
+    void testConfigFailure() throws MapperConfigException {
+        when(configHandler.getInitialConfiguration()).thenThrow(MapperConfigException.class);
         assertThrows(IllegalStateException.class, () -> new App(template, schema, 0, 0, configHandler, processingConfig));
 
     }
 
     @Test
-    void testServerCreationFailure() throws EnvironmentConfigException, CBSServerError, MapperConfigException {
+    void testServerCreationFailure() throws MapperConfigException {
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getKeyStorePath()).thenReturn("not_a_file");
-        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        when(configHandler.getInitialConfiguration()).thenReturn(mockConfig);
         assertThrows(IllegalStateException.class, () -> new App(template, schema, 0, 0, configHandler, processingConfig));
 
     }
@@ -330,7 +330,7 @@ class AppTest {
     void filesProcessingConfiguration_IsReadInMainApp() throws Exception {
         MapperConfig mockConfig = Mockito.spy(mapperConfig);
         when(mockConfig.getEnableHttp()).thenReturn(true);
-        when(configHandler.getMapperConfig()).thenReturn(mockConfig);
+        when(configHandler.getInitialConfiguration()).thenReturn(mockConfig);
         objUnderTest = new App(template, schema, 0, 0, configHandler, processingConfig);
         objUnderTest.start();
 
