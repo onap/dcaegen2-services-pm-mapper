@@ -11,6 +11,7 @@ Test Teardown     CleanSessionsAndLogs
 
 *** Variables ***
 ${CLI_EXEC_CLI_CONFIG}                   { head -n 100 | tail -50;} < /tmp/pmmapper.log
+${CLI_EXEC_CLI_CONFIG_FIRST_100_LINES}   { head -n 50 } < /tmp/pmmapper.log
 ${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${PMMAPPER_BASE_URL}                     http://${PMMAPPER_IP}:8081
 ${DELIVERY_ENDPOINT}                     /delivery
@@ -42,7 +43,7 @@ ${CLI_MR_LOG}                            cat /tmp/mr.log
 Verify PM Mapper Receive Configuraton From Config Binding Service
     [Tags]                          PM_MAPPER_01
     [Documentation]                 Verify 3gpp pm mapper successfully receive config data from CBS
-    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Received pm-mapper configuration from ConfigBinding Service
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Configuration update from Consul
 
 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Tags]                          PM_MAPPER_02

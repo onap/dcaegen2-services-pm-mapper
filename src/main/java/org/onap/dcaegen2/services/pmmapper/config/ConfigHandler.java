@@ -19,19 +19,19 @@
  */
 package org.onap.dcaegen2.services.pmmapper.config;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
-import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
-import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
+
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
 
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import com.google.gson.GsonBuilder;
+import reactor.core.publisher.Mono;
 
 /**
  * Handles the retrieval of the component spec-based PM-Mapper Configuration
@@ -39,24 +39,21 @@ import com.google.gson.GsonBuilder;
  */
 
 public class ConfigHandler {
+
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(ConfigHandler.class));
-    private RequestSender sender;
-    private EnvironmentConfig environmentConfig;
+
+    private MapperConfig mapperConfig;
+    private final CbsClient cbsClient;
+    private final CbsRequest cbsRequest;
 
     /**
-     * Creates a ConfigHandler.
+     * Creates a ConfigHandler based on Cbs Client and Cbs Request provided by DCAE SDK
+     * @param CbsClient A Cbs Client
+     * @param CbsRequest A Cbs Request
      */
-    public ConfigHandler() {
-        this(new RequestSender(), new EnvironmentConfig());
-    }
-
-    /**
-     * @see ConfigHandler#ConfigHandler()
-     * @param sender A RequestSender
-     */
-    public ConfigHandler(RequestSender sender, EnvironmentConfig environmentConfig) {
-        this.sender = sender;
-        this.environmentConfig = environmentConfig;
+    public ConfigHandler(CbsClient cbsClient, CbsRequest cbsRequest){
+        this.cbsClient = cbsClient;
+        this.cbsRequest = cbsRequest;
     }
 
     /**
@@ -65,32 +62,53 @@ public class ConfigHandler {
      * @throws EnvironmentConfigException
      */
     public MapperConfig getMapperConfig() throws EnvironmentConfigException {
-        String mapperConfigJson = "";
-        String cbsSocketAddress = this.environmentConfig.getCBSHostName() + ":" + this.environmentConfig.getCBSPort();
-        String requestURL = "http://" + cbsSocketAddress + "/service_component/" + this.environmentConfig.getServiceName();
-        try {
-            logger.unwrap().info("Fetching pm-mapper configuration from Configbinding Service");
-            mapperConfigJson = sender.send(requestURL);
-        } catch (Exception exception) {
-            throw new CBSServerError("Error connecting to Configbinding Service: ", exception);
+
+        Mono.just(cbsClient)
+            .flatMap(client -> client.get(cbsRequest))
+            .subscribe(
+                this::handleConfigurationFromConsul,
+                this::handleError
+            );
+
+        if (mapperConfig == null) {
+            logger.unwrap().error("Mapper configuration is not initialized");
+            throw new EnvironmentConfigException("Mapper configuration is not initialized");
         }
-        return convertMapperConfigToObject(mapperConfigJson);
+        return mapperConfig;
     }
 
-    private MapperConfig convertMapperConfigToObject(String mapperConfigJson) {
-        MapperConfig mapperConfig;
+    public MapperConfig getInitialConfiguration() {
+        logger.unwrap().info("Attempt to get initial configuration");
         try {
-            JsonObject config = new Gson().fromJson(mapperConfigJson, JsonObject.class);
+            JsonObject jsonObject = Mono.just(cbsClient)
+                .flatMap(client -> client.get(cbsRequest))
+                .block();
+            handleConfigurationFromConsul(jsonObject);
+        } catch (Exception e) {
+            handleError(e);
+            //Todo throw config exception
+//            throw new EnvironmentConfigException(e);
+        }
+        return mapperConfig;
+    }
+
+    void handleConfigurationFromConsul(JsonObject jsonObject) {
+        logger.unwrap().info("Attempt to process configuration object");
+
+        try {
             mapperConfig = new GsonBuilder()
-                    .registerTypeAdapter(MapperConfig.class, new RequiredFieldDeserializer<MapperConfig>())
-                    .create()
-                    .fromJson(config, MapperConfig.class);
+                .registerTypeAdapter(MapperConfig.class, new RequiredFieldDeserializer<MapperConfig>())
+                .create()
+                .fromJson(jsonObject, MapperConfig.class);
         } catch (Exception exception) {
-            String exceptionMessage = "Error parsing configuration, mapper config:\n" + mapperConfigJson;
+            String exceptionMessage = "Error parsing configuration, mapper config:\n" + mapperConfig;
             throw new MapperConfigException(exceptionMessage, exception);
         }
-        logger.unwrap().info("Received pm-mapper configuration from ConfigBinding Service");
-        logger.unwrap().debug("Mapper configuration:\n{}", mapperConfig);
-        return mapperConfig;
+        logger.unwrap().info("PM-mapper configuration processed successful");
+        logger.unwrap().info("Mapper configuration:\n{}", mapperConfig);
+    }
+
+    private void handleError(Throwable throwable) {
+        logger.unwrap().error("Unexpected error occurred during fetching configuration", throwable);
     }
 }

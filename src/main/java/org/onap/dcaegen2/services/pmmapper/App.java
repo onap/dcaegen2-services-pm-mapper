@@ -53,11 +53,18 @@ import org.onap.dcaegen2.services.pmmapper.utils.IncomingEventsCache;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasSplitter;
 import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClientFactory;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsRequests;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsClientConfiguration;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
+import org.onap.dcaegen2.services.sdk.rest.services.model.logging.RequestDiagnosticContext;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
@@ -119,8 +126,8 @@ public class App {
     public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler, FilesProcessingConfig filesProcessingConfig)
         throws EnvironmentConfigException {
         try {
-            this.mapperConfig = configHandler.getMapperConfig();
-        } catch (EnvironmentConfigException | CBSServerError | MapperConfigException e) {
+            this.mapperConfig = configHandler.getInitialConfiguration();
+        } catch ( CBSServerError | MapperConfigException e) {
             logger.unwrap().error("Failed to acquire initial configuration, Application cannot start", e);
             throw new IllegalStateException("Config acquisition failed");
         }
@@ -160,7 +167,7 @@ public class App {
         this.configScheduler.schedulePeriodically(this::reconfigure, INITIAL_RECONFIGURATION_PERIOD, RECONFIGURATION_PERIOD, TimeUnit.SECONDS);
         this.healthCheckHandler = new HealthCheckHandler();
         this.deliveryHandler = new DeliveryHandler(fluxSink::next);
-        this.dynamicConfiguration = new DynamicConfiguration(Arrays.asList(mapperConfig), mapperConfig);
+        this.dynamicConfiguration = new DynamicConfiguration(Arrays.asList(mapperConfig), mapperConfig, configHandler);
         this.serverResources = Arrays.asList(healthCheckHandler, deliveryHandler, dynamicConfiguration);
         try {
             this.applicationServer = server(this.mapperConfig, this.serverResources);
@@ -219,7 +226,13 @@ public class App {
 
     public static void main(String[] args) throws EnvironmentConfigException {
         FilesProcessingConfig processingConfig = new FilesProcessingConfig(new EnvironmentReader());
-        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler(), processingConfig).start();
+        final RequestDiagnosticContext diagnosticContext = RequestDiagnosticContext.create();
+        final CbsRequest request = CbsRequests.getConfiguration(diagnosticContext);
+        final CbsClientConfiguration config = CbsClientConfiguration.fromEnvironment();
+        Mono<CbsClient> cbsClient = CbsClientFactory.createCbsClient(config);
+        CbsClient block = cbsClient.block();
+
+        new App(templates, schemas, HTTP_PORT, HTTPS_PORT, new ConfigHandler(block, request), processingConfig).start();
     }
 
     public static boolean filterByFileType(MeasFilterHandler filterHandler,Event event, MapperConfig config) {

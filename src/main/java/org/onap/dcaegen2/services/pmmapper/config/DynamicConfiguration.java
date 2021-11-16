@@ -44,11 +44,11 @@ public class DynamicConfiguration extends ServerResource {
      * @param configurables list of objects to reconfigure
      * @param originalConfig original config to compare against.
      */
-    public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig) {
+    public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig, ConfigHandler configHandler) {
         super(RECONFIGURE_ENDPOINT);
         this.configurables = configurables;
         this.originalConfig = originalConfig;
-        this.configHandler = new ConfigHandler();
+        this.configHandler = configHandler;
     }
 
     private void applyConfiguration(MapperConfig updatedConfig) throws ReconfigurationException {
