@@ -47,6 +47,7 @@ import com.google.gson.Gson;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CBSServerError;
 import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
@@ -75,6 +76,7 @@ import org.onap.dcaegen2.services.pmmapper.utils.MeasSplitter;
 import utils.EventUtils;
 
 
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class AppTest {
 
