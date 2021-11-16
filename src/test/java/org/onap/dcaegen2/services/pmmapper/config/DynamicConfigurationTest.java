@@ -20,15 +20,19 @@
 
 package org.onap.dcaegen2.services.pmmapper.config;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockSettings;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
@@ -38,6 +42,10 @@ import org.onap.dcaegen2.services.pmmapper.utils.EnvironmentConfig;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.RequestSender;
 
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsClientConfiguration;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
+import reactor.core.publisher.Mono;
 import utils.ConfigUtils;
 import java.util.ArrayList;
 import utils.FileUtils;
@@ -61,24 +69,23 @@ class DynamicConfigurationTest {
     private MapperConfig originalMapperConfig;
     private static ConfigHandler configHandler;
 
-    @Mock
-    private static RequestSender sender;
-
-    @Mock
-    private static EnvironmentConfig config;
+    private final CbsClient cbsClient = mock(CbsClient.class);
+    private final CbsRequest cbsRequest = mock(CbsRequest.class);
 
     @BeforeAll
-     static void setupBeforeAll() throws Exception {
+     static void setupBeforeAll() {
         mapperConfig = FileUtils.getFileContents(VALID_MAPPER_CONFIG_FILE);
     }
 
     @BeforeEach
-    void setup() throws Exception {
-        configHandler = new ConfigHandler(sender, config);
-        when(sender.send(any())).thenReturn(mapperConfig);
+    void setup() {
+        Mono<JsonObject> just = createMonoJsonObject(mapperConfig);
+        when(cbsClient.get(any())).thenReturn(just);
+
+        configHandler = new ConfigHandler(cbsClient, cbsRequest);
         originalMapperConfig = ConfigUtils.getMapperConfigFromFile(VALID_MAPPER_CONFIG_FILE);
         configurables = new ArrayList<>();
-        objUnderTest = new DynamicConfiguration(configurables, originalMapperConfig);
+        objUnderTest = new DynamicConfiguration(configurables, originalMapperConfig, configHandler);
     }
 
     @Test
@@ -97,7 +104,9 @@ class DynamicConfigurationTest {
         configurables.add(configurable);
         JsonObject modifiedConfig = new JsonParser().parse(mapperConfig).getAsJsonObject();
         modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
-        when(sender.send(any())).thenReturn(modifiedConfig.toString());
+
+        Mono<JsonObject> just = Mono.just(modifiedConfig);
+        when(cbsClient.get(any())).thenReturn(just);
         MapperConfig modifiedMapperConfig = configHandler.getMapperConfig();
         objUnderTest.setConfigHandler(configHandler);
         doAnswer(new Answer() {
@@ -127,8 +136,9 @@ class DynamicConfigurationTest {
         JsonObject modifiedConfig = new JsonParser().parse(mapperConfig).getAsJsonObject();
         modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
 
-        when(sender.send(any()))
-                .thenReturn(modifiedConfig.toString());
+        Mono<JsonObject> just = Mono.just(modifiedConfig);
+        when(cbsClient.get(any())).thenReturn(just);
+
         MapperConfig modifiedMapperConfig = configHandler.getMapperConfig();
         objUnderTest.setConfigHandler(configHandler);
 
@@ -143,9 +153,11 @@ class DynamicConfigurationTest {
     @Test
     void testMapperConfigReconfiguration() throws Exception {
         JsonObject modifiedConfigJson = new JsonParser().parse(mapperConfig).getAsJsonObject();
-        modifiedConfigJson.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
-        when(sender.send(any()))
-                .thenReturn(modifiedConfigJson.toString());
+        modifiedConfigJson.addProperty("dmaap_dr_delete_endpoint", "http://modified-delete-endpoint/1");
+
+        Mono<JsonObject> just = Mono.just(modifiedConfigJson);
+        when(cbsClient.get(any())).thenReturn(just);
+
         MapperConfig modifiedConfig = configHandler.getMapperConfig();
         originalMapperConfig.reconfigure(modifiedConfig);
         assertEquals(originalMapperConfig, modifiedConfig);
@@ -153,9 +165,16 @@ class DynamicConfigurationTest {
 
     @Test
     void testMapperConfigReconfigurationNoChange() throws Exception {
-        when(sender.send(any())).thenReturn(mapperConfig);
         MapperConfig inboundConfig = configHandler.getMapperConfig();
+
         originalMapperConfig.reconfigure(inboundConfig);
+
         assertEquals(originalMapperConfig, inboundConfig);
     }
+
+    private Mono<JsonObject> createMonoJsonObject(String stringJson) {
+        JsonObject configJson = new Gson().fromJson(stringJson, JsonObject.class);
+        return Mono.just(configJson);
+    }
+
 }
