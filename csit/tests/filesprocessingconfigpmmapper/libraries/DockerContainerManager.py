@@ -9,6 +9,8 @@ class DockerContainerManager:
         environment = EnvsReader().read_env_list_from_file(path_to_env)
         environment.append("CONFIG_BINDING_SERVICE_SERVICE_HOST=172.18.0.5")
         environment.append("CONFIG_BINDING_SERVICE_SERVICE_PORT=10000")
+        environment.append("CONFIG_BINDING_SERVICE=172.18.0.5")
+        environment.append("CONSUL_HOST=172.18.0.5")
         environment.append("HOSTNAME=pmmapper")
         client.containers.run(
             image=client_image,
