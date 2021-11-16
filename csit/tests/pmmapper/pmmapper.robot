@@ -11,6 +11,7 @@ Test Teardown     CleanSessionsAndLogs
 
 *** Variables ***
 ${CLI_EXEC_CLI_CONFIG}                   { head -n 100 | tail -50;} < /tmp/pmmapper.log
+${CLI_EXEC_CLI_CONFIG_FIRST_100_LINES}   { grep -i password } < /tmp/pmmapper.log
 ${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
 ${PMMAPPER_BASE_URL}                     http://${PMMAPPER_IP}:8081
 ${DELIVERY_ENDPOINT}                     /delivery
@@ -42,7 +43,7 @@ ${CLI_MR_LOG}                            cat /tmp/mr.log
 Verify PM Mapper Receive Configuraton From Config Binding Service
     [Tags]                          PM_MAPPER_01
     [Documentation]                 Verify 3gpp pm mapper successfully receive config data from CBS
-    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           Received pm-mapper configuration from ConfigBinding Service
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           PM-mapper configuration processed successful
 
 Verify Health Check returns 200 when a REST GET request to healthcheck url
     [Tags]                          PM_MAPPER_02
@@ -154,8 +155,9 @@ Verify 3GPP PM Mapper maps Type-A file based on counter filtering with regexp
 Verify that password receive from CBS are successfully encrypted
     [Tags]                          PM_MAPPER_14
     [Documentation]                 Verify that password receive from CBS are successfully encrypted.
-    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "aaf_password": *****
-    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           "password": *****
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG_FIRST_100_LINES}           aafPassword= *****
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           aafPassword= *****
+    CheckLog                        ${CLI_EXEC_CLI_CONFIG}           password= *****
 
 Verify that PM Mapper correctly maps an NR Type-PM file based on counter filtering and publish 3gpp perf VES events to message router.
     [Tags]                          PM_MAPPER_15
