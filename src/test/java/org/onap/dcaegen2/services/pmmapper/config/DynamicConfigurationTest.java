@@ -26,6 +26,7 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.StatusCodes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -51,6 +52,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class DynamicConfigurationTest {
     private static final String VALID_MAPPER_CONFIG_FILE = "valid_mapper_config.json";
