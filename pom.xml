@@ -34,7 +34,7 @@
 
     <groupId>org.onap.dcaegen2.services</groupId>
     <artifactId>pm-mapper</artifactId>
-    <version>1.7.2-SNAPSHOT</version>
+    <version>1.8.0-SNAPSHOT</version>
 
 
     <name>dcaegen2-services-pm-mapper</name>
@@ -53,7 +53,8 @@
         <commons.io.version>2.8.0</commons.io.version>
         <xml.version>2.3.1</xml.version>
         <jaxb.version>2.3.0.1</jaxb.version>
-        <dmaap-client.version>1.8.2</dmaap-client.version>
+        <!-- DCAE SDK -->
+        <sdk.version>1.8.7</sdk.version>
         <!-- Testing Test Dependencies -->
         <junit.version>5.3.2</junit.version>
         <mockito.version>2.23.4</mockito.version>
@@ -125,7 +126,12 @@
         <dependency>
             <groupId>org.onap.dcaegen2.services.sdk.rest.services</groupId>
             <artifactId>dmaap-client</artifactId>
-            <version>${dmaap-client.version}</version>
+            <version>${sdk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.onap.dcaegen2.services.sdk.rest.services</groupId>
+            <artifactId>cbs-client</artifactId>
+            <version>${sdk.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
