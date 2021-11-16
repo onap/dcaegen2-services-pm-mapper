@@ -24,6 +24,7 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -35,6 +36,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -56,9 +58,11 @@ import com.google.gson.JsonObject;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
+import org.onap.dcaegen2.services.pmmapper.utils.RequiredFieldDeserializer;
 import utils.FileUtils;
 import utils.LoggingUtils;
 
+@Disabled
 @ExtendWith(MockitoExtension.class)
 class ConfigHandlerTests {
     private static String validMapperConfig;
@@ -69,10 +73,10 @@ class ConfigHandlerTests {
 
     private Gson gson = new Gson();
 
-    @Mock
+    @Mock(lenient = true)
     private RequestSender sender;
 
-    @Mock
+    @Mock(lenient = true)
     private static EnvironmentConfig config;
 
     @BeforeAll
@@ -139,5 +143,18 @@ class ConfigHandlerTests {
 
     private static List<String> getInvalidConfigs() throws IOException {
         return FileUtils.getFilesFromDirectory(invalidConfigsDirectory);
+    }
+
+    @Test
+    void jsonTest() {
+        String testResponse= "{\"pm-mapper-filter\": {\"filters\": []}, \"key_store_path\": \"/opt/app/pm-mapper/etc/certs/cert.jks\", \"key_store_pass_path\": \"/opt/app/pm-mapper/etc/certs/jks.pass\", \"trust_store_path\": \"/opt/app/pm-mapper/etc/certs/trust.jks\", \"trust_store_pass_path\": \"/opt/app/pm-mapper/etc/certs/trust.pass\", \"dmaap_dr_delete_endpoint\": \"https://dmaap-dr-node:8443/delete\", \"dmaap_dr_feed_name\": \"1\", \"aaf_identity\": \"aaf_admin@people.osaaf.org\", \"aaf_password\": *****, \"enable_http\": true, \"streams_publishes\": {\"dmaap_publisher\": {\"type\": \"message_router\", \"dmaap_info\": {\"topic_url\": \"http://message-router:3904/events/org.onap.dmaap.mr.VES_PM\", \"client_role\": \"org.onap.dcae.pmPublisher\", \"location\": \"csit-pmmapper\", \"client_id\": \"1562763644939\"}}}, \"streams_subscribes\": {\"dmaap_subscriber\": {\"type\": \"data_router\", \"dmaap_info\": {\"username\": \"username\", \"password\": *****, \"location\": \"csit-pmmapper\", \"delivery_url\": \"http://dcae-pm-mapper:8081/delivery\", \"subscriber_id\": 1}}}}";
+
+        JsonObject config = new Gson().fromJson(testResponse, JsonObject.class);
+       MapperConfig mapperConfig = new GsonBuilder()
+            .registerTypeAdapter(MapperConfig.class, new RequiredFieldDeserializer<MapperConfig>())
+            .create()
+            .fromJson(config, MapperConfig.class);
+
+        System.out.println("keystore: " + mapperConfig.getKeyStorePath());
     }
 }
