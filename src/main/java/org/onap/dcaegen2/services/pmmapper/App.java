@@ -119,8 +119,8 @@ public class App {
     public App(Path templatesDirectory, Path schemasDirectory, int httpPort, int httpsPort, ConfigHandler configHandler, FilesProcessingConfig filesProcessingConfig)
         throws EnvironmentConfigException {
         try {
-            this.mapperConfig = configHandler.getMapperConfig();
-        } catch (EnvironmentConfigException | CBSServerError | MapperConfigException e) {
+            this.mapperConfig = configHandler.getInitialConfiguration();
+        } catch ( CBSServerError | MapperConfigException e) {
             logger.unwrap().error("Failed to acquire initial configuration, Application cannot start", e);
             throw new IllegalStateException("Config acquisition failed");
         }
