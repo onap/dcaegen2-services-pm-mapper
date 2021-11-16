@@ -28,8 +28,15 @@ import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.model.ServerResource;
 import org.onap.dcaegen2.services.pmmapper.utils.HttpServerExchangeAdapter;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClientFactory;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsRequests;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsClientConfiguration;
+import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
+import org.onap.dcaegen2.services.sdk.rest.services.model.logging.RequestDiagnosticContext;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
 
 @Data
 public class DynamicConfiguration extends ServerResource {
@@ -44,11 +51,12 @@ public class DynamicConfiguration extends ServerResource {
      * @param configurables list of objects to reconfigure
      * @param originalConfig original config to compare against.
      */
-    public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig) {
+    public DynamicConfiguration(List<Configurable> configurables, MapperConfig originalConfig, ConfigHandler configHandler) {
         super(RECONFIGURE_ENDPOINT);
         this.configurables = configurables;
         this.originalConfig = originalConfig;
-        this.configHandler = new ConfigHandler();
+
+        this.configHandler = configHandler;
     }
 
     private void applyConfiguration(MapperConfig updatedConfig) throws ReconfigurationException {
