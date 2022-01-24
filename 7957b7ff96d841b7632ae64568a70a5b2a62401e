@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdd39f1e_58486ade",
+        "filename": "Changelog.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-24T17:15:21Z",
+      "side": 1,
+      "message": "need to mention the jira ticket number DCAEGEN2-2964",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d0dbb2_286009f9",
+        "filename": "csit/tests/filesprocessingconfigpmmapper/libraries/DockerContainerManager.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-24T17:15:21Z",
+      "side": 1,
+      "message": "theres\u0027 no license and copyright info here",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f7fbf7_413cc938",
+        "filename": "pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-24T17:15:21Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b217d67d_9adedf82",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-24T17:15:21Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
