@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   datarouter-prov:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:latest
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-prov:2.2.0
     container_name: datarouter-prov
     hostname: dmaap-dr-prov
     ports:
@@ -26,7 +26,7 @@ services:
       - "dcae-pm-mapper:$PMMAPPER_IP"
 
   datarouter-node:
-    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:latest
+    image: nexus3.onap.org:10001/onap/dmaap/datarouter-node:2.2.0
     container_name: datarouter-node
     hostname: dmaap-dr-node
     ports:
@@ -82,7 +82,7 @@ services:
 
   cbs:
     container_name: cbs
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.3.0
     environment:
        CONSUL_HOST: $CONSUL_IP
     networks:

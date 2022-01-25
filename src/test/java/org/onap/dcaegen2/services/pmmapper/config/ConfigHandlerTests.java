@@ -1,7 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
- *  Copyright (C) 2022 Nokia.
+ *  Copyright (C) 2022 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
  */
 
 package org.onap.dcaegen2.services.pmmapper.config;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -62,6 +63,8 @@ class ConfigHandlerTests {
     private static String validMapperConfigChanged;
 
     private static final Path INVALID_CONFIGS_DIRECTORY = Paths.get("src/test/resources/invalid_configs/");
+    private static final Path MISSING_OPTIONAL_FIELDS_CONFIGS_DIRECTORY =
+        Paths.get("src/test/resources/missing_optional_fields/");
     private static final String EXPECTED_ERROR_MESSAGE_IN_LOG = "Error parsing configuration";
     private static final String EXPECTED_CHANGED_VALUE = "https://dmaap-dr-node:8443/delete_changed";
 
@@ -142,6 +145,17 @@ class ConfigHandlerTests {
     }
 
     @ParameterizedTest
+    @MethodSource("getConfigsWithMissingOptionalFields")
+    void should_parse_json_with_missing_optional_fields(String mapperConfig) {
+        Mono<JsonObject> just = createMonoJsonObject(mapperConfig);
+
+        when(cbsClient.get(any())).thenReturn(just);
+        ConfigHandler configHandler = new ConfigHandler(cbsClient, cbsRequest);
+
+        assertDoesNotThrow(configHandler::getInitialConfiguration);
+    }
+
+    @ParameterizedTest
     @MethodSource("getInvalidConfigs")
     void parse_valid_json_bad_values_mapper_config(String mapperConfig) throws Exception {
         Mono<JsonObject> just = createMonoJsonObject(mapperConfig);
@@ -168,5 +182,9 @@ class ConfigHandlerTests {
 
     private static List<String> getInvalidConfigs() throws IOException {
         return FileUtils.getFilesFromDirectory(INVALID_CONFIGS_DIRECTORY);
+    }
+
+    private static List<String> getConfigsWithMissingOptionalFields() throws IOException {
+        return FileUtils.getFilesFromDirectory(MISSING_OPTIONAL_FIELDS_CONFIGS_DIRECTORY);
     }
 }

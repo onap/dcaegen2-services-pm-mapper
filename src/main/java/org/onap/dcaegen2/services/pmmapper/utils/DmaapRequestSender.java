@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nokia.
+ *  Copyright (C) 2021-2022 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import com.google.gson.JsonParser;
 import io.vavr.control.Try;
 import org.onap.dcaegen2.services.sdk.model.streams.AafCredentials;
 import org.onap.dcaegen2.services.sdk.model.streams.dmaap.ImmutableMessageRouterSink;
+import org.onap.dcaegen2.services.sdk.model.streams.dmaap.ImmutableMessageRouterSink.Builder;
 import org.onap.dcaegen2.services.sdk.model.streams.dmaap.MessageRouterSink;
 import org.onap.dcaegen2.services.sdk.rest.services.dmaap.client.ContentType;
 import org.onap.dcaegen2.services.sdk.rest.services.dmaap.client.api.DmaapClientFactory;
@@ -88,10 +89,19 @@ public class DmaapRequestSender {
     }
 
     private static MessageRouterSink sink(String topicUrl, AafCredentials credentials) {
-        return ImmutableMessageRouterSink.builder()
-                .aafCredentials(credentials)
-                .topicUrl(topicUrl)
-                .build();
+        Builder builder = ImmutableMessageRouterSink.builder();
+        if (credentialsExists(credentials)) {
+            builder.aafCredentials(credentials);
+        }
+        return builder.topicUrl(topicUrl).build();
+    }
+
+    private static boolean credentialsExists(AafCredentials credentials) {
+        return isNotBlank(credentials.username()) && isNotBlank(credentials.password());
+    }
+
+    private static boolean isNotBlank(String str) {
+        return str != null && !str.isEmpty();
     }
 
     private static RequestDiagnosticContext diagnosticContext() {

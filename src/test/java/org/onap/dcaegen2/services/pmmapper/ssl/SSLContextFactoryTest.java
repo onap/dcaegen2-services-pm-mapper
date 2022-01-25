@@ -1,6 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
+ *  Copyright (C) 2022 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +24,17 @@ package org.onap.dcaegen2.services.pmmapper.ssl;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.rules.ExpectedException;
+
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -40,6 +47,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -80,5 +89,53 @@ public class SSLContextFactoryTest {
         inValidConfig = new Gson().fromJson(configObject, MapperConfig.class);
 
         assertThrows(IOException.class, () -> objUnderTest.createSSLContext(inValidConfig));
+    }
+
+    @ParameterizedTest
+    @MethodSource("pathsAreNull")
+    void shouldReturnNullWhenOneCertPathIsNull(MapperConfig mapperConfig) throws IOException {
+        SSLContextFactory sslContextFactory = new SSLContextFactory(mapperConfig);
+        SSLContext sslContext = sslContextFactory.createSSLContext(mapperConfig);
+
+        assertNull(sslContext);
+    }
+
+    @ParameterizedTest
+    @MethodSource("pathsAreEmpty")
+    void shouldReturnNullWhenOneCertPathIsEmpty(MapperConfig mapperConfig) throws IOException {
+        SSLContextFactory sslContextFactory = new SSLContextFactory(mapperConfig);
+        SSLContext sslContext = sslContextFactory.createSSLContext(mapperConfig);
+
+        assertNull(sslContext);
+    }
+
+    private static List<MapperConfig> pathsAreNull() {
+        return mockMapperConfigList(null);
+    }
+
+    private static List<MapperConfig> pathsAreEmpty() {
+        return mockMapperConfigList("");
+    }
+
+    private static List<MapperConfig> mockMapperConfigList(String returnValue) {
+        List<MapperConfig> mapperConfigList = new ArrayList<>();
+
+        MapperConfig mapperConfig1 = mock(MapperConfig.class);
+        when(mapperConfig1.getKeyStorePath()).thenReturn(returnValue);
+        mapperConfigList.add(mapperConfig1);
+
+        MapperConfig mapperConfig2 = mock(MapperConfig.class);
+        when(mapperConfig2.getKeyStorePassPath()).thenReturn(returnValue);
+        mapperConfigList.add(mapperConfig2);
+
+        MapperConfig mapperConfig3 = mock(MapperConfig.class);
+        when(mapperConfig3.getTrustStorePath()).thenReturn(returnValue);
+        mapperConfigList.add(mapperConfig3);
+
+        MapperConfig mapperConfig4 = mock(MapperConfig.class);
+        when(mapperConfig4.getTrustStorePassPath()).thenReturn(returnValue);
+        mapperConfigList.add(mapperConfig4);
+
+        return mapperConfigList;
     }
 }
