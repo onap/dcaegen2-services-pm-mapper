@@ -26,15 +26,13 @@ import org.onap.dcaegen2.services.pmmapper.utils.GSONRequired;
 
 @Data
 public class SubscriberConfig {
-    @GSONRequired
+
     @SerializedName("username")
     private String username;
 
-    @GSONRequired
     @SerializedName("password")
     private String password;
 
-    @GSONRequired
     @SerializedName("location")
     private String drLocation;
 
