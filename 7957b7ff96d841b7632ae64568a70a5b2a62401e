@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5723ec6_61cce5bd",
+        "filename": "Changelog.md",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-01-25T12:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdd39f1e_58486ade",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd2dc37_61c034d4",
         "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
         "patchSetId": 21
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bd296f73_5a1343d8",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-01-25T12:33:11Z",
+      "side": 1,
+      "message": "It should be done in other MR. This MR change implementation only.",
+      "parentUuid": "abd2dc37_61c034d4",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d0dbb2_286009f9",
         "filename": "csit/tests/filesprocessingconfigpmmapper/libraries/DockerContainerManager.py",
         "patchSetId": 21
@@ -56,6 +98,24 @@
       "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b1e537_71d81f0f",
+        "filename": "csit/tests/filesprocessingconfigpmmapper/libraries/DockerContainerManager.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-01-25T12:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d0dbb2_286009f9",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c4b6f831_f9ba660d",
+        "filename": "pom.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-01-25T12:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f7fbf7_413cc938",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b217d67d_9adedf82",
         "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
         "patchSetId": 21
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "867e321d_ea688a96",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/AppTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-01-25T12:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b217d67d_9adedf82",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96ef625f_b05b9c5d",
         "filename": "tools/development/run-pm-mapper.sh",
         "patchSetId": 21
@@ -107,6 +203,24 @@
       "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71def30e_2f438a20",
+        "filename": "tools/development/run-pm-mapper.sh",
+        "patchSetId": 21
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-01-25T12:33:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96ef625f_b05b9c5d",
+      "revId": "7957b7ff96d841b7632ae64568a70a5b2a62401e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
