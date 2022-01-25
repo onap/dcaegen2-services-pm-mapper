@@ -102,8 +102,8 @@ public class ConfigHandler {
                 .create()
                 .fromJson(jsonObject, MapperConfig.class);
         } catch (Exception exception) {
-            String exceptionMessage = "Error parsing configuration, mapper config:\n" + mapperConfig;
-            logger.unwrap().error(exceptionMessage);
+            String exceptionMessage = "Error parsing configuration, mapper config: " + mapperConfig;
+            logger.unwrap().error("Error parsing configuration", exception);
             throw new MapperConfigException(exceptionMessage, exception);
         }
         logger.unwrap().info("PM-mapper configuration processed successful");
