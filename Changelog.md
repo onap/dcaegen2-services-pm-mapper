@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.8.0] - 2022/01/24
+## [1.8.0] - (not released)
 ### Changed
 - [DCAEGEN2-2964] Switch configuration provider to CBS Client - DCAE SDK
+- [DCAEGEN2-3032] [DCAEGEN2-3038] Allow supports unauthenticated topic and connection without TLS
 
 ## [1.7.2] - 2021/08/26
 ### Changed
