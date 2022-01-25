@@ -27,7 +27,7 @@
       "dmaap_info": {
         "topic_url": "https://message-router:3905/events/org.onap.dmaap.mr.VES_PM",
         "client_role": "org.onap.dcae.pmPublisher",
-        "location": "san-francisco",
+        "location": null,
         "client_id": "1562763644939"
       }
     }
@@ -38,7 +38,7 @@
       "dmaap_info": {
         "username": "username",
         "password": "password",
-        "location": null,
+        "location": "san-francisco",
         "delivery_url": "https://dcae-pm-mapper:8443/delivery",
         "subscriber_id": 1
       }
