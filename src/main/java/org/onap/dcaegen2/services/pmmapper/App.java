@@ -1,7 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
- *  Copyright (C) 2021-2022 Nokia.
+ *  Copyright (C) 2021-2022 Nokia. All rights reserved.
  *  Copyright (C) 2021 Samsung Electronics.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -169,7 +169,7 @@ public class App {
         this.serverResources = Arrays.asList(healthCheckHandler, deliveryHandler, dynamicConfiguration);
         try {
             this.applicationServer = server(this.mapperConfig, this.serverResources);
-        } catch (IOException e) {
+        } catch (IOException | MapperConfigException e ) {
             logger.unwrap().error("Failed to create server instance.", e);
             throw new IllegalStateException("Server instantiation failed");
         }
@@ -194,7 +194,10 @@ public class App {
     private Undertow server(MapperConfig config, List<ServerResource> serverResources) throws IOException {
         SSLContextFactory sslContextFactory = new SSLContextFactory(config);
         SSLContext sslContext = sslContextFactory.createSSLContext(config);
-        SSLContext.setDefault(sslContext);
+        if (sslContext != null) {
+            SSLContext.setDefault(sslContext);
+            logger.unwrap().info("SSL Context loaded");
+        }
         Undertow.Builder builder = Undertow.builder();
         if (config.getEnableHttp()) {
             builder.addHttpListener(this.httpPort, "0.0.0.0");
