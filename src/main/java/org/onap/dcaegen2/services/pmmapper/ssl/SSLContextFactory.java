@@ -48,14 +48,18 @@ import static java.nio.file.Files.readAllBytes;
 
 public class SSLContextFactory {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(SSLContextFactory.class));
-    private MapperConfig mapperConfig;
+    private final MapperConfig mapperConfig;
 
     public SSLContextFactory(MapperConfig config) {
         mapperConfig = config;
     }
 
     public SSLContext createSSLContext(MapperConfig mapperConfig) throws IOException {
-        SSLContext sslContext = null;
+        logger.unwrap().info("Attempt to Create SSL Context");
+        if (!hasCertPathsConfigured(mapperConfig)) {
+            logger.unwrap().info("Certification paths are not configured. Skip creating SLL Context");
+            return null;
+        }
 
         try {
             KeyStore keyStore = loadKeyStore(mapperConfig.getKeyStorePath(), mapperConfig.getKeyStorePassPath());
@@ -64,14 +68,26 @@ public class SSLContextFactory {
             KeyStore trustStore = loadKeyStore(mapperConfig.getTrustStorePath(), mapperConfig.getTrustStorePassPath());
             TrustManager[] trustManagers = createTrustManager(trustStore);
 
-            sslContext = SSLContext.getInstance("TLSv1.2");
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
             sslContext.init(keyManagers, trustManagers, null);
+            return sslContext;
         } catch(KeyManagementException | NoSuchAlgorithmException e) {
             logger.unwrap().error("Failed to create SSL Context.", e);
             throw new CreateContextException("Failed to create SSL Context", e);
         }
-        return sslContext;
     }
+    //Todo Add unit test and make it private
+    public boolean hasCertPathsConfigured(MapperConfig mapperConfig) {
+        return isNotBlank(mapperConfig.getKeyStorePath()) &&
+            isNotBlank(mapperConfig.getKeyStorePassPath()) &&
+            isNotBlank(mapperConfig.getTrustStorePath()) &&
+            isNotBlank(mapperConfig.getTrustStorePassPath());
+    }
+
+    private boolean isNotBlank(String str) {
+        return str != null && !str.isEmpty();
+    }
+
 
     private KeyManager[] createKeyManager(KeyStore keyStore) throws NoSuchAlgorithmException, IOException {
         KeyManager[] keyManager;
