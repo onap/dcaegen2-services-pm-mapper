@@ -84,7 +84,7 @@ services:
 
   cbs:
     container_name: cbs
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest
+    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.3.0
     environment:
        CONSUL_HOST: $CONSUL_IP
     networks:
