@@ -194,7 +194,10 @@ public class App {
     private Undertow server(MapperConfig config, List<ServerResource> serverResources) throws IOException {
         SSLContextFactory sslContextFactory = new SSLContextFactory(config);
         SSLContext sslContext = sslContextFactory.createSSLContext(config);
-        SSLContext.setDefault(sslContext);
+        if (sslContext != null) {
+            SSLContext.setDefault(sslContext);
+            logger.unwrap().info("SSL Context loaded");
+        }
         Undertow.Builder builder = Undertow.builder();
         if (config.getEnableHttp()) {
             builder.addHttpListener(this.httpPort, "0.0.0.0");
