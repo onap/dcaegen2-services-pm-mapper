@@ -1,7 +1,7 @@
 /*-
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019 Nordix Foundation.
- *  Copyright (C) 2022 Nokia.
+ *  Copyright (C) 2022 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,8 +102,8 @@ public class ConfigHandler {
                 .create()
                 .fromJson(jsonObject, MapperConfig.class);
         } catch (Exception exception) {
-            String exceptionMessage = "Error parsing configuration, mapper config:\n" + mapperConfig;
-            logger.unwrap().error(exceptionMessage);
+            String exceptionMessage = "Error parsing configuration, mapper config: " + mapperConfig;
+            logger.unwrap().error("Error parsing configuration", exception);
             throw new MapperConfigException(exceptionMessage, exception);
         }
         logger.unwrap().info("PM-mapper configuration processed successful");
