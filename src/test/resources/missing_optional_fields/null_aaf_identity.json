@@ -18,7 +18,7 @@
   "trust_store_pass_path": "src/test/resources/password",
   "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
   "dmaap_dr_feed_name": "bulk_pm_feed",
-  "aaf_identity": "dcae@dcae.onap.org",
+  "aaf_identity": null,
   "aaf_password": "iheartrainbows44",
   "enable_http": false,
   "streams_publishes": {
@@ -36,7 +36,7 @@
     "dmaap_subscriber": {
       "type": "data_router",
       "dmaap_info": {
-        "username": null,
+        "username": "username",
         "password": "password",
         "location": "san-francisco",
         "delivery_url": "https://dcae-pm-mapper:8443/delivery",

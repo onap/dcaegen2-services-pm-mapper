@@ -2,6 +2,7 @@
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2019-2020 Nordix Foundation.
  *  Copyright (C) 2021 Samsung Electronics.
+ *  Copyright (C) 2022 Nokia. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +24,7 @@ package org.onap.dcaegen2.services.pmmapper.ssl;
 import org.onap.dcaegen2.services.pmmapper.exceptions.CreateContextException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.KeyManagerException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.LoadKeyStoreException;
+import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.exceptions.TrustManagerException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.logging.ref.slf4j.ONAPLogAdapter;
@@ -48,14 +50,18 @@ import static java.nio.file.Files.readAllBytes;
 
 public class SSLContextFactory {
     private static final ONAPLogAdapter logger = new ONAPLogAdapter(LoggerFactory.getLogger(SSLContextFactory.class));
-    private MapperConfig mapperConfig;
+    private final MapperConfig mapperConfig;
 
     public SSLContextFactory(MapperConfig config) {
         mapperConfig = config;
     }
 
     public SSLContext createSSLContext(MapperConfig mapperConfig) throws IOException {
-        SSLContext sslContext = null;
+        logger.unwrap().info("Attempt to Create SSL Context");
+        if (isSslDisabled(mapperConfig)) {
+            logger.unwrap().warn("SSL is disabled. Skip creating SSL Context");
+            return null;
+        }
 
         try {
             KeyStore keyStore = loadKeyStore(mapperConfig.getKeyStorePath(), mapperConfig.getKeyStorePassPath());
@@ -64,14 +70,35 @@ public class SSLContextFactory {
             KeyStore trustStore = loadKeyStore(mapperConfig.getTrustStorePath(), mapperConfig.getTrustStorePassPath());
             TrustManager[] trustManagers = createTrustManager(trustStore);
 
-            sslContext = SSLContext.getInstance("TLSv1.2");
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
             sslContext.init(keyManagers, trustManagers, null);
+            return sslContext;
         } catch(KeyManagementException | NoSuchAlgorithmException e) {
             logger.unwrap().error("Failed to create SSL Context.", e);
             throw new CreateContextException("Failed to create SSL Context", e);
         }
-        return sslContext;
     }
+
+    private boolean isSslDisabled(MapperConfig mapperConfig) {
+        boolean isCertPathMissing = !areCertPathsConfigured(mapperConfig);
+        if (isCertPathMissing && !mapperConfig.getEnableHttp()) {
+            throw new MapperConfigException("Certificate paths are missing, HTTP is disabled. Not allowed configuration");
+        }
+
+        return isCertPathMissing;
+    }
+
+    private boolean areCertPathsConfigured(MapperConfig mapperConfig) {
+        return isNotBlank(mapperConfig.getKeyStorePath()) &&
+            isNotBlank(mapperConfig.getKeyStorePassPath()) &&
+            isNotBlank(mapperConfig.getTrustStorePath()) &&
+            isNotBlank(mapperConfig.getTrustStorePassPath());
+    }
+
+    private boolean isNotBlank(String str) {
+        return str != null && !str.isEmpty();
+    }
+
 
     private KeyManager[] createKeyManager(KeyStore keyStore) throws NoSuchAlgorithmException, IOException {
         KeyManager[] keyManager;

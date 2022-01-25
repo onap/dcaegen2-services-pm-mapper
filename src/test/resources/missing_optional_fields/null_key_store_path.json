@@ -12,14 +12,14 @@
       }
     ]
   },
-  "key_store_path": "src/test/resources/testkeystore.jks",
+  "key_store_path": null,
   "key_store_pass_path": "src/test/resources/password",
   "trust_store_path": "src/test/resources/testkeystore.jks",
   "trust_store_pass_path": "src/test/resources/password",
   "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
   "dmaap_dr_feed_name": "bulk_pm_feed",
   "aaf_identity": "dcae@dcae.onap.org",
-  "aaf_password": null,
+  "aaf_password": "iheartrainbows44",
   "enable_http": false,
   "streams_publishes": {
     "dmaap_publisher": {

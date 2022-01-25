@@ -13,7 +13,7 @@
     ]
   },
   "key_store_path": "src/test/resources/testkeystore.jks",
-  "key_store_pass_path": "src/test/resources/password",
+  "key_store_pass_path": null,
   "trust_store_path": "src/test/resources/testkeystore.jks",
   "trust_store_pass_path": "src/test/resources/password",
   "dmaap_dr_delete_endpoint": "https://dmaap-dr-node:8443/delete",
@@ -27,7 +27,7 @@
       "dmaap_info": {
         "topic_url": "https://message-router:3905/events/org.onap.dmaap.mr.VES_PM",
         "client_role": "org.onap.dcae.pmPublisher",
-        "location": null,
+        "location": "san-francisco",
         "client_id": "1562763644939"
       }
     }

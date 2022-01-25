@@ -12,7 +12,7 @@
       }
     ]
   },
-  "key_store_path": null,
+  "key_store_path": "src/test/resources/testkeystore.jks",
   "key_store_pass_path": "src/test/resources/password",
   "trust_store_path": "src/test/resources/testkeystore.jks",
   "trust_store_pass_path": "src/test/resources/password",
@@ -38,7 +38,7 @@
       "dmaap_info": {
         "username": "username",
         "password": "password",
-        "location": "san-francisco",
+        "location": null,
         "delivery_url": "https://dcae-pm-mapper:8443/delivery",
         "subscriber_id": 1
       }

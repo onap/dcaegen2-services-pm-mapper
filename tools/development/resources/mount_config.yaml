@@ -15,7 +15,7 @@ dmaap_dr_delete_endpoint: "https://dmaap-dr-node:8443/delete"
 dmaap_dr_feed_name: "1"
 aaf_identity: "aaf_admin@people.osaaf.org"
 aaf_password: "demo123456!"
-enable_http: true,
+enable_http: true
 streams_publishes:
   dmaap_publisher:
     type: "message_router"
