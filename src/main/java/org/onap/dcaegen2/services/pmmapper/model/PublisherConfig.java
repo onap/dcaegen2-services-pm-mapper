@@ -30,15 +30,12 @@ public class PublisherConfig {
     @SerializedName("topic_url")
     private String topicUrl;
 
-    @GSONRequired
     @SerializedName("client_role")
     private String clientRole;
 
-    @GSONRequired
     @SerializedName("client_id")
     private String clientId;
 
-    @GSONRequired
     @SerializedName("location")
     private String clusterLocation;
 

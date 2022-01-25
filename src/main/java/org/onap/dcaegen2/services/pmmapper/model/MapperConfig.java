@@ -41,19 +41,15 @@ public class MapperConfig implements Configurable {
     @SerializedName("enable_http")
     private Boolean enableHttp;
 
-    @GSONRequired
     @SerializedName("key_store_path")
     private String keyStorePath;
 
-    @GSONRequired
     @SerializedName("key_store_pass_path")
     private String keyStorePassPath;
 
-    @GSONRequired
     @SerializedName("trust_store_path")
     private String trustStorePath;
 
-    @GSONRequired
     @SerializedName("trust_store_pass_path")
     private String trustStorePassPath;
 
