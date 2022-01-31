@@ -34,6 +34,8 @@ Verify that PM Mapper rejects 6-9 messages when limitRate is 1 and threads count
 
     ${testname}=                    Set Variable                    Afirst-
 
+    Run Process                     ${pmmapperLogs} < docker logs pmmapper
+    Log To Console                  ${pmmapperLogs}
     SendFilesToDatarouter           ${testname}
     ${alllogs}=                     GetLogsOutput
     ${filtered_logs}=               GetFilteredLogs                 ${alllogs}                                    ${testname}
@@ -41,8 +43,9 @@ Verify that PM Mapper rejects 6-9 messages when limitRate is 1 and threads count
 
     Sleep                           40s
     ${isCorrectDroppedCount}=       Evaluate  ${5} < ${dropped_nr} < ${10}
-    SavePmMapperLogsAndDroppedCount  config_1_1  ${dropped_nr}
+    SavePmMapperLogsAndDroppedCount  config_1_1  ${dropped_nr}  ${alllogs}
     Should Be True                  ${isCorrectDroppedCount}  Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 6-9
+#    Sleep                           500s
     ClearLogs
 
 Verify that PM Mapper rejects 0 messages when limitRate is 10 and threads count is 1
@@ -60,7 +63,7 @@ Verify that PM Mapper rejects 0 messages when limitRate is 10 and threads count 
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           15s
-    SavePmMapperLogsAndDroppedCount  config_10_1  ${dropped_nr}
+    SavePmMapperLogsAndDroppedCount  config_10_1  ${dropped_nr}  ${alllogs}
     Should Be Equal As Numbers      ${dropped_nr}   0   Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 0
     ClearLogs
 
@@ -79,7 +82,7 @@ Verify that PM Mapper rejects 0 messages when limitRate is 1 and threads count i
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           15s
-    SavePmMapperLogsAndDroppedCount  config_1_10  ${dropped_nr}
+    SavePmMapperLogsAndDroppedCount  config_1_10  ${dropped_nr}  ${alllogs}
     Should Be Equal As Numbers      ${dropped_nr}   0   Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 0
     ClearLogs
 
@@ -139,12 +142,13 @@ GetDroppedNumber
 RestartPmmapper
     [Arguments]                       ${envs}
     Remove Container                  ${CLIENT_CONTAINER_NAME}
-    Sleep                             5s
+    Sleep                             60s
     Run Pmmapper Container            ${DOCKER_CLIENT_IMAGE}      ${CLIENT_CONTAINER_NAME}        ${envs}        ${DR_NODE_IP}          ${NODE_IP}
-    Sleep                             15s
+    Sleep                             60s
 
 SavePmMapperLogsAndDroppedCount
-    [Arguments]                       ${test_name}                ${dropped_count}
+    [Arguments]                       ${test_name}                ${dropped_count}               ${alllogs}
+    Run Process                      echo ${alllogs} > %{WORKSPACE}/archives/${test_name}_logs_from_datarouter.log  shell=yes
     Run Process                      echo "Dropped: ${dropped_count}" > %{WORKSPACE}/archives/${test_name}_dropped_count.log  shell=yes
     Run Process                      docker logs ${CLIENT_CONTAINER_NAME} > %{WORKSPACE}/archives/${test_name}_pm_mapper_container_logs.log  shell=yes
 
