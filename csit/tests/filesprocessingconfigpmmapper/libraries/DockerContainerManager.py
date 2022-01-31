@@ -30,6 +30,7 @@ class DockerContainerManager:
         environment.append("CONFIG_BINDING_SERVICE=172.18.0.5")
         environment.append("CONSUL_HOST=172.18.0.5")
         environment.append("HOSTNAME=pmmapper")
+        environment.append("CBS_CLIENT_CONFIG_PATH=/opt/app/pm-mapper/etc/certs/config.yaml")
         client.containers.run(
             image=client_image,
             name=container_name,
