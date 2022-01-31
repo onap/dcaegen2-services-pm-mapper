@@ -145,6 +145,6 @@ RestartPmmapper
 
 SavePmMapperLogsAndDroppedCount
     [Arguments]                       ${test_name}                ${dropped_count}
-    Run Process                      echo "Dropped: ${dropped_count}" > %{WORKSPACE}/archives/${test_name}_dropped_count.log  shell=yes
-    Run Process                      docker logs ${CLIENT_CONTAINER_NAME} > %{WORKSPACE}/archives/${test_name}_pm_mapper_container_logs.log  shell=yes
+    Run Process                       echo "Dropped: ${dropped_count}" > %{WORKSPACE}/archives/${test_name}_dropped_count.log  shell=yes
+    Run Process                       docker logs ${CLIENT_CONTAINER_NAME} > %{WORKSPACE}/archives/${test_name}_pm_mapper_container_logs.log  shell=yes
 

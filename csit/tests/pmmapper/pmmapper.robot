@@ -31,9 +31,10 @@ ${TYPE-C_PM_DATA_FILE_PATH}              ${ASSETS_PATH}/C20190328.0000-0015.xml
 ${NR-TYPE-A_PM_DATA_FILE_PATH}           ${ASSETS_PATH}/new_radio/A20181004.0000-1000-0015-1000_5G.xml
 ${NR-TYPE-C_PM_DATA_FILE_PATH}           ${ASSETS_PATH}/new_radio/C20190329.0000-0015.xml
 ${NR-TYPE-PM_DATA_FILE_PATH}             ${ASSETS_PATH}/new_radio/PM202007171301+020024C202007171207+0200-1215+0200_45678.xml
-${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @${ASSETS_PATH}/vendor_filter_config.json
-${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @${ASSETS_PATH}/pm_filter_config.json
-${CLI_EXEC_PM_FILTER_regex}              curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @${ASSETS_PATH}/pm_filter_regex_config.json
+${CLI_EXEC_VENDOR_FILTER}                cp ${ASSETS_PATH}/vendor_filter_config.yaml /var/tmp/config.yaml
+${CLI_EXEC_PM_FILTER}                    cp ${ASSETS_PATH}/pm_filter_config.yaml /var/tmp/config.yaml
+${CLI_EXEC_PM_FILTER_regex}              cp ${ASSETS_PATH}/pm_filter_regex_config.yaml /var/tmp/config.yaml
+
 ${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_MR_LOG}                            cat /tmp/mr.log
 
