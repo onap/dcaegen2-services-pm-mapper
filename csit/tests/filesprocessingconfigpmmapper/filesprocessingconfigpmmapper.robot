@@ -38,12 +38,14 @@ Verify that PM Mapper rejects 6-9 messages when limitRate is 1 and threads count
     ${alllogs}=                     GetLogsOutput
     ${filtered_logs}=               GetFilteredLogs                 ${alllogs}                                    ${testname}
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
+    ${received_nr}=                 GetReceivedNumber               ${filtered_logs}
 
     Sleep                           40s
     ${isCorrectDroppedCount}=       Evaluate  ${5} < ${dropped_nr} < ${10}
+    ${isCorrectReceivedCount}=      Evaluate  ${0} < ${received_nr} < ${5}
     SavePmMapperLogsAndDroppedCount  config_1_1  ${dropped_nr}
     Should Be True                  ${isCorrectDroppedCount}  Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 6-9
-    ClearLogs
+    Should Be True                  ${isCorrectReceivedCount}  Pm-mapper received ${received_nr} messages. Expected received count: 1-4
 
 Verify that PM Mapper rejects 0 messages when limitRate is 10 and threads count is 1
     [Tags]                          FILES_PROCESSING_CONFIG_PM_MAPPER_2
@@ -58,10 +60,12 @@ Verify that PM Mapper rejects 0 messages when limitRate is 10 and threads count 
     ${alllogs}=                     GetLogsOutput
     ${filtered_logs}=               GetFilteredLogs                 ${alllogs}                                    ${testname}
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
+    ${received_nr}=                 GetReceivedNumber               ${filtered_logs}
 
     Sleep                           15s
     SavePmMapperLogsAndDroppedCount  config_10_1  ${dropped_nr}
     Should Be Equal As Numbers      ${dropped_nr}   0   Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 0
+    Should Be Equal As Numbers      ${received_nr}   10   Pm-mapper received ${received_nr} messages. Expected received count: 10
     ClearLogs
 
 Verify that PM Mapper rejects 0 messages when limitRate is 1 and threads count is 10
@@ -77,10 +81,12 @@ Verify that PM Mapper rejects 0 messages when limitRate is 1 and threads count i
     ${alllogs}=                     GetLogsOutput
     ${filtered_logs}=               GetFilteredLogs                 ${alllogs}                                    ${testname}
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
+    ${received_nr}=                 GetReceivedNumber               ${filtered_logs}
 
     Sleep                           15s
     SavePmMapperLogsAndDroppedCount  config_1_10  ${dropped_nr}
     Should Be Equal As Numbers      ${dropped_nr}   0   Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 0
+    Should Be Equal As Numbers      ${received_nr}   10   Pm-mapper received ${received_nr} messages. Expected received count: 10
     ClearLogs
 
 *** Keywords ***
@@ -133,7 +139,12 @@ GetFilteredLogs
 
 GetDroppedNumber
     [Arguments]                       ${logs_output}
-    ${number}=                        Get Number Of Dropped Messages  ${logs_output}
+    ${number}=                        Get Number Of Element Occurrences In Logs  ${logs_output}  |429|
+    [Return]                          ${number}
+
+GetReceivedNumber
+    [Arguments]                       ${logs_output}
+    ${number}=                        Get Number Of Element Occurrences In Logs  ${logs_output}  |200|
     [Return]                          ${number}
 
 RestartPmmapper
@@ -145,6 +156,6 @@ RestartPmmapper
 
 SavePmMapperLogsAndDroppedCount
     [Arguments]                       ${test_name}                ${dropped_count}
-    Run Process                      echo "Dropped: ${dropped_count}" > %{WORKSPACE}/archives/${test_name}_dropped_count.log  shell=yes
-    Run Process                      docker logs ${CLIENT_CONTAINER_NAME} > %{WORKSPACE}/archives/${test_name}_pm_mapper_container_logs.log  shell=yes
+    Run Process                       echo "Dropped: ${dropped_count}" > %{WORKSPACE}/archives/${test_name}_dropped_count.log  shell=yes
+    Run Process                       docker logs ${CLIENT_CONTAINER_NAME} > %{WORKSPACE}/archives/${test_name}_pm_mapper_container_logs.log  shell=yes
 

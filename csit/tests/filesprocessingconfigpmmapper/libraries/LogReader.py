@@ -14,8 +14,8 @@ class LogReader:
         nrs_set.add(filename[0])
     return ret_logs
 
-  def get_number_of_dropped_messages(self, logs_output):
-    return len(list(filter(lambda line: "|429|" in line, logs_output)))
+  def get_number_of_element_occurrences_in_logs(self, logs_output, element):
+    return len(list(filter(lambda line: element in line, logs_output)))
 
   def get_log_files_list(self, fileNames):
     files = fileNames.split()

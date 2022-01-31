@@ -28,8 +28,7 @@ class DockerContainerManager:
         environment = EnvsReader().read_env_list_from_file(path_to_env)
         environment.append("CONFIG_BINDING_SERVICE_SERVICE_PORT=10000")
         environment.append("CONFIG_BINDING_SERVICE=172.18.0.5")
-        environment.append("CONSUL_HOST=172.18.0.5")
-        environment.append("HOSTNAME=pmmapper")
+        environment.append("CBS_CLIENT_CONFIG_PATH=/app-config-input/application_config.yaml")
         client.containers.run(
             image=client_image,
             name=container_name,
@@ -38,7 +37,7 @@ class DockerContainerManager:
             network='filesprocessingconfigpmmapper_pmmapper-network',
             extra_hosts={'dmaap-dr-node': dr_node_ip, 'message-router': mr_ip},
             user='root',
-            mounts=[Mount(target='/opt/app/pm-mapper/etc/certs/', source='/var/tmp/', type='bind')],
+            mounts=[Mount(target='/opt/app/pm-mapper/etc/certs/', source='/var/tmp/', type='bind'), Mount(target='/app-config-input/application_config.yaml', source='/var/tmp/config.yaml', type='bind')],
             detach=True
         )
 
