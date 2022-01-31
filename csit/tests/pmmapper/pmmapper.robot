@@ -34,7 +34,7 @@ ${NR-TYPE-PM_DATA_FILE_PATH}             ${ASSETS_PATH}/new_radio/PM202007171301
 ${CLI_EXEC_VENDOR_FILTER}                curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @${ASSETS_PATH}/vendor_filter_config.json
 ${CLI_EXEC_PM_FILTER}                    curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @${ASSETS_PATH}/pm_filter_config.json
 ${CLI_EXEC_PM_FILTER_regex}              curl 'http://${CONSUL_IP}:8500/v1/kv/pmmapper?dc=dc1' -X PUT -H 'Accept: application/^Con' -H 'Content-Type: application/json' -H 'X-Requested-With: XMLHttpRequest' --data @${ASSETS_PATH}/pm_filter_regex_config.json
-${CLI_MESSAGE_ROUTER_TOPIC}              curl http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
+${CLI_MESSAGE_ROUTER_TOPIC}              curl  http://${DMAAP_MR_IP}:3904/events/PM_MAPPER/CG1/C1?timeout=1000 > /tmp/mr.log
 ${CLI_MR_LOG}                            cat /tmp/mr.log
 
 
