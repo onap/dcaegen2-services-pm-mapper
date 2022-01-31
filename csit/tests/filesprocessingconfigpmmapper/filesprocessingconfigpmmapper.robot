@@ -139,9 +139,9 @@ GetDroppedNumber
 RestartPmmapper
     [Arguments]                       ${envs}
     Remove Container                  ${CLIENT_CONTAINER_NAME}
-    Sleep                             5s
+    Sleep                             60s
     Run Pmmapper Container            ${DOCKER_CLIENT_IMAGE}      ${CLIENT_CONTAINER_NAME}        ${envs}        ${DR_NODE_IP}          ${NODE_IP}
-    Sleep                             15s
+    Sleep                             60s
 
 SavePmMapperLogsAndDroppedCount
     [Arguments]                       ${test_name}                ${dropped_count}
