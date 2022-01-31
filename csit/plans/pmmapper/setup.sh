@@ -15,17 +15,15 @@ export MARIADB_IP=172.18.0.6
 export NODE_IP=172.18.0.7
 export PMMAPPER_IP=172.18.0.8
 
-for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties cbs.json mrserver.js cert.jks jks.pass trust.jks trust.pass; do
+for asset in provserver.properties addSubscriber.txt addFeed3.txt node.properties mrserver.js cert.jks jks.pass trust.jks trust.pass config.yaml; do
   cp $TEST_PLANS_DIR/assets/${asset} /var/tmp/
 done
 
 sed -i 's/datarouter-mariadb/'$MARIADB_IP'/g' /var/tmp/provserver.properties
 #sed -i 's/<kafka-ip>/'$KAFKA_IP'/g' /var/tmp/addSubscriber.txt
 #sed -i 's/<kafka-ip>/'$KAFKA_IP'/g' /var/tmp/addFeed3.txt
-#sed -i 's/ipaddress/'$CBS_IP'/g' /var/tmp/cbs.json
-sed -i 's/ipaddress//g' /var/tmp/cbs.json
 
-docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d mariadb consul cbs node
+docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d mariadb node
 
 echo "Waiting for MariaDB to come up healthy..."
 for i in {1..30}; do
@@ -41,25 +39,16 @@ done
 
 docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d datarouter-node datarouter-prov
 
-curl --request PUT --data @/var/tmp/cbs.json http://$CONSUL_IP:8500/v1/agent/service/register
-curl 'http://'$CONSUL_IP':8500/v1/kv/pmmapper?dc=dc1' -X PUT \
-      -H 'Accept: application/json' \
-      -H 'Content-Type: application/json' \
-      -H 'X-Requested-With: XMLHttpRequest' \
-      --data @$TEST_PLANS_DIR/assets/config.json
-
 docker-compose -f $TEST_PLANS_DIR/docker-compose.yml up -d pmmapper
 sleep 2
 
-# Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb, Consul, CBS
+# Wait for initialization of Docker container for datarouter-node, datarouter-prov and mariadb
 containers_ok=false
 for i in {1..5}; do
     if [ $(docker inspect --format '{{ .State.Running }}' datarouter-node) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' datarouter-prov) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' mariadb) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' mr-simulator) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' consul) ] && \
-        [ $(docker inspect --format '{{ .State.Running }}' cbs) ] && \
         [ $(docker inspect --format '{{ .State.Running }}' pmmapper) ]
     then
         echo "All required docker containers are up."
