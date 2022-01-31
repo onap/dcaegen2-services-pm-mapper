@@ -73,22 +73,6 @@ services:
       pmmapper-network:
         ipv4_address: $MARIADB_IP
 
-  consul:
-    container_name: consul
-    image: nexus3.onap.org:10001/consul:latest
-    networks:
-      pmmapper-network:
-        ipv4_address: $CONSUL_IP
-
-  cbs:
-    container_name: cbs
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:2.3.0
-    environment:
-       CONSUL_HOST: $CONSUL_IP
-    networks:
-      pmmapper-network:
-        ipv4_address: $CBS_IP
-
   pmmapper:
     container_name: pmmapper
     image: onap/org.onap.dcaegen2.services.pm-mapper:latest
@@ -96,13 +80,13 @@ services:
      - "8081:8081"
     volumes:
       - /var/tmp/:/opt/app/pm-mapper/etc/certs/
+      - /var/tmp/config.yaml:/app-config-input/application_config.yaml
     depends_on:
       - datarouter-prov
     environment:
        CONFIG_BINDING_SERVICE_SERVICE_PORT: 10000
        CONFIG_BINDING_SERVICE: $CBS_IP
-       CONSUL_HOST: $CBS_IP
-       HOSTNAME: pmmapper
+       CBS_CLIENT_CONFIG_PATH: /app-config-input/application_config.yaml
     networks:
       pmmapper-network:
         ipv4_address: $PMMAPPER_IP
