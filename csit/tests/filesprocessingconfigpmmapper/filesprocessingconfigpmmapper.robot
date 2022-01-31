@@ -79,7 +79,7 @@ Verify that PM Mapper rejects 0 messages when limitRate is 1 and threads count i
     ${dropped_nr}=                  GetDroppedNumber                ${filtered_logs}
 
     Sleep                           15s
-    SavePmMapperLogsAndDroppedCount  config_1_10  ${dropped_nr}
+    SavePmMapperLogsAndDroppedCount  config_1_10  ${dropped_nr}  ${alllogs}
     Should Be Equal As Numbers      ${dropped_nr}   0   Pm-mapper drop: ${dropped_nr} messages. Expected drop count: 0
     ClearLogs
 
@@ -139,12 +139,13 @@ GetDroppedNumber
 RestartPmmapper
     [Arguments]                       ${envs}
     Remove Container                  ${CLIENT_CONTAINER_NAME}
-    Sleep                             5s
+    Sleep                             60s
     Run Pmmapper Container            ${DOCKER_CLIENT_IMAGE}      ${CLIENT_CONTAINER_NAME}        ${envs}        ${DR_NODE_IP}          ${NODE_IP}
-    Sleep                             15s
+    Sleep                             60s
 
 SavePmMapperLogsAndDroppedCount
-    [Arguments]                       ${test_name}                ${dropped_count}
+    [Arguments]                       ${test_name}                ${dropped_count}               ${alllogs}
+    Run Process                      echo ${alllogs} > %{WORKSPACE}/archives/${test_name}_logs_from_datarouter.log  shell=yes
     Run Process                      echo "Dropped: ${dropped_count}" > %{WORKSPACE}/archives/${test_name}_dropped_count.log  shell=yes
     Run Process                      docker logs ${CLIENT_CONTAINER_NAME} > %{WORKSPACE}/archives/${test_name}_pm_mapper_container_logs.log  shell=yes
 
