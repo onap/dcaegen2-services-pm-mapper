@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf3a348_0a9e1468",
+        "filename": "src/test/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactoryTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "this needs to be expanded",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c4006c_321f5e3b",
+        "filename": "src/test/resources/missing_optional_fields/null_aaf_identity.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2bc8de_2a04141a",
+        "filename": "src/test/resources/missing_optional_fields/null_aaf_password.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa11c7a6_ee7afdb9",
+        "filename": "src/test/resources/missing_optional_fields/null_client_role.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442a44fd_6a8897a3",
+        "filename": "src/test/resources/missing_optional_fields/null_dr_location.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56d2642_a793f2d2",
+        "filename": "src/test/resources/missing_optional_fields/null_dr_password.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c6c5d8_805a1e01",
+        "filename": "src/test/resources/missing_optional_fields/null_dr_username.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0b5357_33bf06cf",
+        "filename": "src/test/resources/missing_optional_fields/null_key_store_pass_path.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc9e449_d3e32d0e",
+        "filename": "src/test/resources/missing_optional_fields/null_key_store_path.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50a5b25_fcbd204b",
+        "filename": "src/test/resources/missing_optional_fields/null_location.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccf4c2a_d2337d16",
+        "filename": "src/test/resources/missing_optional_fields/null_trust_store_pass_path.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd25c1f_e05e2e8a",
+        "filename": "src/test/resources/missing_optional_fields/null_trust_store_path.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-01T23:23:58Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
