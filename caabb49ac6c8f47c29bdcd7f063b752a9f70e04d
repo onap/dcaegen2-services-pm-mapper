@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1db5db2d_10fd1615",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-02T11:24:37Z",
+      "side": 1,
+      "message": "I agree with return null is not preferred, but currently implementation provide good units coverage. Moving its to main App require much more effort to cover by tests.",
+      "parentUuid": "47a8f118_f5fa7dca",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "caabb49ac6c8f47c29bdcd7f063b752a9f70e04d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dce3bbc_3dbdc854",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "caabb49ac6c8f47c29bdcd7f063b752a9f70e04d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792d195a_1afbe568",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-02T11:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dce3bbc_3dbdc854",
+      "range": {
+        "startLine": 61,
+        "startChar": 88,
+        "endLine": 61,
+        "endChar": 91
+      },
+      "revId": "caabb49ac6c8f47c29bdcd7f063b752a9f70e04d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
