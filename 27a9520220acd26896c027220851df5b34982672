@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f9c9d42_8b94cdfb",
+        "filename": "Changelog.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-02T23:48:02Z",
+      "side": 1,
+      "message": "We are not tracking release date on this changelog. \n\nThe convention we have been following on most/all dcae repo to indicate the date when this version was updated i.e gerrit submission date itself.",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17a507de_2cbd9d34",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
         "patchSetId": 15
@@ -13,6 +36,24 @@
       "writtenOn": "2022-02-02T19:43:17Z",
       "side": 1,
       "message": "Does the null return allow us to fall back to an insecure, in-the-clear, network path?\n\nOr does it prevent it?\n\nIf it does, that is not good. We should NOT default to a lack of security, but should instead fail.\n\nShould an exception be thrown instead?",
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463ec9ea_1ef2f419",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-02T23:48:02Z",
+      "side": 1,
+      "message": "The intent of this change is default to non-ssl mode when certificates are unavailable -  which is not really an error condition to be handled as exception. \n\nAlternatively hasCertPathsConfigured check can be handled in main class directly and if true then invoke this method",
+      "parentUuid": "17a507de_2cbd9d34",
       "revId": "27a9520220acd26896c027220851df5b34982672",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
