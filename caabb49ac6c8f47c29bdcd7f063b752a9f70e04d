@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a8f118_f5fa7dca",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2022-02-02T08:12:34Z",
+      "side": 1,
+      "message": "consider moving that if logic to App.java instead of returning null.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "caabb49ac6c8f47c29bdcd7f063b752a9f70e04d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dce3bbc_3dbdc854",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2022-02-02T08:12:34Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 61,
+        "startChar": 88,
+        "endLine": 61,
+        "endChar": 91
+      },
+      "revId": "caabb49ac6c8f47c29bdcd7f063b752a9f70e04d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
