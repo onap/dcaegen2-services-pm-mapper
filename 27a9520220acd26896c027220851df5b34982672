@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a507de_2cbd9d34",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-02T19:43:17Z",
+      "side": 1,
+      "message": "Does the null return allow us to fall back to an insecure, in-the-clear, network path?\n\nOr does it prevent it?\n\nIf it does, that is not good. We should NOT default to a lack of security, but should instead fail.\n\nShould an exception be thrown instead?",
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

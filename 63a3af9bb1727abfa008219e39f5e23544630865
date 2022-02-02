@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ddc53907_608c72d1",
+        "filename": "src/test/resources/missing_optional_fields/null_aaf_identity.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-02T19:43:17Z",
+      "side": 1,
+      "message": "NL is still missing",
+      "parentUuid": "02de8a5c_c56d6892",
+      "revId": "63a3af9bb1727abfa008219e39f5e23544630865",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd2bc8de_2a04141a",
         "filename": "src/test/resources/missing_optional_fields/null_aaf_password.json",
         "patchSetId": 13
