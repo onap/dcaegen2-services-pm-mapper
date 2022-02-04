@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a052dcf0_6dced24c",
+        "filename": "Changelog.md",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-04T09:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9c9d42_8b94cdfb",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a507de_2cbd9d34",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
         "patchSetId": 15
@@ -57,6 +81,24 @@
       "revId": "27a9520220acd26896c027220851df5b34982672",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8641825_8115a853",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-04T09:30:32Z",
+      "side": 1,
+      "message": "As I mentioned, hasCertPathsConfigured can exist in App (and should), but it require much more effort to cover by unit tests. Both of solution (in SSLContextFactory and in App) haave same logic, but current implementation allow to easy cover all cert configuration cases.",
+      "parentUuid": "463ec9ea_1ef2f419",
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
