@@ -99,6 +99,24 @@
       "revId": "27a9520220acd26896c027220851df5b34982672",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c441cf76_19e506d7",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-07T16:21:51Z",
+      "side": 1,
+      "message": "The security guidelines are that it\u0027s okay to have a path that goes to an insecure mode, but it must be EXPLICITLY configured. That is, the default case is always secure, and a lack of information to support that is an error condition, unless that explicit configuration is added. Something like the following:\n\nif (!hasCertPathsConfigured(...)) {\n   if (explicit configuring allowing insecure mode is set) {\n      logger....warn(\"... Skip creating SSL Context\");\n      return null;\n   throw new CertificateInformationMissing();\n}\n\nThis allows you to explicitly skip SSL for unit tests or other purposes, but still prevents falling back accidentally to an insecure mode.",
+      "parentUuid": "d8641825_8115a853",
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
