@@ -117,6 +117,24 @@
       "revId": "27a9520220acd26896c027220851df5b34982672",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727cb1b6_de5b7298",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-07T19:45:03Z",
+      "side": 1,
+      "message": "Discussed with Tony and clarified expectation on DCAEGEN2-3038\n\n if (explicit configuring allowing insecure mode is set)  --\u003e This can be controlled with \" !enable_tls\" property in application config\n\nException must be thrown if TLS is enabled and if certificates are missing/null. See jira for details.",
+      "parentUuid": "c441cf76_19e506d7",
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
