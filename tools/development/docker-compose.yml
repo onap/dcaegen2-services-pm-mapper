@@ -73,25 +73,6 @@ services:
       pmmapper-network:
         ipv4_address: $MARIADB_IP
 
-  consul:
-    container_name: consul
-    image: nexus3.onap.org:10001/consul:latest
-    ports:
-    - "8500:8500"
-    networks:
-      pmmapper-network:
-        ipv4_address: $CONSUL_IP
-
-  cbs:
-    container_name: cbs
-    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.platform.configbinding.app-app:latest
-    environment:
-       CONSUL_HOST: $CONSUL_IP
-    networks:
-      pmmapper-network:
-        ipv4_address: $CBS_IP
-
-
   files-publisher:
     container_name: files-publisher
     build:
