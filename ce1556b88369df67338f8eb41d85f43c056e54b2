@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6220f40_78e21905",
+        "filename": "tools/development/run-pm-mapper.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-10T09:50:16Z",
+      "side": 1,
+      "message": "Consider add CBS_CLIENT_CONFIG_PATH",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "ce1556b88369df67338f8eb41d85f43c056e54b2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
