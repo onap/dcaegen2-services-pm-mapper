@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.8.0] - 2022/01/24
 ### Changed
 - [DCAEGEN2-2964] Switch configuration provider to CBS Client - DCAE SDK
+- [DCAEGEN2-3049] Remove vulnerability
 
 ## [1.7.2] - 2021/08/26
 ### Changed
