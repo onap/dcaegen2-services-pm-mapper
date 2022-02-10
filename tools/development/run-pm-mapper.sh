@@ -19,9 +19,8 @@ IMAGE=onap/org.onap.dcaegen2.services.pm-mapper:latest
 
 docker run -d -p 8081:8081 \
   --mount type=bind,source="$PWD/certs",target="/opt/app/pm-mapper/etc/certs/" \
+  --mount type=bind,source="$PWD/resources/mount_config.yaml",target="/app-config/application_config.yaml" \
   -e "CONFIG_BINDING_SERVICE=$CBS_IP" \
-  -e "CONSUL_HOST=$CBS_IP" \
-  -e "HOSTNAME=pmmapper" \
   -e "CONFIG_BINDING_SERVICE_SERVICE_PORT=10000" \
   -e "PROCESSING_LIMIT_RATE=1" \
   -e "THREADS_MULTIPLIER=1" \
