@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fa425d6_0daafaf0",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-10T15:44:30Z",
+      "side": 1,
+      "message": "2.2.0 is not official released. Release file with 2.2.0 is not available in datarouter repo . I supposed to 2.2.0 was automatically released during remove of latest tag. \n\nhttps://gerrit.onap.org/r/gitweb?p\u003ddmaap/datarouter.git;a\u003dtree;f\u003dreleases;h\u003d6da912dcac16ccf477695ef4409bc18760d4bcfa;hb\u003drefs/heads/master",
+      "parentUuid": "5cffdfba_9800640f",
+      "range": {
+        "startLine": 5,
+        "startChar": 60,
+        "endLine": 5,
+        "endChar": 65
+      },
+      "revId": "25f7419b16e1fc090d65465f2fa1c72662c872bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03bcc3d5_005645d5",
         "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b1b090e5_dde26ab5",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-10T15:44:30Z",
+      "side": 1,
+      "message": "as above",
+      "parentUuid": "03bcc3d5_005645d5",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "25f7419b16e1fc090d65465f2fa1c72662c872bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6639fc25_907f8242",
         "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2022-02-10T15:08:38Z",
       "side": 1,
       "message": "Shouldn\u0027t this be pointing to latest version - 2.5.4?",
+      "range": {
+        "startLine": 85,
+        "startChar": 87,
+        "endLine": 85,
+        "endChar": 92
+      },
+      "revId": "25f7419b16e1fc090d65465f2fa1c72662c872bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf34e75_ef008cff",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-02-10T15:44:30Z",
+      "side": 1,
+      "message": "It will be removed in this MR: \nhttps://gerrit.onap.org/r/c/dcaegen2/services/pm-mapper/+/126861",
+      "parentUuid": "6639fc25_907f8242",
       "range": {
         "startLine": 85,
         "startChar": 87,
