@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cffdfba_9800640f",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-10T15:08:38Z",
+      "side": 1,
+      "message": "latest released images is 2.2.0 - any reason we cannot use it?",
+      "range": {
+        "startLine": 5,
+        "startChar": 60,
+        "endLine": 5,
+        "endChar": 65
+      },
+      "revId": "25f7419b16e1fc090d65465f2fa1c72662c872bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bcc3d5_005645d5",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-10T15:08:38Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "25f7419b16e1fc090d65465f2fa1c72662c872bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6639fc25_907f8242",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/docker-compose.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-10T15:08:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be pointing to latest version - 2.5.4?",
+      "range": {
+        "startLine": 85,
+        "startChar": 87,
+        "endLine": 85,
+        "endChar": 92
+      },
+      "revId": "25f7419b16e1fc090d65465f2fa1c72662c872bf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
