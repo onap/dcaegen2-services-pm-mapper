@@ -135,6 +135,24 @@
       "revId": "27a9520220acd26896c027220851df5b34982672",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820cb3f4_d09dd9aa",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-11T21:28:34Z",
+      "side": 1,
+      "message": "Thank you",
+      "parentUuid": "727cb1b6_de5b7298",
+      "revId": "27a9520220acd26896c027220851df5b34982672",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
