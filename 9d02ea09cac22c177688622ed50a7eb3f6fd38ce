@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e54e3e6_6f5f3c70",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2022-02-14T09:01:43Z",
+      "side": 1,
+      "message": "consider splitting the check into two guard clauses for more readability instead. Now the logic of two different things is convoluted.\n\nthen in createSSLContext you would have:\n\n if (isSslDisabled(mapperConfig)) {\n    return null;\n}\nif (!areCertPathsConfigured(mapperConfig) {\n    throw Exception;\n}",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 62
+      },
+      "revId": "9d02ea09cac22c177688622ed50a7eb3f6fd38ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387fd644_c15a1bf5",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2022-02-14T09:01:43Z",
+      "side": 1,
+      "message": "is there no library for that already in pm-mapper?",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "9d02ea09cac22c177688622ed50a7eb3f6fd38ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
