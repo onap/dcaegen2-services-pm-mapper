@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bc20d70_3c7958a1",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2022-02-14T11:47:54Z",
+      "side": 1,
+      "message": "Current logic is ok, clarified offline.",
+      "parentUuid": "7e54e3e6_6f5f3c70",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 62
+      },
+      "revId": "9d02ea09cac22c177688622ed50a7eb3f6fd38ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "387fd644_c15a1bf5",
         "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "9d02ea09cac22c177688622ed50a7eb3f6fd38ce",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7767ab5b_5066e9cb",
+        "filename": "src/main/java/org/onap/dcaegen2/services/pmmapper/ssl/SSLContextFactory.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6044
+      },
+      "writtenOn": "2022-02-14T11:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387fd644_c15a1bf5",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "9d02ea09cac22c177688622ed50a7eb3f6fd38ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
