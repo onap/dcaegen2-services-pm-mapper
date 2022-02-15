@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a400f4f8_38dc641b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-15T23:43:30Z",
+      "side": 1,
+      "message": "Do include a brief description of change introduced under this release version going forward (changlog entry can used here also)",
+      "revId": "b768cba41ac112da9736c872257c6399fd8502cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
