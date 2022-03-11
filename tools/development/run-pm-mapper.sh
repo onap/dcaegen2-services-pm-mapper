@@ -21,7 +21,7 @@ TARGET_CONFIG_PATH=/app-config/application_config.yaml
 docker run -d -p 8081:8081 \
   --mount type=bind,source="$PWD/certs",target="/opt/app/pm-mapper/etc/certs/" \
   --mount type=bind,source="$PWD/resources/mount_config.yaml",target="$TARGET_CONFIG_PATH" \
-  -e "CONFIG_BINDING_SERVICE=$CBS_IP" \
+  -e "CONFIG_BINDING_SERVICE=0.0.0.0" \
   -e "CONFIG_BINDING_SERVICE_SERVICE_PORT=10000" \
   -e "CBS_CLIENT_CONFIG_PATH=$TARGET_CONFIG_PATH" \
   -e "PROCESSING_LIMIT_RATE=1" \

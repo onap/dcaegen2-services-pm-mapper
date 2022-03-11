@@ -7,6 +7,7 @@ pm-mapper-filter:
       - attTCHSeizures
       - succTCHSeizures2
       - succImmediateAssignProcs8
+#  filters: [] #disabling filters
 key_store_path: "/opt/app/pm-mapper/etc/certs/cert.jks"
 key_store_pass_path: "/opt/app/pm-mapper/etc/certs/jks.pass"
 trust_store_path: "/opt/app/pm-mapper/etc/certs/trust.jks"
@@ -31,5 +32,5 @@ streams_subscribes:
       username: "username"
       password: "password"
       location: "csit-pmmapper"
-      delivery_url: "http://dcae-pm-mapper:8081/delivery"
+      delivery_url: "http://pmmapper:8081/delivery"
       subscriber_id: 1

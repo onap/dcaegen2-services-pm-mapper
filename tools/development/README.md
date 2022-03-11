@@ -38,7 +38,7 @@ MeasDataFile Examples:
 
 2 b. To send MeasCollec file use:  
 ```
-./send-meas-collec.sh A20181002.0000-1000-0015-1000_5G.xml
+./send-meas-collec.sh A20181002.0000-1000-0015-1000_5G.xml.gz
 ```
 
 MeasCollec Examples:
