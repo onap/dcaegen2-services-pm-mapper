@@ -16,6 +16,24 @@
       "revId": "72c62a090d7551c1619321ab8c8c81a60516efe8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15eb31c9_4d635274",
+        "filename": "tools/development/resources/mount_config.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-03-14T14:36:04Z",
+      "side": 1,
+      "message": "It is configuration file so copyrights are not necessary.",
+      "parentUuid": "4f3367c3_89a0c752",
+      "revId": "72c62a090d7551c1619321ab8c8c81a60516efe8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
