@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "895e3e05_4c12fb18",
+        "filename": "tools/development/send-meas-collec.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-06T13:11:29Z",
+      "side": 1,
+      "message": "2022",
+      "revId": "360bf4d72917ad5b9bb3aaaf26b6d48f85fb3799",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86feea62_80a7bc82",
+        "filename": "tools/development/send-meas-data.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-06T13:11:29Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "360bf4d72917ad5b9bb3aaaf26b6d48f85fb3799",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
