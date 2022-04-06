@@ -11,7 +11,7 @@ Test Teardown     CleanSessionsAndLogs
 
 *** Variables ***
 ${CLI_EXEC_CLI_CONFIG}                   { head -n 100 | tail -50;} < /tmp/pmmapper.log
-${CLI_EXEC_CLI_SUBS}                     curl -k https://${DR_PROV_IP}:8443/internal/prov
+${CLI_EXEC_CLI_SUBS}                     curl -k http://${DR_PROV_IP}:8080/internal/prov
 ${PMMAPPER_BASE_URL}                     http://${PMMAPPER_IP}:8081
 ${DELIVERY_ENDPOINT}                     /delivery
 ${HEALTHCHECK_ENDPOINT}                  /healthcheck
@@ -25,7 +25,7 @@ ${DIFF_VENDOR_METADATA}                  ${ASSETS_PATH}/diff_vendor_metadata.jso
 ${NON_XML_FILE}                          ${ASSETS_PATH}/diff_vendor_metadata.json
 ${CLI_EXEC_CLI_PM_LOG}                   docker exec pmmapper /bin/sh -c "cat /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
 ${CLI_EXEC_CLI_PM_LOG_CLEAR}             docker exec pmmapper /bin/sh -c "echo -n "" > /var/log/ONAP/dcaegen2/services/pm-mapper/pm-mapper_output.log"
-${PUBLISH_NODE_URL}                      https://${DR_NODE_IP}:8443/publish/1
+${PUBLISH_PROV_URL}                      http://${DR_PROV_IP}:8080/publish/1
 ${TYPE-A_PM_DATA_FILE_PATH}              ${ASSETS_PATH}/A20181002.0000-1000-0015-1000_5G.xml
 ${TYPE-C_PM_DATA_FILE_PATH}              ${ASSETS_PATH}/C20190328.0000-0015.xml
 ${NR-TYPE-A_PM_DATA_FILE_PATH}           ${ASSETS_PATH}/new_radio/A20181004.0000-1000-0015-1000_5G.xml
@@ -173,14 +173,14 @@ SendToDatarouter
     ${pmdata}=                      Get File                         ${filepath}
     ${metatdata}                    Get File                         ${metadatapath}
     ${filename}                     Fetch From Right                 ${filepath}                /
-    ${resp}=                        PutCall                          ${PUBLISH_NODE_URL}/${filename}        ${request_id}    ${pmdata}    ${metatdata.replace("\n","")}    pmmapper
+    ${resp}=                        PutCall                          ${PUBLISH_PROV_URL}/${filename}        ${request_id}    ${pmdata}    ${metatdata.replace("\n","")}    pmmapper
     VerifyResponse                  ${resp.status_code}              204
     Sleep                           10s
 
 PutCall
     [Arguments]                     ${url}                           ${request_id}              ${data}            ${meta}          ${user}
     ${headers}=                     Create Dictionary                X-ONAP-RequestID=${request_id}                X-DMAAP-DR-META=${meta}    Content-Type=application/octet-stream     X-DMAAP-DR-ON-BEHALF-OF=${user}    Authorization=Basic cG1tYXBwZXI6cG1tYXBwZXI=
-    ${resp}=                        Evaluate                         requests.put('${url}', data="""${data}""", headers=${headers}, verify=False, allow_redirects=False)    requests
+    ${resp}=                        Evaluate                         requests.put('${url}', data="""${data}""", headers=${headers}, verify=False, allow_redirects=True)    requests
     [Return]                        ${resp}
 
 CheckLog
