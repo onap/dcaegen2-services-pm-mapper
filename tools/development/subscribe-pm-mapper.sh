@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright (C) 2021 NOKIA
+# Copyright (C) 2021-2022 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,4 +18,4 @@ source ./env/containers_ip
 
 # PM Mapper subscriber on data router
 
-curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @./resources/addSubscriber.json --post301 --location-trusted -k https://localhost:8443/subscribe/1
+curl -v -X POST -H "Content-Type:application/vnd.dmaap-dr.subscription" -H "X-DMAAP-DR-ON-BEHALF-OF:pmmapper" --data-ascii @./resources/addSubscriber.json --post301 --location-trusted -k http://localhost:8080/subscribe/1

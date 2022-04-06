@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.9.0] - 2022/05/13
+### Changed
+- [DCAEGEN2-3037] Disable TLS in DataRouter (CSIT)
+
+
 ## [1.8.0] - 2022/01/24
 ### Changed
 - [DCAEGEN2-2964] Switch configuration provider to CBS Client - DCAE SDK

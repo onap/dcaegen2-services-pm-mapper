@@ -9,11 +9,6 @@
   "metadataOnly": false,
   "suspend": false,
   "groupid": 0,
-  "links": {
-    "self": "https://dmaap-dr-prov/subscribe/1",
-    "log": "https://dmaap-dr-prov/feedlog/1",
-    "feed": "https://dmaap-dr-prov/feed/1"
-  },
   "subscriber": "pmmapper",
   "decompress": true,
   "privilegedSubscriber": true
