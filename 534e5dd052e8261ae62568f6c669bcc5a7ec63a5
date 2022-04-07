@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "25273163_51f3c2fb",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/addSubscriber.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "This isn\u0027t needed. Error on our part. DR generates these when adding a new subscriber",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "055bb829_1dbe4911",
         "filename": "csit/plans/filesprocessingconfigpmmapper/assets/node.properties",
         "patchSetId": 3
@@ -47,6 +70,52 @@
       "writtenOn": "2022-04-07T02:50:41Z",
       "side": 1,
       "message": "this really should have the Copyright + License block in it",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e5df67_0cfe77a5",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Prob don\u0027t need this now\nSame below",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4132b6_fd9d16f0",
+        "filename": "csit/plans/pmmapper/assets/addSubscriber.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Same comment as before",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 11
+      },
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -104,6 +173,52 @@
     },
     {
       "key": {
+        "uuid": "a517226a_12705cb0",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Not needed\nSame below",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6183ea_b676e1d0",
+        "filename": "csit/tests/pmmapper/pmmapper.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Should be targeting dr-prov\nRobot request may not like the redirect though",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 61
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef2224da_4a649006",
         "filename": "tools/development/config-dmaap.sh",
         "patchSetId": 3
@@ -115,6 +230,29 @@
       "writtenOn": "2022-04-07T02:50:41Z",
       "side": 1,
       "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c887e7_61cd8991",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Not needed\nSame below",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 45
+      },
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -138,6 +276,29 @@
     },
     {
       "key": {
+        "uuid": "c5ee6527_9e0654df",
+        "filename": "tools/development/dr-mount/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Lots of duplication of files in the csits dir. Could we not just maintain 1 set and copy them into the relevant folder for testing where needed?",
+      "range": {
+        "startLine": 30,
+        "startChar": 29,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d06f039_e07927ed",
         "filename": "tools/development/dr-mount/provserver.properties",
         "patchSetId": 3
@@ -149,6 +310,29 @@
       "writtenOn": "2022-04-07T02:50:41Z",
       "side": 1,
       "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6bf2f4_8842bcc2",
+        "filename": "tools/development/resources/addSubscriber.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Same comment as before",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 8
+      },
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -172,6 +356,29 @@
     },
     {
       "key": {
+        "uuid": "c0015d07_baed135d",
+        "filename": "tools/development/send-meas-collec.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 20,
+        "startChar": 69,
+        "endLine": 20,
+        "endChar": 71
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a8443aa_96140d45",
         "filename": "tools/development/send-meas-data.sh",
         "patchSetId": 3
@@ -183,6 +390,29 @@
       "writtenOn": "2022-04-07T02:50:41Z",
       "side": 1,
       "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fe28d6_a56ee4ff",
+        "filename": "tools/development/send-meas-data.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:16:36Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 20,
+        "startChar": 69,
+        "endLine": 20,
+        "endChar": 71
+      },
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
