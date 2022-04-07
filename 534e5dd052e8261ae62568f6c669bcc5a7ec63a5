@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "055bb829_1dbe4911",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42146bd_fb5554d0",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/provserver.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3928329b_67580b5d",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "this really should have the Copyright + License block in it",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd522b56_4cce6193",
+        "filename": "csit/plans/pmmapper/assets/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78156ef5_02148092",
+        "filename": "csit/plans/pmmapper/assets/provserver.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152cab4f_cbd07ad9",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "this really should have the Copyright + License block in it",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2224da_4a649006",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af80073_08dcdbd0",
+        "filename": "tools/development/dr-mount/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d06f039_e07927ed",
+        "filename": "tools/development/dr-mount/provserver.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53dbc8f_d6aa2b25",
+        "filename": "tools/development/send-meas-collec.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8443aa_96140d45",
+        "filename": "tools/development/send-meas-data.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1603b3_30c1b412",
+        "filename": "tools/development/subscribe-pm-mapper.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-07T02:50:41Z",
+      "side": 1,
+      "message": "add 2022",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
