@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "165586eb_df1bb80c",
+        "filename": "tools/development/send-meas-collec.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 4405
+      },
+      "writtenOn": "2022-04-07T16:06:52Z",
+      "side": 1,
+      "message": "Should be targeting dr-prov\nhttp://dmaap-dr-prov:8080\n\nSame for the other file",
+      "range": {
+        "startLine": 20,
+        "startChar": 335,
+        "endLine": 20,
+        "endChar": 361
+      },
+      "revId": "22c42c557015b9a6760d9ed666c36ffd5fc26a6a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
