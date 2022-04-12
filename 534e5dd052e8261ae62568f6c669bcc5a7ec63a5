@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d23661f_eb231c49",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/addSubscriber.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25273163_51f3c2fb",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "055bb829_1dbe4911",
         "filename": "csit/plans/filesprocessingconfigpmmapper/assets/node.properties",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2cead5_a69b1152",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055bb829_1dbe4911",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a702b3ed_d341f5c9",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/provserver.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e42146bd_fb5554d0",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3928329b_67580b5d",
         "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cc7763_d1ede82a",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3928329b_67580b5d",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "a5244017_24e93abb",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98e5df67_0cfe77a5",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4132b6_fd9d16f0",
         "filename": "csit/plans/pmmapper/assets/addSubscriber.json",
         "patchSetId": 3
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "1f92a2bf_f28d20b2",
+        "filename": "csit/plans/pmmapper/assets/addSubscriber.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4132b6_fd9d16f0",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd522b56_4cce6193",
         "filename": "csit/plans/pmmapper/assets/node.properties",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6abbb2_945aaf28",
+        "filename": "csit/plans/pmmapper/assets/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd522b56_4cce6193",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "66bbbe1b_d81b4bd0",
+        "filename": "csit/plans/pmmapper/assets/provserver.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78156ef5_02148092",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152cab4f_cbd07ad9",
         "filename": "csit/plans/pmmapper/setup.sh",
         "patchSetId": 3
@@ -170,6 +332,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d791f4c_10895ff8",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "152cab4f_cbd07ad9",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "c603654f_3b105414",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a517226a_12705cb0",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6183ea_b676e1d0",
         "filename": "csit/tests/pmmapper/pmmapper.robot",
         "patchSetId": 3
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "9f7ea392_9c3ff4ce",
+        "filename": "csit/tests/pmmapper/pmmapper.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Unfortunately robot not support redirects correctly :( https://jenkins.onap.org/job/dcaegen2-services-pm-mapper-review-verification-maven-master/160/console",
+      "parentUuid": "5d6183ea_b676e1d0",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 61
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef2224da_4a649006",
         "filename": "tools/development/config-dmaap.sh",
         "patchSetId": 3
@@ -233,6 +461,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a145253_0842168e",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef2224da_4a649006",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "5e68dc44_67004aa7",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c887e7_61cd8991",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7af80073_08dcdbd0",
         "filename": "tools/development/dr-mount/node.properties",
         "patchSetId": 3
@@ -273,6 +543,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6beae94_1f693e3e",
+        "filename": "tools/development/dr-mount/node.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af80073_08dcdbd0",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +604,24 @@
     },
     {
       "key": {
+        "uuid": "2afeb8a6_72666437",
+        "filename": "tools/development/dr-mount/provserver.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d06f039_e07927ed",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6bf2f4_8842bcc2",
         "filename": "tools/development/resources/addSubscriber.json",
         "patchSetId": 3
@@ -339,6 +645,30 @@
     },
     {
       "key": {
+        "uuid": "db0c6c2a_a7c0274f",
+        "filename": "tools/development/resources/addSubscriber.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6bf2f4_8842bcc2",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f53dbc8f_d6aa2b25",
         "filename": "tools/development/send-meas-collec.sh",
         "patchSetId": 3
@@ -353,6 +683,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e964d8b_56c58827",
+        "filename": "tools/development/send-meas-collec.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f53dbc8f_d6aa2b25",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -379,6 +727,30 @@
     },
     {
       "key": {
+        "uuid": "8ea46275_13133ee7",
+        "filename": "tools/development/send-meas-collec.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0015d07_baed135d",
+      "range": {
+        "startLine": 20,
+        "startChar": 69,
+        "endLine": 20,
+        "endChar": 71
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a8443aa_96140d45",
         "filename": "tools/development/send-meas-data.sh",
         "patchSetId": 3
@@ -393,6 +765,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b59a926_1ea7a030",
+        "filename": "tools/development/send-meas-data.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8443aa_96140d45",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -419,6 +809,30 @@
     },
     {
       "key": {
+        "uuid": "f52a427b_b05a4cdc",
+        "filename": "tools/development/send-meas-data.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0fe28d6_a56ee4ff",
+      "range": {
+        "startLine": 20,
+        "startChar": 69,
+        "endLine": 20,
+        "endChar": 71
+      },
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e1603b3_30c1b412",
         "filename": "tools/development/subscribe-pm-mapper.sh",
         "patchSetId": 3
@@ -433,6 +847,24 @@
       "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec45f7c_2ab94848",
+        "filename": "tools/development/subscribe-pm-mapper.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-04-12T10:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e1603b3_30c1b412",
+      "revId": "534e5dd052e8261ae62568f6c669bcc5a7ec63a5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
