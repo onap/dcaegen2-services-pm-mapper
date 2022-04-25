@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c71df34_b50bc071",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/node.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "please remove the separator line between the individual copyright notices",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e909467d_578a64a1",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "because it has a variable that needs to be expanded, please put quotes around the URL here. Because there are already double quotes around the entire command being passed to docker, you should use single quotes, as in:\n\n\"curl -X PUT \u0027http://$DR_PROV_IP:8080/internal/api/NODES?val\u003ddmaap-dr-node\\|$GATEWAY_IP\u0027\"",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55613de6_99f228c5",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40f3ea3_52e13110",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "this one needs double quotes around the URL:\n\n--post301 --location-trusted \"http://${DR_PROV_IP}:8080\"",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882ff0ef_69cd8288",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "same here, add double quotes",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7347fd01_3d385104",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "and here, add double quotes",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985c2b97_9da52ea5",
+        "filename": "csit/plans/pmmapper/assets/node.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "remove the separator line between the copyright statements",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7255d8_d8409740",
+        "filename": "csit/plans/pmmapper/assets/provserver.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "remove the separator line between the copyright statements",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de53c0ae_d2a66c8c",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "because it has a variable that needs to be expanded, please put quotes around the URL here. Because there are already double quotes around the entire command being passed to docker, you should use single quotes, as in:\n\n    \"curl -X PUT \u0027http://$DR_PROV_IP:8080/internal/api/NODES?val\u003ddmaap-dr-node\\|$GATEWAY_IP\u0027\"",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5d5559_985eec48",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f716222_30e18a3e",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "add double quotes around the URL",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece02546_1bb5e393",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "add double quotes around the URL",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b00e4d4_a89668b8",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "add double quotes around the URL",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11caafc_fcd62187",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "because it has a variable that needs to be expanded, please put quotes around the URL here. Because there are already double quotes around the entire command being passed to docker, you should use single quotes, as in:\n\ndocker exec -i datarouter-prov sh -c \"curl -X PUT \u0027http://$DR_PROV_IP:8080/internal/api/NODES?val\u003ddmaap-dr-node\\|$GATEWAY_IP\"\"",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94049cf1_2d7a9f5c",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3382a5_133aa281",
+        "filename": "tools/development/dr-mount/node.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "remove the separator line between the copyright statements",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c958f7bb_4d6f4ffc",
+        "filename": "tools/development/dr-mount/provserver.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-04-25T19:44:53Z",
+      "side": 1,
+      "message": "remove the separator line between the copyright statements",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
