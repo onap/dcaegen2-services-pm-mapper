@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dee96541_0cf648c4",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/assets/node.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c71df34_b50bc071",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e909467d_578a64a1",
         "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd4faa3_2bb7fea5",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Can\u0027t be done. Single quotes change string parsing in bash, ENVs is not parsing correctly.",
+      "parentUuid": "e909467d_578a64a1",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "db3c3f85_adb94508",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "As above",
+      "parentUuid": "55613de6_99f228c5",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a40f3ea3_52e13110",
         "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21a8ea0_93f46ef8",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40f3ea3_52e13110",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1cf003ae_5d7a2d66",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "882ff0ef_69cd8288",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7347fd01_3d385104",
         "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5497d853_782fe7cf",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7347fd01_3d385104",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "640f7878_0d712241",
+        "filename": "csit/plans/pmmapper/assets/node.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "985c2b97_9da52ea5",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc7255d8_d8409740",
         "filename": "csit/plans/pmmapper/assets/provserver.properties",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3f6583_036f2ea4",
+        "filename": "csit/plans/pmmapper/assets/provserver.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc7255d8_d8409740",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "829bd527_92387601",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Can\u0027t be done. Single quotes change string parsing in bash, ENVs is not parsing correctly.",
+      "parentUuid": "de53c0ae_d2a66c8c",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5d5559_985eec48",
         "filename": "csit/plans/pmmapper/setup.sh",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566cd976_feac466e",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "As above",
+      "parentUuid": "cc5d5559_985eec48",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "4541589a_8b3cad34",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f716222_30e18a3e",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ece02546_1bb5e393",
         "filename": "csit/plans/pmmapper/setup.sh",
         "patchSetId": 6
@@ -203,6 +401,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa1ac2b_d66bcd5d",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ece02546_1bb5e393",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "26776973_34148ff4",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b00e4d4_a89668b8",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c11caafc_fcd62187",
         "filename": "tools/development/config-dmaap.sh",
         "patchSetId": 6
@@ -237,6 +471,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55f2af6_497c415d",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Can\u0027t be done. Single quotes change string parsing in bash, ENVs is not parsing correctly.",
+      "parentUuid": "c11caafc_fcd62187",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "3fbcdd41_32390add",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "As above",
+      "parentUuid": "94049cf1_2d7a9f5c",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3382a5_133aa281",
         "filename": "tools/development/dr-mount/node.properties",
         "patchSetId": 6
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "166f452c_842237b2",
+        "filename": "tools/development/dr-mount/node.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3382a5_133aa281",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c958f7bb_4d6f4ffc",
         "filename": "tools/development/dr-mount/provserver.properties",
         "patchSetId": 6
@@ -288,6 +576,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d76855d_b89b95d5",
+        "filename": "tools/development/dr-mount/provserver.properties",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 6310
+      },
+      "writtenOn": "2022-05-11T07:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c958f7bb_4d6f4ffc",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
