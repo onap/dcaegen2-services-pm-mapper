@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright (C) 2021 NOKIA
+# Copyright (C) 2021-2022 NOKIA. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,4 +18,6 @@ source ./env/containers_ip
 
 docker stop pmmapper
 docker rm pmmapper
+docker stop datafile-dev
+docker rm datafile-dev
 docker-compose down
