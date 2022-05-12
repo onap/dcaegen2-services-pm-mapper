@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.9.0] - 2022/05/13
 ### Changed
 - [DCAEGEN2-3037] Disable TLS in DataRouter (CSIT)
+- [DCAEGEN2-3182] Extend development tools
 
 
 ## [1.8.0] - 2022/01/24
