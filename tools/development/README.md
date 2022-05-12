@@ -75,6 +75,34 @@ docker logs -f pmmapper
 docker logs -f mr-simulator
 ```
 
+### DataFileCollector
+```
+docker logs -f datafile-dev
+```
+
+## Development and running  DataFile Collector
+DFC is fetching events from mr-simulator, based on event properties file is downloading and pushing to DataRouter
+
+1. Downloaded file properties: location, fileType, fileName could be set in 'tools/development/message-router/mrserver.js', see function handleVesNotificationRequest(res)
+2. Publish file properties and DFC configuration could be set in 'tools/development/resources/datafile/mount_config.yaml'
+3. Logging level and other DFC/Spring properties could be set in 'tools/development/resources/datafile/spring_application.yaml'
+
+### Running DFC
+To run DFC execute following scripts
+```
+make setup-all
+make run-data-file
+```
+
+Bulk-pm flow:
+DFC fetch message from MR-Simulator, download file from sftp-server, push file to DataRouter.
+DataRouter push file to pm-mapper. 
+Pm-mapper send message to MR-Simulator.
+
+To stop DFC execute: 
+``` 
+make remove-datafile
+```
 
 #####Info:
 Certificate validity - 2023 August

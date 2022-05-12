@@ -54,6 +54,18 @@ services:
       pmmapper-network:
         ipv4_address: $NODE_IP
 
+  sftp:
+    container_name: sftp-server
+    image: atmoz/sftp
+    ports:
+      - "2222:22"
+    command: admin:admin:1001
+    volumes:
+      - ./files-publisher/files/:/home/admin/upload
+    networks:
+      pmmapper-network:
+        ipv4_address: $SFTP_SERVER_IP
+
   mariadb:
     image: nexus3.onap.org:10001/mariadb:10.2.14
     container_name: mariadb

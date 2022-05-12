@@ -20,7 +20,7 @@ source ./env/containers_ip
 
 sed -i 's/datarouter-mariadb/'$MARIADB_IP'/g' $SCRIPT_DIR/dr-mount/provserver.properties
 
-docker-compose -f $SCRIPT_DIR/docker-compose.yml up -d mariadb node files-publisher
+docker-compose -f $SCRIPT_DIR/docker-compose.yml up -d mariadb node files-publisher sftp
 
 echo "Waiting for MariaDB to come up healthy..."
 for i in {1..30}; do

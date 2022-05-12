@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright (C) 2021-2022 NOKIA
+# Copyright (C) 2022 NOKIA
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,20 +15,18 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 source ./env/containers_ip
-IMAGE=onap/org.onap.dcaegen2.services.pm-mapper:latest
-
+IMAGE=nexus3.onap.org:10003/onap/org.onap.dcaegen2.collectors.datafile.datafile-app-server:latest
 TARGET_CONFIG_PATH=/app-config/application_config.yaml
-docker run -d -p 8081:8081 -p 5005:5005 \
-  --mount type=bind,source="$PWD/certs",target="/opt/app/pm-mapper/etc/certs/" \
-  --mount type=bind,source="$PWD/resources/mount_config.yaml",target="$TARGET_CONFIG_PATH" \
-  -e "JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n" \
+TARGET_SPRING_CONFIG=/opt/app/datafile/config/application.yaml
+
+docker run -d -p 8100:8100 -p 8000:8000 \
+  --mount type=bind,source="$PWD/resources/datafile/mount_config.yaml",target="$TARGET_CONFIG_PATH" \
+  --mount type=bind,source="$PWD/resources/datafile/spring_application.yaml",target="$TARGET_SPRING_CONFIG" \
+  -e "JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n" \
   -e "CONFIG_BINDING_SERVICE=0.0.0.0" \
   -e "CONFIG_BINDING_SERVICE_SERVICE_PORT=10000" \
   -e "CBS_CLIENT_CONFIG_PATH=$TARGET_CONFIG_PATH" \
-  -e "PROCESSING_LIMIT_RATE=1" \
-  -e "THREADS_MULTIPLIER=1" \
-  -e "PROCESSING_THREADS_COUNT=1" \
   --add-host "dmaap-dr-node:$DR_NODE_IP" \
-  --add-host "message-router:$NODE_IP" \
+  --add-host "dmaap-dr-prov:$DR_PROV_IP" \
   --network=development_pmmapper-network \
-  --name=pmmapper $IMAGE
+  --name=datafile-dev $IMAGE

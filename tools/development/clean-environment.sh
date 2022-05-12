@@ -18,4 +18,6 @@ source ./env/containers_ip
 
 docker stop pmmapper
 docker rm pmmapper
+docker stop datafile-dev
+docker rm datafile-dev
 docker-compose down

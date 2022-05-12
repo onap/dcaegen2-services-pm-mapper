@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active: prod
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "loggers,logfile,health,info,metrics"
+server:
+  port: 8433
+  ssl:
+    key-store-type: PKCS12
+    key-store-password: ericssondfc
+    key-store: classpath:keystore.jks
+    key-password: ericssondfc
+    keyAlias: tomcat-localhost
+logging:
+  level:
+    ROOT: INFO
+    org.springframework: INFO
+    org.springframework.data: INFO
+    org.springframework.web.reactive.function.client.ExchangeFunctions: INFO
+    org.onap.dcaegen2.collectors.datafile: TRACE
+    org.onap.dcaegen2: TRACE
+  file: /var/log/ONAP/application.log
+app:
+  filepath: config/datafile_endpoints_test.json
+
+springdoc:
+  show-actuator: true
+  swagger-ui.disable-swagger-default-url: true
