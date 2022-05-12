@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ac17cd73_4cd74fa7",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-12T18:31:53Z",
+      "side": 1,
+      "message": "This is a classic nested quote mark pattern.\n\nThe double quotes around the entire sh -c command will cause the environment variables to be expanded. The internal single quotes would prevent the RESULTS of the environment variable expansion from subsequently being incorrectly interpreted.\n\nThis entire shell script should be run through shellcheck.",
+      "parentUuid": "ccd4faa3_2bb7fea5",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55613de6_99f228c5",
         "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
         "patchSetId": 6
@@ -104,6 +122,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a123461_0b3ec3ab",
+        "filename": "csit/plans/filesprocessingconfigpmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-12T18:31:53Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "db3c3f85_adb94508",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
@@ -317,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "80c26e5a_bf44fcfa",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-12T18:31:53Z",
+      "side": 1,
+      "message": "This is a classic nested quote mark pattern.\n\nThe double quotes around the entire sh -c command will cause the environment variables to be expanded. The internal single quotes would prevent the RESULTS of the environment variable expansion from subsequently being incorrectly interpreted.\n\nThis entire shell script should be run through shellcheck.",
+      "parentUuid": "829bd527_92387601",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc5d5559_985eec48",
         "filename": "csit/plans/pmmapper/setup.sh",
         "patchSetId": 6
@@ -349,6 +403,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4690a529_c8cad6e9",
+        "filename": "csit/plans/pmmapper/setup.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-12T18:31:53Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "566cd976_feac466e",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
@@ -492,6 +564,24 @@
     },
     {
       "key": {
+        "uuid": "e21157d5_72456744",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-12T18:31:53Z",
+      "side": 1,
+      "message": "This is a classic nested quote mark pattern.\n\nThe double quotes around the entire sh -c command will cause the environment variables to be expanded. The internal single quotes would prevent the RESULTS of the environment variable expansion from subsequently being incorrectly interpreted.\n\nThis entire shell script should be run through shellcheck.",
+      "parentUuid": "e55f2af6_497c415d",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94049cf1_2d7a9f5c",
         "filename": "tools/development/config-dmaap.sh",
         "patchSetId": 6
@@ -524,6 +614,24 @@
       "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e14589be_2653d27b",
+        "filename": "tools/development/config-dmaap.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-12T18:31:53Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "3fbcdd41_32390add",
+      "revId": "c9fd68b14c145d8afc446e2b0c08cb859e088ef9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
