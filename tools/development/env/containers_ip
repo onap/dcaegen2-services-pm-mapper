@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright (C) 2021-2022 NOKIA. All rights reserved.
+# Copyright (C) 2021-2022 Nokia. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,3 +22,5 @@ export MARIADB_IP=172.18.0.6
 export NODE_IP=172.18.0.7
 export PMMAPPER_IP=172.18.0.8
 export FILES_PUBLISHER_IP=172.18.0.9
+export DFC_IP=172.18.0.10
+export SFTP_SERVER_IP=172.18.0.10

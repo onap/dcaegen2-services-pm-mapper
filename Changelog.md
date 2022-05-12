@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+//Todo update changelog after rebase 
+
 ## [1.8.0] - 2022/01/24
 ### Changed
 - [DCAEGEN2-2964] Switch configuration provider to CBS Client - DCAE SDK
