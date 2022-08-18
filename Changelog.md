@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.9.0] - 2022/05/13
 ### Changed
+- [DCAEGEN2-3218] Fix vulnerabilities:
+  - Update io.undertow:undertow-core to version 2.2.17.Final
+  - Update dcae-sdk to version 1.8.10
+  - Update io.projectreactor:reactor-core to version 3.4.21
 - [DCAEGEN2-3037] Disable TLS in DataRouter (CSIT)
 - [DCAEGEN2-3182] Extend development tools
 
