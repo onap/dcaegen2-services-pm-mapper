@@ -29,18 +29,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import io.undertow.server.HttpServerExchange;
 import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.util.HashMap;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.dcaegen2.services.pmmapper.exceptions.ProcessEventException;
@@ -53,10 +52,13 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
-import utils.EventUtils;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import io.undertow.server.HttpServerExchange;
+import utils.EventUtils;
 @PowerMockIgnore({"org.apache.http.conn.ssl.*", "javax.net.ssl.*" , "javax.crypto.*", "com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
 @PrepareForTest(RequestSender.class)
 @RunWith(PowerMockRunner.class)
@@ -71,7 +73,7 @@ public class DataRouterUtilsTest {
     @Test
     public void processEventSuccessful() throws Exception {
         validConfigFileContents = new String(Files.readAllBytes(validConfigPath));
-        JsonObject configObject = new JsonParser().parse(validConfigFileContents).getAsJsonObject();
+        JsonObject configObject = JsonParser.parseString(validConfigFileContents).getAsJsonObject();
         validConfig = new Gson().fromJson(configObject, MapperConfig.class);
         sslContextFactory = new SSLContextFactory(validConfig);
 
@@ -125,7 +127,7 @@ public class DataRouterUtilsTest {
     @Test
     public void testNegativeResponse() throws Exception {
         validConfigFileContents = new String(Files.readAllBytes(validConfigPath));
-        JsonObject configObject = new JsonParser().parse(validConfigFileContents).getAsJsonObject();
+        JsonObject configObject = JsonParser.parseString(validConfigFileContents).getAsJsonObject();
         validConfig = new Gson().fromJson(configObject, MapperConfig.class);
         sslContextFactory = new SSLContextFactory(validConfig);
 

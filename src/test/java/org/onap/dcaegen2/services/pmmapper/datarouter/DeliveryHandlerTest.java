@@ -23,28 +23,19 @@ package org.onap.dcaegen2.services.pmmapper.datarouter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import io.undertow.io.Receiver;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.HeaderMap;
-import io.undertow.util.StatusCodes;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,6 +43,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+import io.undertow.io.Receiver;
+import io.undertow.server.HttpServerExchange;
+import io.undertow.util.HeaderMap;
+import io.undertow.util.StatusCodes;
 import utils.LoggingUtils;
 
 @ExtendWith(MockitoExtension.class)
@@ -73,8 +74,8 @@ class DeliveryHandlerTest {
     @Test
     void testRequestInboundInvalidMetadata() throws Exception {
         HttpServerExchange httpServerExchange = mock(HttpServerExchange.class, RETURNS_DEEP_STUBS);
-        JsonObject metadata = new JsonParser().parse(new String(Files
-                .readAllBytes(INVALID_METADATA_PATH))).getAsJsonObject();
+        JsonObject metadata = JsonParser.parseString(new String(Files
+            .readAllBytes(INVALID_METADATA_PATH))).getAsJsonObject();
         when(httpServerExchange.getRequestHeaders().get(any(String.class)).get(anyInt()))
                 .thenReturn(metadata.toString());
         when(httpServerExchange.setStatusCode(anyInt())).thenReturn(httpServerExchange);
@@ -106,8 +107,7 @@ class DeliveryHandlerTest {
         Receiver receiver = mock(Receiver.class);
         when(httpServerExchange.getRequestReceiver()).thenReturn(receiver);
         String testString = "MESSAGE BODY";
-        JsonObject metadata = new JsonParser().parse(
-                new String(Files.readAllBytes(VALID_METADATA_PATH))).getAsJsonObject();
+        JsonObject metadata = JsonParser.parseString(new String(Files.readAllBytes(VALID_METADATA_PATH))).getAsJsonObject();
         when(httpServerExchange.getRequestHeaders().get(DeliveryHandler.METADATA_HEADER).get(anyInt()))
                 .thenReturn(metadata.toString());
         when(httpServerExchange.getRequestHeaders().get(DeliveryHandler.PUB_ID_HEADER).getFirst()).thenReturn("");

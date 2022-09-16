@@ -21,11 +21,17 @@
 
 package org.onap.dcaegen2.services.pmmapper.config;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.StatusCodes;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,25 +39,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
-
 import org.onap.dcaegen2.services.pmmapper.exceptions.ReconfigurationException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
-
 import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.api.CbsClient;
 import org.onap.dcaegen2.services.sdk.rest.services.cbs.client.model.CbsRequest;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import io.undertow.server.HttpServerExchange;
+import io.undertow.util.StatusCodes;
 import reactor.core.publisher.Mono;
 import utils.ConfigUtils;
-import java.util.ArrayList;
 import utils.FileUtils;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class DynamicConfigurationTest {
@@ -96,7 +97,7 @@ class DynamicConfigurationTest {
     void testApplyOriginalUponFailure() throws Exception {
         Configurable configurable = mock(Configurable.class);
         configurables.add(configurable);
-        JsonObject modifiedConfig = new JsonParser().parse(mapperConfig).getAsJsonObject();
+        JsonObject modifiedConfig = JsonParser.parseString(mapperConfig).getAsJsonObject();
         modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
 
         Mono<JsonObject> just = Mono.just(modifiedConfig);
@@ -127,7 +128,7 @@ class DynamicConfigurationTest {
     void testSuccessfulReconfiguration() throws Exception {
         Configurable configurable = mock(Configurable.class);
         configurables.add(configurable);
-        JsonObject modifiedConfig = new JsonParser().parse(mapperConfig).getAsJsonObject();
+        JsonObject modifiedConfig = JsonParser.parseString(mapperConfig).getAsJsonObject();
         modifiedConfig.addProperty("dmaap_dr_delete_endpoint","http://modified-delete-endpoint/1");
 
         Mono<JsonObject> just = Mono.just(modifiedConfig);
@@ -146,7 +147,7 @@ class DynamicConfigurationTest {
 
     @Test
     void testMapperConfigReconfiguration() throws Exception {
-        JsonObject modifiedConfigJson = new JsonParser().parse(mapperConfig).getAsJsonObject();
+        JsonObject modifiedConfigJson = JsonParser.parseString(mapperConfig).getAsJsonObject();
         modifiedConfigJson.addProperty("dmaap_dr_delete_endpoint", "http://modified-delete-endpoint/1");
 
         Mono<JsonObject> just = Mono.just(modifiedConfigJson);

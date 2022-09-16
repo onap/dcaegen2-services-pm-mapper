@@ -21,12 +21,21 @@
 
 package org.onap.dcaegen2.services.pmmapper.ssl;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.net.ssl.SSLContext;
+
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,22 +43,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.rules.ExpectedException;
-
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -71,7 +71,7 @@ public class SSLContextFactoryTest {
     @BeforeEach
     void setUp() throws Exception {
         validConfigFileContents = new String(Files.readAllBytes(validConfigPath));
-        JsonObject configObject = new JsonParser().parse(validConfigFileContents).getAsJsonObject();
+        JsonObject configObject = JsonParser.parseString(validConfigFileContents).getAsJsonObject();
         validConfig = new Gson().fromJson(configObject, MapperConfig.class);
 
         objUnderTest = new SSLContextFactory(validConfig);
@@ -86,7 +86,7 @@ public class SSLContextFactoryTest {
 
     @Test
     void testCreateSSLContextInvalidPassword() {
-        JsonObject configObject = new JsonParser().parse(validConfigFileContents).getAsJsonObject();
+        JsonObject configObject = JsonParser.parseString(validConfigFileContents).getAsJsonObject();
         configObject.addProperty("key_store_pass_path", "src/test/resources/nopassword");
         inValidConfig = new Gson().fromJson(configObject, MapperConfig.class);
 

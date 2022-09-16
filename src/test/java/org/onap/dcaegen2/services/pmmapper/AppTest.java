@@ -38,26 +38,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Collections;
-
-import com.google.gson.Gson;
-import io.undertow.server.HttpServerExchange;
-import io.undertow.util.StatusCodes;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.MockSettings;
-import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
-import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
-import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
-
-import org.onap.dcaegen2.services.pmmapper.config.FilesProcessingConfig;
-import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
-import reactor.core.publisher.Flux;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -65,6 +53,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.HttpRequest;
+import org.onap.dcaegen2.services.pmmapper.config.ConfigHandler;
+import org.onap.dcaegen2.services.pmmapper.config.FilesProcessingConfig;
+import org.onap.dcaegen2.services.pmmapper.exceptions.EnvironmentConfigException;
+import org.onap.dcaegen2.services.pmmapper.exceptions.MapperConfigException;
 import org.onap.dcaegen2.services.pmmapper.filtering.MeasFilterHandler;
 import org.onap.dcaegen2.services.pmmapper.mapping.Mapper;
 import org.onap.dcaegen2.services.pmmapper.model.Event;
@@ -72,6 +64,13 @@ import org.onap.dcaegen2.services.pmmapper.model.EventMetadata;
 import org.onap.dcaegen2.services.pmmapper.model.MapperConfig;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasConverter;
 import org.onap.dcaegen2.services.pmmapper.utils.MeasSplitter;
+import org.onap.dcaegen2.services.pmmapper.utils.XMLValidator;
+
+import com.google.gson.Gson;
+
+import io.undertow.server.HttpServerExchange;
+import io.undertow.util.StatusCodes;
+import reactor.core.publisher.Flux;
 import utils.EventUtils;
 
 

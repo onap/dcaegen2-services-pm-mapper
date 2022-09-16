@@ -21,21 +21,20 @@
 
 package org.onap.dcaegen2.services.pmmapper.utils;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.IOException;
+import java.io.StringReader;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.onap.dcaegen2.services.pmmapper.model.MeasFilterConfig;
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
 
 @ExtendWith(MockitoExtension.class)
 class MeasFilterConfigAdapterTest {
