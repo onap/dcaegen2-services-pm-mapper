@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.10.0] - 2022/12/06
+### Changed
+- [DCAEGEN2-3190] Fix vulnerabilities:
+  - PM-mapper is not able to map the input data from xml file from measType to measTypes.
+  - As it is taking the p value from the input xml, it is no longer sequential.
+
 ## [1.9.0] - 2022/05/13
 ### Changed
 - [DCAEGEN2-3218] Fix vulnerabilities:

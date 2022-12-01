@@ -3,6 +3,7 @@
   ============LICENSE_START=======================================================
    Copyright (C) 2019-2020 Nordix Foundation.
    Copyright (C) 2021 Samsung Electronics.
+   Copyright (C) 2022 Deutsche Telekom AG. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -56,7 +57,7 @@
 {
     "sMeasTypesList":[
      <#if measInfo.measType?has_content>
-       <#list measInfo.measType as measType>
+       <#list measInfo.measType?sort_by("number(@p)") as measType>
        "${measType}"<#sep>,</#sep>
        </#list>
      <#else>
@@ -77,9 +78,9 @@
         "suspectFlag": "${measValue.suspect[0]! "false"}",
         "measResults": [
         <#if measValue.r?has_content>
-        <#list measValue.r as r>
+        <#list measValue.r?sort_by("number(@p)") as r>
             {
-                "p": ${r.@p},
+                "p": ${r?index+1},
                 "sValue": "${r}"
             }<#sep>,</#sep>
         </#list>
