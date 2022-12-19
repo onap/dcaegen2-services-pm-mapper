@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a24fcf4f_0b2f74b3",
+        "filename": "Changelog.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-12-19T18:11:37Z",
+      "side": 1,
+      "message": "I do not see any vulnerabilities addressed here... pls check DCAEGEN2-3318 for vulnerabilities needing to be addressed. You may either amend along with this patch or submit that as separate patch",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "8c57d4c91009f173a6cdf113ca8a9f805307c1ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
