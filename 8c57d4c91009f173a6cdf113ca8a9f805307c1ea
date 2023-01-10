@@ -22,6 +22,30 @@
       "revId": "8c57d4c91009f173a6cdf113ca8a9f805307c1ea",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc0ffb1_eb24297f",
+        "filename": "Changelog.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8217
+      },
+      "writtenOn": "2023-01-10T07:24:09Z",
+      "side": 1,
+      "message": "Sorry \"Fix vulnerabilities\" was added by mistake. I will remove that and resubmit.",
+      "parentUuid": "a24fcf4f_0b2f74b3",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "8c57d4c91009f173a6cdf113ca8a9f805307c1ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
