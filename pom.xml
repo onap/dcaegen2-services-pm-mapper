@@ -35,7 +35,7 @@
 
     <groupId>org.onap.dcaegen2.services</groupId>
     <artifactId>pm-mapper</artifactId>
-    <version>1.10.0-SNAPSHOT</version>
+    <version>1.10.1-SNAPSHOT</version>
 
 
     <name>dcaegen2-services-pm-mapper</name>
@@ -48,7 +48,7 @@
         <sl4j.version>1.7.25</sl4j.version>
         <logback.version>1.2.10</logback.version>
         <reactor.version>3.4.21</reactor.version>
-        <undertow.version>2.2.17.Final</undertow.version>
+        <undertow.version>2.3.0.Final</undertow.version>
         <gson.version>2.8.9</gson.version>
         <freemarker.version>2.3.31</freemarker.version>
         <commons.io.version>2.8.0</commons.io.version>
