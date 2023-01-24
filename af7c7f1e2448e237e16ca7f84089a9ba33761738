@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16c126d1_46e7bced",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-01-24T20:45:13Z",
+      "side": 1,
+      "message": "duplicates to be removed",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf010306_03b00de2",
+        "filename": "Changelog.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-01-24T20:45:13Z",
+      "side": 1,
+      "message": "suggest this as 1.10.1 (patch version bump will suffice here as minor revision is already bumped with earlier patch for London release)",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07d923a_2b9fb745",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-01-24T20:45:13Z",
+      "side": 1,
+      "message": "Patch version bump recommended",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
