@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.11.0] - 2023/01/13
+## [1.10.1] - 2023/01/31
 ### Changed
 - [DCAEGEN2-3323] Fix vulnerabilities:
   - Update io.undertow:2.2.17.Final to version 2.3.0.Final
