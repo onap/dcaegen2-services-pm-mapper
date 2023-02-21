@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddfff54e_8c5bdda1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-02-21T15:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16c126d1_46e7bced",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf010306_03b00de2",
         "filename": "Changelog.md",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f6400d0_9fd743df",
+        "filename": "Changelog.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-02-21T15:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf010306_03b00de2",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d07d923a_2b9fb745",
         "filename": "pom.xml",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347ee951_c2dbda63",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-02-21T15:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d07d923a_2b9fb745",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "af7c7f1e2448e237e16ca7f84089a9ba33761738",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
