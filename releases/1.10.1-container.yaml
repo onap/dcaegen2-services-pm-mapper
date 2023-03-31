@@ -1,0 +1,10 @@
+distribution_type: 'container'
+version: '1.10.1'
+project: 'dcaegen2-services-pm-mapper'
+log_dir: 'dcaegen2-services-pm-mapper-maven-docker-stage-master/1362/'
+containers:
+  - name: 'org.onap.dcaegen2.services.pm-mapper'
+    version: '1.10.1-20230330T113706ZZ'
+container_release_tag: '1.10.1'
+git_tag: '1.10.1'
+ref: 'f08084cc6b5696627bc2ef649787b007d526112f'
